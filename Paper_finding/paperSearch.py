@@ -36,7 +36,7 @@ theme_patterns = [
 compiled_patterns = [re.compile(pat, flags=re.IGNORECASE) for pat in theme_patterns]
 
 
-base_path = "C:/Users/mathi/Desktop/Malta/Code/Paper_finding"
+base_path = "C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding"
 
 txt_files = [f for f in os.listdir(base_path) if f.endswith(".txt")]
 print(f"Found {len(txt_files)} text files in {base_path}.")
