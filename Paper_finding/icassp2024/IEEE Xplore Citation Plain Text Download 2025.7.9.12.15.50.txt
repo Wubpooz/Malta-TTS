@@ -1,0 +1,24 @@
+L. Yang, J. -X. Mi, G. Wang and W. Li, "Window-Based Convolutional Sparse Coding: Towards A Unified Framework," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. 2755-2759, doi: 10.1109/ICASSP48485.2024.10448086. keywords: {Convolutional codes;Computer vision;Correlation;Convolution;Computational modeling;Encoding;Acoustics;convolutional sparse coding;window function;weighted averaging;image inpainting},
+
+Y. Mi, Y. Li, Y. Shu and S. Liu, "ZE-FESG: A Zero-Shot Feature Extraction Method Based on Semantic Guidance for No-Reference Video Quality Assessment," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. 3640-3644, doi: 10.1109/ICASSP48485.2024.10448422. keywords: {Codes;Semantics;Artificial neural networks;Visual systems;Signal processing;Feature extraction;Quality assessment;Video Quality Assessment;Semantic Guidance;Zero-shot;Multidimensional Feature Extractor},
+
+A. Tabassum, D. Tran, T. Dang, I. Lourentzou and K. Koishida, "uaMix-MAE: Efficient Tuning of Pretrained Audio Transformers with Unsupervised Audio Mixtures," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. 5435-5439, doi: 10.1109/ICASSP48485.2024.10446342. keywords: {Training;Adaptation models;Computational modeling;Semantics;Signal processing;Transformers;Data models;Masked audio models;Contrastive tuning;Few-shot learning;Masked autoencoders},
+
+"ICASSP 2024 Welcome," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. iii-iv, doi: 10.1109/ICASSP48485.2024.10446813.
+
+"ICASSP 2024 Author Index," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. A-1-A-39, doi: 10.1109/ICASSP48485.2024.10448297.
+
+"ICASSP 2024 Committees," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. vii-x, doi: 10.1109/ICASSP48485.2024.10446715.
+
+"ICASSP 2024 Copyright Page," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. ii-ii, doi: 10.1109/ICASSP48485.2024.10447238.
+
+"ICASSP 2024 Cover Page," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. c1-c1, doi: 10.1109/ICASSP48485.2024.10446733.
+
+"ICASSP 2024 List Reviewer Page," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. i-xxxviii, doi: 10.1109/ICASSP48485.2024.10446211.
+
+"ICASSP 2024 Organizing Committee," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. v-vi, doi: 10.1109/ICASSP48485.2024.10446760.
+
+"ICASSP 2024 TOC," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. xlix-cclxviii, doi: 10.1109/ICASSP48485.2024.10446722.
+
+"ICASSP 2024 Title Page," ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Korea, Republic of, 2024, pp. i-i, doi: 10.1109/ICASSP48485.2024.10446707.
+

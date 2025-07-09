@@ -1,0 +1,20 @@
+F. Zhang, C. Wu, A. Zhou and H. Ma, "mmHIU: a human-to-human interaction understanding system based on mmWave sensing," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. 1-5, doi: 10.1109/ICASSP49660.2025.10889352. keywords: {Point cloud compression;Privacy;Visualization;Accuracy;Neural networks;Signal processing;Feature extraction;Sensors;Millimeter wave communication;Speech processing;Human-to-human interaction understanding(HIU);mmWave sensing;machine learning},
+
+S. Basak, A. Padarthi and M. Gowda, "mmWave-Whisper: Phone Call Eavesdropping and Transcription Using Millimeter-Wave Radar," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. 1-5, doi: 10.1109/ICASSP49660.2025.10890670. keywords: {Vibrations;Training;Vocabulary;Accuracy;Systematics;Training data;Millimeter wave radar;Millimeter wave communication;Speech processing;Eavesdropping;side channel attacks;mmWave radars;speech privacy;speech recognition},
+
+Y. Gao, A. Su, C. Zhao and J. Song, "pFedFace: Personalized Federated Learning for Face Recognition," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. 1-5, doi: 10.1109/ICASSP49660.2025.10889072. keywords: {Training;Data privacy;Adaptation models;Federated learning;Face recognition;Speech recognition;Benchmark testing;Feature extraction;Speech processing;Batch normalization;Data Security;Personalized Federated Learning;Face Recognition;Domain Adaptation},
+
+P. P. Parada et al., "persoDA: Personalized Data Augmentation for Personalized ASR," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. 1-5, doi: 10.1109/ICASSP49660.2025.10887752. keywords: {Training;Acoustic distortion;Noise;Data augmentation;Data models;Robustness;Recording;Reverberation;Speech processing;Standards;Personalization;Data augmentation;ASR;Adaptation;Noise modelling},
+
+A. Koudounas, M. La Quatra, S. M. Siniscalchi and E. Baralis, "voc2vec: A Foundation Model for Non-Verbal Vocalization," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. 1-5, doi: 10.1109/ICASSP49660.2025.10890672. keywords: {Pediatrics;Accuracy;Foundation models;Benchmark testing;Signal processing;Data models;Acoustics;Speech processing;Nonverbal vocalization;Representation Learning;Self-Supervised Models;Pre-trained Models},
+
+"Copyright Page," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. i-i, doi: 10.1109/ICASSP49660.2025.10889852.
+
+"Front Matter," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. 4-14, doi: 10.1109/ICASSP49660.2025.10887662.
+
+"Author Index," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. i-lxxv, doi: 10.1109/ICASSP49660.2025.10890416.
+
+"ICASSP 2025 Cover Page," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. c1-c1, doi: 10.1109/ICASSP49660.2025.10887806.
+
+"Table of Contents," ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Hyderabad, India, 2025, pp. i-cccix, doi: 10.1109/ICASSP49660.2025.10889635.
+

@@ -2,38 +2,73 @@ import re
 import os
 
 weighted_patterns = [
-  # r"\blanguages\b"
+   # General themes
   (r"\bmaltese\b", 100),
   (r"\btts\b|\btext-to-speech\b|\bspeech synthesis\b|\bmultilingual TTS\b|\bzero[- ]shot TTS\b|\bcross-lingual TTS\b", 80),
   (r"\blow[- ]resource\b|\bunder[- ]resourced\b|\blow[- ]resource languages\b|\blanguages with limited resources\b", 95),
-  (r"\btransfer learning\b|\blanguage transfer\b", 78),
-  (r"\bmultilingual\b|\bcross[- ]lingual\b|\bcode-switching\b", 65),
-  (r"\bbenchmark\b", 40),
-  (r"\binstruction tuning\b|\bprompt tuning\b", 20),
-  (r"\b(domain|task|language) adaptation\b|\b(domain|task|language) extension\b", 63),
-  (r"\bself[- ]supervised\b|\bself[- ]training\b|\bpseudo[- ]labeling\b", 15),
-  (r"\bspeech foundation model\b|\baudio[- ]language model\b", 58),
+  (r"\bdataset\b.*(maltese|low[- ]resource|under[- ]resourced)", 90),
+  (r"\bdata scarcity\b|\blow data availability\b", 88),
+
+  # Specific themes
+  (r"\btransfer learning\b|\blanguage transfer\b", 87),
+  (r"\bmultilingual\b|\bcross[- ]lingual\b|\bcode-switching\b", 73),
+  (r"\bspeech foundation model\b|\baudio[- ]language model\b", 60),
   (r"\bfoundational model(s)?\b", 58),
+  (r"\bfew[- ]shot\b|\blimited data\b", 65),
+  (r"\bzero[- ]shot\b", 48),
+
+  # Improving models
+  (r"\b(domain|task|language) adaptation\b|\b(domain|task|language) extension\b", 86),
+  (r"\bself[- ]supervised\b|\bself[- ]training\b|\bpseudo[- ]labeling\b", 35),
+  (r"\binstruction tuning\b|\bprompt tuning\b", 30),
+  # (r"\btraining data\b|\btraining efficiency\b", 7),
+  # (r"\bdata efficiency\b|\blabel efficiency\b", 3),
+
+  # Models
   (r"\bwhisper\b", 80),
   (r"\blo[- ]rank adaptation\b|\bLoRA\b", 70),
   (r"\bdiffusion (model|transformer|TTS)\b", 50),
-  (r"\bdataset\b.*(maltese|low[- ]resource|under[- ]resourced)", 90),
-  (r"\bzero[- ]shot\b", 55),
-  (r"\bontology\b", 12),
-  (r"\bdata augmentation\b", 35),
+
+  # Text processing
+  (r"\btext[- ]to[- ]phoneme\b", 85),
+  (r"\btext normalization\b", 85),
+  (r"\bgrapheme[- ]to[- ]phoneme\b|\bG2P\b", 85),
+  (r"\btext preprocessing\b", 75),
+  (r"\blinguistic pre[- ]processing\b", 75),
+  (r"\bTTS alignment\b|\btext[- ]to[- ]speech alignment\b", 75),
+  (r"\btext analysis pipeline\b", 70),
+  (r"\bpart[- ]of[- ]speech tagging\b|\bPOS tagging\b", 70),
+  (r"\bsyntactic parsing\b", 70),
+  (r"\butterance segmentation\b", 70),
+  (r"\btokenization\b", 65),
+  (r"\bsubword segmentation\b", 65),
+  (r"\bsemantic parsing\b", 65),
+  (r"\bdependency parsing\b", 65),
+  (r"\bbyte[- ]pair encoding\b|\bBPE\b", 60),
+  (r"\bwordpiece\b", 60),
+  (r"\bsentencepiece\b", 60),
+  (r"\blatent representation(s)?\b", 60),
+  (r"\bconstituency parsing\b", 60),
+  (r"\bnamed entity recognition\b|\bNER\b", 60),
+  (r"\bcontextual embeddings\b", 55),
+  (r"\bpretrained language model(s)?\b", 55),
+  (r"\btoken encoder(s)?\b", 50),
+  (r"\blabeling\b", 30),
+  
+  # Useful techniques for later
+  (r"\bgeneralization\b", 65),
+  (r"\brobust( training| models| generalization)?\b", 64),
+  (r"\bdata augmentation\b", 55),
   (r"\bcompositional generalization\b", 23),
-  (r"\btraining data\b|\btraining efficiency\b", 7),
-  (r"\bgeneralization\b", 10),
-  (r"\bdata efficiency\b|\blabel efficiency\b", 3),
-  (r"\bfew[- ]shot\b|\blimited data\b", 76),
-  (r"\brobust( training| models| generalization)?\b", 44),
-  (r"\bdata scarcity\b|\blow data availability\b", 82),
+  (r"\bbenchmark\b", 40),
+  (r"\bontology\b", 12),
 ]
+
 EXCLUDE_PREFIXES = ("theme_matches", "output_", "log_")
 
 
-def find_and_score_titles(base_path, weighted_patterns, output_file=None):
-  txt_files = [f for f in os.listdir(base_path) if f.endswith(".txt") and not f.startswith(EXCLUDE_PREFIXES)]
+def find_and_score_titles(base_path, weighted_patterns, output_file=None, excluded_sources=()):
+  txt_files = [f for f in os.listdir(base_path) if f.endswith(".txt") and not f.startswith(EXCLUDE_PREFIXES) and not f.startswith(excluded_sources)]
   print(f"Found {len(txt_files)} text files in {base_path}.")
 
   papers_by_file = {}
@@ -61,7 +96,7 @@ def find_and_score_titles(base_path, weighted_patterns, output_file=None):
 
 
   print(f"Found {len(theme_matches)} papers matching the themes.")
-  for score, source, title in theme_matches[:10]:
+  for score, source, title in theme_matches[:5]:
       print(f"[{score}] {source} - {title}")
   print("...")
 
@@ -76,6 +111,7 @@ def find_and_score_titles(base_path, weighted_patterns, output_file=None):
 
 
 if __name__ == "__main__":
+    EXCLUDED_SOURCES = () #("icassp2024", "icassp2025")
     compiled_weighted_patterns = [(re.compile(pat, re.IGNORECASE), weight) for pat, weight in weighted_patterns]
-    find_and_score_titles("C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding", compiled_weighted_patterns, "theme_matches.txt")
+    find_and_score_titles("C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding", compiled_weighted_patterns, "theme_matches.txt", EXCLUDED_SOURCES)
     
