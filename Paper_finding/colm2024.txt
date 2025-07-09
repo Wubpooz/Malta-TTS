@@ -1,598 +1,598 @@
-1	Does Collaborative Human–LM Dialogue Generation Help Information Extraction from Human–Human Dialogues?
--	Bo-Ru Lu; Nikita Haduong; Chia-Hsuan Lee; Zeqiu Wu; Hao Cheng; Paul Koester; Jean Utke; Tao Yu; Noah A. Smith; Mari Ostendorf;	University of Washington; Microsoft; Allstate Insurance Company; University of Hong Kong;	United States; China;	Poster	4
-2	GPQA: A Graduate-Level Google-Proof Q&A Benchmark
--	David Rein; Betty Li Hou; Asa Cooper Stickland; Jackson Petty; Richard Yuanzhe Pang; Julien Dirani; Julian Michael; Samuel R. Bowman;	New York University;	United States;	Poster	548
-3	Information-Theoretic Distillation for Reference-less Summarization
--	Jaehun Jung; Ximing Lu; Liwei Jiang; Faeze Brahman; Peter West; Pang Wei Koh; Yejin Choi;	University of Washington; Allen Institute for AI;	United States;	Poster	0
-4	PolygloToxicityPrompts: Multilingual Evaluation of Neural Toxic Degeneration in Large Language Models
--	Devansh Jain; Priyanshu Kumar; Samuel Gehman; Xuhui Zhou; Thomas Hartvigsen; Maarten Sap;	Carnegie Mellon University; Independent; Allen Institute for Artificial Intelligence; University of Virginia;	United States; ;	Poster	25
-5	A Survey on Deep Learning for Theorem Proving
--	Zhaoyu Li; Jialiang Sun; Logan Murphy; Qidong Su; Zenan Li; Xian Zhang; Kaiyu Yang; Xujie Si;	University of Toronto; Microsoft; California Institute of Technology;	Canada; United States;	Poster	24
-6	Will the Real Linda Please Stand up...to Large Language Models? Examining the Representativeness Heuristic in LLMs
--	Pengda Wang; Zilin Xiao; Hanjie Chen; Frederick L. Oswald;	Rice University;	United States;	Poster	12
-7	Mamba: Linear-Time Sequence Modeling with Selective State Spaces
--	Albert Gu; Tri Dao;	Carnegie Mellon University; Princeton University;	United States;	Poster	3403
-8	A Language Agent for Autonomous Driving
--	Jiageng Mao; Junjie Ye; Yuxi Qian; Marco Pavone; Yue Wang;	University of Southern California; Stanford University; NVIDIA;	United States;	Poster	114
-9	Top Leaderboard Ranking = Top Coding Proficiency, Always? EvoEval: Evolving Coding Benchmarks via LLM
--	Chunqiu Steven Xia; Yinlin Deng; LINGMING ZHANG;	University of Illinois Urbana-Champaign;	United States;	Poster	25
-10	Dated Data: Tracing Knowledge Cutoffs in Large Language Models
--	Jeffrey Cheng; Marc Marone; Orion Weller; Dawn Lawrie; Daniel Khashabi; Benjamin Van Durme;	Johns Hopkins University;	United States;	Poster	28
-11	Can Language Models Solve Olympiad Programming?
--	Ben Shi; Michael Tang; Karthik R Narasimhan; Shunyu Yao;	Princeton University;	United States;	Poster	25
-12	Measuring and Controlling Instruction (In)Stability in Language Model Dialogs
--	Kenneth Li; Tianle Liu; Naomi Bashkansky; David Bau; Fernanda Viégas; Hanspeter Pfister; Martin Wattenberg;	Harvard University; Northeastern University; Google;	United States;	Poster	14
-13	GeniL: A Multilingual Dataset on Generalizing Language
--	Aida Mostafazadeh Davani; Sagar Gubbi Venkatesh; Sunipa Dev; Shachi Dave; Vinodkumar Prabhakaran;	Google;	United States;	Poster	0
-14	AI-generated text boundary detection with RoFT
--	Laida Kushnareva; Tatiana Gaintseva; Dmitry Abulkhanov; Kristian Kuznetsov; German Magai; Eduard Tulchinskii; Serguei Barannikov; Sergey Nikolenko; Irina Piontkovskaya;	Queen Mary University of London; Skolkovo Institute of Science and Technology; Higher School of Economics; Paris Diderot University; Steklov Institute of Mathematics; Huawei;	United Kingdom; Russian Federation; France; China;	Poster	5
-15	Evaluating Cultural Adaptability of a Large Language Model via Simulation of Synthetic Personas
--	Louis Kwok; Michal Bravansky; Lewis Griffin;	University College London;	United Kingdom;	Poster	17
-16	Infini-gram: Scaling Unbounded n-gram Language Models to a Trillion Tokens
--	Jiacheng Liu; Sewon Min; Luke Zettlemoyer; Yejin Choi; Hannaneh Hajishirzi;	Meta; University of Washington;	United States;	Poster	15
-17	VisualWebBench: How Far Have Multimodal LLMs Evolved in Web Page Understanding and Grounding?
--	Junpeng Liu; Yifan Song; Bill Yuchen Lin; Wai Lam; Graham Neubig; Yuanzhi Li; Xiang Yue;	Chinese University of Hong Kong; Peking University; Allen Institute for Artificial Intelligence; Carnegie Mellon University;	China; United States;	Poster	50
-18	Auxiliary task demands mask the capabilities of smaller language models
--	Jennifer Hu; Michael Frank;	Harvard University; Stanford University;	United States;	Poster	27
-19	Iteratively Prompting Multimodal LLMs to Reproduce Natural and AI-Generated Images
--	Ali Naseh; Katherine Thai; Mohit Iyyer; Amir Houmansadr;	University of Massachusetts Amherst;	United States;	Poster	6
-20	Tower: An Open Multilingual Large Language Model for Translation-Related Tasks
--	Duarte Miguel Alves; José Pombal; Nuno M Guerreiro; Pedro Henrique Martins; João Alves; Amin Farajian; Ben Peters; Ricardo Rei; Patrick Fernandes; Sweta Agrawal; Pierre Colombo; José G. C. de Souza; Andre Martins;	Instituto Superior Técnico; Unbabel; Instituto de Telecomunicações; CentraleSupélec; INESC-ID;	Portugal; France;	Poster	114
-21	AmbigDocs: Reasoning across Documents on Different Entities under the Same Name
--	Yoonsang Lee; Xi Ye; Eunsol Choi;	Seoul National University; University of Texas at Austin;	South Korea; United States;	Poster	4
-22	Commonsense-T2I Challenge: Can Text-to-Image Generation Models Understand Commonsense?
--	Xingyu Fu; Muyu He; Yujie Lu; William Yang Wang; Dan Roth;	University of Pennsylvania; University of California, Santa Barbara; Amazon;	United States;	Poster	16
-23	MiniCPM: Unveiling the Potential of Small Language Models with Scalable Training Strategies
--	Shengding Hu; Yuge Tu; Xu Han; Ganqu Cui; Chaoqun He; Weilin Zhao; Xiang Long; Zhi Zheng; Yewei Fang; Yuxiang Huang; Xinrong Zhang; Zhen Leng Thai; Chongyi Wang; Yuan Yao; Chenyang Zhao; Jie Zhou; Jie Cai; Zhongwu Zhai; Ning Ding; Chao Jia; Guoyang Zeng; dahai li; Zhiyuan Liu; Maosong Sun;	Tsinghua University; ModelBest Inc.; ModelBest; National University of Singapore; Alibaba Group;	China; United States; ; Singapore;	Poster	277
-24	Tuning Language Models by Proxy
--	Alisa Liu; Xiaochuang Han; Yizhong Wang; Yulia Tsvetkov; Yejin Choi; Noah A. Smith;	University of Washington; Allen Institute for Artificial Intelligence;	United States;	Poster	77
-25	A Long Way to Go: Investigating Length Correlations in RLHF
--	Prasann Singhal; Tanya Goyal; Jiacheng Xu; Greg Durrett;	University of Texas at Austin; Princeton University; Salesforce;	United States;	Poster	125
-26	Factual and Tailored Recommendation Endorsements using Language Models and Reinforcement Learning
--	Jihwan Jeong; Yinlam Chow; Guy Tennenholtz; ChihWei Hsu; Mohammad Ghavamzadeh; Craig Boutilier;	University of Toronto; Google; Amazon;	Canada; United States;	Poster	0
-27	Inspecting and Editing Knowledge Representations in Language Models
--	Evan Hernandez; Belinda Z. Li; Jacob Andreas;	Massachusetts Institute of Technology; Microsoft;	United States;	Poster	126
-28	Hydra: Sequentially-Dependent Draft Heads for Medusa Decoding
--	Zachary Ankner; Rishab Parthasarathy; Aniruddha Nrusimha; Christopher Rinard; Jonathan Ragan-Kelley; William Brandon;	Massachusetts Institute of Technology; Databricks; Adobe;	United States;	Poster	33
-29	MBBQ: A Dataset for Cross-Lingual Comparison of Stereotypes in Generative LLMs
--	Vera Neplenbroek; Arianna Bisazza; Raquel Fernández;	University of Amsterdam; University of Groningen;	Netherlands;	Poster	8
-30	Towards Measuring the Representation of Subjective Global Opinions in Language Models
--	Esin DURMUS; Karina Nguyen; Thomas Liao; Nicholas Schiefer; Amanda Askell; Anton Bakhtin; Carol Chen; Zac Hatfield-Dodds; Danny Hernandez; Nicholas Joseph; Liane Lovitt; Sam McCandlish; Orowa Sikder; Alex Tamkin; Janel Thamkul; Jared Kaplan; Jack Clark; Deep Ganguli;	Anthropic; Anthropic AI; Australian National University; Anthropic PBC;	United States; Australia;	Poster	224
-31	LLM360: Towards Fully Transparent Open-Source LLMs
--	Zhengzhong Liu; Aurick Qiao; Willie Neiswanger; Hongyi Wang; Bowen Tan; Tianhua Tao; Junbo Li; Yuqi Wang; Suqi Sun; Omkar Pangarkar; Richard Fan; Yi Gu; Victor Miller; Yonghao Zhuang; Guowei He; Haonan Li; Fajri Koto; Liping Tang; Nikhil Ranjan; Zhiqiang Shen; Roberto Iriondo; Cun Mu; Zhiting Hu; Mark Schulze; Preslav Nakov; Timothy Baldwin; Eric P. Xing;	Mohamed bin Zayed University of Artificial Intelligence; Snowflake Inc.; University of Southern California; Carnegie Mellon University; University of Illinois Urbana-Champaign; Petuum Inc.; Petuum Inc; University of California, San Diego; Northeastern University; Amazon; University of Melbourne;	United Arab Emirates; United States; Australia;	Poster	79
-32	Cohesive Conversations: Enhancing Authenticity in Multi-Agent Simulated Dialogues
--	KuanChao Chu; Yi-Pei Chen; Hideki Nakayama;	University of Tokyo;	Japan;	Poster	2
-33	Your Context Is Not an Array: Unveiling Random Access Limitations in Transformers
--	MohammadReza Ebrahimi; Sunny Panchal; Roland Memisevic;	University of Toronto; Qualcomm Incorporated;	Canada; United States;	Poster	4
-34	RAFT: Adapting Language Model to Domain Specific RAG
--	Tianjun Zhang; Shishir G Patil; Naman Jain; Sheng Shen; Matei Zaharia; Ion Stoica; Joseph E. Gonzalez;	University of California, Berkeley; Databricks;	United States;	Poster	197
-35	Branch-Train-MiX: Mixing Expert LLMs into a Mixture-of-Experts LLM
--	Sainbayar Sukhbaatar; Olga Golovneva; Vasu Sharma; Hu Xu; Xi Victoria Lin; Baptiste Roziere; Jacob Kahn; Shang-Wen Li; Wen-tau Yih; Jason E Weston; Xian Li;	Meta; FAIR;	United States; France;	Poster	16
-36	How Far Are We from Intelligent Visual Deductive Reasoning?
--	Yizhe Zhang; Richard He Bai; Ruixiang ZHANG; Jiatao Gu; Shuangfei Zhai; Joshua M. Susskind; Navdeep Jaitly;	Apple; Université de Montréal;	United States; Canada;	Poster	13
-37	Beyond A*: Better Planning with Transformers via Search Dynamics Bootstrapping
--	Lucas Lehnert; Sainbayar Sukhbaatar; DiJia Su; Qinqing Zheng; Paul McVay; Michael Rabbat; Yuandong Tian;	Meta; Mila;	United States; Canada;	Poster	55
-38	Corex: Pushing the Boundaries of Complex Reasoning through Multi-Model Collaboration
--	Qiushi Sun; Zhangyue Yin; Xiang Li; Zhiyong Wu; Xipeng Qiu; Lingpeng Kong;	National University of Singapore; Fudan University; East China Normal University; University of Hong Kong;	Singapore; China;	Poster	46
-39	Emergent World Models and Latent Variable Estimation in Chess-Playing Language Models
--	Adam Karvonen;	Galois, Inc.;	United States;	Poster	22
-40	Evaluating LLMs at Detecting Errors in LLM Responses
--	Ryo Kamoi; Sarkar Snigdha Sarathi Das; Renze Lou; Jihyun Janice Ahn; Yilun Zhao; Xiaoxin Lu; Nan Zhang; Yusen Zhang; Haoran Ranran Zhang; Sujeeth Reddy Vummanthala; Salika Dave; Shaobo Qin; Arman Cohan; Wenpeng Yin; Rui Zhang;	Pennsylvania State University; Salesforce; Yale University; State University of New York at Stony Brook; Allen Institute for Artificial Intelligence;	United States;	Poster	21
-41	Guiding Language Model Reasoning with Planning Tokens
--	Xinyi Wang; Lucas Caccia; Oleksiy Ostapenko; Xingdi Yuan; William Yang Wang; Alessandro Sordoni;	International Business Machines Corporation; Microsoft; University of Montreal; University of California, Santa Barbara;	United States; Canada;	Poster	24
-42	Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms
--	Michael Hanna; Sandro Pezzelle; Yonatan Belinkov;	University of Amsterdam; Technion - Israel Institute of Technology;	Netherlands; Israel;	Poster	26
-43	Large Language Models as Biomedical Hypothesis Generators: A Comprehensive Evaluation
--	Biqing Qi; Kaiyan Zhang; Kai Tian; Haoxiang Li; Zhang-Ren Chen; Sihang Zeng; Ermo Hua; Hu Jinfang; Bowen Zhou;	Harbin Institute of Technology; Tsinghua University; Nanchang University; University of Washington;	China; United States;	Poster	13
-44	StructLM: Towards Building Generalist Models for Structured Knowledge Grounding
--	Alex Zhuang; Ge Zhang; Tianyu Zheng; Xinrun Du; Junjie Wang; Weiming Ren; Wenhao Huang; Jie Fu; Xiang Yue; Wenhu Chen;	University of Waterloo; Waseda University;	Canada; Japan;	Poster	5
-45	FABLES: Evaluating faithfulness and content selection in book-length summarization
--	Yekyung Kim; Yapei Chang; Marzena Karpinska; Aparna Garimella; Varun Manjunatha; Kyle Lo; Tanya Goyal; Mohit Iyyer;	University of Massachusetts Amherst; Adobe; Allen Institute for Artificial Intelligence; Princeton University;	United States;	Poster	39
-46	Enhancing Language Models with Idiomatic Reasoning
--	Jianing Zhou; Ziheng Zeng; Hongyu Gong; Suma Bhat;	University of Illinois Urbana-Champaign; Meta;	United States;	Poster	0
-47	Forklift: An Extensible Neural Lifter
--	Jordi Armengol-Estapé; Rodrigo C. O. Rocha; Jackson Woodruff; Pasquale Minervini; Michael O'Boyle;	Google; Huawei; University of Edinburgh;	United Kingdom; China;	Poster	0
-48	Length-Controlled AlpacaEval: A Simple Debiasing of Automatic Evaluators
--	Yann Dubois; Percy Liang; Tatsunori Hashimoto;	Stanford University;	United States;	Poster	33
-49	Poly-Visual-Expert Vision-Language Models
--	Xiaoran Fan; Tao Ji; 江常皓; Shuo Li; Senjie Jin; Sirui Song; Junke Wang; Boyang Hong; Lu Chen; Guodong Zheng; Ming Zhang; Huangcaishuang; Rui Zheng; Zhiheng Xi; Yuhao Zhou; Shihan Dou; Junjie Ye; Hang Yan; Tao Gui; Qi Zhang; Xipeng Qiu; Xuanjing Huang; Zuxuan Wu; Yu-Gang Jiang;	Fudan University;	China;	Poster	0
-50	RULER: What’s the Real Context Size of Your Long-Context Language Models?
--	Cheng-Ping Hsieh; Simeng Sun; Samuel Kriman; Shantanu Acharya; Dima Rekesh; Fei Jia; Boris Ginsburg;	NVIDIA; University of Massachusetts Amherst; University of California, Berkeley;	United States;	Poster	198
-51	STaR-GATE: Teaching Language Models to Ask Clarifying Questions
--	Chinmaya Andukuri; Jan-Philipp Fränken; Tobias Gerstenberg; Noah Goodman;	Stanford University;	United States;	Poster	42
-52	The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets
--	Samuel Marks; Max Tegmark;	Northeastern University; Massachusetts Institute of Technology;	United States;	Poster	153
-53	Eagle and Finch: RWKV with Matrix-Valued States and Dynamic Recurrence
--	Bo Peng; Daniel Goldstein; Quentin Gregory Anthony; Alon Albalak; Eric Alcaide; Stella Biderman; Eugene Cheah; Teddy Ferdinan; Kranthi Kiran GV; Haowen Hou; Satyapriya Krishna; Ronald McClelland Jr.; Niklas Muennighoff; Fares Obeid; Atsushi Saito; Guangyu Song; Haoqin Tu; Ruichong Zhang; Bingchen Zhao; Qihang Zhao; Jian Zhu; Rui-Jie Zhu;	University of Hong Kong; Recursal AI; Ohio State University; University of California, Santa Barbara; Booz Allen Hamilton; Wroclaw University of Technology; DataChat; Harvard University; Grand Canyon University; Allen Institute for Artificial Intelligence; Imperial College London; University of Chinese Academy of Sciences; Tsinghua University; University of Edinburgh; University of British Columbia; University of California, Santa Cruz;	China; United States; Unknown; Poland; ; United Kingdom; Canada;	Poster	67
-54	Stop Reasoning! When Multimodal LLM with Chain-of-Thought Reasoning Meets Adversarial Image
--	Zefeng Wang; Zhen Han; Shuo Chen; Fan Xue; Zifeng Ding; Xun Xiao; Volker Tresp; Philip Torr; Jindong Gu;	Technische Universität München; Amazon; Ludwig-Maximilians-Universität München; Ludwig Maximilian University of Munich; Huawei; Siemens AG; University of Oxford;	Germany; United States; China; United Kingdom;	Poster	31
-55	CULTURE-GEN: Revealing Global Cultural Perception in Language Models through Natural Language Prompting
--	Huihan Li; Liwei Jiang; Nouha Dziri; Xiang Ren; Yejin Choi;	University of Southern California; University of Washington;	United States;	Poster	21
-56	Prompt Exploration with Prompt Regression
--	Michael Feffer; Ronald Xu; Yuekai Sun; Mikhail Yurochkin;	Spotify; Massachusetts Institute of Technology; University of Michigan; IBM;	Sweden; United States;	Poster	2
-57	Quiet-STaR: Language Models Can Teach Themselves to Think Before Speaking
--	Eric Zelikman; Georges Raif Harik; Yijia Shao; Varuna Jayasiri; Nick Haber; Noah Goodman;	Stanford University;	United States;	Poster	120
-58	Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation
--	Eric Zelikman; Eliana Lorch; Lester Mackey; Adam Tauman Kalai;	Stanford University; Microsoft;	United States;	Poster	46
-59	SKVQ: Sliding-window Key and Value Cache Quantization for Large Language Models
--	Haojie Duanmu; Zhihang Yuan; Xiuhong Li; Jiangfei Duan; Xingcheng ZHANG; Dahua Lin;	Shanghai Jiao Tong University; Houmo AI; Peking University; Chinese University of Hong Kong; SenseTime;	China;	Poster	24
-60	Starling-7B: Improving Helpfulness and Harmlessness with RLAIF
--	Banghua Zhu; Evan Frick; Tianhao Wu; Hanlin Zhu; Karthik Ganesan; Wei-Lin Chiang; Jian Zhang; Jiantao Jiao;	University of California, Berkeley; Nexusflow; SambaNova Systems;	United States; ;	Poster	28
-61	Transformer Circuit Evaluation Metrics Are Not Robust
--	Joseph Miller; Bilal Chughtai; William Saunders;	ML Alignment & Theory Scholars; OpenAI;	; United States;	Poster	5
-62	From $r$ to $Q^*$: Your Language Model is Secretly a Q-Function
--	Rafael Rafailov; Joey Hejna; Ryan Park; Chelsea Finn;	Stanford University; Google;	United States;	Poster	112
-63	PRobELM: Plausibility Ranking Evaluation for Language Models
--	Moy Yuan; Eric Chamoun; Rami Aly; Chenxi Whitehouse; Andreas Vlachos;	University of Cambridge; Amazon;	United Kingdom; United States;	Poster	3
-64	An Incomplete Loop: Instruction Inference, Instruction Following, and In-Context Learning in Language Models
--	Emmy Liu; Graham Neubig; Jacob Andreas;	Carnegie Mellon University; Microsoft;	United States;	Poster	1
-65	Negative Preference Optimization: From Catastrophic Collapse to Effective Unlearning
--	Ruiqi Zhang; Licong Lin; Yu Bai; Song Mei;	University of California, Berkeley; Salesforce;	United States;	Poster	133
-66	MambaByte: Token-free Selective State Space Model
--	Junxiong Wang; Tushaar Gangavarapu; Jing Nathan Yan; Alexander M Rush;	Cornell University; Harvard University;	United States;	Poster	49
-67	Unified View of Grokking, Double Descent and Emergent Abilities: A Comprehensive Study on Algorithm Task
--	Yufei Huang; Shengding Hu; Xu Han; Zhiyuan Liu; Maosong Sun;	Tsinghua University;	China;	Poster	2
-68	List Items One by One: A New Data Source and Learning Paradigm for Multimodal LLMs
--	An Yan; Zhengyuan Yang; Junda Wu; Wanrong Zhu; Jianwei Yang; Linjie Li; Kevin Lin; Jianfeng Wang; Julian McAuley; Jianfeng Gao; Lijuan Wang;	University of California, San Diego; Microsoft;	United States;	Poster	16
-69	Talk Less, Interact Better: Evaluating In-context Conversational Adaptation in Multimodal LLMs
+Does Collaborative Human–LM Dialogue Generation Help Information Extraction from Human–Human Dialogues?
+-	Bo-Ru Lu; Nikita Haduong; Chia-Hsuan Lee; Zeqiu Wu; Hao Cheng; Paul Koester; Jean Utke; Tao Yu; Noah A. Smith; Mari Ostendorf;	University of Washington; Microsoft; Allstate Insurance Company; University of Hong Kong;	United States; China
+GPQA: A Graduate-Level Google-Proof Q&A Benchmark
+-	David Rein; Betty Li Hou; Asa Cooper Stickland; Jackson Petty; Richard Yuanzhe Pang; Julien Dirani; Julian Michael; Samuel R. Bowman;	New York University;	United States
+Information-Theoretic Distillation for Reference-less Summarization
+-	Jaehun Jung; Ximing Lu; Liwei Jiang; Faeze Brahman; Peter West; Pang Wei Koh; Yejin Choi;	University of Washington; Allen Institute for AI;	United States
+PolygloToxicityPrompts: Multilingual Evaluation of Neural Toxic Degeneration in Large Language Models
+-	Devansh Jain; Priyanshu Kumar; Samuel Gehman; Xuhui Zhou; Thomas Hartvigsen; Maarten Sap;	Carnegie Mellon University; Independent; Allen Institute for Artificial Intelligence; University of Virginia;	United States; 
+A Survey on Deep Learning for Theorem Proving
+-	Zhaoyu Li; Jialiang Sun; Logan Murphy; Qidong Su; Zenan Li; Xian Zhang; Kaiyu Yang; Xujie Si;	University of Toronto; Microsoft; California Institute of Technology;	Canada; United States
+Will the Real Linda Please Stand up...to Large Language Models? Examining the Representativeness Heuristic in LLMs
+-	Pengda Wang; Zilin Xiao; Hanjie Chen; Frederick L. Oswald;	Rice University;	United States
+Mamba: Linear-Time Sequence Modeling with Selective State Spaces
+-	Albert Gu; Tri Dao;	Carnegie Mellon University; Princeton University;	United States
+A Language Agent for Autonomous Driving
+-	Jiageng Mao; Junjie Ye; Yuxi Qian; Marco Pavone; Yue Wang;	University of Southern California; Stanford University; NVIDIA;	United States
+Top Leaderboard Ranking = Top Coding Proficiency, Always? EvoEval: Evolving Coding Benchmarks via LLM
+-	Chunqiu Steven Xia; Yinlin Deng; LINGMING ZHANG;	University of Illinois Urbana-Champaign;	United States
+Dated Data: Tracing Knowledge Cutoffs in Large Language Models
+-	Jeffrey Cheng; Marc Marone; Orion Weller; Dawn Lawrie; Daniel Khashabi; Benjamin Van Durme;	Johns Hopkins University;	United States
+Can Language Models Solve Olympiad Programming?
+-	Ben Shi; Michael Tang; Karthik R Narasimhan; Shunyu Yao;	Princeton University;	United States
+Measuring and Controlling Instruction (In)Stability in Language Model Dialogs
+-	Kenneth Li; Tianle Liu; Naomi Bashkansky; David Bau; Fernanda Viégas; Hanspeter Pfister; Martin Wattenberg;	Harvard University; Northeastern University; Google;	United States
+GeniL: A Multilingual Dataset on Generalizing Language
+-	Aida Mostafazadeh Davani; Sagar Gubbi Venkatesh; Sunipa Dev; Shachi Dave; Vinodkumar Prabhakaran;	Google;	United States
+AI-generated text boundary detection with RoFT
+-	Laida Kushnareva; Tatiana Gaintseva; Dmitry Abulkhanov; Kristian Kuznetsov; German Magai; Eduard Tulchinskii; Serguei Barannikov; Sergey Nikolenko; Irina Piontkovskaya;	Queen Mary University of London; Skolkovo Institute of Science and Technology; Higher School of Economics; Paris Diderot University; Steklov Institute of Mathematics; Huawei;	United Kingdom; Russian Federation; France; China
+Evaluating Cultural Adaptability of a Large Language Model via Simulation of Synthetic Personas
+-	Louis Kwok; Michal Bravansky; Lewis Griffin;	University College London;	United Kingdom
+Infini-gram: Scaling Unbounded n-gram Language Models to a Trillion Tokens
+-	Jiacheng Liu; Sewon Min; Luke Zettlemoyer; Yejin Choi; Hannaneh Hajishirzi;	Meta; University of Washington;	United States
+VisualWebBench: How Far Have Multimodal LLMs Evolved in Web Page Understanding and Grounding?
+-	Junpeng Liu; Yifan Song; Bill Yuchen Lin; Wai Lam; Graham Neubig; Yuanzhi Li; Xiang Yue;	Chinese University of Hong Kong; Peking University; Allen Institute for Artificial Intelligence; Carnegie Mellon University;	China; United States
+Auxiliary task demands mask the capabilities of smaller language models
+-	Jennifer Hu; Michael Frank;	Harvard University; Stanford University;	United States
+Iteratively Prompting Multimodal LLMs to Reproduce Natural and AI-Generated Images
+-	Ali Naseh; Katherine Thai; Mohit Iyyer; Amir Houmansadr;	University of Massachusetts Amherst;	United States
+Tower: An Open Multilingual Large Language Model for Translation-Related Tasks
+-	Duarte Miguel Alves; José Pombal; Nuno M Guerreiro; Pedro Henrique Martins; João Alves; Amin Farajian; Ben Peters; Ricardo Rei; Patrick Fernandes; Sweta Agrawal; Pierre Colombo; José G. C. de Souza; Andre Martins;	Instituto Superior Técnico; Unbabel; Instituto de Telecomunicações; CentraleSupélec; INESC-ID;	Portugal; France
+AmbigDocs: Reasoning across Documents on Different Entities under the Same Name
+-	Yoonsang Lee; Xi Ye; Eunsol Choi;	Seoul National University; University of Texas at Austin;	South Korea; United States
+Commonsense-T2I Challenge: Can Text-to-Image Generation Models Understand Commonsense?
+-	Xingyu Fu; Muyu He; Yujie Lu; William Yang Wang; Dan Roth;	University of Pennsylvania; University of California, Santa Barbara; Amazon;	United States
+MiniCPM: Unveiling the Potential of Small Language Models with Scalable Training Strategies
+-	Shengding Hu; Yuge Tu; Xu Han; Ganqu Cui; Chaoqun He; Weilin Zhao; Xiang Long; Zhi Zheng; Yewei Fang; Yuxiang Huang; Xinrong Zhang; Zhen Leng Thai; Chongyi Wang; Yuan Yao; Chenyang Zhao; Jie Zhou; Jie Cai; Zhongwu Zhai; Ning Ding; Chao Jia; Guoyang Zeng; dahai li; Zhiyuan Liu; Maosong Sun;	Tsinghua University; ModelBest Inc.; ModelBest; National University of Singapore; Alibaba Group;	China; United States; ; Singapore
+Tuning Language Models by Proxy
+-	Alisa Liu; Xiaochuang Han; Yizhong Wang; Yulia Tsvetkov; Yejin Choi; Noah A. Smith;	University of Washington; Allen Institute for Artificial Intelligence;	United States
+A Long Way to Go: Investigating Length Correlations in RLHF
+-	Prasann Singhal; Tanya Goyal; Jiacheng Xu; Greg Durrett;	University of Texas at Austin; Princeton University; Salesforce;	United States
+Factual and Tailored Recommendation Endorsements using Language Models and Reinforcement Learning
+-	Jihwan Jeong; Yinlam Chow; Guy Tennenholtz; ChihWei Hsu; Mohammad Ghavamzadeh; Craig Boutilier;	University of Toronto; Google; Amazon;	Canada; United States
+Inspecting and Editing Knowledge Representations in Language Models
+-	Evan Hernandez; Belinda Z. Li; Jacob Andreas;	Massachusetts Institute of Technology; Microsoft;	United States
+Hydra: Sequentially-Dependent Draft Heads for Medusa Decoding
+-	Zachary Ankner; Rishab Parthasarathy; Aniruddha Nrusimha; Christopher Rinard; Jonathan Ragan-Kelley; William Brandon;	Massachusetts Institute of Technology; Databricks; Adobe;	United States
+MBBQ: A Dataset for Cross-Lingual Comparison of Stereotypes in Generative LLMs
+-	Vera Neplenbroek; Arianna Bisazza; Raquel Fernández;	University of Amsterdam; University of Groningen;	Netherlands
+Towards Measuring the Representation of Subjective Global Opinions in Language Models
+-	Esin DURMUS; Karina Nguyen; Thomas Liao; Nicholas Schiefer; Amanda Askell; Anton Bakhtin; Carol Chen; Zac Hatfield-Dodds; Danny Hernandez; Nicholas Joseph; Liane Lovitt; Sam McCandlish; Orowa Sikder; Alex Tamkin; Janel Thamkul; Jared Kaplan; Jack Clark; Deep Ganguli;	Anthropic; Anthropic AI; Australian National University; Anthropic PBC;	United States; Australia
+LLM360: Towards Fully Transparent Open-Source LLMs
+-	Zhengzhong Liu; Aurick Qiao; Willie Neiswanger; Hongyi Wang; Bowen Tan; Tianhua Tao; Junbo Li; Yuqi Wang; Suqi Sun; Omkar Pangarkar; Richard Fan; Yi Gu; Victor Miller; Yonghao Zhuang; Guowei He; Haonan Li; Fajri Koto; Liping Tang; Nikhil Ranjan; Zhiqiang Shen; Roberto Iriondo; Cun Mu; Zhiting Hu; Mark Schulze; Preslav Nakov; Timothy Baldwin; Eric P. Xing;	Mohamed bin Zayed University of Artificial Intelligence; Snowflake Inc.; University of Southern California; Carnegie Mellon University; University of Illinois Urbana-Champaign; Petuum Inc.; Petuum Inc; University of California, San Diego; Northeastern University; Amazon; University of Melbourne;	United Arab Emirates; United States; Australia
+Cohesive Conversations: Enhancing Authenticity in Multi-Agent Simulated Dialogues
+-	KuanChao Chu; Yi-Pei Chen; Hideki Nakayama;	University of Tokyo;	Japan
+Your Context Is Not an Array: Unveiling Random Access Limitations in Transformers
+-	MohammadReza Ebrahimi; Sunny Panchal; Roland Memisevic;	University of Toronto; Qualcomm Incorporated;	Canada; United States
+RAFT: Adapting Language Model to Domain Specific RAG
+-	Tianjun Zhang; Shishir G Patil; Naman Jain; Sheng Shen; Matei Zaharia; Ion Stoica; Joseph E. Gonzalez;	University of California, Berkeley; Databricks;	United States
+Branch-Train-MiX: Mixing Expert LLMs into a Mixture-of-Experts LLM
+-	Sainbayar Sukhbaatar; Olga Golovneva; Vasu Sharma; Hu Xu; Xi Victoria Lin; Baptiste Roziere; Jacob Kahn; Shang-Wen Li; Wen-tau Yih; Jason E Weston; Xian Li;	Meta; FAIR;	United States; France
+How Far Are We from Intelligent Visual Deductive Reasoning?
+-	Yizhe Zhang; Richard He Bai; Ruixiang ZHANG; Jiatao Gu; Shuangfei Zhai; Joshua M. Susskind; Navdeep Jaitly;	Apple; Université de Montréal;	United States; Canada
+Beyond A*: Better Planning with Transformers via Search Dynamics Bootstrapping
+-	Lucas Lehnert; Sainbayar Sukhbaatar; DiJia Su; Qinqing Zheng; Paul McVay; Michael Rabbat; Yuandong Tian;	Meta; Mila;	United States; Canada
+Corex: Pushing the Boundaries of Complex Reasoning through Multi-Model Collaboration
+-	Qiushi Sun; Zhangyue Yin; Xiang Li; Zhiyong Wu; Xipeng Qiu; Lingpeng Kong;	National University of Singapore; Fudan University; East China Normal University; University of Hong Kong;	Singapore; China
+Emergent World Models and Latent Variable Estimation in Chess-Playing Language Models
+-	Adam Karvonen;	Galois, Inc.;	United States
+Evaluating LLMs at Detecting Errors in LLM Responses
+-	Ryo Kamoi; Sarkar Snigdha Sarathi Das; Renze Lou; Jihyun Janice Ahn; Yilun Zhao; Xiaoxin Lu; Nan Zhang; Yusen Zhang; Haoran Ranran Zhang; Sujeeth Reddy Vummanthala; Salika Dave; Shaobo Qin; Arman Cohan; Wenpeng Yin; Rui Zhang;	Pennsylvania State University; Salesforce; Yale University; State University of New York at Stony Brook; Allen Institute for Artificial Intelligence;	United States
+Guiding Language Model Reasoning with Planning Tokens
+-	Xinyi Wang; Lucas Caccia; Oleksiy Ostapenko; Xingdi Yuan; William Yang Wang; Alessandro Sordoni;	International Business Machines Corporation; Microsoft; University of Montreal; University of California, Santa Barbara;	United States; Canada
+Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms
+-	Michael Hanna; Sandro Pezzelle; Yonatan Belinkov;	University of Amsterdam; Technion - Israel Institute of Technology;	Netherlands; Israel
+Large Language Models as Biomedical Hypothesis Generators: A Comprehensive Evaluation
+-	Biqing Qi; Kaiyan Zhang; Kai Tian; Haoxiang Li; Zhang-Ren Chen; Sihang Zeng; Ermo Hua; Hu Jinfang; Bowen Zhou;	Harbin Institute of Technology; Tsinghua University; Nanchang University; University of Washington;	China; United States
+StructLM: Towards Building Generalist Models for Structured Knowledge Grounding
+-	Alex Zhuang; Ge Zhang; Tianyu Zheng; Xinrun Du; Junjie Wang; Weiming Ren; Wenhao Huang; Jie Fu; Xiang Yue; Wenhu Chen;	University of Waterloo; Waseda University;	Canada; Japan
+FABLES: Evaluating faithfulness and content selection in book-length summarization
+-	Yekyung Kim; Yapei Chang; Marzena Karpinska; Aparna Garimella; Varun Manjunatha; Kyle Lo; Tanya Goyal; Mohit Iyyer;	University of Massachusetts Amherst; Adobe; Allen Institute for Artificial Intelligence; Princeton University;	United States
+Enhancing Language Models with Idiomatic Reasoning
+-	Jianing Zhou; Ziheng Zeng; Hongyu Gong; Suma Bhat;	University of Illinois Urbana-Champaign; Meta;	United States
+Forklift: An Extensible Neural Lifter
+-	Jordi Armengol-Estapé; Rodrigo C. O. Rocha; Jackson Woodruff; Pasquale Minervini; Michael O'Boyle;	Google; Huawei; University of Edinburgh;	United Kingdom; China
+Length-Controlled AlpacaEval: A Simple Debiasing of Automatic Evaluators
+-	Yann Dubois; Percy Liang; Tatsunori Hashimoto;	Stanford University;	United States
+Poly-Visual-Expert Vision-Language Models
+-	Xiaoran Fan; Tao Ji; 江常皓; Shuo Li; Senjie Jin; Sirui Song; Junke Wang; Boyang Hong; Lu Chen; Guodong Zheng; Ming Zhang; Huangcaishuang; Rui Zheng; Zhiheng Xi; Yuhao Zhou; Shihan Dou; Junjie Ye; Hang Yan; Tao Gui; Qi Zhang; Xipeng Qiu; Xuanjing Huang; Zuxuan Wu; Yu-Gang Jiang;	Fudan University;	China
+RULER: What’s the Real Context Size of Your Long-Context Language Models?
+-	Cheng-Ping Hsieh; Simeng Sun; Samuel Kriman; Shantanu Acharya; Dima Rekesh; Fei Jia; Boris Ginsburg;	NVIDIA; University of Massachusetts Amherst; University of California, Berkeley;	United States
+STaR-GATE: Teaching Language Models to Ask Clarifying Questions
+-	Chinmaya Andukuri; Jan-Philipp Fränken; Tobias Gerstenberg; Noah Goodman;	Stanford University;	United States
+The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets
+-	Samuel Marks; Max Tegmark;	Northeastern University; Massachusetts Institute of Technology;	United States
+Eagle and Finch: RWKV with Matrix-Valued States and Dynamic Recurrence
+-	Bo Peng; Daniel Goldstein; Quentin Gregory Anthony; Alon Albalak; Eric Alcaide; Stella Biderman; Eugene Cheah; Teddy Ferdinan; Kranthi Kiran GV; Haowen Hou; Satyapriya Krishna; Ronald McClelland Jr.; Niklas Muennighoff; Fares Obeid; Atsushi Saito; Guangyu Song; Haoqin Tu; Ruichong Zhang; Bingchen Zhao; Qihang Zhao; Jian Zhu; Rui-Jie Zhu;	University of Hong Kong; Recursal AI; Ohio State University; University of California, Santa Barbara; Booz Allen Hamilton; Wroclaw University of Technology; DataChat; Harvard University; Grand Canyon University; Allen Institute for Artificial Intelligence; Imperial College London; University of Chinese Academy of Sciences; Tsinghua University; University of Edinburgh; University of British Columbia; University of California, Santa Cruz;	China; United States; Unknown; Poland; ; United Kingdom; Canada
+Stop Reasoning! When Multimodal LLM with Chain-of-Thought Reasoning Meets Adversarial Image
+-	Zefeng Wang; Zhen Han; Shuo Chen; Fan Xue; Zifeng Ding; Xun Xiao; Volker Tresp; Philip Torr; Jindong Gu;	Technische Universität München; Amazon; Ludwig-Maximilians-Universität München; Ludwig Maximilian University of Munich; Huawei; Siemens AG; University of Oxford;	Germany; United States; China; United Kingdom
+CULTURE-GEN: Revealing Global Cultural Perception in Language Models through Natural Language Prompting
+-	Huihan Li; Liwei Jiang; Nouha Dziri; Xiang Ren; Yejin Choi;	University of Southern California; University of Washington;	United States
+Prompt Exploration with Prompt Regression
+-	Michael Feffer; Ronald Xu; Yuekai Sun; Mikhail Yurochkin;	Spotify; Massachusetts Institute of Technology; University of Michigan; IBM;	Sweden; United States
+Quiet-STaR: Language Models Can Teach Themselves to Think Before Speaking
+-	Eric Zelikman; Georges Raif Harik; Yijia Shao; Varuna Jayasiri; Nick Haber; Noah Goodman;	Stanford University;	United States
+Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation
+-	Eric Zelikman; Eliana Lorch; Lester Mackey; Adam Tauman Kalai;	Stanford University; Microsoft;	United States
+SKVQ: Sliding-window Key and Value Cache Quantization for Large Language Models
+-	Haojie Duanmu; Zhihang Yuan; Xiuhong Li; Jiangfei Duan; Xingcheng ZHANG; Dahua Lin;	Shanghai Jiao Tong University; Houmo AI; Peking University; Chinese University of Hong Kong; SenseTime;	China
+Starling-7B: Improving Helpfulness and Harmlessness with RLAIF
+-	Banghua Zhu; Evan Frick; Tianhao Wu; Hanlin Zhu; Karthik Ganesan; Wei-Lin Chiang; Jian Zhang; Jiantao Jiao;	University of California, Berkeley; Nexusflow; SambaNova Systems;	United States; 
+Transformer Circuit Evaluation Metrics Are Not Robust
+-	Joseph Miller; Bilal Chughtai; William Saunders;	ML Alignment & Theory Scholars; OpenAI;	; United States
+From $r$ to $Q^*$: Your Language Model is Secretly a Q-Function
+-	Rafael Rafailov; Joey Hejna; Ryan Park; Chelsea Finn;	Stanford University; Google;	United States
+PRobELM: Plausibility Ranking Evaluation for Language Models
+-	Moy Yuan; Eric Chamoun; Rami Aly; Chenxi Whitehouse; Andreas Vlachos;	University of Cambridge; Amazon;	United Kingdom; United States
+An Incomplete Loop: Instruction Inference, Instruction Following, and In-Context Learning in Language Models
+-	Emmy Liu; Graham Neubig; Jacob Andreas;	Carnegie Mellon University; Microsoft;	United States
+Negative Preference Optimization: From Catastrophic Collapse to Effective Unlearning
+-	Ruiqi Zhang; Licong Lin; Yu Bai; Song Mei;	University of California, Berkeley; Salesforce;	United States
+MambaByte: Token-free Selective State Space Model
+-	Junxiong Wang; Tushaar Gangavarapu; Jing Nathan Yan; Alexander M Rush;	Cornell University; Harvard University;	United States
+Unified View of Grokking, Double Descent and Emergent Abilities: A Comprehensive Study on Algorithm Task
+-	Yufei Huang; Shengding Hu; Xu Han; Zhiyuan Liu; Maosong Sun;	Tsinghua University;	China
+List Items One by One: A New Data Source and Learning Paradigm for Multimodal LLMs
+-	An Yan; Zhengyuan Yang; Junda Wu; Wanrong Zhu; Jianwei Yang; Linjie Li; Kevin Lin; Jianfeng Wang; Julian McAuley; Jianfeng Gao; Lijuan Wang;	University of California, San Diego; Microsoft;	United States
+Talk Less, Interact Better: Evaluating In-context Conversational Adaptation in Multimodal LLMs
 -	Yilun Hua; Yoav Artzi;			Poster	4
-70	Are Language Models Robust Coreference Resolvers?
--	Nghia T. Le; Alan Ritter;	Georgia Institute of Technology;	United States;	Poster	0
-71	BumbleBee: Dynamic KV-Cache Streaming Submodular Summarization for Infinite-Context Transformers
--	Lilly Kumari; Shengjie Wang; Tianyi Zhou; Nikhil Sarda; Anthony Rowe; Jeff Bilmes;	University of Washington; New York University; University of Maryland; Google; Carnegie Mellon University;	United States;	Poster	1
-72	Can It Edit? Evaluating the Ability of Large Language Models to Follow Code Editing Instructions
--	Federico Cassano; Luisa Li; Akul Sethi; Noah Shinn; Abby Brennan-Jones; Jacob Ginesin; Edward Berman; George Chakhnashvili; Anton Lozhkov; Carolyn Jane Anderson; Arjun Guha;	Northeastern University; Wellesley College; Hugging Face; Roblox Corporation;	United States;	Poster	23
-73	HDT: Hierarchical Document Transformer
--	Haoyu He; Markus Flicke; Jan Buchmann; Iryna Gurevych; Andreas Geiger;	Eberhard Karls University of Tübingen; Technische Universität Darmstadt; University of Tuebingen;	Germany;	Poster	1
-74	Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking
--	Jacob Eisenstein; Chirag Nagpal; Alekh Agarwal; Ahmad Beirami; Alexander Nicholas D'Amour; Krishnamurthy Dj Dvijotham; Adam Fisch; Katherine A Heller; Stephen Robert Pfohl; Deepak Ramachandran; Peter Shaw; Jonathan Berant;	Google; Massachusetts Institute of Technology; Tel Aviv University;	United States; United Kingdom; Israel;	Poster	79
-75	Is ChatGPT a Good Sentiment Analyzer?
--	Zengzhi Wang; Qiming Xie; Yi Feng; Zixiang Ding; Zinong Yang; Rui Xia;	Nanjing University of Science and Technology;	China;	Poster	34
-76	Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice Selectors than You Think
--	Xinpeng Wang; Chengzhi Hu; Bolei Ma; Paul Rottger; Barbara Plank;	Ludwig-Maximilians-Universität München; Bocconi University; IT University of Copenhagen;	Germany; Italy; Denmark;	Poster	12
-77	ORAG: Ontology-Guided Retrieval-Augmented Generation for Theme-Specific Entity Typing
--	Jinfeng Xiao; Linyi Ding; James Barry; Mohab Elkaref; Geeth De Mel; Jiawei Han;	University of Illinois Urbana-Champaign; International Business Machines Corporation;	United States;	Poster	0
-78	V-STaR: Training Verifiers for Self-Taught Reasoners
--	Arian Hosseini; Xingdi Yuan; Nikolay Malkin; Aaron Courville; Alessandro Sordoni; Rishabh Agarwal;	University of Montreal; Université de Montréal; Google;	Canada; United Kingdom;	Poster	110
-79	Agent-DocEdit: Language-Instructed LLM Agent for Content-Rich Document Editing
--	Te-Lin Wu; Rajiv Jain; Yufan Zhou; Puneet Mathur; Vlad I Morariu;	University of California, Los Angeles; Adobe; University of Maryland;	United States;	Poster	1
-80	Aligning with Human Judgement: The Role of Pairwise Preference in Large Language Model Evaluators
--	Yinhong Liu; Han Zhou; Zhijiang Guo; Ehsan Shareghi; Ivan Vulić; Anna Korhonen; Nigel Collier;	University of Cambridge; Google; Monash University; PolyAI Limited;	United Kingdom; United States; Australia;	Poster	66
-81	Do Membership Inference Attacks Work on Large Language Models?
--	Michael Duan; Anshuman Suri; Niloofar Mireshghallah; Sewon Min; Weijia Shi; Luke Zettlemoyer; Yulia Tsvetkov; Yejin Choi; David Evans; Hannaneh Hajishirzi;	University of Washington; University of Virginia; Meta;	United States;	Poster	63
-82	Multi-hop Question Answering under Temporal Knowledge Editing
--	Keyuan Cheng; Gang Lin; Haoyang Fei; Yuxuan Zhai; Lu Yu; Muhammad Asif Ali; Lijie Hu; Di Wang;	South China University of Technology; Ant Group; King Abdullah University of Science and Technology;	China; Saudi Arabia;	Poster	20
-83	Reasoning about concepts with LLMs: Inconsistencies abound
--	Rosario Uceda Sosa; Karthikeyan Natesan Ramamurthy; Maria Chang; Moninder Singh;	International Business Machines Corporation;	United States;	Poster	3
-84	Stream of Search (SoS): Learning to Search in Language
--	Kanishk Gandhi; Denise H J Lee; Gabriel Grand; Muxin Liu; Winson Cheng; Archit Sharma; Noah Goodman;	Stanford University; Massachusetts Institute of Technology; Harvey Mudd College;	United States;	Poster	49
-85	Understanding Retrieval Augmentation for Long-Form Question Answering
--	Hung-Ting Chen; Fangyuan Xu; Shane Arora; Eunsol Choi;	University of Texas at Austin;	United States;	Poster	32
-86	Counting Like Transformers: Compiling Temporal Counting Logic Into Softmax Transformers
--	Andy Yang; David Chiang;	University of Notre Dame;	United States;	Poster	13
-87	Exploiting the Potential of Seq2Seq Models as Robust Few-Shot Learners
--	Jihyeon Lee; Dain Kim; Doohae Jung; Boseop Kim; Kyoung-Woon On;	KakaoBrain; Kakao Brain; Sogang University; Kakao Corp.;	South Korea;	Poster	0
-88	Impact of Preference Noise on the Alignment Performance of Generative Language Models
--	Yang Gao; Dana Alon; Donald Metzler;	Google;	United States;	Poster	12
-89	MANGO: A Benchmark for Evaluating Mapping and Navigation Abilities of Large Language Models
--	Peng Ding; Jiading Fang; Peng Li; Kangrui Wang; Xiaochen Zhou; Mo Yu; Jing Li; Hongyuan Mei; Matthew Walter;	Toyota Technological Institute at Chicago; Fudan University; Northwestern University; Tencent;	United States; China;	Poster	5
-90	Risks from Language Models for Automated Mental Healthcare: Ethics and Structure for Implementation
--	Declan Grabb; Max Lamparth; Nina Vasan;	Stanford University;	United States;	Poster	12
-91	TarGEN: Targeted Data Generation with Large Language Models
--	Himanshu Gupta; Kevin Scaria; Ujjwala Anantheswaran; Shreyas Verma; Mihir Parmar; Saurabh Arjun Sawant; Chitta Baral; Swaroop Mishra;	Amazon; Simplr AI; Arizona State University; Google;	United States;	Poster	33
-92	What is in Your Safe Data? Identifying Benign Data that Breaks Safety
--	Luxi He; Mengzhou Xia; Peter Henderson;	Princeton University;	United States;	Poster	38
-93	JailBreakV: A Benchmark for Assessing the Robustness of MultiModal Large Language Models against Jailbreak Attacks
--	Weidi Luo; Siyuan Ma; Xiaogeng Liu; Xiaoyu Guo; Chaowei Xiao;	Ohio State University; Peking University; University of Wisconsin-Madison; NVIDIA;	United States; China;	Poster	15
-94	Elephants Never Forget: Memorization and Learning of Tabular Data in Large Language Models
--	Sebastian Bordt; Harsha Nori; Vanessa Cristiny Rodrigues Vasconcelos; Besmira Nushi; Rich Caruana;	Eberhard Karls University of Tübingen; Microsoft;	Germany; United States;	Poster	24
-95	LITE: Modeling Environmental Ecosystems with Multimodal Large Language Models
--	Haoran Li; Junqi Liu; Zexian Wang; Shiyuan Luo; Xiaowei Jia; Huaxiu Yao;	Hong Kong Polytechnic University; University of Pittsburgh; University of North Carolina at Chapel Hill;	China; United States;	Poster	7
-96	ACORN: Aspect-wise Commonsense Reasoning Explanation Evaluation
--	Ana Brassard; Benjamin Heinzerling; Keito Kudo; Keisuke Sakaguchi; Kentaro Inui;	Tohoku University; RIKEN;	Japan;	Poster	0
-97	Autonomous Evaluation and Refinement of Digital Agents
--	Jiayi Pan; Yichi Zhang; Nicholas Tomlin; Yifei Zhou; Sergey Levine; Alane Suhr;	University of California, Berkeley; University of Michigan; Google;	United States;	Poster	67
-98	CHOPS: CHat with custOmer Profile Systems for Customer Service with LLMs
--	Jingzhe Shi; Jialuo Li; Qinwei Ma; Zaiwen Yang; Huan Ma; Lei Li;	Tsinghua University; University of Copenhagen;	China; Denmark;	Poster	7
-99	Does Incomplete Syntax Influence Korean Language Model? Focusing on Word Order and Case Markers
--	Jong Myoung Kim; Young-Jun Lee; Yong-Jin Han; Ho-Jin Choi; Sangkeun Jung;	SK Telecom; Korea Advanced Institute of Science and Technology;	South Korea;	Poster	3
-100	Does In-Context Learning Really Learn? Rethinking How Large Language Models Respond and Solve Tasks via In-Context Learning
--	Quanyu Long; Yin Wu; Wenya Wang; Sinno Jialin Pan;	Nanyang Technological University;	Singapore;	Poster	1
-101	How Multilingual are Large Language Models Fine-tuned for Translation?
--	Aquia Richburg; Marine Carpuat;	University of Maryland;	United States;	Poster	3
-102	Learning to Plan for Language Modeling from Unlabeled Data
--	Nathan Cornille; Marie-Francine Moens; Florian Mai;	Katholieke Universiteit Leuven; KU Leuven;	Belgium;	Poster	8
-103	Scattered Mixture-of-Experts Implementation
--	Shawn Tan; Yikang Shen; Rameswar Panda; Aaron Courville;	Université de Montréal; International Business Machines Corporation; Massachusetts Institute of Technology;	Canada; United States;	Poster	18
-104	TriForce: Lossless Acceleration of Long Sequence Generation with Hierarchical Speculative Decoding
--	Hanshi Sun; Zhuoming Chen; Xinyu Yang; Yuandong Tian; Beidi Chen;	Carnegie Mellon University; Meta;	United States;	Poster	43
-105	Do Language Models Plan Ahead for Future Tokens?
--	Wilson Wu; John Xavier Morris; Lionel Levine;	University of Colorado; Cornell University;	United States;	Poster	15
-106	TMMLU+: An Improved Traditional Chinese Evaluation Suite for Foundation Models
--	Zhi Rui Tam; Ya Ting Pai; Yen-Wei Lee; Hong-Han Shuai; Jun-Da Chen; Wei Min Chu; Sega Cheng;	Appier; National Yang Ming Chiao Tung University; iKala Interactive Media Inc.; National Taiwan University; Stanford University; University of Illinois Urbana-Champaign;	China; United States;	Poster	3
-107	A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration
--	Zijun Liu; Yanzhe Zhang; Peng Li; Yang Liu; Diyi Yang;	Tsinghua University; Georgia Institute of Technology; Stanford University;	China; United States;	Poster	42
-108	SteP: Stacked LLM Policies for Web Actions
--	Paloma Sodhi; S.R.K Branavan; Yoav Artzi; Ryan McDonald;	ASAPP;	United States;	Poster	25
-109	Compression Represents Intelligence Linearly
--	Yuzhen Huang; Jinghan Zhang; Zifei Shan; Junxian He;	Hong Kong University of Science and Technology; Tencent;	China;	Poster	36
-110	Building a Large Japanese Web Corpus for Large Language Models
--	Naoaki Okazaki; Kakeru Hattori; Hirai Shota; Hiroki Iida; Masanari Ohi; Kazuki Fujii; Taishi Nakamura; Mengsay Loem; Rio Yokota; Sakae Mizuki;	Tokyo Institute of Technology; Institute of Science, Tokyo; National Institute of Advanced Industrial Science and Technology;	Japan;	Poster	11
-111	Crowd-Calibrator: Can Annotator Disagreement Inform Calibration in Subjective Tasks?
--	Urja Khurana; Eric Nalisnick; Antske Fokkens; Swabha Swayamdipta;	Vrije Universiteit Amsterdam; University of Amsterdam; VU University Amsterdam; University of Southern California;	Netherlands; United States;	Poster	7
-112	Khayyam Challenge (PersianMMLU): Is Your LLM Truly Wise to The Persian Language?
--	Omid Ghahroodi; Marzia Nouri; Mohammad Vali Sanian; Alireza Sahebi; Doratossadat Dastgheib; Ehsaneddin Asgari; Mahdieh Soleymani Baghshah; Mohammad Hossein Rohban;	Sharif University of Technology; University of Helsinki; Motamed Cancer Institute; Shahid Beheshti University; University of California, Berkeley;	Iran; Finland; United States;	Poster	16
-113	LLM Discussion: Enhancing the Creativity of Large Language Models via Discussion Framework and Role-Play
--	Li-Chun Lu; Shou-Jen Chen; Tsung-Min Pai; Chan-Hung Yu; Hung-yi Lee; Shao-Hua Sun;	National Taiwan University; Academia Sinica;	China;	Poster	39
-114	Does your data spark joy? Performance gains from domain upsampling at the end of training
--	Cody Blakeney; Mansheej Paul; Brett W. Larsen; Sean Owen; Jonathan Frankle;	MosaicML; Databricks;	United States;	Poster	13
-115	Learning From Correctness Without Prompting Makes LLM Efficient Reasoner
--	Yuxuan YAO; Han Wu; Zhijiang Guo; Zhou Biyan; Jiahui Gao; Sichun Luo; Hanxu Hou; Xiaojin Fu; Linqi Song;	City University of Hong Kong; Huawei; University of Cambridge; Dongguan University of Technology;	China; United Kingdom;	Poster	11
-116	LoraHub: Efficient Cross-Task Generalization via Dynamic LoRA Composition
--	Chengsong Huang; Qian Liu; Bill Yuchen Lin; Tianyu Pang; Chao Du; Min Lin;	Washington University in St. Louis; TikTok; Allen Institute for Artificial Intelligence; Sea AI Lab;	United States; China; ;	Poster	207
-117	Massive Activations in Large Language Models
--	Mingjie Sun; Xinlei Chen; J Zico Kolter; Zhuang Liu;	Carnegie Mellon University; Meta;	United States;	Poster	201
-118	Resolving Knowledge Conflicts in Large Language Models
--	Yike Wang; Shangbin Feng; Heng Wang; Weijia Shi; Vidhisha Balachandran; Tianxing He; Yulia Tsvetkov;	University of California, Berkeley; University of Washington; Xi'an Jiao Tong University; Carnegie Mellon University;	United States; China;	Poster	37
-119	TOFU: A Task of Fictitious Unlearning for LLMs
--	Pratyush Maini; Zhili Feng; Avi Schwarzschild; Zachary Chase Lipton; J Zico Kolter;	Carnegie Mellon University; Microsoft;	United States;	Poster	49
-120	Best Practices and Lessons Learned on Synthetic Data
--	Ruibo Liu; Jerry Wei; Fangyu Liu; Chenglei Si; Yanzhe Zhang; Jinmeng Rao; Steven Zheng; Daiyi Peng; Diyi Yang; Denny Zhou; Andrew M. Dai;	Google; Stanford University; Georgia Institute of Technology;	United Kingdom; United States;	Poster	48
-121	Can MLLMs Perform Text-to-Image In-Context Learning?
--	Yuchen Zeng; Wonjun Kang; Yicong Chen; Hyung Il Koo; Kangwook Lee;	Microsoft; Furiosa AI; KRAFTON Inc.;	United States; South Korea;	Poster	9
-122	How Well Do LLMs Identify Cultural Unity in Diversity?
--	Jialin Li; Junli Wang; Junjie Hu; Ming Jiang;	Tongji University;	China;	Poster	7
-123	InstructAV: Instruction Fine-tuning Large Language Models for Authorship Verification
--	Yujia Hu; Zhiqiang Hu; Chun Wei Seah; Roy Ka-Wei Lee;	Singapore University of Technology and Design; DSO;	Singapore; ;	Poster	1
-124	Latent Causal Probing: A Formal Perspective on Probing with Causal Models of Data
--	Charles Jin;	Massachusetts Institute of Technology;	United States;	Poster	1
-125	LLM Reasoners: New Evaluation, Library, and Analysis of Step-by-Step Reasoning with Large Language Models
--	Shibo Hao; Yi Gu; Haotian Luo; Tianyang Liu; Xiyan Shao; Xinyuan Wang; Shuhua Xie; Haodi Ma; Adithya Samavedhi; Qiyue Gao; Zhen Wang; Zhiting Hu;	Meta; University of California, San Diego; Shanghai Jiao Tong University; University of Florida; Amazon;	United States; China;	Poster	56
-126	LLM4Causal: Democratized Causal Tools for Everyone via Large Language Model
--	Haitao Jiang; Lin Ge; Yuhe Gao; Jianian Wang; Rui Song;	North Carolina State University;	United States;	Poster	2
-127	Long-Form Answers to Visual Questions from Blind and Low Vision People
--	Mina Huh; Fangyuan Xu; Yi-Hao Peng; Chongyan Chen; Hansika Murugu; Danna Gurari; Eunsol Choi; Amy Pavel;	University of Texas at Austin; Carnegie Mellon University; Hong Kong University of Science and Technology; University of Colorado;	United States; China;	Poster	8
-128	Model Autophagy Analysis to Explicate Self-consumption within Human-AI Interactions
--	Shu Yang; Muhammad Asif Ali; Lu Yu; Lijie Hu; Di Wang;	University of Macau; King Abdullah University of Science and Technology; Ant Group;	China; Saudi Arabia;	Poster	2
-129	O3D: Offline Data-driven Discovery and Distillation for Sequential Decision-Making with Large Language Models
--	Yuchen Xiao; Yanchao Sun; Mengda Xu; Udari Madhushani Sehwag; Jared Vann; Deepeka Garg; Sumitra Ganesh;	JPMorgan Chase & Co.; J.P. Morgan; Columbia University;	United States;	Poster	3
-130	ProLLM: Protein Chain-of-Thoughts Enhanced LLM for Protein-Protein Interaction Prediction
--	Mingyu Jin; Haochen Xue; Zhenting Wang; Boming Kang; Ruosong Ye; Kaixiong Zhou; Mengnan Du; Yongfeng Zhang;	Northwestern University; Sony; Beijing Medical University; Rutgers University; Massachusetts Institute of Technology; New Jersey Institute of Technology;	United States; Japan; China;	Poster	9
-131	Task Success is not Enough: Investigating the Use of Video-Language Models as Behavior Critics for Catching Undesirable Agent Behaviors
--	Lin Guan; Yifan Zhou; Denis Liu; Yantian Zha; Heni Ben Amor; Subbarao Kambhampati;	Arizona State University; University of Maryland;	United States;	Poster	16
-132	Trust No Bot: Discovering Personal Disclosures in Human-LLM Conversations in the Wild
--	Niloofar Mireshghallah; Maria Antoniak; Yash More; Yejin Choi; Golnoosh Farnadi;	Allen Institute for Artificial Intelligence; University of Montreal; University of Washington; McGill University;	United States; Canada;	Poster	24
-133	UniMem: Towards a Unified View of Long-Context Large Language Models
--	Junjie Fang; Likai Tang; Hongzhe Bi; Yujia Qin; Si Sun; Zhenyu Li; Haolun Li; Yongjian Li; Xin Cong; Yankai Lin; Yukun Yan; Xiaodong Shi; Sen Song; Zhiyuan Liu; Maosong Sun;	Xiamen University; Tsinghua University; Renmin University of China; Beijing University of Posts and Telecommunications;	China;	Poster	3
-134	What Are Tools Anyway? A Survey from the Language Model Perspective
--	Zhiruo Wang; Zhoujun Cheng; Hao Zhu; Daniel Fried; Graham Neubig;	Carnegie Mellon University; Shanghai Jiao Tong University;	United States; China;	Poster	28
-135	Characterizing Multimodal Long-form Summarization: A Case Study on Financial Reports
--	Tianyu Cao; Natraj Raman; Danial Dervovic; Chenhao Tan;	Zhejiang University; JPMorgan Chase & Co.; University of Chicago;	China; United States;	Poster	4
-136	DeStein: Navigating Detoxification of Language Models via Universal Steering Pairs and Head-wise Activation Fusion
--	Yu Li; Han Jiang; Chuanyang Gong; Zhihua Wei;	Tongji University;	China;	Poster	2
-137	Do Large Language Models Have Compositional Ability? An Investigation into Limitations and Scalability
--	Zhuoyan Xu; Zhenmei Shi; Yingyu Liang;	University of Wisconsin-Madison;	United States;	Poster	46
-138	Efficient Parallelization Layouts for Large-Scale Distributed Model Training
--	Johannes Hagemann; Samuel Weinbach; Konstantin Dobler; Maximilian Schall; Gerard de Melo;	Prime Intellect; Aleph Alpha; InstaDeep; Hasso Plattner Institute; University of Potsdam;	; Germany; United Kingdom;	Poster	5
-139	Is Model Collapse Inevitable? Breaking the Curse of Recursion by Accumulating Real and Synthetic Data
--	Matthias Gerstgrasser; Rylan Schaeffer; Apratim Dey; Rafael Rafailov; Tomasz Korbak; Henry Sleight; Rajashree Agrawal; John Hughes; Dhruv Bhandarkar Pai; Andrey Gromov; Dan Roberts; Diyi Yang; David L. Donoho; Sanmi Koyejo;	Harvard University; Meta; Stanford University; Anthropic; MATS Program; Reed College; Speechmatics; University of Maryland; Sequoia Capital; Google;	United States; ; United Kingdom;	Poster	70
-140	NoFunEval: Funny How Code LMs Falter on Requirements Beyond Functional Correctness
--	Manav Singhal; Tushar Aggarwal; Abhijeet Awasthi; Nagarajan Natarajan; Aditya Kanade;	Microsoft;	United States;	Poster	14
-141	Pairwise Proximal Policy Optimization: Language Model Alignment with Comparative RL
--	Tianhao Wu; Banghua Zhu; Ruoyu Zhang; Zhaojin Wen; Kannan Ramchandran; Jiantao Jiao;	University of California, Berkeley; Peking University;	United States; China;	Poster	3
-142	SPEER: Sentence-Level Planning of Long Clinical Summaries via Embedded Entity Retrieval
--	Griffin Thomas Adams; Jason Zucker; Noémie Elhadad;	Columbia University;	United States;	Poster	4
-143	StateFlow: Enhancing LLM Task-Solving through State-Driven Workflows
--	Yiran Wu; Tianwei Yue; Shaokun Zhang; Chi Wang; Qingyun Wu;	Pennsylvania State University; Mathos AI; Microsoft;	United States; ;	Poster	26
-144	StyleTalker: Finetuning Audio Language Model and Style-Based Text-to-Speech Model for Fast Spoken Dialogue Generation
--	Yinghao Aaron Li; Xilin Jiang; Jordan Darefsky; Ge Zhu; Nima Mesgarani;	Columbia University; University of Rochester;	United States;	Poster	7
-145	Training Language Models on the Knowledge Graph: Insights on Hallucinations and Their Detectability
--	Jiri Hron; Laura A Culp; Gamaleldin Fathy Elsayed; Rosanne Liu; Jasper Snoek; Simon Kornblith; Alex Rizkowsky; Isabelle Simpson; Jascha Sohl-Dickstein; Noah Fiedel; Aaron T Parisi; Alexander A Alemi; Azade Nova; Ben Adlam; Bernd Bohnet; Gaurav Mishra; Hanie Sedghi; Izzeddin Gur; Jaehoon Lee; John D Co-Reyes; Kathleen Kenealy; Kelvin Xu; Kevin Swersky; Igor Mordatch; Lechao Xiao; Maxwell Bileschi; Peter J Liu; Roman Novak; Sharad Vikram; Tris Warkentin; Jeffrey Pennington;	Google; ML Collective; Anthropic; University of California, Berkeley; DeepMind; OpenAI;	United States; ; United Kingdom;	Poster	3
-146	CATS: Context-Aware Thresholding for Sparsity in Large Language Models
--	Donghyun Lee; Jaeyong Lee; Genghan Zhang; Mo Tiwari; Azalia Mirhoseini;	University College London; University of Oxford; NVIDIA; OpenAI;	United Kingdom; United States;	Poster	2
-147	CTIKG: LLM-Powered Knowledge Graph Construction from Cyber Threat Intelligence
--	Liangyi Huang; Xusheng Xiao;	Arizona State University;	United States;	Poster	8
-148	Data Checklist: On Unit-Testing Datasets with Usable Information
--	Heidi Chenyu Zhang; Shabnam Behzad; Kawin Ethayarajh; Dan Jurafsky;	Stanford University;	United States;	Poster	0
-149	LLM economicus? Mapping the Behavioral Biases of LLMs via Utility Theory
--	Jillian Ross; Yoon Kim; Andrew Lo;	Massachusetts Institute of Technology;	United States;	Poster	18
-150	Locating and Editing Factual Associations in Mamba
--	Arnab Sen Sharma; David Atkinson; David Bau;	Northeastern University;	United States;	Poster	27
-151	Mapping the Increasing Use of LLMs in Scientific Papers
--	Weixin Liang; Yaohui Zhang; Zhengxuan Wu; Haley Lepp; Wenlong Ji; Xuandong Zhao; Hancheng Cao; Sheng Liu; Siyu He; Zhi Huang; Diyi Yang; Christopher Potts; Christopher D Manning; James Y. Zou;	Stanford University; University of California, Santa Barbara;	United States;	Poster	97
-152	Pack of LLMs: Model Fusion at Test-Time via Perplexity Optimization
--	Costas Mavromatis; Petros Karypis; George Karypis;	University of Minnesota; University of California, San Diego;	United States;	Poster	24
-153	Don't throw away your value model! Generating more preferable text with Value-Guided Monte-Carlo Tree Search decoding
--	Jiacheng Liu; Andrew Cohen; Ramakanth Pasunuru; Yejin Choi; Hannaneh Hajishirzi; Asli Celikyilmaz;	Meta; University of Washington;	United States;	Poster	23
-154	Eliciting Latent Knowledge from "Quirky" Language Models
--	Alex Troy Mallen; Madeline Brumley; Julia Kharchenko; Nora Belrose;	Redwood Research; University of Washington; EleutherAI;	United States;	Poster	20
-155	Helmsman of the Masses? Evaluate the Opinion Leadership of Large Language Models in the Werewolf Game
--	Silin Du; Xiaowei Zhang;	Tsinghua University;	China;	Poster	5
-156	NeMo-Aligner: Scalable Toolkit for Efficient Model Alignment
--	Gerald Shen; Zhilin Wang; Olivier Delalleau; Jiaqi Zeng; Yi Dong; Daniel Egert; Shengyang Sun; Jimmy J. Zhang; Sahil Jain; Ali Taghibakhshi; Markel Sanz Ausin; Ashwath Aithal; Oleksii Kuchaiev;	NVIDIA; Stanford University;	United States;	Poster	9
-157	Unforgettable Generalization in Language Models
--	Eric Zhang; Leshem Choshen; Jacob Andreas;	Massachusetts Institute of Technology; International Business Machines Corporation; Microsoft;	United States;	Poster	1
-158	The N+ Implementation Details of RLHF with PPO: A Case Study on TL;DR Summarization
--	Shengyi Huang; Michael Noukhovitch; Arian Hosseini; Kashif Rasul; Weixun Wang; Lewis Tunstall;	Hugging Face; University of Montreal; Zalando SE;	United States; Canada; Germany;	Poster	31
-159	RAVEN: In-Context Learning with Retrieval-Augmented Encoder-Decoder Language Models
--	Jie Huang; Wei Ping; Peng Xu; Mohammad Shoeybi; Kevin Chang; Bryan Catanzaro;	University of Illinois Urbana-Champaign; NVIDIA;	United States;	Poster	47
-160	Crystal: Illuminating LLM Abilities on Language and Code
--	Tianhua Tao; Junbo Li; Bowen Tan; Hongyi Wang; William Marshall; Bhargav M Kanakiya; Joel Hestness; Natalia Vassilieva; Zhiqiang Shen; Eric P. Xing; Zhengzhong Liu;	University of Illinois Urbana-Champaign; Mohamed bin Zayed University of Artificial Intelligence; Carnegie Mellon University; Cerebras Systems;	United States; United Arab Emirates;	Poster	6
-161	Timo: Towards Better Temporal Reasoning for Language Models
--	Zhaochen Su; Jun Zhang; Tong Zhu; Xiaoye Qu; Juntao Li; Min zhang; Yu Cheng;	Soochow University; Shanghai Artificial Intelligence Laboratory; Harbin Institute of Technology; Chinese University of Hong Kong;	China;	Poster	21
-162	AmpleGCG: Learning a Universal and Transferable Generative Model of Adversarial Suffixes for Jailbreaking Both Open and Closed LLMs
--	Zeyi Liao; Huan Sun;	Ohio State University;	United States;	Poster	89
-163	Ferret-v2: An Improved Baseline for Referring and Grounding with Large Language Models
--	Haotian Zhang; Haoxuan You; Philipp Dufter; Bowen Zhang; Chen Chen; Hong-You Chen; Tsu-Jui Fu; William Yang Wang; Shih-Fu Chang; Zhe Gan; Yinfei Yang;	Apple; Columbia University; University of California, Santa Barbara;	United States;	Poster	8
-164	LlaSMol: Advancing Large Language Models for Chemistry with a Large-Scale, Comprehensive, High-Quality Instruction Tuning Dataset
--	Botao Yu; Frazier N. Baker; Ziqi Chen; Xia Ning; Huan Sun;	Ohio State University;	United States;	Poster	52
-165	SynerGPT: In-Context Learning for Personalized Drug Synergy Prediction and Drug Design
--	Carl Edwards; Aakanksha Naik; Tushar Khot; Martin D. Burke; Heng Ji; Tom Hope;	Genentech; National Institutes of Health; Allen Institute for Artificial Intelligence; University of Illinois Urbana-Champaign; University of Illinois;	United States;	Poster	27
-166	ChatGPT Based Data Augmentation for Improved Parameter-Efficient Debiasing of LLMs
--	Pengrui Han; Rafal Dariusz Kocielnik; Adhithya Prakash Saravanan; Roy Luoyao Jiang; Or Sharir; Anima Anandkumar;	Carleton College; California Institute of Technology; University of Cambridge;	United States; United Kingdom;	Poster	10
-167	CoCA: Regaining Safety-awareness of Multimodal Large Language Models with Constitutional Calibration
--	Jiahui Gao; Renjie Pi; Tianyang Han; Han Wu; Lanqing HONG; Lingpeng Kong; Xin Jiang; Zhenguo Li;	Hong Kong University of Science and Technology; Hong Kong Polytechnic University; Huawei; University of Hong Kong;	China;	Poster	2
-168	Handling Open-Vocabulary Constructs in Formalizing Specifications: Retrieval Augmented Parsing with Expert Knowledge
--	Mohammad Saqib Hasan; Sayontan Ghosh; Dhruv Verma; Geoff Kuenning; Erez Zadok; Scott Smolka; Niranjan Balasubramanian;	State University of New York at Stony Brook; Stony Brook University; Harvey Mudd College; State University of New York;	United States;	Poster	0
-169	Mind the Privacy Unit! User-Level Differential Privacy for Language Model Fine-Tuning
--	Lynn Chua; Badih Ghazi; Yangsibo Huang; Pritish Kamath; Ravi Kumar; Daogao Liu; Pasin Manurangsi; Amer Sinha; Chiyuan Zhang;	Google; Princeton University; University of Washington;	United States;	Poster	13
-170	Reverse Training to Nurse the Reversal Curse
--	Olga Golovneva; Zeyuan Allen-Zhu; Jason E Weston; Sainbayar Sukhbaatar;	Meta;	United States;	Poster	30
-171	A Reparameterized Discrete Diffusion Model for Text Generation
--	Lin Zheng; Jianbo Yuan; Lei Yu; Lingpeng Kong;	University of Hong Kong; ByteDance; Google;	China; United Kingdom;	Poster	60
-172	CoLLEGe: Concept Embedding Generation for Large Language Models
--	Ryan Teehan; Brenden Lake; Mengye Ren;	New York University;	United States;	Poster	7
-173	How Susceptible are LLMs to Influence in Prompts?
--	Sotiris Anagnostidis; Jannis Bulian;	ETH Zurich; Google;	Switzerland; United Kingdom;	Poster	18
-174	Logits of API-Protected LLMs Leak Proprietary Information
--	Matthew Finlayson; Xiang Ren; Swabha Swayamdipta;	University of Southern California;	United States;	Poster	22
-175	ScenicNL: Generating Probabilistic Scenario Programs from Natural Language
--	Karim Elmaaroufi; Devan Shanker; Ana Cismaru; Marcell Vazquez-Chanlatte; Alberto Sangiovanni-Vincentelli; Matei Zaharia; Sanjit A. Seshia;	University of California, Berkeley; Nissan Motor Corporation; Databricks;	United States; Japan;	Poster	4
-176	EnvGen: Generating and Adapting Environments via LLMs for Training Embodied Agents
--	Abhay Zala; Jaemin Cho; Han Lin; Jaehong Yoon; Mohit Bansal;	University of North Carolina at Chapel Hill; University of North Carolina;	United States;	Poster	13
-177	How bad is training on synthetic data? A statistical analysis of language model collapse
--	Mohamed El Amine Seddik; Suei-Wen Chen; Soufiane Hayou; Pierre Youssef; Merouane Abdelkader DEBBAH;	Technology Innovation Institute; New York University; National University of Singapore; Khalifa University of Science, Technology and Research;	; United Arab Emirates; Singapore; United States;	Poster	25
-178	MultiHop-RAG: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries
--	Yixuan Tang; Yi Yang;	Hong Kong University of Science and Technology;	China;	Poster	93
-179	Chain-of-Symbol Prompting For Spatial Reasoning in Large Language Models
--	Hanxu Hu; Hongyuan Lu; Huajian Zhang; Yun-Ze Song; Wai Lam; Yue Zhang;	University of Edinburgh; Chinese University of Hong Kong; Westlake University;	United Kingdom; China;	Poster	6
-180	Linearizing Large Language Models
--	Jean Mercat; Igor Vasiljevic; Sedrick Scott Keh; Kushal Arora; Achal Dave; Adrien Gaidon; Thomas Kollar;	Toyota Research Institute; McGill University; Stanford University;	United States; Canada;	Poster	19
-181	Fakes of Varying Shades: How Warning Affects Human Perception and Engagement Regarding LLM Hallucinations
--	Mahjabin Nahar; Haeseung Seo; Eun-Ju Lee; Aiping Xiong; Dongwon Lee;	Pennsylvania State University; Seoul National University;	United States; South Korea;	Poster	14
-182	Forcing Diffuse Distributions out of Language Models
--	Yiming Zhang; Avi Schwarzschild; Nicholas Carlini; J Zico Kolter; Daphne Ippolito;	Carnegie Mellon University; Google;	United States;	Poster	4
-183	Measuring Taiwanese Mandarin Language Understanding
--	Po-Heng Chen; Sijia Cheng; Wei-Lin Chen; Yen-Ting Lin; Yun-Nung Chen;	National Taiwan University;	China;	Poster	4
-184	MileBench: Benchmarking MLLMs in Long Context
--	Song Dingjie; Shunian Chen; Guiming Hardy Chen; Fei Yu; Xiang Wan; Benyou Wang;	Chinese University of Hong Kong; Shenzhen Research Institute of Big Data;	China;	Poster	34
-185	Zephyr: Direct Distillation of LM Alignment
--	Lewis Tunstall; Edward Emanuel Beeching; Nathan Lambert; Nazneen Rajani; Kashif Rasul; Younes Belkada; Shengyi Huang; Leandro Von Werra; Clémentine Fourrier; Nathan Habib; Nathan Sarrazin; Omar Sanseviero; Alexander M Rush; Thomas Wolf;	Hugging Face; Allen Institute for Artificial Intelligence; Zalando SE; Delft University of Technology; Harvard University;	United States; Germany; Netherlands;	Poster	612
-186	"Merge Conflicts!'" Exploring the Impacts of External Knowledge Distractors to Parametric Knowledge Graphs
--	Cheng Qian; Xinran Zhao; Tongshuang Wu;	Carnegie Mellon University;	United States;	Poster	0
-187	AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models
--	Sicheng Zhu; Ruiyi Zhang; Bang An; Gang Wu; Joe Barrow; Zichao Wang; Furong Huang; Ani Nenkova; Tong Sun;	University of Maryland; Adobe;	United States;	Poster	60
-188	DiagrammerGPT: Generating Open-Domain, Open-Platform Diagrams via LLM Planning
--	Abhay Zala; Han Lin; Jaemin Cho; Mohit Bansal;	University of North Carolina at Chapel Hill; University of North Carolina;	United States;	Poster	11
-189	Evaluating Language Models for Efficient Code Generation
--	Jiawei Liu; Songrun Xie; Junhao Wang; Yuxiang Wei; Yifeng Ding; LINGMING ZHANG;	Amazon; Tongji University; Snowflake Inc.; University of Illinois Urbana-Champaign;	United States; China;	Poster	30
-190	Faithful and Unfaithful Error Recovery in Chain of Thought
--	Evelyn Yee; Alice Li; Chenyu Tang; Yeon Ho Jung; Ramamohan Paturi; Leon Bergen;	University of California, San Diego;	United States;	Poster	1
-191	Language Models as Critical Thinking Tools: A Case Study of Philosophers
--	Andre Ye; Jared Moore; Rose Novick; Amy X Zhang;	University of Washington; Unknown Institution;	United States; ;	Poster	10
-192	Lory: Fully Differentiable Mixture-of-Experts for Autoregressive Language Model Pre-training
--	Zexuan Zhong; Mengzhou Xia; Danqi Chen; Mike Lewis;	Princeton University; Meta;	United States;	Poster	23
-193	On Robustness-Accuracy Characterization of Language Models using Synthetic Datasets
--	Ching-Yun Ko; Pin-Yu Chen; Payel Das; Yung-Sung Chuang; Luca Daniel;	Massachusetts Institute of Technology; International Business Machines Corporation; International Business Machines;	United States;	Poster	6
-194	Rejection Improves Reliability: Training LLMs to Refuse Unknown Questions Using RL from Knowledge Feedback
--	Hongshen Xu; Zichen Zhu; Situo Zhang; Da Ma; Shuai Fan; Lu Chen; Kai Yu;	Shanghai Jiao Tong University; AISpeech Ltd;	China; ;	Poster	27
-195	Revenge of the Fallen? Recurrent Models Match Transformers at Predicting Human Language Comprehension Metrics
--	James Michaelov; Catherine Arnett; Ben Bergen;	University of California, San Diego;	United States;	Poster	5
-196	Suspicion Agent: Playing Imperfect Information Games with Theory of Mind Aware GPT-4
--	Jiaxian Guo; Bo Yang; Paul Yoo; Bill Yuchen Lin; Yusuke Iwasawa; Yutaka Matsuo;	Google; KDDI Research; University of Tokyo; Allen Institute for Artificial Intelligence;	United States; Japan;	Poster	38
-197	Web Retrieval Agents for Evidence-Based Misinformation Detection
--	Jacob-Junqi Tian; Hao Yu; Yury Orlovskiy; Tyler Vergho; Mauricio Rivera; Mayank Goel; Zachary Yang; Jean-François Godbout; Reihaneh Rabbany; Kellin Pelrine;	Quebec Artificial Intelligence Institute; University of California, Berkeley; Dartmouth College; International Institute of Information Technology, Hyderabad; McGill University; Université de Montréal; University of Montreal;	Canada; United States; India;	Poster	6
-198	Beyond Relevance: Evaluate and Improve Retrievers on Perspective Awareness
--	Xinran Zhao; Tong Chen; Sihao Chen; Hongming Zhang; Tongshuang Wu;	Carnegie Mellon University; University of Washington; University of Pennsylvania; Tencent;	United States;	Poster	10
-199	Efficient Hybrid Long Sequence Modeling with State Space Augmented Transformers
--	Simiao Zuo; Xiaodong Liu; Jian Jiao; Denis X Charles; Eren Manavoglu; Tuo Zhao; Jianfeng Gao;	Microsoft; Georgia Institute of Technology;	United States;	Poster	1
-200	LAMPO: Large Language Models as Preference Machines for Few-shot Ordinal Classification
--	Zhen Qin; Junru Wu; Jiaming Shen; Tianqi Liu; Xuanhui Wang;	DeepMind; Google;	United Kingdom; United States;	Poster	2
-201	LLM as a Mastermind: A Survey of Strategic Reasoning with Large Language Models
--	Yadong Zhang; Shaoguang Mao; Tao Ge; Xun Wang; Yan Xia; Wenshan Wu; Ting Song; Man Lan; Furu Wei;	East China Normal University; Microsoft; Tencent;	China; United States;	Poster	42
-202	Tabular Transfer Learning via Prompting LLMs
--	Jaehyun Nam; Woomin Song; Seong Hyeon Park; Jihoon Tack; Sukmin Yun; Jaehyung Kim; Kyu Hwan Oh; Jinwoo Shin;	Korea Advanced Institute of Science and Technology; Meta; Mohamed bin Zayed University of Artificial Intelligence; Carnegie Mellon University; Hyundai Motor Company;	South Korea; United States; United Arab Emirates;	Poster	4
-203	Why do small language models underperform? Studying Language Model Saturation via the Softmax Bottleneck
--	Nathan Godey; Éric Villemonte de la Clergerie; Benoît Sagot;	INRIA;	France;	Poster	2
-204	CALM : A Multi-task Benchmark for Comprehensive Assessment of Language Model Bias
--	Vipul Gupta; Pranav Narayanan Venkit; Hugo Laurençon; Shomir Wilson; Rebecca J. Passonneau;	Pennsylvania State University;	United States;	Poster	11
-205	Cookbook: A framework for improving LLM generative abilities via programmatic data generating templates
+Are Language Models Robust Coreference Resolvers?
+-	Nghia T. Le; Alan Ritter;	Georgia Institute of Technology;	United States
+BumbleBee: Dynamic KV-Cache Streaming Submodular Summarization for Infinite-Context Transformers
+-	Lilly Kumari; Shengjie Wang; Tianyi Zhou; Nikhil Sarda; Anthony Rowe; Jeff Bilmes;	University of Washington; New York University; University of Maryland; Google; Carnegie Mellon University;	United States
+Can It Edit? Evaluating the Ability of Large Language Models to Follow Code Editing Instructions
+-	Federico Cassano; Luisa Li; Akul Sethi; Noah Shinn; Abby Brennan-Jones; Jacob Ginesin; Edward Berman; George Chakhnashvili; Anton Lozhkov; Carolyn Jane Anderson; Arjun Guha;	Northeastern University; Wellesley College; Hugging Face; Roblox Corporation;	United States
+HDT: Hierarchical Document Transformer
+-	Haoyu He; Markus Flicke; Jan Buchmann; Iryna Gurevych; Andreas Geiger;	Eberhard Karls University of Tübingen; Technische Universität Darmstadt; University of Tuebingen;	Germany
+Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking
+-	Jacob Eisenstein; Chirag Nagpal; Alekh Agarwal; Ahmad Beirami; Alexander Nicholas D'Amour; Krishnamurthy Dj Dvijotham; Adam Fisch; Katherine A Heller; Stephen Robert Pfohl; Deepak Ramachandran; Peter Shaw; Jonathan Berant;	Google; Massachusetts Institute of Technology; Tel Aviv University;	United States; United Kingdom; Israel
+Is ChatGPT a Good Sentiment Analyzer?
+-	Zengzhi Wang; Qiming Xie; Yi Feng; Zixiang Ding; Zinong Yang; Rui Xia;	Nanjing University of Science and Technology;	China
+Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice Selectors than You Think
+-	Xinpeng Wang; Chengzhi Hu; Bolei Ma; Paul Rottger; Barbara Plank;	Ludwig-Maximilians-Universität München; Bocconi University; IT University of Copenhagen;	Germany; Italy; Denmark
+ORAG: Ontology-Guided Retrieval-Augmented Generation for Theme-Specific Entity Typing
+-	Jinfeng Xiao; Linyi Ding; James Barry; Mohab Elkaref; Geeth De Mel; Jiawei Han;	University of Illinois Urbana-Champaign; International Business Machines Corporation;	United States
+V-STaR: Training Verifiers for Self-Taught Reasoners
+-	Arian Hosseini; Xingdi Yuan; Nikolay Malkin; Aaron Courville; Alessandro Sordoni; Rishabh Agarwal;	University of Montreal; Université de Montréal; Google;	Canada; United Kingdom
+Agent-DocEdit: Language-Instructed LLM Agent for Content-Rich Document Editing
+-	Te-Lin Wu; Rajiv Jain; Yufan Zhou; Puneet Mathur; Vlad I Morariu;	University of California, Los Angeles; Adobe; University of Maryland;	United States
+Aligning with Human Judgement: The Role of Pairwise Preference in Large Language Model Evaluators
+-	Yinhong Liu; Han Zhou; Zhijiang Guo; Ehsan Shareghi; Ivan Vulić; Anna Korhonen; Nigel Collier;	University of Cambridge; Google; Monash University; PolyAI Limited;	United Kingdom; United States; Australia
+Do Membership Inference Attacks Work on Large Language Models?
+-	Michael Duan; Anshuman Suri; Niloofar Mireshghallah; Sewon Min; Weijia Shi; Luke Zettlemoyer; Yulia Tsvetkov; Yejin Choi; David Evans; Hannaneh Hajishirzi;	University of Washington; University of Virginia; Meta;	United States
+Multi-hop Question Answering under Temporal Knowledge Editing
+-	Keyuan Cheng; Gang Lin; Haoyang Fei; Yuxuan Zhai; Lu Yu; Muhammad Asif Ali; Lijie Hu; Di Wang;	South China University of Technology; Ant Group; King Abdullah University of Science and Technology;	China; Saudi Arabia
+Reasoning about concepts with LLMs: Inconsistencies abound
+-	Rosario Uceda Sosa; Karthikeyan Natesan Ramamurthy; Maria Chang; Moninder Singh;	International Business Machines Corporation;	United States
+Stream of Search (SoS): Learning to Search in Language
+-	Kanishk Gandhi; Denise H J Lee; Gabriel Grand; Muxin Liu; Winson Cheng; Archit Sharma; Noah Goodman;	Stanford University; Massachusetts Institute of Technology; Harvey Mudd College;	United States
+Understanding Retrieval Augmentation for Long-Form Question Answering
+-	Hung-Ting Chen; Fangyuan Xu; Shane Arora; Eunsol Choi;	University of Texas at Austin;	United States
+Counting Like Transformers: Compiling Temporal Counting Logic Into Softmax Transformers
+-	Andy Yang; David Chiang;	University of Notre Dame;	United States
+Exploiting the Potential of Seq2Seq Models as Robust Few-Shot Learners
+-	Jihyeon Lee; Dain Kim; Doohae Jung; Boseop Kim; Kyoung-Woon On;	KakaoBrain; Kakao Brain; Sogang University; Kakao Corp.;	South Korea
+Impact of Preference Noise on the Alignment Performance of Generative Language Models
+-	Yang Gao; Dana Alon; Donald Metzler;	Google;	United States
+MANGO: A Benchmark for Evaluating Mapping and Navigation Abilities of Large Language Models
+-	Peng Ding; Jiading Fang; Peng Li; Kangrui Wang; Xiaochen Zhou; Mo Yu; Jing Li; Hongyuan Mei; Matthew Walter;	Toyota Technological Institute at Chicago; Fudan University; Northwestern University; Tencent;	United States; China
+Risks from Language Models for Automated Mental Healthcare: Ethics and Structure for Implementation
+-	Declan Grabb; Max Lamparth; Nina Vasan;	Stanford University;	United States
+TarGEN: Targeted Data Generation with Large Language Models
+-	Himanshu Gupta; Kevin Scaria; Ujjwala Anantheswaran; Shreyas Verma; Mihir Parmar; Saurabh Arjun Sawant; Chitta Baral; Swaroop Mishra;	Amazon; Simplr AI; Arizona State University; Google;	United States
+What is in Your Safe Data? Identifying Benign Data that Breaks Safety
+-	Luxi He; Mengzhou Xia; Peter Henderson;	Princeton University;	United States
+JailBreakV: A Benchmark for Assessing the Robustness of MultiModal Large Language Models against Jailbreak Attacks
+-	Weidi Luo; Siyuan Ma; Xiaogeng Liu; Xiaoyu Guo; Chaowei Xiao;	Ohio State University; Peking University; University of Wisconsin-Madison; NVIDIA;	United States; China
+Elephants Never Forget: Memorization and Learning of Tabular Data in Large Language Models
+-	Sebastian Bordt; Harsha Nori; Vanessa Cristiny Rodrigues Vasconcelos; Besmira Nushi; Rich Caruana;	Eberhard Karls University of Tübingen; Microsoft;	Germany; United States
+LITE: Modeling Environmental Ecosystems with Multimodal Large Language Models
+-	Haoran Li; Junqi Liu; Zexian Wang; Shiyuan Luo; Xiaowei Jia; Huaxiu Yao;	Hong Kong Polytechnic University; University of Pittsburgh; University of North Carolina at Chapel Hill;	China; United States
+ACORN: Aspect-wise Commonsense Reasoning Explanation Evaluation
+-	Ana Brassard; Benjamin Heinzerling; Keito Kudo; Keisuke Sakaguchi; Kentaro Inui;	Tohoku University; RIKEN;	Japan
+Autonomous Evaluation and Refinement of Digital Agents
+-	Jiayi Pan; Yichi Zhang; Nicholas Tomlin; Yifei Zhou; Sergey Levine; Alane Suhr;	University of California, Berkeley; University of Michigan; Google;	United States
+CHOPS: CHat with custOmer Profile Systems for Customer Service with LLMs
+-	Jingzhe Shi; Jialuo Li; Qinwei Ma; Zaiwen Yang; Huan Ma; Lei Li;	Tsinghua University; University of Copenhagen;	China; Denmark
+Does Incomplete Syntax Influence Korean Language Model? Focusing on Word Order and Case Markers
+-	Jong Myoung Kim; Young-Jun Lee; Yong-Jin Han; Ho-Jin Choi; Sangkeun Jung;	SK Telecom; Korea Advanced Institute of Science and Technology;	South Korea
+Does In-Context Learning Really Learn? Rethinking How Large Language Models Respond and Solve Tasks via In-Context Learning
+-	Quanyu Long; Yin Wu; Wenya Wang; Sinno Jialin Pan;	Nanyang Technological University;	Singapore
+How Multilingual are Large Language Models Fine-tuned for Translation?
+-	Aquia Richburg; Marine Carpuat;	University of Maryland;	United States
+Learning to Plan for Language Modeling from Unlabeled Data
+-	Nathan Cornille; Marie-Francine Moens; Florian Mai;	Katholieke Universiteit Leuven; KU Leuven;	Belgium
+Scattered Mixture-of-Experts Implementation
+-	Shawn Tan; Yikang Shen; Rameswar Panda; Aaron Courville;	Université de Montréal; International Business Machines Corporation; Massachusetts Institute of Technology;	Canada; United States
+TriForce: Lossless Acceleration of Long Sequence Generation with Hierarchical Speculative Decoding
+-	Hanshi Sun; Zhuoming Chen; Xinyu Yang; Yuandong Tian; Beidi Chen;	Carnegie Mellon University; Meta;	United States
+Do Language Models Plan Ahead for Future Tokens?
+-	Wilson Wu; John Xavier Morris; Lionel Levine;	University of Colorado; Cornell University;	United States
+TMMLU+: An Improved Traditional Chinese Evaluation Suite for Foundation Models
+-	Zhi Rui Tam; Ya Ting Pai; Yen-Wei Lee; Hong-Han Shuai; Jun-Da Chen; Wei Min Chu; Sega Cheng;	Appier; National Yang Ming Chiao Tung University; iKala Interactive Media Inc.; National Taiwan University; Stanford University; University of Illinois Urbana-Champaign;	China; United States
+A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration
+-	Zijun Liu; Yanzhe Zhang; Peng Li; Yang Liu; Diyi Yang;	Tsinghua University; Georgia Institute of Technology; Stanford University;	China; United States
+SteP: Stacked LLM Policies for Web Actions
+-	Paloma Sodhi; S.R.K Branavan; Yoav Artzi; Ryan McDonald;	ASAPP;	United States
+Compression Represents Intelligence Linearly
+-	Yuzhen Huang; Jinghan Zhang; Zifei Shan; Junxian He;	Hong Kong University of Science and Technology; Tencent;	China
+Building a Large Japanese Web Corpus for Large Language Models
+-	Naoaki Okazaki; Kakeru Hattori; Hirai Shota; Hiroki Iida; Masanari Ohi; Kazuki Fujii; Taishi Nakamura; Mengsay Loem; Rio Yokota; Sakae Mizuki;	Tokyo Institute of Technology; Institute of Science, Tokyo; National Institute of Advanced Industrial Science and Technology;	Japan
+Crowd-Calibrator: Can Annotator Disagreement Inform Calibration in Subjective Tasks?
+-	Urja Khurana; Eric Nalisnick; Antske Fokkens; Swabha Swayamdipta;	Vrije Universiteit Amsterdam; University of Amsterdam; VU University Amsterdam; University of Southern California;	Netherlands; United States
+Khayyam Challenge (PersianMMLU): Is Your LLM Truly Wise to The Persian Language?
+-	Omid Ghahroodi; Marzia Nouri; Mohammad Vali Sanian; Alireza Sahebi; Doratossadat Dastgheib; Ehsaneddin Asgari; Mahdieh Soleymani Baghshah; Mohammad Hossein Rohban;	Sharif University of Technology; University of Helsinki; Motamed Cancer Institute; Shahid Beheshti University; University of California, Berkeley;	Iran; Finland; United States
+LLM Discussion: Enhancing the Creativity of Large Language Models via Discussion Framework and Role-Play
+-	Li-Chun Lu; Shou-Jen Chen; Tsung-Min Pai; Chan-Hung Yu; Hung-yi Lee; Shao-Hua Sun;	National Taiwan University; Academia Sinica;	China
+Does your data spark joy? Performance gains from domain upsampling at the end of training
+-	Cody Blakeney; Mansheej Paul; Brett W. Larsen; Sean Owen; Jonathan Frankle;	MosaicML; Databricks;	United States
+Learning From Correctness Without Prompting Makes LLM Efficient Reasoner
+-	Yuxuan YAO; Han Wu; Zhijiang Guo; Zhou Biyan; Jiahui Gao; Sichun Luo; Hanxu Hou; Xiaojin Fu; Linqi Song;	City University of Hong Kong; Huawei; University of Cambridge; Dongguan University of Technology;	China; United Kingdom
+LoraHub: Efficient Cross-Task Generalization via Dynamic LoRA Composition
+-	Chengsong Huang; Qian Liu; Bill Yuchen Lin; Tianyu Pang; Chao Du; Min Lin;	Washington University in St. Louis; TikTok; Allen Institute for Artificial Intelligence; Sea AI Lab;	United States; China; 
+Massive Activations in Large Language Models
+-	Mingjie Sun; Xinlei Chen; J Zico Kolter; Zhuang Liu;	Carnegie Mellon University; Meta;	United States
+Resolving Knowledge Conflicts in Large Language Models
+-	Yike Wang; Shangbin Feng; Heng Wang; Weijia Shi; Vidhisha Balachandran; Tianxing He; Yulia Tsvetkov;	University of California, Berkeley; University of Washington; Xi'an Jiao Tong University; Carnegie Mellon University;	United States; China
+TOFU: A Task of Fictitious Unlearning for LLMs
+-	Pratyush Maini; Zhili Feng; Avi Schwarzschild; Zachary Chase Lipton; J Zico Kolter;	Carnegie Mellon University; Microsoft;	United States
+Best Practices and Lessons Learned on Synthetic Data
+-	Ruibo Liu; Jerry Wei; Fangyu Liu; Chenglei Si; Yanzhe Zhang; Jinmeng Rao; Steven Zheng; Daiyi Peng; Diyi Yang; Denny Zhou; Andrew M. Dai;	Google; Stanford University; Georgia Institute of Technology;	United Kingdom; United States
+Can MLLMs Perform Text-to-Image In-Context Learning?
+-	Yuchen Zeng; Wonjun Kang; Yicong Chen; Hyung Il Koo; Kangwook Lee;	Microsoft; Furiosa AI; KRAFTON Inc.;	United States; South Korea
+How Well Do LLMs Identify Cultural Unity in Diversity?
+-	Jialin Li; Junli Wang; Junjie Hu; Ming Jiang;	Tongji University;	China
+InstructAV: Instruction Fine-tuning Large Language Models for Authorship Verification
+-	Yujia Hu; Zhiqiang Hu; Chun Wei Seah; Roy Ka-Wei Lee;	Singapore University of Technology and Design; DSO;	Singapore; 
+Latent Causal Probing: A Formal Perspective on Probing with Causal Models of Data
+-	Charles Jin;	Massachusetts Institute of Technology;	United States
+LLM Reasoners: New Evaluation, Library, and Analysis of Step-by-Step Reasoning with Large Language Models
+-	Shibo Hao; Yi Gu; Haotian Luo; Tianyang Liu; Xiyan Shao; Xinyuan Wang; Shuhua Xie; Haodi Ma; Adithya Samavedhi; Qiyue Gao; Zhen Wang; Zhiting Hu;	Meta; University of California, San Diego; Shanghai Jiao Tong University; University of Florida; Amazon;	United States; China
+LLM4Causal: Democratized Causal Tools for Everyone via Large Language Model
+-	Haitao Jiang; Lin Ge; Yuhe Gao; Jianian Wang; Rui Song;	North Carolina State University;	United States
+Long-Form Answers to Visual Questions from Blind and Low Vision People
+-	Mina Huh; Fangyuan Xu; Yi-Hao Peng; Chongyan Chen; Hansika Murugu; Danna Gurari; Eunsol Choi; Amy Pavel;	University of Texas at Austin; Carnegie Mellon University; Hong Kong University of Science and Technology; University of Colorado;	United States; China
+Model Autophagy Analysis to Explicate Self-consumption within Human-AI Interactions
+-	Shu Yang; Muhammad Asif Ali; Lu Yu; Lijie Hu; Di Wang;	University of Macau; King Abdullah University of Science and Technology; Ant Group;	China; Saudi Arabia
+O3D: Offline Data-driven Discovery and Distillation for Sequential Decision-Making with Large Language Models
+-	Yuchen Xiao; Yanchao Sun; Mengda Xu; Udari Madhushani Sehwag; Jared Vann; Deepeka Garg; Sumitra Ganesh;	JPMorgan Chase & Co.; J.P. Morgan; Columbia University;	United States
+ProLLM: Protein Chain-of-Thoughts Enhanced LLM for Protein-Protein Interaction Prediction
+-	Mingyu Jin; Haochen Xue; Zhenting Wang; Boming Kang; Ruosong Ye; Kaixiong Zhou; Mengnan Du; Yongfeng Zhang;	Northwestern University; Sony; Beijing Medical University; Rutgers University; Massachusetts Institute of Technology; New Jersey Institute of Technology;	United States; Japan; China
+Task Success is not Enough: Investigating the Use of Video-Language Models as Behavior Critics for Catching Undesirable Agent Behaviors
+-	Lin Guan; Yifan Zhou; Denis Liu; Yantian Zha; Heni Ben Amor; Subbarao Kambhampati;	Arizona State University; University of Maryland;	United States
+Trust No Bot: Discovering Personal Disclosures in Human-LLM Conversations in the Wild
+-	Niloofar Mireshghallah; Maria Antoniak; Yash More; Yejin Choi; Golnoosh Farnadi;	Allen Institute for Artificial Intelligence; University of Montreal; University of Washington; McGill University;	United States; Canada
+UniMem: Towards a Unified View of Long-Context Large Language Models
+-	Junjie Fang; Likai Tang; Hongzhe Bi; Yujia Qin; Si Sun; Zhenyu Li; Haolun Li; Yongjian Li; Xin Cong; Yankai Lin; Yukun Yan; Xiaodong Shi; Sen Song; Zhiyuan Liu; Maosong Sun;	Xiamen University; Tsinghua University; Renmin University of China; Beijing University of Posts and Telecommunications;	China
+What Are Tools Anyway? A Survey from the Language Model Perspective
+-	Zhiruo Wang; Zhoujun Cheng; Hao Zhu; Daniel Fried; Graham Neubig;	Carnegie Mellon University; Shanghai Jiao Tong University;	United States; China
+Characterizing Multimodal Long-form Summarization: A Case Study on Financial Reports
+-	Tianyu Cao; Natraj Raman; Danial Dervovic; Chenhao Tan;	Zhejiang University; JPMorgan Chase & Co.; University of Chicago;	China; United States
+DeStein: Navigating Detoxification of Language Models via Universal Steering Pairs and Head-wise Activation Fusion
+-	Yu Li; Han Jiang; Chuanyang Gong; Zhihua Wei;	Tongji University;	China
+Do Large Language Models Have Compositional Ability? An Investigation into Limitations and Scalability
+-	Zhuoyan Xu; Zhenmei Shi; Yingyu Liang;	University of Wisconsin-Madison;	United States
+Efficient Parallelization Layouts for Large-Scale Distributed Model Training
+-	Johannes Hagemann; Samuel Weinbach; Konstantin Dobler; Maximilian Schall; Gerard de Melo;	Prime Intellect; Aleph Alpha; InstaDeep; Hasso Plattner Institute; University of Potsdam;	; Germany; United Kingdom
+Is Model Collapse Inevitable? Breaking the Curse of Recursion by Accumulating Real and Synthetic Data
+-	Matthias Gerstgrasser; Rylan Schaeffer; Apratim Dey; Rafael Rafailov; Tomasz Korbak; Henry Sleight; Rajashree Agrawal; John Hughes; Dhruv Bhandarkar Pai; Andrey Gromov; Dan Roberts; Diyi Yang; David L. Donoho; Sanmi Koyejo;	Harvard University; Meta; Stanford University; Anthropic; MATS Program; Reed College; Speechmatics; University of Maryland; Sequoia Capital; Google;	United States; ; United Kingdom
+NoFunEval: Funny How Code LMs Falter on Requirements Beyond Functional Correctness
+-	Manav Singhal; Tushar Aggarwal; Abhijeet Awasthi; Nagarajan Natarajan; Aditya Kanade;	Microsoft;	United States
+Pairwise Proximal Policy Optimization: Language Model Alignment with Comparative RL
+-	Tianhao Wu; Banghua Zhu; Ruoyu Zhang; Zhaojin Wen; Kannan Ramchandran; Jiantao Jiao;	University of California, Berkeley; Peking University;	United States; China
+SPEER: Sentence-Level Planning of Long Clinical Summaries via Embedded Entity Retrieval
+-	Griffin Thomas Adams; Jason Zucker; Noémie Elhadad;	Columbia University;	United States
+StateFlow: Enhancing LLM Task-Solving through State-Driven Workflows
+-	Yiran Wu; Tianwei Yue; Shaokun Zhang; Chi Wang; Qingyun Wu;	Pennsylvania State University; Mathos AI; Microsoft;	United States; 
+StyleTalker: Finetuning Audio Language Model and Style-Based Text-to-Speech Model for Fast Spoken Dialogue Generation
+-	Yinghao Aaron Li; Xilin Jiang; Jordan Darefsky; Ge Zhu; Nima Mesgarani;	Columbia University; University of Rochester;	United States
+Training Language Models on the Knowledge Graph: Insights on Hallucinations and Their Detectability
+-	Jiri Hron; Laura A Culp; Gamaleldin Fathy Elsayed; Rosanne Liu; Jasper Snoek; Simon Kornblith; Alex Rizkowsky; Isabelle Simpson; Jascha Sohl-Dickstein; Noah Fiedel; Aaron T Parisi; Alexander A Alemi; Azade Nova; Ben Adlam; Bernd Bohnet; Gaurav Mishra; Hanie Sedghi; Izzeddin Gur; Jaehoon Lee; John D Co-Reyes; Kathleen Kenealy; Kelvin Xu; Kevin Swersky; Igor Mordatch; Lechao Xiao; Maxwell Bileschi; Peter J Liu; Roman Novak; Sharad Vikram; Tris Warkentin; Jeffrey Pennington;	Google; ML Collective; Anthropic; University of California, Berkeley; DeepMind; OpenAI;	United States; ; United Kingdom
+CATS: Context-Aware Thresholding for Sparsity in Large Language Models
+-	Donghyun Lee; Jaeyong Lee; Genghan Zhang; Mo Tiwari; Azalia Mirhoseini;	University College London; University of Oxford; NVIDIA; OpenAI;	United Kingdom; United States
+CTIKG: LLM-Powered Knowledge Graph Construction from Cyber Threat Intelligence
+-	Liangyi Huang; Xusheng Xiao;	Arizona State University;	United States
+Data Checklist: On Unit-Testing Datasets with Usable Information
+-	Heidi Chenyu Zhang; Shabnam Behzad; Kawin Ethayarajh; Dan Jurafsky;	Stanford University;	United States
+LLM economicus? Mapping the Behavioral Biases of LLMs via Utility Theory
+-	Jillian Ross; Yoon Kim; Andrew Lo;	Massachusetts Institute of Technology;	United States
+Locating and Editing Factual Associations in Mamba
+-	Arnab Sen Sharma; David Atkinson; David Bau;	Northeastern University;	United States
+Mapping the Increasing Use of LLMs in Scientific Papers
+-	Weixin Liang; Yaohui Zhang; Zhengxuan Wu; Haley Lepp; Wenlong Ji; Xuandong Zhao; Hancheng Cao; Sheng Liu; Siyu He; Zhi Huang; Diyi Yang; Christopher Potts; Christopher D Manning; James Y. Zou;	Stanford University; University of California, Santa Barbara;	United States
+Pack of LLMs: Model Fusion at Test-Time via Perplexity Optimization
+-	Costas Mavromatis; Petros Karypis; George Karypis;	University of Minnesota; University of California, San Diego;	United States
+Don't throw away your value model! Generating more preferable text with Value-Guided Monte-Carlo Tree Search decoding
+-	Jiacheng Liu; Andrew Cohen; Ramakanth Pasunuru; Yejin Choi; Hannaneh Hajishirzi; Asli Celikyilmaz;	Meta; University of Washington;	United States
+Eliciting Latent Knowledge from "Quirky" Language Models
+-	Alex Troy Mallen; Madeline Brumley; Julia Kharchenko; Nora Belrose;	Redwood Research; University of Washington; EleutherAI;	United States
+Helmsman of the Masses? Evaluate the Opinion Leadership of Large Language Models in the Werewolf Game
+-	Silin Du; Xiaowei Zhang;	Tsinghua University;	China
+NeMo-Aligner: Scalable Toolkit for Efficient Model Alignment
+-	Gerald Shen; Zhilin Wang; Olivier Delalleau; Jiaqi Zeng; Yi Dong; Daniel Egert; Shengyang Sun; Jimmy J. Zhang; Sahil Jain; Ali Taghibakhshi; Markel Sanz Ausin; Ashwath Aithal; Oleksii Kuchaiev;	NVIDIA; Stanford University;	United States
+Unforgettable Generalization in Language Models
+-	Eric Zhang; Leshem Choshen; Jacob Andreas;	Massachusetts Institute of Technology; International Business Machines Corporation; Microsoft;	United States
+The N+ Implementation Details of RLHF with PPO: A Case Study on TL;DR Summarization
+-	Shengyi Huang; Michael Noukhovitch; Arian Hosseini; Kashif Rasul; Weixun Wang; Lewis Tunstall;	Hugging Face; University of Montreal; Zalando SE;	United States; Canada; Germany
+RAVEN: In-Context Learning with Retrieval-Augmented Encoder-Decoder Language Models
+-	Jie Huang; Wei Ping; Peng Xu; Mohammad Shoeybi; Kevin Chang; Bryan Catanzaro;	University of Illinois Urbana-Champaign; NVIDIA;	United States
+Crystal: Illuminating LLM Abilities on Language and Code
+-	Tianhua Tao; Junbo Li; Bowen Tan; Hongyi Wang; William Marshall; Bhargav M Kanakiya; Joel Hestness; Natalia Vassilieva; Zhiqiang Shen; Eric P. Xing; Zhengzhong Liu;	University of Illinois Urbana-Champaign; Mohamed bin Zayed University of Artificial Intelligence; Carnegie Mellon University; Cerebras Systems;	United States; United Arab Emirates
+Timo: Towards Better Temporal Reasoning for Language Models
+-	Zhaochen Su; Jun Zhang; Tong Zhu; Xiaoye Qu; Juntao Li; Min zhang; Yu Cheng;	Soochow University; Shanghai Artificial Intelligence Laboratory; Harbin Institute of Technology; Chinese University of Hong Kong;	China
+AmpleGCG: Learning a Universal and Transferable Generative Model of Adversarial Suffixes for Jailbreaking Both Open and Closed LLMs
+-	Zeyi Liao; Huan Sun;	Ohio State University;	United States
+Ferret-v2: An Improved Baseline for Referring and Grounding with Large Language Models
+-	Haotian Zhang; Haoxuan You; Philipp Dufter; Bowen Zhang; Chen Chen; Hong-You Chen; Tsu-Jui Fu; William Yang Wang; Shih-Fu Chang; Zhe Gan; Yinfei Yang;	Apple; Columbia University; University of California, Santa Barbara;	United States
+LlaSMol: Advancing Large Language Models for Chemistry with a Large-Scale, Comprehensive, High-Quality Instruction Tuning Dataset
+-	Botao Yu; Frazier N. Baker; Ziqi Chen; Xia Ning; Huan Sun;	Ohio State University;	United States
+SynerGPT: In-Context Learning for Personalized Drug Synergy Prediction and Drug Design
+-	Carl Edwards; Aakanksha Naik; Tushar Khot; Martin D. Burke; Heng Ji; Tom Hope;	Genentech; National Institutes of Health; Allen Institute for Artificial Intelligence; University of Illinois Urbana-Champaign; University of Illinois;	United States
+ChatGPT Based Data Augmentation for Improved Parameter-Efficient Debiasing of LLMs
+-	Pengrui Han; Rafal Dariusz Kocielnik; Adhithya Prakash Saravanan; Roy Luoyao Jiang; Or Sharir; Anima Anandkumar;	Carleton College; California Institute of Technology; University of Cambridge;	United States; United Kingdom
+CoCA: Regaining Safety-awareness of Multimodal Large Language Models with Constitutional Calibration
+-	Jiahui Gao; Renjie Pi; Tianyang Han; Han Wu; Lanqing HONG; Lingpeng Kong; Xin Jiang; Zhenguo Li;	Hong Kong University of Science and Technology; Hong Kong Polytechnic University; Huawei; University of Hong Kong;	China
+Handling Open-Vocabulary Constructs in Formalizing Specifications: Retrieval Augmented Parsing with Expert Knowledge
+-	Mohammad Saqib Hasan; Sayontan Ghosh; Dhruv Verma; Geoff Kuenning; Erez Zadok; Scott Smolka; Niranjan Balasubramanian;	State University of New York at Stony Brook; Stony Brook University; Harvey Mudd College; State University of New York;	United States
+Mind the Privacy Unit! User-Level Differential Privacy for Language Model Fine-Tuning
+-	Lynn Chua; Badih Ghazi; Yangsibo Huang; Pritish Kamath; Ravi Kumar; Daogao Liu; Pasin Manurangsi; Amer Sinha; Chiyuan Zhang;	Google; Princeton University; University of Washington;	United States
+Reverse Training to Nurse the Reversal Curse
+-	Olga Golovneva; Zeyuan Allen-Zhu; Jason E Weston; Sainbayar Sukhbaatar;	Meta;	United States
+A Reparameterized Discrete Diffusion Model for Text Generation
+-	Lin Zheng; Jianbo Yuan; Lei Yu; Lingpeng Kong;	University of Hong Kong; ByteDance; Google;	China; United Kingdom
+CoLLEGe: Concept Embedding Generation for Large Language Models
+-	Ryan Teehan; Brenden Lake; Mengye Ren;	New York University;	United States
+How Susceptible are LLMs to Influence in Prompts?
+-	Sotiris Anagnostidis; Jannis Bulian;	ETH Zurich; Google;	Switzerland; United Kingdom
+Logits of API-Protected LLMs Leak Proprietary Information
+-	Matthew Finlayson; Xiang Ren; Swabha Swayamdipta;	University of Southern California;	United States
+ScenicNL: Generating Probabilistic Scenario Programs from Natural Language
+-	Karim Elmaaroufi; Devan Shanker; Ana Cismaru; Marcell Vazquez-Chanlatte; Alberto Sangiovanni-Vincentelli; Matei Zaharia; Sanjit A. Seshia;	University of California, Berkeley; Nissan Motor Corporation; Databricks;	United States; Japan
+EnvGen: Generating and Adapting Environments via LLMs for Training Embodied Agents
+-	Abhay Zala; Jaemin Cho; Han Lin; Jaehong Yoon; Mohit Bansal;	University of North Carolina at Chapel Hill; University of North Carolina;	United States
+How bad is training on synthetic data? A statistical analysis of language model collapse
+-	Mohamed El Amine Seddik; Suei-Wen Chen; Soufiane Hayou; Pierre Youssef; Merouane Abdelkader DEBBAH;	Technology Innovation Institute; New York University; National University of Singapore; Khalifa University of Science, Technology and Research;	; United Arab Emirates; Singapore; United States
+MultiHop-RAG: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries
+-	Yixuan Tang; Yi Yang;	Hong Kong University of Science and Technology;	China
+Chain-of-Symbol Prompting For Spatial Reasoning in Large Language Models
+-	Hanxu Hu; Hongyuan Lu; Huajian Zhang; Yun-Ze Song; Wai Lam; Yue Zhang;	University of Edinburgh; Chinese University of Hong Kong; Westlake University;	United Kingdom; China
+Linearizing Large Language Models
+-	Jean Mercat; Igor Vasiljevic; Sedrick Scott Keh; Kushal Arora; Achal Dave; Adrien Gaidon; Thomas Kollar;	Toyota Research Institute; McGill University; Stanford University;	United States; Canada
+Fakes of Varying Shades: How Warning Affects Human Perception and Engagement Regarding LLM Hallucinations
+-	Mahjabin Nahar; Haeseung Seo; Eun-Ju Lee; Aiping Xiong; Dongwon Lee;	Pennsylvania State University; Seoul National University;	United States; South Korea
+Forcing Diffuse Distributions out of Language Models
+-	Yiming Zhang; Avi Schwarzschild; Nicholas Carlini; J Zico Kolter; Daphne Ippolito;	Carnegie Mellon University; Google;	United States
+Measuring Taiwanese Mandarin Language Understanding
+-	Po-Heng Chen; Sijia Cheng; Wei-Lin Chen; Yen-Ting Lin; Yun-Nung Chen;	National Taiwan University;	China
+MileBench: Benchmarking MLLMs in Long Context
+-	Song Dingjie; Shunian Chen; Guiming Hardy Chen; Fei Yu; Xiang Wan; Benyou Wang;	Chinese University of Hong Kong; Shenzhen Research Institute of Big Data;	China
+Zephyr: Direct Distillation of LM Alignment
+-	Lewis Tunstall; Edward Emanuel Beeching; Nathan Lambert; Nazneen Rajani; Kashif Rasul; Younes Belkada; Shengyi Huang; Leandro Von Werra; Clémentine Fourrier; Nathan Habib; Nathan Sarrazin; Omar Sanseviero; Alexander M Rush; Thomas Wolf;	Hugging Face; Allen Institute for Artificial Intelligence; Zalando SE; Delft University of Technology; Harvard University;	United States; Germany; Netherlands
+"Merge Conflicts!'" Exploring the Impacts of External Knowledge Distractors to Parametric Knowledge Graphs
+-	Cheng Qian; Xinran Zhao; Tongshuang Wu;	Carnegie Mellon University;	United States
+AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models
+-	Sicheng Zhu; Ruiyi Zhang; Bang An; Gang Wu; Joe Barrow; Zichao Wang; Furong Huang; Ani Nenkova; Tong Sun;	University of Maryland; Adobe;	United States
+DiagrammerGPT: Generating Open-Domain, Open-Platform Diagrams via LLM Planning
+-	Abhay Zala; Han Lin; Jaemin Cho; Mohit Bansal;	University of North Carolina at Chapel Hill; University of North Carolina;	United States
+Evaluating Language Models for Efficient Code Generation
+-	Jiawei Liu; Songrun Xie; Junhao Wang; Yuxiang Wei; Yifeng Ding; LINGMING ZHANG;	Amazon; Tongji University; Snowflake Inc.; University of Illinois Urbana-Champaign;	United States; China
+Faithful and Unfaithful Error Recovery in Chain of Thought
+-	Evelyn Yee; Alice Li; Chenyu Tang; Yeon Ho Jung; Ramamohan Paturi; Leon Bergen;	University of California, San Diego;	United States
+Language Models as Critical Thinking Tools: A Case Study of Philosophers
+-	Andre Ye; Jared Moore; Rose Novick; Amy X Zhang;	University of Washington; Unknown Institution;	United States; 
+Lory: Fully Differentiable Mixture-of-Experts for Autoregressive Language Model Pre-training
+-	Zexuan Zhong; Mengzhou Xia; Danqi Chen; Mike Lewis;	Princeton University; Meta;	United States
+On Robustness-Accuracy Characterization of Language Models using Synthetic Datasets
+-	Ching-Yun Ko; Pin-Yu Chen; Payel Das; Yung-Sung Chuang; Luca Daniel;	Massachusetts Institute of Technology; International Business Machines Corporation; International Business Machines;	United States
+Rejection Improves Reliability: Training LLMs to Refuse Unknown Questions Using RL from Knowledge Feedback
+-	Hongshen Xu; Zichen Zhu; Situo Zhang; Da Ma; Shuai Fan; Lu Chen; Kai Yu;	Shanghai Jiao Tong University; AISpeech Ltd;	China; 
+Revenge of the Fallen? Recurrent Models Match Transformers at Predicting Human Language Comprehension Metrics
+-	James Michaelov; Catherine Arnett; Ben Bergen;	University of California, San Diego;	United States
+Suspicion Agent: Playing Imperfect Information Games with Theory of Mind Aware GPT-4
+-	Jiaxian Guo; Bo Yang; Paul Yoo; Bill Yuchen Lin; Yusuke Iwasawa; Yutaka Matsuo;	Google; KDDI Research; University of Tokyo; Allen Institute for Artificial Intelligence;	United States; Japan
+Web Retrieval Agents for Evidence-Based Misinformation Detection
+-	Jacob-Junqi Tian; Hao Yu; Yury Orlovskiy; Tyler Vergho; Mauricio Rivera; Mayank Goel; Zachary Yang; Jean-François Godbout; Reihaneh Rabbany; Kellin Pelrine;	Quebec Artificial Intelligence Institute; University of California, Berkeley; Dartmouth College; International Institute of Information Technology, Hyderabad; McGill University; Université de Montréal; University of Montreal;	Canada; United States; India
+Beyond Relevance: Evaluate and Improve Retrievers on Perspective Awareness
+-	Xinran Zhao; Tong Chen; Sihao Chen; Hongming Zhang; Tongshuang Wu;	Carnegie Mellon University; University of Washington; University of Pennsylvania; Tencent;	United States
+Efficient Hybrid Long Sequence Modeling with State Space Augmented Transformers
+-	Simiao Zuo; Xiaodong Liu; Jian Jiao; Denis X Charles; Eren Manavoglu; Tuo Zhao; Jianfeng Gao;	Microsoft; Georgia Institute of Technology;	United States
+LAMPO: Large Language Models as Preference Machines for Few-shot Ordinal Classification
+-	Zhen Qin; Junru Wu; Jiaming Shen; Tianqi Liu; Xuanhui Wang;	DeepMind; Google;	United Kingdom; United States
+LLM as a Mastermind: A Survey of Strategic Reasoning with Large Language Models
+-	Yadong Zhang; Shaoguang Mao; Tao Ge; Xun Wang; Yan Xia; Wenshan Wu; Ting Song; Man Lan; Furu Wei;	East China Normal University; Microsoft; Tencent;	China; United States
+Tabular Transfer Learning via Prompting LLMs
+-	Jaehyun Nam; Woomin Song; Seong Hyeon Park; Jihoon Tack; Sukmin Yun; Jaehyung Kim; Kyu Hwan Oh; Jinwoo Shin;	Korea Advanced Institute of Science and Technology; Meta; Mohamed bin Zayed University of Artificial Intelligence; Carnegie Mellon University; Hyundai Motor Company;	South Korea; United States; United Arab Emirates
+Why do small language models underperform? Studying Language Model Saturation via the Softmax Bottleneck
+-	Nathan Godey; Éric Villemonte de la Clergerie; Benoît Sagot;	INRIA;	France
+CALM : A Multi-task Benchmark for Comprehensive Assessment of Language Model Bias
+-	Vipul Gupta; Pranav Narayanan Venkit; Hugo Laurençon; Shomir Wilson; Rebecca J. Passonneau;	Pennsylvania State University;	United States
+Cookbook: A framework for improving LLM generative abilities via programmatic data generating templates
 -	Avanika Narayan; Mayee F Chen; Kush Bhatia; Christopher Re;			Poster	3
-206	Hummer: Towards Limited Competitive Preference Dataset
--	Yusen Wu; Li Jiang; Junwu Xiong; Jingqing Ruan; Yichuan Ding; Qingpei Guo; zujie wen; JUN ZHOU; Xiaotie Deng;	Peking University; McGill University; Ant Group; Chinese Academy of Sciences;	China; Canada;	Poster	6
-207	Large Language Model Routing with Benchmark Datasets
--	Tal Shnitzer; Anthony Ou; Mírian Silva; Kate Soule; Yuekai Sun; Justin Solomon; Neil Thompson; Mikhail Yurochkin;	Broad Institute; Universidade Federal de Minas Gerais; IBM; University of Michigan; Massachusetts Institute of Technology;	United States; Brazil;	Poster	69
-208	Enhancing Adversarial Robustness of LLMs with Analytic Hierarchy Process
--	Jiahao Zhao; Minzheng Wang; Nan Xu; Yin Luo; Wenji Mao;	Chinese Academy of Sciences;	China;	Poster	2
-209	Beyond Accuracy: Evaluating the Reasoning Behavior of Large Language Models - A Survey
--	Philipp Mondorf; Barbara Plank;	Ludwig-Maximilians-Universität München; IT University of Copenhagen;	Germany; Denmark;	Poster	45
-210	RQ-RAG: Learning to Refine Queries for Retrieval Augmented Generation
--	Chi-Min Chan; Chunpu Xu; Ruibin Yuan; Hongyin Luo; Wei Xue; Yike Guo; Jie Fu;	Massachusetts Institute of Technology; Hong Kong University of Science and Technology; Imperial College London;	United States; China; United Kingdom;	Poster	83
-211	AdaMoLE: Fine-Tuning Large Language Models with Adaptive Mixture of Low-Rank Adaptation Experts
--	Zefang Liu; Jiahua Luo;	JPMorgan Chase & Co.; University of Macau;	United States; China;	Poster	12
-212	An In-Context Learning Agent for Formal Theorem-Proving
--	Amitayush Thakur; George Tsoukalas; Yeming Wen; Jimmy Xin; Swarat Chaudhuri;	University of Texas at Austin;	United States;	Poster	19
-213	Chinese Tiny LLM: Pretraining a Chinese-Centered Large Language Model
--	Xeron Du; Zhouliang Yu; Songyang Gao; Ding Pan; Cheng Yuyang; Ziyang Ma; Ruibin Yuan; Xingwei Qu; Jiaheng Liu; Tianyu Zheng; Xinchen Luo; Guorui Zhou; Wenhu Chen; Ge Zhang;	Chinese University of Hong Kong; Fudan University; Peking University; Shanghai Jiao Tong University; Hong Kong University of Science and Technology; Alibaba Group; Kuaishou Technology; University of Waterloo;	China; Canada;	Poster	23
-214	Continual Pre-Training for Cross-Lingual LLM Adaptation: Enhancing Japanese Language Capabilities
--	Kazuki Fujii; Taishi Nakamura; Mengsay Loem; Hiroki Iida; Masanari Ohi; Kakeru Hattori; Hirai Shota; Sakae Mizuki; Rio Yokota; Naoaki Okazaki;	Tokyo Institute of Technology; Institute of Science, Tokyo; National Institute of Advanced Industrial Science and Technology;	Japan;	Poster	49
-215	Decoupling Noise and Toxic Parameters for Language Model Detoxification by Task Vector Merging
--	Yongmin Kim; Takeshi Kojima; Yusuke Iwasawa; Yutaka Matsuo;	Tokyo University; University of Tokyo;	Japan;	Poster	0
-216	Evaluating the Adversarial Robustness of Retrieval-Based In-Context Learning for Large Language Models
--	Simon Chi Lok Yu; Jie He; Pasquale Minervini; Jeff Z. Pan;	University of Edinburgh;	United Kingdom;	Poster	1
-217	How Easily do Irrelevant Inputs Skew the Responses of Large Language Models?
--	Siye Wu; Jian Xie; Jiangjie Chen; Tinghui Zhu; Kai Zhang; Yanghua Xiao;	Wuhan University; Fudan University; Google;	China; United Kingdom;	Poster	42
-218	IllusionVQA: A Challenging Optical Illusion Dataset for Vision Language Models
--	Haz Sameen Shahgir; Khondker Salman Sayeed; Abhik Bhattacharjee; Wasi Uddin Ahmad; Yue Dong; Rifat Shahriyar;	Bangladesh University of Engineering and Technology; Amazon; McGill University;	Bangladesh; United States; Canada;	Poster	16
-219	LLM2Vec: Large Language Models Are Secretly Powerful Text Encoders
--	Parishad BehnamGhader; Vaibhav Adlakha; Marius Mosbach; Dzmitry Bahdanau; Nicolas Chapados; Siva Reddy;	McGill University; Saarland University; ServiceNow;	Canada; Germany; United States;	Poster	209
-220	OpenAgents: An Open Platform for Language Agents in the Wild
--	Tianbao Xie; Fan Zhou; Zhoujun Cheng; Peng Shi; Luoxuan Weng; Yitao Liu; Toh Jing Hua; Junning Zhao; Qian Liu; Che Liu; Zeyu Liu; Yiheng Xu; Hongjin SU; Dongchan Shin; Caiming Xiong; Tao Yu;	University of Hong Kong; Shanghai Jiao Tong University; Amazon; Zhejiang University; Nanyang Technological University; Tokyo Institute of Technology; TikTok; University of Texas at Austin; Salesforce;	China; United States; Singapore; Japan;	Poster	84
-221	Studying Large Language Model Behaviors Under Context-Memory Conflicts With Real Documents
--	Evgenii Kortukov; Alexander Rubinstein; Elisa Nguyen; Seong Joon Oh;	Eberhard Karls University of Tübingen;	Germany;	Poster	5
-222	With Greater Text Comes Greater Necessity: Inference-Time Training Helps Long Text Generation
--	Yan Wang; Dongyang Ma; Deng Cai;	miHoYo; Tencent;	China;	Poster	13
-223	WorkBench: a Benchmark Dataset for Agents in a Realistic Workplace Setting
--	Olly Styles; Sam Miller; Patricio Cerda-Mardini; Tanaya Guha; Victor Sanchez; Bertie Vidgen;	MindsDB; MindsDB Inc.; University of Glasgow; University of Warwick; MLCommons;	United States; United Kingdom;	Poster	3
-224	Automata-based constraints for language model decoding
--	Terry Koo; Frederick Liu; Luheng He;	Google;	United States;	Poster	10
-225	CLIN: A Continually Learning Language Agent for Rapid Task Adaptation and Generalization
--	Bodhisattwa Prasad Majumder; Bhavana Dalvi Mishra; Peter Jansen; Oyvind Tafjord; Niket Tandon; Li Zhang; Chris Callison-Burch; Peter Clark;	Allen Institute for Artificial Intelligence; Microsoft; University of Pennsylvania;	United States;	Poster	36
-226	Exploring the Mystery of Influential Data for Mathematical Reasoning
--	Xinzhe Ni; Yeyun Gong; Zhibin Gou; yelong shen; Yujiu Yang; Nan Duan; Weizhu Chen;	Microsoft; Tsinghua University;	United States; China;	Poster	6
-227	From Words to Numbers: Your Large Language Model Is Secretly A Capable Regressor When Given In-Context Examples
--	Robert Vacareanu; Vlad Andrei Negru; Vasile Suciu; Mihai Surdeanu;	University of Arizona; Technical University of Cluj-Napoca;	United States; Romania;	Poster	25
-228	HuatuoGPT-II, One-stage Training for Medical Adaption of LLMs
--	Junying Chen; Xidong Wang; Ke Ji; Anningzhe Gao; Feng Jiang; Shunian Chen; Hongbo Zhang; Song Dingjie; Wenya Xie; Chuyi Kong; Jianquan Li; Xiang Wan; Haizhou Li; Benyou Wang;	Chinese University of Hong Kong; Southeast University; Shenzhen Research Institute of Big Data; Westlake University; Hong Kong Baptist University; National University of Singapore;	China; Singapore;	Poster	54
-229	Information Guided Regularization for Fine-tuning Language Models
--	Mandar Sharma; Nikhil Muralidhar; Shengzhe Xu; Raquib Bin Yousuf; Naren Ramakrishnan;	Virginia Tech; Stevens Institute of Technology;	United States;	Poster	0
-230	Large Language Model is not a (Multilingual) Compositional Relation Reasoner
--	Jinman Zhao; Xueyan Zhang;	University of Toronto; University of Waterloo;	Canada;	Poster	8
-231	Prompt-prompted Adaptive Structured Pruning for Efficient LLM Generation
--	Harry Dong; Beidi Chen; Yuejie Chi;	Carnegie Mellon University; Meta;	United States;	Poster	6
-232	Scalable Model Editing via Customized Expert Networks
--	Zihan Yao; Yu He; Tianyu Qi; Ming Li;	Tomorrow Advancing Life;		Poster	2
-233	Stronger Random Baselines for In-Context Learning
--	Gregory Yauney; David Mimno;	Cornell University;	United States;	Poster	3
-234	Trans-Tokenization and Cross-lingual Vocabulary Transfers: Language Adaptation of LLMs for Low-Resource NLP
--	François Remy; Pieter Delobelle; Hayastan Avetisyan; Alfiya Khabibullina; Miryam de Lhoneux; Thomas Demeester;	University of Ghent; KU Leuven; German Centre for Higher Education Research and Science Studies; Becode; Katholieke Universiteit Leuven; Ghent University;	Belgium; Germany;	Poster	3
-235	Investigating Instruction Tuning Large Language Models on Graphs
--	Kerui Zhu; Bo-Wei Huang; Bowen Jin; Yizhu Jiao; Ming Zhong; Kevin Chang; Shou-De Lin; Jiawei Han;	National Taiwan University; University of Illinois Urbana-Champaign;	China; United States;	Poster	2
-236	PhonATe: Impact of Type-Written Phonological Features of African American Language on Generative Language Modeling Tasks
--	Nicholas Deas; Jessica A Grieser; Xinmeng Hou; Shana Kleiner; Tajh Martin; Sreya Nandanampati; Desmond U. Patton; Kathleen McKeown;	Columbia University; University of Michigan;	United States;	Poster	1
-237	What makes a good metric? Evaluating automatic metrics for text-to-image consistency
--	Candace Ross; Melissa Hall; Adriana Romero-Soriano; Adina Williams;	Meta;	United States;	Poster	2
-238	AgentKit: Structured LLM Reasoning with Dynamic Graphs
--	Yue Wu; Yewen Fan; So Yeon Min; Shrimai Prabhumoye; Stephen Marcus McAleer; Ruslan Salakhutdinov; Yonatan Bisk; Yuanzhi Li; Tom Mitchell;	Carnegie Mellon University; NVIDIA; Meta;	United States;	Poster	1
-239	Automatic Pseudo-Harmful Prompt Generation for Evaluating False Refusals in Large Language Models
--	Bang An; Sicheng Zhu; Ruiyi Zhang; Michael-Andrei Panaitescu-Liess; Yuancheng Xu; Furong Huang;	University of Maryland; Adobe;	United States;	Poster	15
-240	Best-of-Venom: Attacking RLHF by Injecting Poisoned Preference Data
--	Tim Baumgärtner; Yang Gao; Dana Alon; Donald Metzler;	Google;	United States;	Poster	17
-241	Description-Based Text Similarity
--	Shauli Ravfogel; Valentina Pyatkin; Amir David Nissan Cohen; Avshalom Manevich; Yoav Goldberg;	Bar-Ilan University; Allen Institute for Artificial Intelligence;	Israel; United States;	Poster	4
-242	DISTFLASHATTN: Distributed Memory-efficient Attention for Long-context LLMs Training
--	Dacheng Li; Rulin Shao; Anze Xie; Eric P. Xing; Xuezhe Ma; Ion Stoica; Joseph E. Gonzalez; Hao Zhang;	University of Washington; Carnegie Mellon University; University of Southern California; University of California, Berkeley;	United States;	Poster	16
-243	Does RoBERTa Perform Better than BERT in Continual Learning: An Attention Sink Perspective
--	Xueying Bai; Yifan Sun; Niranjan Balasubramanian;	State University of New York;	United States;	Poster	1
-244	ExoViP: Step-by-step Verification and Exploration with Exoskeleton Modules for Compositional Visual Reasoning
--	Yuxuan Wang; Alan Yuille; Zhuowan Li; Zilong Zheng;	Beijing Institute for General Artificial Intelligence; Johns Hopkins University;	China; United States;	Poster	3
-245	FUSE-ing Language Models: Zero-Shot Adapter Discovery for Prompt Optimization Across Tokenizers
--	Joshua Nathaniel Williams; J Zico Kolter;	Carnegie Mellon University;	United States;	Poster	0
-246	Large Language Models are Capable of Offering Cognitive Reappraisal, if Guided
--	Hongli Zhan; Allen Zheng; Yoon Kyung Lee; Jina Suh; Junyi Jessy Li; Desmond Ong;	University of Texas at Austin; Seoul National University; University of Washington;	United States; South Korea;	Poster	14
-247	PairEval: Open-domain Dialogue Evaluation Metric with Pairwise Comparisons
--	ChaeHun Park; Minseok Choi; Dohyun Lee; Jaegul Choo;	Korea Advanced Institute of Science and Technology;	South Korea;	Poster	1
-248	Predicting Emergent Capabilities by Finetuning
--	Charlie Victor Snell; Eric Wallace; Dan Klein; Sergey Levine;	University of California, Berkeley; Google;	United States;	Poster	3
-249	Prompt Public Large Language Models to Synthesize Data for Private On-device Applications
--	Shanshan Wu; Zheng Xu; Yanxiang Zhang; Yuanbo Zhang; Daniel Ramage;	Google;	United States;	Poster	13
-250	See What LLMs Cannot Answer: A Self-Challenge Framework for Uncovering LLM Weaknesses
--	Yulong Chen; Yang Liu; Jianhao Yan; Xuefeng Bai; Ming Zhong; Yinghao Yang; Ziyi Yang; Chenguang Zhu; Yue Zhang;	University of Cambridge; Microsoft; Westlake University; Harbin Institute of Technology; University of Illinois Urbana-Champaign; Meta;	United Kingdom; United States; China;	Poster	8
-251	Should We Attend More or Less? Modulating Attention for Fairness
--	Abdelrahman Zayed; Goncalo Mordido; Samira Shabanian; Sarath Chandar;	University of Montreal; École Polytechnique de Montréal;	Canada;	Poster	9
-252	CA-LoRA: Adapting Existing LoRA for Compressed LLMs to Enable Efficient Multi-Tasking on Personal Devices
--	Weilin Zhao; Yuxiang Huang; Xu Han; Zhiyuan Liu; Zhengyan Zhang; Kuai Li; Chen Chen; TAO YANG; Maosong Sun;	Tsinghua University; Apple;	China; United States;	Poster	2
-253	CatCode: A Comprehensive Evaluation Framework for LLMs On the Mixture of Code and Text
--	Zhenru Lin; Yiqun Yao; Yang Yuan;	Tsinghua University; Beijing Academy of Artificial Intelligence;	China;	Poster	0
-254	HGRN2: Gated Linear RNNs with State Expansion
--	Zhen Qin; Songlin Yang; Weixuan Sun; Xuyang Shen; Dong Li; Weigao Sun; Yiran Zhong;	TapTap; Massachusetts Institute of Technology; Tencent; Shanghai AI Lab; Shanghai Artificial Intelligence Laboratory;	China; United States;	Poster	56
-255	ReAct Meets ActRe: Autonomous Annotation of Agent Trajectories for Contrastive Self-Training
--	Zonghan Yang; Peng Li; Ming Yan; Ji Zhang; Fei Huang; Yang Liu;	Tsinghua University; Alibaba Group;	China; United States;	Poster	9
-256	Uncovering Intermediate Variables in Transformers using Circuit Probing
--	Michael A. Lepori; Thomas Serre; Ellie Pavlick;	Brown University; Université de Toulouse;	United States; France;	Poster	4
-257	Keep the Cost Down: A Review on Methods to Optimize LLM’s KV-Cache Consumption
--	Shi Luohe; Hongyi Zhang; Yao Yao; Zuchao Li; hai zhao;	Wuhan University; Shanghai Jiao Tong University;	China;	Poster	31
-258	IsoBench: Benchmarking Multimodal Foundation Models on Isomorphic Representations
--	Deqing Fu; Ruohao Guo; Ghazal Khalighinejad; Ollie Liu; Bhuwan Dhingra; Dani Yogatama; Robin Jia; Willie Neiswanger;	University of Southern California; Georgia Institute of Technology; Duke University; Google;	United States; United Kingdom;	Poster	20
-259	AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversations
--	Qingyun Wu; Gagan Bansal; Jieyu Zhang; Yiran Wu; Beibin Li; Erkang Zhu; Li Jiang; Xiaoyun Zhang; Shaokun Zhang; Jiale Liu; Ahmed Hassan Awadallah; Ryen W White; Doug Burger; Chi Wang;	Microsoft; University of Washington; Pennsylvania State University;	United States;	Poster	367
-260	Empowering Large Language Model Agents through Action Learning
--	Haiteng Zhao; Chang Ma; Guoyin Wang; Jing Su; Lingpeng Kong; Jingjing Xu; Zhi-Hong Deng; Hongxia Yang;	Peking University; ByteDance; University of Hong Kong;	China;	Poster	0
-261	On Fairness of Low-Rank Adaptation of Large Models
--	Zhoujie Ding; Ken Liu; Pura Peetathawatchai; Berivan Isik; Sanmi Koyejo;	Stanford University; Google;	United States; United Kingdom;	Poster	8
-262	Personalized Collaborative Fine-Tuning for On-Device Large Language Models
--	Nicolas Wagner; Dongyang Fan; Martin Jaggi;	EPFL;	Switzerland;	Poster	3
-263	Benchmarks as Microscopes: A Call for Model Metrology
--	Michael Saxon; Ari Holtzman; Peter West; William Yang Wang; Naomi Saphra;	Advanced Micro Devices, Inc.; Meta; University of Washington; Harvard University; University of California, Santa Barbara;	United States;	Poster	10
-264	Bring Your Own Data! Self-Sensitivity Evaluation for Large Language Models
--	Neel Jain; Khalid Saifullah; Yuxin Wen; John Kirchenbauer; Manli Shu; Aniruddha Saha; Micah Goldblum; Jonas Geiping; Tom Goldstein;	University of Maryland; University of Maryland, College Park; New York University; Max Planck Institute for Intelligent Systems;	United States; Germany;	Poster	0
-265	Instruction-tuning Aligns LLMs to the Human Brain
--	Khai Loong Aw; Syrielle Montariol; Badr AlKhamissi; Martin Schrimpf; Antoine Bosselut;	Singapore Management University; EPFL; Swiss Federal Institute of Technology Lausanne;	Singapore; Switzerland;	Poster	20
-266	Multi-FAct: Assessing Factuality of Multilingual LLMs using FActScore
--	Sheikh Shafayat; Eunsu Kim; Juhyun Oh; Alice Oh;	Korea Advanced Institute of Science and Technology;	South Korea;	Poster	6
-267	The Curious Case of Nonverbal Abstract Reasoning with Multi-Modal Large Language Models
--	Kian Ahrabian; Zhivar Sourati; Kexuan Sun; Jiarui Zhang; Yifan Jiang; Fred Morstatter; Jay Pujara;	Microsoft; University of Southern California; Amazon;	United States;	Poster	13
-268	Yes, no, maybe? Revisiting language models' response stability under paraphrasing for the assessment of political leaning
--	Patrick Haller; Jannis Vamvas; Lena Ann Jäger;	University of Zurich; University of Potsdam;	Switzerland; Germany;	Poster	0
-269	From Narratives to Numbers: Valid Inference Using Language Model Predictions from Verbal Autopsies
--	Shuxian Fan; Adam Visokay; Kentaro Hoffman; Stephen Salerno; Li Liu; Jeffrey T. Leek; Tyler McCormick;	University of Washington; Fred Hutchinson Cancer Research Center; Johns Hopkins University;	United States;	Poster	5
-270	From Strategic Narratives to Code-Like Cognitive Models: An LLM-Based Approach in A Sorting Task
--	Hanbo Xie; Hua-Dong Xiong; Robert Wilson;	University of Arizona; Georgia Institute of Technology;	United States;	Poster	0
-271	Let’s Think Dot by Dot: Hidden computation in transformer language models
--	Jacob Pfau; William Merrill; Samuel R. Bowman;	New York University;	United States;	Poster	60
-272	Optimising Calls to Large Language Models with Uncertainty-Based Two-Tier Selection
--	Guillem Ramírez; Alexandra Birch; Ivan Titov;	University of Edinburgh; University of Amsterdam;	United Kingdom; Netherlands;	Poster	10
-273	Source-Aware Training Enables Knowledge Attribution in Language Models
--	Muhammad Khalifa; David Wadden; Emma Strubell; Honglak Lee; Lu Wang; Iz Beltagy; Hao Peng;	University of Michigan; Allen Institute for Artificial Intelligence; University of Illinois Urbana-Champaign; LG;	United States; South Korea;	Poster	19
-274	The Larger the Better? Improved LLM Code-Generation via Budget Reallocation
--	Michael Hassid; Tal Remez; Jonas Gehring; Roy Schwartz; Yossi Adi;	Hebrew University of Jerusalem; Meta;	Israel; United States;	Poster	20
-275	Certifying LLM Safety against Adversarial Prompting
--	Aounon Kumar; Chirag Agarwal; Suraj Srinivas; Aaron Jiaxun Li; Soheil Feizi; Himabindu Lakkaraju;	Harvard University; University of Maryland;	United States;	Poster	197
-276	Redesigning Information Markets in the Era of Language Models
--	Martin Weiss; Nasim Rahaman; Manuel Wuthrich; Yoshua Bengio; Li Erran Li; Bernhard Schölkopf; Christopher Pal;	University of Montreal; Max Planck Institute for Intelligent Systems; Columbia University; Polytechnique Montreal;	Canada; Germany; United States;	Poster	2
-277	On Limitations of the Transformer Architecture
--	Binghui Peng; Srini Narayanan; Christos Papadimitriou;	Columbia University; Google;	United States; United Kingdom;	Poster	39
-278	D2PO: Discriminator-Guided DPO with Response Evaluation Models
--	Prasann Singhal; Nathan Lambert; Scott Niekum; Tanya Goyal; Greg Durrett;	University of Texas at Austin; Allen Institute for Artificial Intelligence; University of Massachusetts Amherst; Princeton University;	United States;	Poster	6
-279	Bot or Human? Detecting ChatGPT Imposters with A Single Question
--	Hong Wang; Xuan Luo; Weizhi Wang; Melody Yu; Xifeng Yan;	University of California, Santa Barbara; Sage Hill School;	United States;	Poster	31
-280	Generating Synthetic Datasets for Few-shot Prompt Tuning
--	Xu Guo; Zilin Du; Boyang Li; Chunyan Miao;	Nanyang Technological University;	Singapore;	Poster	1
-281	LLM-Datasets: An Open Framework for Pretraining Datasets of Large Language Models
--	Malte Ostendorff; Pedro Ortiz Suarez; Lucas Fonseca Lage; Georg Rehm;	German Research Center for Artificial Intelligence; Universität des Saarlandes; Deutsches Forschungszentrum für Künstliche Intelligenz; Common Crawl Foundation;	Germany; United States;	Poster	6
-282	VideoDirectorGPT: Consistent Multi-Scene Video Generation via LLM-Guided Planning
--	Han Lin; Abhay Zala; Jaemin Cho; Mohit Bansal;	University of North Carolina at Chapel Hill; University of North Carolina;	United States;	Poster	75
-283	Fine-grained Hallucination Detection and Editing for Language Models
--	Abhika Mishra; Akari Asai; Vidhisha Balachandran; Yizhong Wang; Graham Neubig; Yulia Tsvetkov; Hannaneh Hajishirzi;	University of Washington; Carnegie Mellon University;	United States;	Poster	80
-284	TPD: Enhancing Student Language Model Reasoning via Principle Discovery and Guidance
--	Haorui Wang; Rongzhi Zhang; Yinghao Li; Lingkai Kong; Yuchen Zhuang; Xiusi Chen; Chao Zhang;	Georgia Institute of Technology; Zhejiang University; University of California, Los Angeles;	United States; China;	Poster	0
-285	Early Weight Averaging meets High Learning Rates for LLM Pre-training
--	Sunny Sanyal; Atula Tejaswi Neerkaje; Jean Kaddour; Abhishek Kumar; sujay sanghavi;	University of Texas at Austin; University College London; Google;	United States; United Kingdom;	Poster	12
-286	Effective Prompt Extraction from Language Models
--	Yiming Zhang; Nicholas Carlini; Daphne Ippolito;	Carnegie Mellon University; Google;	United States;	Poster	35
-287	LMD3: Language Model Data Density Dependence
--	John Kirchenbauer; Garrett Honke; Gowthami Somepalli; Jonas Geiping; Katherine Lee; Daphne Ippolito; Tom Goldstein; David Andre;	University of Maryland; Google; Max Planck Institute for Intelligent Systems; Carnegie Mellon University;	United States; Germany;	Poster	8
-288	Self-Guide: Better Task-Specific Instruction Following via Self-Synthetic Finetuning
--	Chenyang Zhao; Xueying Jia; Vijay Viswanathan; Graham Neubig; Tongshuang Wu;	Tsinghua University; Carnegie Mellon University;	China; United States;	Poster	27
-289	3M-Diffusion: Latent Multi-Modal Diffusion for Language-Guided Molecular Structure Generation
--	Huaisheng Zhu; Teng Xiao; Vasant G Honavar;	Pennsylvania State University;	United States;	Poster	4
-290	Nonparametric Variational Regularisation of Pretrained Transformers
--	Fabio James Fehr; James Henderson;	Idiap Research Institute;	Switzerland;	Poster	1
-291	Implicit Geometry of Next-token Prediction: From Language Sparsity Patterns to Model Representations
--	Yize Zhao; Tina Behnia; Vala Vakilian; Christos Thrampoulidis;	University of British Columbia;	Canada;	Poster	7
-292	Towards Verifiable Text Generation with Symbolic References
--	Lucas Torroba Hennigen; Zejiang Shen; Aniruddha Nrusimha; Bernhard Gapp; David Sontag; Yoon Kim;	Massachusetts Institute of Technology; Good Data Initiative;	United States;	Poster	14
-293	Deductive Beam Search: Decoding Deducible Rationale for Chain-of-Thought Reasoning
--	Tinghui Zhu; Kai Zhang; Jian Xie; Yu Su;	Fudan University; Google; Microsoft;	China; United Kingdom; United States;	Poster	16
-294	Using Natural Language Explanations to Rescale Human Judgments
--	Manya Wadhwa; Jifan Chen; Junyi Jessy Li; Greg Durrett;	University of Texas at Austin; Amazon;	United States;	Poster	12
-295	Unveiling LLMs: The Evolution of Latent Representations in a Dynamic Knowledge Graph
--	Marco Bronzini; Carlo Nicolini; Bruno Lepri; Jacopo Staiano; Andrea Passerini;	University of Trento; Ipazia Spa; Fondazione Bruno Kessler;	Italy; ;	Poster	3
-296	Adaptive Quantization Error Reconstruction for LLMs with Mixed Precision
--	Lin Ou; Jinpeng Xia; Yuewei Zhang; Chuzhan Hao; Hao Henry Wang;	Alibaba Group; Tianjin University;	China;	Poster	1
-297	PAPERCLIP: Associating Astronomical Observations and Natural Language with Multi-Modal Models
--	Siddharth Mishra-Sharma; YIDING SONG; Jesse Thaler;	Harvard University; Harrow School; Massachusetts Institute of Technology;	United States; United Kingdom;	Poster	7
-298	LalaEval: A Holistic Human Evaluation Framework for Domain-Specific Large Language Models
--	Chongyan Sun; Ken Lin; Shiwei Wang; Hulong Wu; Chengfei Fu; Zhen Wang;	Chinese University of Hong Kong; Huolala;	China; ;	Poster	3
-299	Instruction Mining: Instruction Data Selection for Tuning Large Language Models
--	Yihan Cao; Yanbin Kang; Chi Wang; Lichao Sun;	LinkedIn Corporation; Microsoft; Lehigh University;	United States;	Poster	27
+Hummer: Towards Limited Competitive Preference Dataset
+-	Yusen Wu; Li Jiang; Junwu Xiong; Jingqing Ruan; Yichuan Ding; Qingpei Guo; zujie wen; JUN ZHOU; Xiaotie Deng;	Peking University; McGill University; Ant Group; Chinese Academy of Sciences;	China; Canada
+Large Language Model Routing with Benchmark Datasets
+-	Tal Shnitzer; Anthony Ou; Mírian Silva; Kate Soule; Yuekai Sun; Justin Solomon; Neil Thompson; Mikhail Yurochkin;	Broad Institute; Universidade Federal de Minas Gerais; IBM; University of Michigan; Massachusetts Institute of Technology;	United States; Brazil
+Enhancing Adversarial Robustness of LLMs with Analytic Hierarchy Process
+-	Jiahao Zhao; Minzheng Wang; Nan Xu; Yin Luo; Wenji Mao;	Chinese Academy of Sciences;	China
+Beyond Accuracy: Evaluating the Reasoning Behavior of Large Language Models - A Survey
+-	Philipp Mondorf; Barbara Plank;	Ludwig-Maximilians-Universität München; IT University of Copenhagen;	Germany; Denmark
+RQ-RAG: Learning to Refine Queries for Retrieval Augmented Generation
+-	Chi-Min Chan; Chunpu Xu; Ruibin Yuan; Hongyin Luo; Wei Xue; Yike Guo; Jie Fu;	Massachusetts Institute of Technology; Hong Kong University of Science and Technology; Imperial College London;	United States; China; United Kingdom
+AdaMoLE: Fine-Tuning Large Language Models with Adaptive Mixture of Low-Rank Adaptation Experts
+-	Zefang Liu; Jiahua Luo;	JPMorgan Chase & Co.; University of Macau;	United States; China
+An In-Context Learning Agent for Formal Theorem-Proving
+-	Amitayush Thakur; George Tsoukalas; Yeming Wen; Jimmy Xin; Swarat Chaudhuri;	University of Texas at Austin;	United States
+Chinese Tiny LLM: Pretraining a Chinese-Centered Large Language Model
+-	Xeron Du; Zhouliang Yu; Songyang Gao; Ding Pan; Cheng Yuyang; Ziyang Ma; Ruibin Yuan; Xingwei Qu; Jiaheng Liu; Tianyu Zheng; Xinchen Luo; Guorui Zhou; Wenhu Chen; Ge Zhang;	Chinese University of Hong Kong; Fudan University; Peking University; Shanghai Jiao Tong University; Hong Kong University of Science and Technology; Alibaba Group; Kuaishou Technology; University of Waterloo;	China; Canada
+Continual Pre-Training for Cross-Lingual LLM Adaptation: Enhancing Japanese Language Capabilities
+-	Kazuki Fujii; Taishi Nakamura; Mengsay Loem; Hiroki Iida; Masanari Ohi; Kakeru Hattori; Hirai Shota; Sakae Mizuki; Rio Yokota; Naoaki Okazaki;	Tokyo Institute of Technology; Institute of Science, Tokyo; National Institute of Advanced Industrial Science and Technology;	Japan
+Decoupling Noise and Toxic Parameters for Language Model Detoxification by Task Vector Merging
+-	Yongmin Kim; Takeshi Kojima; Yusuke Iwasawa; Yutaka Matsuo;	Tokyo University; University of Tokyo;	Japan
+Evaluating the Adversarial Robustness of Retrieval-Based In-Context Learning for Large Language Models
+-	Simon Chi Lok Yu; Jie He; Pasquale Minervini; Jeff Z. Pan;	University of Edinburgh;	United Kingdom
+How Easily do Irrelevant Inputs Skew the Responses of Large Language Models?
+-	Siye Wu; Jian Xie; Jiangjie Chen; Tinghui Zhu; Kai Zhang; Yanghua Xiao;	Wuhan University; Fudan University; Google;	China; United Kingdom
+IllusionVQA: A Challenging Optical Illusion Dataset for Vision Language Models
+-	Haz Sameen Shahgir; Khondker Salman Sayeed; Abhik Bhattacharjee; Wasi Uddin Ahmad; Yue Dong; Rifat Shahriyar;	Bangladesh University of Engineering and Technology; Amazon; McGill University;	Bangladesh; United States; Canada
+LLM2Vec: Large Language Models Are Secretly Powerful Text Encoders
+-	Parishad BehnamGhader; Vaibhav Adlakha; Marius Mosbach; Dzmitry Bahdanau; Nicolas Chapados; Siva Reddy;	McGill University; Saarland University; ServiceNow;	Canada; Germany; United States
+OpenAgents: An Open Platform for Language Agents in the Wild
+-	Tianbao Xie; Fan Zhou; Zhoujun Cheng; Peng Shi; Luoxuan Weng; Yitao Liu; Toh Jing Hua; Junning Zhao; Qian Liu; Che Liu; Zeyu Liu; Yiheng Xu; Hongjin SU; Dongchan Shin; Caiming Xiong; Tao Yu;	University of Hong Kong; Shanghai Jiao Tong University; Amazon; Zhejiang University; Nanyang Technological University; Tokyo Institute of Technology; TikTok; University of Texas at Austin; Salesforce;	China; United States; Singapore; Japan
+Studying Large Language Model Behaviors Under Context-Memory Conflicts With Real Documents
+-	Evgenii Kortukov; Alexander Rubinstein; Elisa Nguyen; Seong Joon Oh;	Eberhard Karls University of Tübingen;	Germany
+With Greater Text Comes Greater Necessity: Inference-Time Training Helps Long Text Generation
+-	Yan Wang; Dongyang Ma; Deng Cai;	miHoYo; Tencent;	China
+WorkBench: a Benchmark Dataset for Agents in a Realistic Workplace Setting
+-	Olly Styles; Sam Miller; Patricio Cerda-Mardini; Tanaya Guha; Victor Sanchez; Bertie Vidgen;	MindsDB; MindsDB Inc.; University of Glasgow; University of Warwick; MLCommons;	United States; United Kingdom
+Automata-based constraints for language model decoding
+-	Terry Koo; Frederick Liu; Luheng He;	Google;	United States
+CLIN: A Continually Learning Language Agent for Rapid Task Adaptation and Generalization
+-	Bodhisattwa Prasad Majumder; Bhavana Dalvi Mishra; Peter Jansen; Oyvind Tafjord; Niket Tandon; Li Zhang; Chris Callison-Burch; Peter Clark;	Allen Institute for Artificial Intelligence; Microsoft; University of Pennsylvania;	United States
+Exploring the Mystery of Influential Data for Mathematical Reasoning
+-	Xinzhe Ni; Yeyun Gong; Zhibin Gou; yelong shen; Yujiu Yang; Nan Duan; Weizhu Chen;	Microsoft; Tsinghua University;	United States; China
+From Words to Numbers: Your Large Language Model Is Secretly A Capable Regressor When Given In-Context Examples
+-	Robert Vacareanu; Vlad Andrei Negru; Vasile Suciu; Mihai Surdeanu;	University of Arizona; Technical University of Cluj-Napoca;	United States; Romania
+HuatuoGPT-II, One-stage Training for Medical Adaption of LLMs
+-	Junying Chen; Xidong Wang; Ke Ji; Anningzhe Gao; Feng Jiang; Shunian Chen; Hongbo Zhang; Song Dingjie; Wenya Xie; Chuyi Kong; Jianquan Li; Xiang Wan; Haizhou Li; Benyou Wang;	Chinese University of Hong Kong; Southeast University; Shenzhen Research Institute of Big Data; Westlake University; Hong Kong Baptist University; National University of Singapore;	China; Singapore
+Information Guided Regularization for Fine-tuning Language Models
+-	Mandar Sharma; Nikhil Muralidhar; Shengzhe Xu; Raquib Bin Yousuf; Naren Ramakrishnan;	Virginia Tech; Stevens Institute of Technology;	United States
+Large Language Model is not a (Multilingual) Compositional Relation Reasoner
+-	Jinman Zhao; Xueyan Zhang;	University of Toronto; University of Waterloo;	Canada
+Prompt-prompted Adaptive Structured Pruning for Efficient LLM Generation
+-	Harry Dong; Beidi Chen; Yuejie Chi;	Carnegie Mellon University; Meta;	United States
+Scalable Model Editing via Customized Expert Networks
+-	Zihan Yao; Yu He; Tianyu Qi; Ming Li;	Tomorrow Advancing Life
+Stronger Random Baselines for In-Context Learning
+-	Gregory Yauney; David Mimno;	Cornell University;	United States
+Trans-Tokenization and Cross-lingual Vocabulary Transfers: Language Adaptation of LLMs for Low-Resource NLP
+-	François Remy; Pieter Delobelle; Hayastan Avetisyan; Alfiya Khabibullina; Miryam de Lhoneux; Thomas Demeester;	University of Ghent; KU Leuven; German Centre for Higher Education Research and Science Studies; Becode; Katholieke Universiteit Leuven; Ghent University;	Belgium; Germany
+Investigating Instruction Tuning Large Language Models on Graphs
+-	Kerui Zhu; Bo-Wei Huang; Bowen Jin; Yizhu Jiao; Ming Zhong; Kevin Chang; Shou-De Lin; Jiawei Han;	National Taiwan University; University of Illinois Urbana-Champaign;	China; United States
+PhonATe: Impact of Type-Written Phonological Features of African American Language on Generative Language Modeling Tasks
+-	Nicholas Deas; Jessica A Grieser; Xinmeng Hou; Shana Kleiner; Tajh Martin; Sreya Nandanampati; Desmond U. Patton; Kathleen McKeown;	Columbia University; University of Michigan;	United States
+What makes a good metric? Evaluating automatic metrics for text-to-image consistency
+-	Candace Ross; Melissa Hall; Adriana Romero-Soriano; Adina Williams;	Meta;	United States
+AgentKit: Structured LLM Reasoning with Dynamic Graphs
+-	Yue Wu; Yewen Fan; So Yeon Min; Shrimai Prabhumoye; Stephen Marcus McAleer; Ruslan Salakhutdinov; Yonatan Bisk; Yuanzhi Li; Tom Mitchell;	Carnegie Mellon University; NVIDIA; Meta;	United States
+Automatic Pseudo-Harmful Prompt Generation for Evaluating False Refusals in Large Language Models
+-	Bang An; Sicheng Zhu; Ruiyi Zhang; Michael-Andrei Panaitescu-Liess; Yuancheng Xu; Furong Huang;	University of Maryland; Adobe;	United States
+Best-of-Venom: Attacking RLHF by Injecting Poisoned Preference Data
+-	Tim Baumgärtner; Yang Gao; Dana Alon; Donald Metzler;	Google;	United States
+Description-Based Text Similarity
+-	Shauli Ravfogel; Valentina Pyatkin; Amir David Nissan Cohen; Avshalom Manevich; Yoav Goldberg;	Bar-Ilan University; Allen Institute for Artificial Intelligence;	Israel; United States
+DISTFLASHATTN: Distributed Memory-efficient Attention for Long-context LLMs Training
+-	Dacheng Li; Rulin Shao; Anze Xie; Eric P. Xing; Xuezhe Ma; Ion Stoica; Joseph E. Gonzalez; Hao Zhang;	University of Washington; Carnegie Mellon University; University of Southern California; University of California, Berkeley;	United States
+Does RoBERTa Perform Better than BERT in Continual Learning: An Attention Sink Perspective
+-	Xueying Bai; Yifan Sun; Niranjan Balasubramanian;	State University of New York;	United States
+ExoViP: Step-by-step Verification and Exploration with Exoskeleton Modules for Compositional Visual Reasoning
+-	Yuxuan Wang; Alan Yuille; Zhuowan Li; Zilong Zheng;	Beijing Institute for General Artificial Intelligence; Johns Hopkins University;	China; United States
+FUSE-ing Language Models: Zero-Shot Adapter Discovery for Prompt Optimization Across Tokenizers
+-	Joshua Nathaniel Williams; J Zico Kolter;	Carnegie Mellon University;	United States
+Large Language Models are Capable of Offering Cognitive Reappraisal, if Guided
+-	Hongli Zhan; Allen Zheng; Yoon Kyung Lee; Jina Suh; Junyi Jessy Li; Desmond Ong;	University of Texas at Austin; Seoul National University; University of Washington;	United States; South Korea
+PairEval: Open-domain Dialogue Evaluation Metric with Pairwise Comparisons
+-	ChaeHun Park; Minseok Choi; Dohyun Lee; Jaegul Choo;	Korea Advanced Institute of Science and Technology;	South Korea
+Predicting Emergent Capabilities by Finetuning
+-	Charlie Victor Snell; Eric Wallace; Dan Klein; Sergey Levine;	University of California, Berkeley; Google;	United States
+Prompt Public Large Language Models to Synthesize Data for Private On-device Applications
+-	Shanshan Wu; Zheng Xu; Yanxiang Zhang; Yuanbo Zhang; Daniel Ramage;	Google;	United States
+See What LLMs Cannot Answer: A Self-Challenge Framework for Uncovering LLM Weaknesses
+-	Yulong Chen; Yang Liu; Jianhao Yan; Xuefeng Bai; Ming Zhong; Yinghao Yang; Ziyi Yang; Chenguang Zhu; Yue Zhang;	University of Cambridge; Microsoft; Westlake University; Harbin Institute of Technology; University of Illinois Urbana-Champaign; Meta;	United Kingdom; United States; China
+Should We Attend More or Less? Modulating Attention for Fairness
+-	Abdelrahman Zayed; Goncalo Mordido; Samira Shabanian; Sarath Chandar;	University of Montreal; École Polytechnique de Montréal;	Canada
+CA-LoRA: Adapting Existing LoRA for Compressed LLMs to Enable Efficient Multi-Tasking on Personal Devices
+-	Weilin Zhao; Yuxiang Huang; Xu Han; Zhiyuan Liu; Zhengyan Zhang; Kuai Li; Chen Chen; TAO YANG; Maosong Sun;	Tsinghua University; Apple;	China; United States
+CatCode: A Comprehensive Evaluation Framework for LLMs On the Mixture of Code and Text
+-	Zhenru Lin; Yiqun Yao; Yang Yuan;	Tsinghua University; Beijing Academy of Artificial Intelligence;	China
+HGRN2: Gated Linear RNNs with State Expansion
+-	Zhen Qin; Songlin Yang; Weixuan Sun; Xuyang Shen; Dong Li; Weigao Sun; Yiran Zhong;	TapTap; Massachusetts Institute of Technology; Tencent; Shanghai AI Lab; Shanghai Artificial Intelligence Laboratory;	China; United States
+ReAct Meets ActRe: Autonomous Annotation of Agent Trajectories for Contrastive Self-Training
+-	Zonghan Yang; Peng Li; Ming Yan; Ji Zhang; Fei Huang; Yang Liu;	Tsinghua University; Alibaba Group;	China; United States
+Uncovering Intermediate Variables in Transformers using Circuit Probing
+-	Michael A. Lepori; Thomas Serre; Ellie Pavlick;	Brown University; Université de Toulouse;	United States; France
+Keep the Cost Down: A Review on Methods to Optimize LLM’s KV-Cache Consumption
+-	Shi Luohe; Hongyi Zhang; Yao Yao; Zuchao Li; hai zhao;	Wuhan University; Shanghai Jiao Tong University;	China
+IsoBench: Benchmarking Multimodal Foundation Models on Isomorphic Representations
+-	Deqing Fu; Ruohao Guo; Ghazal Khalighinejad; Ollie Liu; Bhuwan Dhingra; Dani Yogatama; Robin Jia; Willie Neiswanger;	University of Southern California; Georgia Institute of Technology; Duke University; Google;	United States; United Kingdom
+AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversations
+-	Qingyun Wu; Gagan Bansal; Jieyu Zhang; Yiran Wu; Beibin Li; Erkang Zhu; Li Jiang; Xiaoyun Zhang; Shaokun Zhang; Jiale Liu; Ahmed Hassan Awadallah; Ryen W White; Doug Burger; Chi Wang;	Microsoft; University of Washington; Pennsylvania State University;	United States
+Empowering Large Language Model Agents through Action Learning
+-	Haiteng Zhao; Chang Ma; Guoyin Wang; Jing Su; Lingpeng Kong; Jingjing Xu; Zhi-Hong Deng; Hongxia Yang;	Peking University; ByteDance; University of Hong Kong;	China
+On Fairness of Low-Rank Adaptation of Large Models
+-	Zhoujie Ding; Ken Liu; Pura Peetathawatchai; Berivan Isik; Sanmi Koyejo;	Stanford University; Google;	United States; United Kingdom
+Personalized Collaborative Fine-Tuning for On-Device Large Language Models
+-	Nicolas Wagner; Dongyang Fan; Martin Jaggi;	EPFL;	Switzerland
+Benchmarks as Microscopes: A Call for Model Metrology
+-	Michael Saxon; Ari Holtzman; Peter West; William Yang Wang; Naomi Saphra;	Advanced Micro Devices, Inc.; Meta; University of Washington; Harvard University; University of California, Santa Barbara;	United States
+Bring Your Own Data! Self-Sensitivity Evaluation for Large Language Models
+-	Neel Jain; Khalid Saifullah; Yuxin Wen; John Kirchenbauer; Manli Shu; Aniruddha Saha; Micah Goldblum; Jonas Geiping; Tom Goldstein;	University of Maryland; University of Maryland, College Park; New York University; Max Planck Institute for Intelligent Systems;	United States; Germany
+Instruction-tuning Aligns LLMs to the Human Brain
+-	Khai Loong Aw; Syrielle Montariol; Badr AlKhamissi; Martin Schrimpf; Antoine Bosselut;	Singapore Management University; EPFL; Swiss Federal Institute of Technology Lausanne;	Singapore; Switzerland
+Multi-FAct: Assessing Factuality of Multilingual LLMs using FActScore
+-	Sheikh Shafayat; Eunsu Kim; Juhyun Oh; Alice Oh;	Korea Advanced Institute of Science and Technology;	South Korea
+The Curious Case of Nonverbal Abstract Reasoning with Multi-Modal Large Language Models
+-	Kian Ahrabian; Zhivar Sourati; Kexuan Sun; Jiarui Zhang; Yifan Jiang; Fred Morstatter; Jay Pujara;	Microsoft; University of Southern California; Amazon;	United States
+Yes, no, maybe? Revisiting language models' response stability under paraphrasing for the assessment of political leaning
+-	Patrick Haller; Jannis Vamvas; Lena Ann Jäger;	University of Zurich; University of Potsdam;	Switzerland; Germany
+From Narratives to Numbers: Valid Inference Using Language Model Predictions from Verbal Autopsies
+-	Shuxian Fan; Adam Visokay; Kentaro Hoffman; Stephen Salerno; Li Liu; Jeffrey T. Leek; Tyler McCormick;	University of Washington; Fred Hutchinson Cancer Research Center; Johns Hopkins University;	United States
+From Strategic Narratives to Code-Like Cognitive Models: An LLM-Based Approach in A Sorting Task
+-	Hanbo Xie; Hua-Dong Xiong; Robert Wilson;	University of Arizona; Georgia Institute of Technology;	United States
+Let’s Think Dot by Dot: Hidden computation in transformer language models
+-	Jacob Pfau; William Merrill; Samuel R. Bowman;	New York University;	United States
+Optimising Calls to Large Language Models with Uncertainty-Based Two-Tier Selection
+-	Guillem Ramírez; Alexandra Birch; Ivan Titov;	University of Edinburgh; University of Amsterdam;	United Kingdom; Netherlands
+Source-Aware Training Enables Knowledge Attribution in Language Models
+-	Muhammad Khalifa; David Wadden; Emma Strubell; Honglak Lee; Lu Wang; Iz Beltagy; Hao Peng;	University of Michigan; Allen Institute for Artificial Intelligence; University of Illinois Urbana-Champaign; LG;	United States; South Korea
+The Larger the Better? Improved LLM Code-Generation via Budget Reallocation
+-	Michael Hassid; Tal Remez; Jonas Gehring; Roy Schwartz; Yossi Adi;	Hebrew University of Jerusalem; Meta;	Israel; United States
+Certifying LLM Safety against Adversarial Prompting
+-	Aounon Kumar; Chirag Agarwal; Suraj Srinivas; Aaron Jiaxun Li; Soheil Feizi; Himabindu Lakkaraju;	Harvard University; University of Maryland;	United States
+Redesigning Information Markets in the Era of Language Models
+-	Martin Weiss; Nasim Rahaman; Manuel Wuthrich; Yoshua Bengio; Li Erran Li; Bernhard Schölkopf; Christopher Pal;	University of Montreal; Max Planck Institute for Intelligent Systems; Columbia University; Polytechnique Montreal;	Canada; Germany; United States
+On Limitations of the Transformer Architecture
+-	Binghui Peng; Srini Narayanan; Christos Papadimitriou;	Columbia University; Google;	United States; United Kingdom
+D2PO: Discriminator-Guided DPO with Response Evaluation Models
+-	Prasann Singhal; Nathan Lambert; Scott Niekum; Tanya Goyal; Greg Durrett;	University of Texas at Austin; Allen Institute for Artificial Intelligence; University of Massachusetts Amherst; Princeton University;	United States
+Bot or Human? Detecting ChatGPT Imposters with A Single Question
+-	Hong Wang; Xuan Luo; Weizhi Wang; Melody Yu; Xifeng Yan;	University of California, Santa Barbara; Sage Hill School;	United States
+Generating Synthetic Datasets for Few-shot Prompt Tuning
+-	Xu Guo; Zilin Du; Boyang Li; Chunyan Miao;	Nanyang Technological University;	Singapore
+LLM-Datasets: An Open Framework for Pretraining Datasets of Large Language Models
+-	Malte Ostendorff; Pedro Ortiz Suarez; Lucas Fonseca Lage; Georg Rehm;	German Research Center for Artificial Intelligence; Universität des Saarlandes; Deutsches Forschungszentrum für Künstliche Intelligenz; Common Crawl Foundation;	Germany; United States
+VideoDirectorGPT: Consistent Multi-Scene Video Generation via LLM-Guided Planning
+-	Han Lin; Abhay Zala; Jaemin Cho; Mohit Bansal;	University of North Carolina at Chapel Hill; University of North Carolina;	United States
+Fine-grained Hallucination Detection and Editing for Language Models
+-	Abhika Mishra; Akari Asai; Vidhisha Balachandran; Yizhong Wang; Graham Neubig; Yulia Tsvetkov; Hannaneh Hajishirzi;	University of Washington; Carnegie Mellon University;	United States
+TPD: Enhancing Student Language Model Reasoning via Principle Discovery and Guidance
+-	Haorui Wang; Rongzhi Zhang; Yinghao Li; Lingkai Kong; Yuchen Zhuang; Xiusi Chen; Chao Zhang;	Georgia Institute of Technology; Zhejiang University; University of California, Los Angeles;	United States; China
+Early Weight Averaging meets High Learning Rates for LLM Pre-training
+-	Sunny Sanyal; Atula Tejaswi Neerkaje; Jean Kaddour; Abhishek Kumar; sujay sanghavi;	University of Texas at Austin; University College London; Google;	United States; United Kingdom
+Effective Prompt Extraction from Language Models
+-	Yiming Zhang; Nicholas Carlini; Daphne Ippolito;	Carnegie Mellon University; Google;	United States
+LMD3: Language Model Data Density Dependence
+-	John Kirchenbauer; Garrett Honke; Gowthami Somepalli; Jonas Geiping; Katherine Lee; Daphne Ippolito; Tom Goldstein; David Andre;	University of Maryland; Google; Max Planck Institute for Intelligent Systems; Carnegie Mellon University;	United States; Germany
+Self-Guide: Better Task-Specific Instruction Following via Self-Synthetic Finetuning
+-	Chenyang Zhao; Xueying Jia; Vijay Viswanathan; Graham Neubig; Tongshuang Wu;	Tsinghua University; Carnegie Mellon University;	China; United States
+3M-Diffusion: Latent Multi-Modal Diffusion for Language-Guided Molecular Structure Generation
+-	Huaisheng Zhu; Teng Xiao; Vasant G Honavar;	Pennsylvania State University;	United States
+Nonparametric Variational Regularisation of Pretrained Transformers
+-	Fabio James Fehr; James Henderson;	Idiap Research Institute;	Switzerland
+Implicit Geometry of Next-token Prediction: From Language Sparsity Patterns to Model Representations
+-	Yize Zhao; Tina Behnia; Vala Vakilian; Christos Thrampoulidis;	University of British Columbia;	Canada
+Towards Verifiable Text Generation with Symbolic References
+-	Lucas Torroba Hennigen; Zejiang Shen; Aniruddha Nrusimha; Bernhard Gapp; David Sontag; Yoon Kim;	Massachusetts Institute of Technology; Good Data Initiative;	United States
+Deductive Beam Search: Decoding Deducible Rationale for Chain-of-Thought Reasoning
+-	Tinghui Zhu; Kai Zhang; Jian Xie; Yu Su;	Fudan University; Google; Microsoft;	China; United Kingdom; United States
+Using Natural Language Explanations to Rescale Human Judgments
+-	Manya Wadhwa; Jifan Chen; Junyi Jessy Li; Greg Durrett;	University of Texas at Austin; Amazon;	United States
+Unveiling LLMs: The Evolution of Latent Representations in a Dynamic Knowledge Graph
+-	Marco Bronzini; Carlo Nicolini; Bruno Lepri; Jacopo Staiano; Andrea Passerini;	University of Trento; Ipazia Spa; Fondazione Bruno Kessler;	Italy; 
+Adaptive Quantization Error Reconstruction for LLMs with Mixed Precision
+-	Lin Ou; Jinpeng Xia; Yuewei Zhang; Chuzhan Hao; Hao Henry Wang;	Alibaba Group; Tianjin University;	China
+PAPERCLIP: Associating Astronomical Observations and Natural Language with Multi-Modal Models
+-	Siddharth Mishra-Sharma; YIDING SONG; Jesse Thaler;	Harvard University; Harrow School; Massachusetts Institute of Technology;	United States; United Kingdom
+LalaEval: A Holistic Human Evaluation Framework for Domain-Specific Large Language Models
+-	Chongyan Sun; Ken Lin; Shiwei Wang; Hulong Wu; Chengfei Fu; Zhen Wang;	Chinese University of Hong Kong; Huolala;	China; 
+Instruction Mining: Instruction Data Selection for Tuning Large Language Models
+-	Yihan Cao; Yanbin Kang; Chi Wang; Lichao Sun;	LinkedIn Corporation; Microsoft; Lehigh University;	United States

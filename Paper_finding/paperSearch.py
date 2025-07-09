@@ -53,6 +53,10 @@ weighted_patterns = [
   (r"\bcontextual embeddings\b", 55),
   (r"\bpretrained language model(s)?\b", 55),
   (r"\btoken encoder(s)?\b", 50),
+  (r"\btext encoder(s)?\b", 50),
+  (r"\btext representation(s)?\b", 50),
+  (r"\btext feature extraction\b", 50),
+  (r"\bfront[-]end(s)?\b", 45),
   (r"\blabeling\b", 30),
   
   # Useful techniques for later
@@ -89,12 +93,27 @@ def find_and_score_titles(base_path, weighted_patterns, output_file=None, exclud
   theme_matches = []
   for source, titles in papers_by_file.items():
     for title in titles:
+      #TODO try to normalize the title, but they can vary from source to source, include keywords for icassp for example
       score = sum(weight for pattern, weight in weighted_patterns if pattern.search(title))
       if score > 0:
         theme_matches.append((score, source, title))
+
+  # Filter out excluded sources
+  theme_matches = list(filter(lambda x: x[1] not in EXCLUDED_SOURCES, theme_matches))
+
+  # Remove duplicate titles while keeping highest scoring one
+  seen_titles = set()
+  unique_matches = []
+  for entry in theme_matches:
+    if entry[2] not in seen_titles:
+      seen_titles.add(entry[2])
+      unique_matches.append(entry)
+
+  theme_matches = unique_matches
   theme_matches.sort(reverse=True)  # Sort descending by score
-
-
+  if not theme_matches:
+    print("No matches found for the specified themes.")
+    return
   print(f"Found {len(theme_matches)} papers matching the themes.")
   for score, source, title in theme_matches[:5]:
       print(f"[{score}] {source} - {title}")
