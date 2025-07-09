@@ -19,7 +19,7 @@ def loading_papers_files(base_path, exclude_sources):
 
 
 
-def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_sources, compiled_boost_patterns=None, model_name="all-MiniLM-L6-v2", research_goal=None):
+def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_sources, compiled_boost_patterns=None, model_name="all-MiniLM-L6-v2", research_goal=None, semantic_threshold=0.3):
   """
   Scores paper titles based on compiled patterns and semantic matching.
   Args:
@@ -30,6 +30,7 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
       compiled_boost_patterns (list, optional): A list of tuples containing compiled regex patterns and their bonus scores.
       model_name (str, optional): The name of the SentenceTransformer model to use for semantic scoring.
       research_goal (str, optional): The research goal to use for semantic scoring.
+      semantic_threshold (float, optional): The threshold for semantic similarity. Defaults to 0.3.
   Returns:
       list: A list of tuples containing the score, source file name, and title of matched papers.
   """
@@ -73,7 +74,7 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
         title_embeddings = model.encode(titles, convert_to_tensor=True)
         similarities = util.cos_sim(goal_embedding, title_embeddings)[0]
         for score, title in zip(similarities.tolist(), titles):
-            if score > 0.3:  # semantic threshold
+            if score > semantic_threshold:
                 theme_matches.append((score, source, title))
       print(f"Found {len(theme_matches)} semantically matched papers.")
     
@@ -89,16 +90,15 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
 
       for source, titles in papers_by_file.items():
           title_embeddings = model.encode(titles, convert_to_tensor=True)
-          similarities = util.cos_sim(goal_embedding, title_embeddings)[0]
+          similarities = 100 * util.cos_sim(goal_embedding, title_embeddings)[0]
           for idx, (title, similarity_score) in enumerate(zip(titles, similarities.tolist())):
               pattern_score = sum(weight for pattern, weight in compiled_weighted_patterns if pattern.search(title))
               for pattern, bonus in compiled_boost_patterns:
                   if pattern.search(title):
                       pattern_score += bonus
-              # TODO tweak this threshold and the combined score formula
-              if pattern_score == 0 and similarity_score < 0.3:
+              if pattern_score == 0 and similarity_score < semantic_threshold:
                   continue
-              combined_score = 0.7 * pattern_score + 0.3 * similarity_score * 100  # normalize similarity
+              combined_score = 0.7 * pattern_score + 0.3 * similarity_score  # normalize similarity
               if combined_score > 0:
                   theme_matches.append((combined_score, source, title))
       print(f"Found {len(theme_matches)} matches using combined scoring.")
@@ -158,27 +158,28 @@ def saving_scores_to_file(theme_matches, output_file, base_path, categorize=True
 
 
 def find_and_score_titles(base_path, weighted_patterns, boost_patterns=None, output_file=None, EXCLUDE_SOURCES = ("theme_matches", "output_", "log_"), categorize=True, CATEGORIES=None
-                          , scoring_type='patterns', research_goal=None, model_name=None):
+                          , scoring_type='patterns', research_goal=None, model_name=None, semantic_threshold=0.3):
   """
   Finds and scores paper titles based on weighted patterns from text files in a specified directory.
 
   Args:
-      base_path (str): The path to the directory containing text files with paper titles.
-      weighted_patterns (list of tuples): A list of tuples where each tuple contains a regex pattern 
-                                          and its associated weight for scoring.
-      boost_patterns (list of tuples, optional): A list of tuples where each tuple contains a regex pattern
-                                                and a bonus score to boost the score of titles that match these patterns.
-      output_file (str, optional): The name of the file to save the scored paper titles. Defaults to 'theme_matches.txt'.
-      EXCLUDE_SOURCES (tuple, optional): A tuple of file name prefixes to exclude from processing. Defaults to 
-                                          ("theme_matches", "output_", "log_").
-      categorize (bool, optional): Whether to categorize the scores into predefined categories. Defaults to True.
-      CATEGORIES (dict, optional): A dictionary defining categories and their score thresholds for categorization
-                                          (e.g., {"high": 200, "medium": 80, "low": 10}).
-      scoring_type (str, optional): The type of scoring to use. Options are 'patterns', 'semantic', or 'combined'.
-                                    Defaults to 'patterns'.
-      research_goal (str, optional): The research goal to use for semantic scoring. Required if scoring_type is 'semantic' or 'combined'.
-      model_name (str, optional): The name of the SentenceTransformer model to use for semantic scoring. Required if scoring_type is 'semantic' or 'combined'.
-
+    base_path (str): The path to the directory containing text files with paper titles.
+    weighted_patterns (list of tuples): A list of tuples where each tuple contains a regex pattern 
+                                        and its associated weight for scoring.
+    boost_patterns (list of tuples, optional): A list of tuples where each tuple contains a regex pattern
+                                              and a bonus score to boost the score of titles that match these patterns.
+    output_file (str, optional): The name of the file to save the scored paper titles. Defaults to 'theme_matches.txt'.
+    EXCLUDE_SOURCES (tuple, optional): A tuple of file name prefixes to exclude from processing. Defaults to 
+                                        ("theme_matches", "output_", "log_").
+    categorize (bool, optional): Whether to categorize the scores into predefined categories. Defaults to True.
+    CATEGORIES (dict, optional): A dictionary defining categories and their score thresholds for categorization
+                                        (e.g., {"high": 200, "medium": 80, "low": 10}).
+    scoring_type (str, optional): The type of scoring to use. Options are 'patterns', 'semantic', or 'combined'.
+                                  Defaults to 'patterns'.
+    research_goal (str, optional): The research goal to use for semantic scoring. Required if scoring_type is 'semantic' or 'combined'.
+    model_name (str, optional): The name of the SentenceTransformer model to use for semantic scoring. Required if scoring_type is 'semantic' or 'combined'.
+    semantic_threshold (float, optional): The threshold for semantic similarity. Defaults to 0.3.
+      
   Returns:
       None. Outputs the results by printing and saving scored titles to a text file.
 
@@ -204,7 +205,7 @@ def find_and_score_titles(base_path, weighted_patterns, boost_patterns=None, out
                           compiled_weighted_patterns=compiled_weighted_patterns, 
                           compiled_boost_patterns=compiled_boost_patterns,
                           exclude_sources=EXCLUDE_SOURCES,
-                          model_name=model_name, research_goal=research_goal)
+                          model_name=model_name, research_goal=research_goal, semantic_threshold=semantic_threshold)
 
 
   if not theme_matches:
@@ -221,98 +222,97 @@ def find_and_score_titles(base_path, weighted_patterns, boost_patterns=None, out
 
 
 
-if __name__ == "__main__":
-  PATH = "C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding"
-  OUTPUT = "theme_matches.txt"     
-  EXCLUDED_SOURCES = ("theme_matches", "output_", "log_") #("icassp2024", "icassp2025")
-  WEIGHTED_PATTERNS = [
-    # General themes
-    (r"\bmaltese\b", 100),
-    (r"\btts\b|\btext-to-speech\b|\bspeech synthesis\b|\bmultilingual TTS\b|\bzero[- ]shot TTS\b|\bcross-lingual TTS\b", 80),
-    (r"\blow[- ]resource\b|\bunder[- ]resourced\b|\blow[- ]resource languages\b|\blanguages with limited resources\b", 95),
-    (r"\bdataset\b.*(maltese|low[- ]resource|under[- ]resourced)", 90),
-    (r"\bdata scarcity\b|\blow data availability\b", 88),
 
-    # Specific themes
-    (r"\btransfer learning\b|\blanguage transfer\b", 87),
-    (r"\bmultilingual\b|\bcross[- ]lingual\b|\bcode-switching\b", 73),
-    (r"\bspeech foundation model\b|\baudio[- ]language model\b", 60),
-    (r"\bfoundational model(s)?\b", 58),
-    (r"\bfew[- ]shot\b|\blimited data\b", 65),
-    (r"\bzero[- ]shot\b", 48),
+PATH = "C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding"
+OUTPUT = "theme_matches.txt"     
+EXCLUDED_SOURCES = ("theme_matches", "output_", "log_") #("icassp2024", "icassp2025")
+WEIGHTED_PATTERNS = [
+  # General themes
+  (r"\bmaltese\b", 100),
+  (r"\btts\b|\btext-to-speech\b|\bspeech synthesis\b|\bmultilingual TTS\b|\bzero[- ]shot TTS\b|\bcross-lingual TTS\b", 80),
+  (r"\blow[- ]resource\b|\bunder[- ]resourced\b|\blow[- ]resource languages\b|\blanguages with limited resources\b", 95),
+  (r"\bdataset\b.*(maltese|low[- ]resource|under[- ]resourced)", 90),
+  (r"\bdata scarcity\b|\blow data availability\b", 88),
 
-    # Improving models
-    (r"\b(domain|task|language) adaptation\b|\b(domain|task|language) extension\b", 86),
-    (r"\bself[- ]supervised\b|\bself[- ]training\b|\bpseudo[- ]labeling\b", 35),
-    (r"\binstruction tuning\b|\bprompt tuning\b", 30),
-    # (r"\btraining data\b|\btraining efficiency\b", 7),
-    # (r"\bdata efficiency\b|\blabel efficiency\b", 3),
+  # Specific themes
+  (r"\btransfer learning\b|\blanguage transfer\b", 87),
+  (r"\bmultilingual\b|\bcross[- ]lingual\b|\bcode-switching\b", 73),
+  (r"\bspeech foundation model\b|\baudio[- ]language model\b", 60),
+  (r"\bfoundational model(s)?\b", 58),
+  (r"\bfew[- ]shot\b|\blimited data\b", 65),
+  (r"\bzero[- ]shot\b", 48),
 
-    # Models
-    (r"\bwhisper\b", 80),
-    (r"\blo[- ]rank adaptation\b|\bLoRA\b", 70),
-    (r"\bdiffusion (model|transformer|TTS)\b", 50),
+  # Improving models
+  (r"\b(domain|task|language) adaptation\b|\b(domain|task|language) extension\b", 86),
+  (r"\bself[- ]supervised\b|\bself[- ]training\b|\bpseudo[- ]labeling\b", 35),
+  (r"\binstruction tuning\b|\bprompt tuning\b", 30),
+  # (r"\btraining data\b|\btraining efficiency\b", 7),
+  # (r"\bdata efficiency\b|\blabel efficiency\b", 3),
 
-    # Text processing
-    (r"\btext[- ]to[- ]phoneme\b", 85),
-    (r"\btext normalization\b", 85),
-    (r"\bgrapheme[- ]to[- ]phoneme\b|\bG2P\b", 85),
-    (r"\btext preprocessing\b", 75),
-    (r"\blinguistic pre[- ]processing\b", 75),
-    (r"\bTTS alignment\b|\btext[- ]to[- ]speech alignment\b", 75),
-    (r"\btext analysis pipeline\b", 70),
-    (r"\bpart[- ]of[- ]speech tagging\b|\bPOS tagging\b", 70),
-    (r"\bsyntactic parsing\b", 70),
-    (r"\butterance segmentation\b", 70),
-    (r"\btokenization\b", 65),
-    (r"\bsubword segmentation\b", 65),
-    (r"\bsemantic parsing\b", 65),
-    (r"\bdependency parsing\b", 65),
-    (r"\bbyte[- ]pair encoding\b|\bBPE\b", 60),
-    (r"\bwordpiece\b", 60),
-    (r"\bsentencepiece\b", 60),
-    (r"\blatent representation(s)?\b", 60),
-    (r"\bconstituency parsing\b", 60),
-    (r"\bnamed entity recognition\b|\bNER\b", 60),
-    (r"\bcontextual embeddings\b", 55),
-    (r"\bpretrained language model(s)?\b", 55),
-    (r"\btoken encoder(s)?\b", 50),
-    (r"\btext encoder(s)?\b", 50),
-    (r"\btext representation(s)?\b", 50),
-    (r"\btext feature extraction\b", 50),
-    (r"\bfront[-]end(s)?\b", 45),
-    (r"\blabeling\b", 30),
-    
-    # Useful techniques for later
-    (r"\bgeneralization\b", 65),
-    (r"\brobust( training| models| generalization)?\b", 64),
-    (r"\bdata augmentation\b", 55),
-    (r"\bcompositional generalization\b", 23),
-    (r"\bbenchmark\b", 40),
-    (r"\bontology\b", 12),
-  ]
+  # Models
+  (r"\bwhisper\b", 80),
+  (r"\blo[- ]rank adaptation\b|\bLoRA\b", 70),
+  (r"\bdiffusion (model|transformer|TTS)\b", 50),
 
-  # Boost patterns for specific themes associations
-  boost_patterns = [
-    (r"(maltese|low-resource).*(tts|speech synthesis)", 30),
-    (r"(text-to-speech).*(alignment|tokenization)", 20),
-    # TODO
-  ]
+  # Text processing
+  (r"\btext[- ]to[- ]phoneme\b", 85),
+  (r"\btext normalization\b", 85),
+  (r"\bgrapheme[- ]to[- ]phoneme\b|\bG2P\b", 85),
+  (r"\btext preprocessing\b", 75),
+  (r"\blinguistic pre[- ]processing\b", 75),
+  (r"\bTTS alignment\b|\btext[- ]to[- ]speech alignment\b", 75),
+  (r"\btext analysis pipeline\b", 70),
+  (r"\bpart[- ]of[- ]speech tagging\b|\bPOS tagging\b", 70),
+  (r"\bsyntactic parsing\b", 70),
+  (r"\butterance segmentation\b", 70),
+  (r"\btokenization\b", 65),
+  (r"\bsubword segmentation\b", 65),
+  (r"\bsemantic parsing\b", 65),
+  (r"\bdependency parsing\b", 65),
+  (r"\bbyte[- ]pair encoding\b|\bBPE\b", 60),
+  (r"\bwordpiece\b", 60),
+  (r"\bsentencepiece\b", 60),
+  (r"\blatent representation(s)?\b", 60),
+  (r"\bconstituency parsing\b", 60),
+  (r"\bnamed entity recognition\b|\bNER\b", 60),
+  (r"\bcontextual embeddings\b", 55),
+  (r"\bpretrained language model(s)?\b", 55),
+  (r"\btoken encoder(s)?\b", 50),
+  (r"\btext encoder(s)?\b", 50),
+  (r"\btext representation(s)?\b", 50),
+  (r"\btext feature extraction\b", 50),
+  (r"\bfront[-]end(s)?\b", 45),
+  (r"\blabeling\b", 30),
+  
+  # Useful techniques for later
+  (r"\bgeneralization\b", 65),
+  (r"\brobust( training| models| generalization)?\b", 64),
+  (r"\bdata augmentation\b", 55),
+  (r"\bcompositional generalization\b", 23),
+  (r"\bbenchmark\b", 40),
+  (r"\bontology\b", 12),
+]
 
-  research_goal = "low-resource multilingual text-to-speech synthesis using phoneme modeling and robust adaptation"
+# Boost patterns for specific themes associations
+boost_patterns = [
+  (r"(maltese|low-resource).*(tts|speech synthesis)", 30),
+  (r"(text-to-speech).*(alignment|tokenization)", 20),
+]
 
-  CATEGORIES = {
-    "very high": 200,
-    "high": 140,
-    "medium": 80,
-    "low-medium": 50,
-    "low": 40,
-    "very low": 10,
-    "uncategorized": 0
-  }
+research_goal = "low-resource multilingual text-to-speech synthesis using phoneme modeling and robust adaptation"
+
+CATEGORIES = {
+  "very high": 200,
+  "high": 140,
+  "medium": 80,
+  "low-medium": 50,
+  "low": 40,
+  "very low": 10,
+  "uncategorized": 0
+}
 
 
-  find_and_score_titles(base_path=PATH, output_file= OUTPUT, EXCLUDE_SOURCES=EXCLUDED_SOURCES, 
-                        weighted_patterns=WEIGHTED_PATTERNS, boost_patterns=boost_patterns, 
-                        categorize=True, CATEGORIES=CATEGORIES, 
-                        research_goal=research_goal, model_name="all-MiniLM-L6-v2", scoring_type='re')
+find_and_score_titles(base_path=PATH, output_file= OUTPUT, EXCLUDE_SOURCES=EXCLUDED_SOURCES, 
+                      weighted_patterns=WEIGHTED_PATTERNS, boost_patterns=boost_patterns, 
+                      categorize=True, CATEGORIES=CATEGORIES, 
+                      research_goal=research_goal, model_name="all-MiniLM-L6-v2", scoring_type='patterns')
