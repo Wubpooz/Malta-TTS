@@ -1,9 +1,12 @@
 [250] coling2025 - CUTE: A Multilingual Dataset for Enhancing Cross-Lingual Knowledge Transfer in Low-Resource Languages
 [238] acl2024 - UniBridge: A Unified Approach to Cross-Lingual Transfer Learning for Low-Resource Languages
 [236] coling2025 - Towards Cross-Lingual Audio Abuse Detection in Low-Resource Setting with Few-Shot Learning
+[223] colm2025 - Trans-Tokenization and Cross-lingual Vocabulary Transfers: Language Adaptation of LLMs for Low-Resource NLP
+[223] colm2024 - 234	Trans-Tokenization and Cross-lingual Vocabulary Transfers: Language Adaptation of LLMs for Low-Resource NLP
 [215] emnlp2024 - Zero-Shot Cross-Lingual NER Using Phonemic Representations for Low-Resource Languages
 [215] coling2025 - Cross-Lingual Knowledge Projection and Knowledge Enhancement for Zero-Shot Question Answering in Low-Resource Languages
 [215] acl2024 - Zero-Shot Cross-Lingual Reranking with Large Language Models for Low-Resource Languages
+[204] coling2025 - (ID: 109) Leveraging Multilingual Models for Robust Grammatical Error Correction Across Low-Resource Languages
 [200] coling2025 - VoxpopuliTTS: a large-scale multilingual TTS corpus for zero-shot speech generation
 [200] coling2025 - Benchmark Creation for Aspect-Based Sentiment Analysis in Low-Resource Odia Language and Evaluation through Fine-Tuning of Multilingual Models
 [185] naacl2024 - IndiSentiment140: Sentiment Analysis Dataset for Indian Languages with Emphasis on Low-Resource Languages using Machine Translation Saurabh Kumar, Ranbir Singh Sanasam, Sukumar Nandi
@@ -34,6 +37,8 @@
 [141] naacl2024 - BUFFET: Benchmarking Large Language Models for Few-shot Cross-lingual Transfer Akari Asai, Sneha Kudugunta, Xinyan Velocity Yu, Terra Blevins, Hila Gonen, Machel Reid, Yulia Tsvetkov, Sebastian Ruder, Hannaneh Hajishirzi
 [141] acl2024 - Argument Mining in Data Scarce Settings: Cross-lingual Transfer and Few-shot Techniques
 [139] coling2025 - Few-shot domain adaptation for named-entity recognition via joint constrained k-means and subspace selection
+[138] colm2025 - StyleTalker: Finetuning Audio Language Model and Style-Based Text-to-Speech Model for Fast Spoken Dialogue Generation
+[138] colm2024 - 144	StyleTalker: Finetuning Audio Language Model and Style-Based Text-to-Speech Model for Fast Spoken Dialogue Generation
 [135] naacl2025 - kNN Retrieval for Simple and Effective Zero-Shot Multi-speaker Text-to-Speech
 [135] naacl2025 - StyleTTS-ZS: Efficient High-Quality Zero-Shot Text-to-Speech Synthesis with Distilled Time-Varying Style Diffusion
 [135] naacl2024 - FedLFC: Towards Efficient Federated Multilingual Modeling with LoRA-based Language Family Clustering Zhihan Guo, Yifei Zhang, Zhuo Zhang, Zenglin Xu, Irwin King
@@ -59,6 +64,8 @@
 [120] emnlp2024 - Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment
 [120] emnlp2024 - An LLM-Enabled Knowledge Elicitation and Retrieval Framework for Zero-Shot Cross-Lingual Stance Identification
 [120] emnlp2024 - Advancing Cross-Lingual Entity Alignment with Large Language Models: Tailored Sample Segmentation and Zero-Shot Prompts
+[120] colm2025 - Exploiting the Potential of Seq2Seq Models as Robust Few-Shot Learners
+[120] colm2024 - 87	Exploiting the Potential of Seq2Seq Models as Robust Few-Shot Learners
 [120] coling2025 - ColBERT-XM: A Modular Multi-Vector Representation Model for Zero-Shot Multilingual Information Retrieval
 [118] naacl2024 - VLUE: A New Benchmark and Multi-task Knowledge Transfer Learning for Vietnamese Natural Language Understanding Phong Nguyen-Thuan Do, Son Quoc Tran, Phu Gia Hoang, Kiet Van Nguyen, Ngan Luu-Thuy Nguyen
 [116] coling2025 - Semantic Captioning: Benchmark Dataset and Graph-Aware Few-Shot In-Context Learning for SQL2Text
@@ -95,6 +102,8 @@
 [96] naacl2024 - PromptFix: Few-shot Backdoor Removal via Adversarial Prompt Tuning Tianrong Zhang, Zhaohan Xi, Ting Wang, Prasenjit Mitra, Jinghui Chen
 [96] naacl2024 - FPT: Feature Prompt Tuning for Few-shot Readability Assessment Ziyang Wang, Sanwoo Lee, Hsiu-Yuan Huang, Yunfang Wu
 [96] emnlp2024 - (Paper ID: 179) Improving Few-Shot Cross-Domain Named Entity Recognition by Instruction Tuning a Word-Embedding based Retrieval Augmented Large Language Model
+[96] colm2025 - Generating Synthetic Datasets for Few-shot Prompt Tuning
+[96] colm2024 - 280	Generating Synthetic Datasets for Few-shot Prompt Tuning
 [95] naacl2025 - ProverbEval: Exploring LLM Evaluation Challenges for Low-resource Language Understanding
 [95] naacl2025 - Pipeline Analysis for Developing Instruct LLMs in Low-Resource Languages: A Case Study on Basque
 [95] naacl2025 - PICLe: Pseudo-annotations for In-Context Learning in Low-Resource Named Entity Detection
@@ -144,6 +153,7 @@
 [95] coling2025 - Dialectal and Low Resource Machine Translation for Aromanian
 [95] coling2025 - CycleOIE: A Low-Resource Training Framework For Open Information Extraction
 [95] coling2025 - Cross-Dialect Information Retrieval: Information Access in Low-Resource and High Variance Languages
+[95] coling2025 - (ID: 133) DaCoM: Strategies to Construct Domain-specific Low-resource Language Machine Translation Dataset
 [95] acl2024 - POMP: Probability-driven Meta-graph Prompter for LLMs in Low-resource Unsupervised Neural Machine Translation
 [95] acl2024 - Exploring Conditional Variational Mechanism to Pinyin Input Method for Addressing One-to-Many Mappings in Low-Resource Scenarios
 [95] acl2024 - Democratizing LLMs for Low-Resource Languages by Leveraging their English Dominant Abilities with Linguistically-Diverse Prompts
@@ -174,6 +184,8 @@
 [80] emnlp2024 - Muting Whisper: A Universal Acoustic Adversarial Attack on Speech Foundation Models
 [80] emnlp2024 - Fast Streaming Transducer ASR Prototyping via Knowledge Distillation with Whisper
 [80] emnlp2024 - Bahasa Harmony: A Comprehensive Dataset for Bahasa Text-to-Speech Synthesis with Discrete Codec Modeling of EnGen-TTS.
+[80] colm2025 - LoraHub: Efficient Cross-Task Generalization via Dynamic LoRA Composition
+[80] colm2024 - 116	LoraHub: Efficient Cross-Task Generalization via Dynamic LoRA Composition
 [80] coling2025 - ProsodyFlow: High-fidelity Text-to-Speech through Conditional Flow Matching and Prosody Modeling with Large Speech Language Models
 [80] coling2025 - DiffStyleTTS: Diffusion-based Hierarchical Prosody Modeling for Text-to-Speech with Diverse and Controllable Styles
 [80] acl2024 - SpikeVoice: High-Quality Text-to-Speech Via Efficient Spiking Neural Network
@@ -184,6 +196,8 @@
 [78] emnlp2024 - Mitigating Catastrophic Forgetting in Language Transfer via Model Merging
 [78] emnlp2024 - Less is More: Parameter-Efficient Selection of Intermediate Tasks for Transfer Learning
 [78] emnlp2024 - Advancing Adversarial Suffix Transfer Learning on Aligned Large Language Models
+[78] colm2025 - Tabular Transfer Learning via Prompting LLMs
+[78] colm2024 - 202	Tabular Transfer Learning via Prompting LLMs
 [76] naacl2025 - SynthDetoxM: Modern LLMs are Few-Shot Parallel Detoxification Data Annotators
 [76] naacl2025 - Prototype Tuning: A Meta-Learning Approach for Few-Shot Document-Level Relation Extraction with Large Language Models
 [76] naacl2025 - Mutual Reinforcement of LLM Dialogue Synthesis and Summarization Capabilities for Few-Shot Dialogue Summarization
@@ -220,16 +234,21 @@
 [76] emnlp2024 - Context-Aware Adapter Tuning for Few-Shot Relation Learning in Knowledge Graphs
 [76] emnlp2024 - Bridging Modalities: Enhancing Cross-Modality Hate Speech Detection with Few-Shot In-Context Learning
 [76] emnlp2024 - A Coarse-to-Fine Prototype Learning Approach for Multi-Label Few-Shot Intent Detection
+[76] colm2025 - LAMPO: Large Language Models as Preference Machines for Few-shot Ordinal Classification
+[76] colm2024 - 200	LAMPO: Large Language Models as Preference Machines for Few-shot Ordinal Classification
 [76] coling2025 - Retrieval-Augmented Generation for Large Language Model based Few-shot Chinese Spell Checking
 [76] coling2025 - Partial Order-centered Hyperbolic Representation Learning for Few-shot Relation Extraction
 [76] coling2025 - Dynamic-prototype Constrastive Fine-tuning for Continual Few-shot Relation Extraction with Unseen Relation Detection
 [76] coling2025 - BANER: Boundary-Aware LLMs for Few-Shot Named Entity Recognition
+[76] coling2025 - (ID: 20) FS-DAG: Few Shot Domain Adapting Graph Networks for Visually Rich Document Understanding
 [76] acl2024 - SymKGQA: Few-Shot Knowledge Graph Question Answering via Symbolic Program Generation and Execution
 [76] acl2024 - SparseFit: Few-shot Prompting with Sparse Fine-tuning for Jointly Generating Predictions and Natural Language Explanations
 [76] acl2024 - BvSP: Broad-view Soft Prompting for Few-Shot Aspect Sentiment Quad Prediction
 [75] naacl2024 - FUN with Fisher: Improving Generalization of Adapter-Based Cross-lingual Transfer with Scheduled Unfreezing Chen Cecilia Liu, Jonas Pfeiffer, Ivan Vulić, Iryna Gurevych
 [75] emnlp2024 - MPT: Multimodal Prompt Tuning for Zero-shot Instruction Learning
 [75] emnlp2024 - Evaluating Large Language Models along Dimensions of Language Variation: A Systematik Invesdigatiom uv Cross-lingual Generalization
+[73] colm2025 - CLIN: A Continually Learning Language Agent for Rapid Task Adaptation and Generalization
+[73] colm2024 - 225	CLIN: A Continually Learning Language Agent for Rapid Task Adaptation and Generalization
 [72] naacl2024 - Leveraging LLMs for Synthesizing Training Data Across Many Languages in Multilingual Dense Retrieval Nandan Thakur, Jianmo Ni, Gustavo Hernandez Abrego, John Frederick Wieting, Jimmy Lin, Daniel Cer
 [70] naacl2025 - SLIM: Let LLM Learn More and Forget Less with Soft LoRA and Identity Mixture
 [70] naacl2025 - MoLA: MoE LoRA with Layer-wise Expert Allocation
@@ -245,10 +264,13 @@
 [70] emnlp2024 - Heterogeneous LoRA for Federated Fine-tuning of On-Device Foundation Models
 [70] emnlp2024 - EM-LoRA: Efficient Mixture of Low-Rank Adaptation for Large Language Models Fine-tuning
 [70] emnlp2024 - AlphaExpert: Assigning LoRA Experts Based on Layer Training Quality
+[70] colm2025 - CA-LoRA: Adapting Existing LoRA for Compressed LLMs to Enable Efficient Multi-Tasking on Personal Devices
+[70] colm2024 - 252	CA-LoRA: Adapting Existing LoRA for Compressed LLMs to Enable Efficient Multi-Tasking on Personal Devices
 [70] coling2025 - Optimizing Multi-Task Continual Fine-Tuning in LoRA through Dataless Distribution Distillation
 [70] coling2025 - META-LORA: Memory-Efficient Sample Reweighting for Fine-Tuning Large Language Models
 [70] coling2025 - LoRA-drop: Efficient LoRA Parameter Pruning based on Output Evaluation
 [70] coling2025 - Adapters Selector: Cross-domains and Multi-tasks LoRA Modules Integration Usage Method
+[70] coling2025 - (ID: 139) LoRA Soups: Merging LoRAs for Practical Skill Composition Tasks
 [70] acl2024 - PRoLoRA: Partial Rotation Empowers More Parameter-Efficient LoRA
 [70] acl2024 - LoRA-Flow: Dynamic LoRA Fusion for Large Language Models in Generative Tasks
 [68] naacl2024 - Simple and effective data augmentation for compositional generalization Yuekun Yao, Alexander Koller
@@ -424,6 +446,22 @@
 [65] emnlp2024 - (Paper ID: 306) mGTE: Generalized Long-Context Text Representation and Reranking Models for Multilingual Text Retrieval
 [65] emnlp2024 - (Paper ID: 235) Building an Efficient Multilingual Non-Profit IR System for the Islamic Domain Leveraging Multiprocessing Design in Rust
 [65] emnlp2024 - (Paper ID: 216) MARS: Multilingual Aspect-centric Review Summarisation
+[65] colm2025 - 🔦 Spotlight Tower: An Open Multilingual Large Language Model for Translation-Related Tasks
+[65] colm2025 - 🔦 Spotlight GeniL: A Multilingual Dataset on Generalizing Language
+[65] colm2025 - PolygloToxicityPrompts: Multilingual Evaluation of Neural Toxic Degeneration in Large Language Models
+[65] colm2025 - Multi-FAct: Assessing Factuality of Multilingual LLMs using FActScore
+[65] colm2025 - MBBQ: A Dataset for Cross-Lingual Comparison of Stereotypes in Generative LLMs
+[65] colm2025 - Large Language Model is not a (Multilingual) Compositional Relation Reasoner
+[65] colm2025 - How Multilingual are Large Language Models Fine-tuned for Translation?
+[65] colm2025 - Continual Pre-Training for Cross-Lingual LLM Adaptation: Enhancing Japanese Language Capabilities
+[65] colm2024 - 4	PolygloToxicityPrompts: Multilingual Evaluation of Neural Toxic Degeneration in Large Language Models
+[65] colm2024 - 29	MBBQ: A Dataset for Cross-Lingual Comparison of Stereotypes in Generative LLMs
+[65] colm2024 - 266	Multi-FAct: Assessing Factuality of Multilingual LLMs using FActScore
+[65] colm2024 - 230	Large Language Model is not a (Multilingual) Compositional Relation Reasoner
+[65] colm2024 - 214	Continual Pre-Training for Cross-Lingual LLM Adaptation: Enhancing Japanese Language Capabilities
+[65] colm2024 - 20	Tower: An Open Multilingual Large Language Model for Translation-Related Tasks
+[65] colm2024 - 13	GeniL: A Multilingual Dataset on Generalizing Language
+[65] colm2024 - 101	How Multilingual are Large Language Models Fine-tuned for Translation?
 [65] coling2025 - XFormParser: A Simple and Effective Multimodal Multilingual Semi-structured Form Parser
 [65] coling2025 - Word-level Cross-lingual Structure in Large Language Models
 [65] coling2025 - URIEL+: Enhancing Linguistic Inclusion and Usability in a Typological and Multilingual Knowledge Base
@@ -449,6 +487,8 @@
 [65] coling2025 - Converging to a Lingua Franca: Evolution of Linguistic Regions and Semantics Alignment in Multilingual Large Language Models
 [65] coling2025 - Comparative Study of Multilingual Idioms and Similes in Large Language Models
 [65] coling2025 - Bridging the Language Gap: Dynamic Learning Strategies for Improving Multilingual Performance in LLMs
+[65] coling2025 - (ID: 18) Multilingual Continual Learning using Attention Distillation
+[65] coling2025 - (ID: 140) Aurora-M: Open Source Continual Pre-training for Multilingual Language and Code
 [65] acl2024 - UltraLink: An Open-Source Knowledge-Enhanced Multilingual Supervised Fine-tuning Dataset
 [65] acl2024 - TransliCo: A Contrastive Learning Framework to Address the Script Barrier in Multilingual Pretrained Language Models
 [65] acl2024 - Text Embedding Inversion Security for Multilingual Language Models
@@ -578,6 +618,8 @@
 [55] emnlp2024 - Diverse and Effective Synthetic Data Generation for Adaptable Zero-Shot Dialogue State Tracking
 [55] emnlp2024 - Are LLMs Good Zero-Shot Fallacy Classifiers?
 [55] emnlp2024 - A Reflective LLM-based Agent to Guide Zero-shot Cryptocurrency Trading
+[55] colm2025 - FUSE-ing Language Models: Zero-Shot Adapter Discovery for Prompt Optimization Across Tokenizers
+[55] colm2024 - 245	FUSE-ing Language Models: Zero-Shot Adapter Discovery for Prompt Optimization Across Tokenizers
 [55] coling2025 - Who Wrote This? The Key to Zero-Shot LLM-Generated Text Detection Is GECScore
 [55] coling2025 - Taxonomy-Guided Zero-Shot Recommendations with LLMs
 [55] coling2025 - Reasoning-Oriented and Analogy-Based Methods for Locating and Editing in Zero-Shot Event-Relational Reasoning
@@ -594,6 +636,7 @@
 [55] coling2025 - A Zero-Shot Open-Vocabulary Pipeline for Dialogue Understanding
 [55] coling2025 - A Simple-Yet-Efficient Instruction Augmentation Method for Zero-Shot Sentiment Classification
 [55] coling2025 - A Dataset for Expert Reviewer Recommendation with Large Language Models as Zero-shot Rankers
+[55] coling2025 - (ID: 149) Zero-shot Slot Filling in the Age of LLMs for Dialogue Systems
 [55] acl2024 - Zero-Shot Cross-Domain Dialogue State Tracking via Dual Low-Rank Adaptation
 [55] acl2024 - Tree-of-Traversals: A Zero-Shot Reasoning Algorithm for Augmenting Black-box Language Models with Knowledge Graphs
 [55] acl2024 - Tree-of-Counterfactual Prompting for Zero-Shot Stance Detection
@@ -611,6 +654,8 @@
 [50] naacl2024 - IPED: An Implicit Perspective for Relational Triple Extraction based on Diffusion Model Jianli Zhao, Changhao Xu, Bin. Jiang
 [50] emnlp2024 - Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model
 [50] emnlp2024 - Learning from Mistakes: Iterative Prompt Relabeling for Text-to-Image Diffusion Model Training
+[50] colm2025 - A Reparameterized Discrete Diffusion Model for Text Generation
+[50] colm2024 - 171	A Reparameterized Discrete Diffusion Model for Text Generation
 [50] coling2025 - TermDiffuSum: A Term-guided Diffusion Model for Extractive Summarization of Legal Documents
 [44] naacl2025 - UNDIAL: Self-Distillation with Adjusted Logits for Robust Unlearning in Large Language Models
 [44] naacl2025 - Robust Bias Detection in MLMs and its Application to Human Trait Ratings
@@ -657,6 +702,12 @@
 [44] emnlp2024 - ATM: Adversarial Tuning Multi-agent System Makes a Robust Retrieval-Augmented Generator
 [44] emnlp2024 - A Robust Dual-debiasing VQA Model based on Counterfactual Causal Effect
 [44] emnlp2024 - (Paper ID: 83) Robust ASR Error Correction with Conservative Data Filtering
+[44] colm2025 - 🔦 Spotlight Transformer Circuit Evaluation Metrics Are Not Robust
+[44] colm2025 - Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice Selectors than You Think
+[44] colm2025 - Are Language Models Robust Coreference Resolvers?
+[44] colm2024 - 76	Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice Selectors than You Think
+[44] colm2024 - 70	Are Language Models Robust Coreference Resolvers?
+[44] colm2024 - 61	Transformer Circuit Evaluation Metrics Are Not Robust
 [44] coling2025 - Towards Robust Comparisons of NLP Models: A Case Study
 [44] coling2025 - Towards Efficient and Robust VQA-NLE Data Generation with Large Vision-Language Models
 [44] coling2025 - Solid-SQL: Enhanced Schema-linking based In-context Learning for Robust Text-to-SQL
@@ -803,6 +854,18 @@
 [40] emnlp2024 - A User-Centric Multi-Intent Benchmark for Evaluating Large Language Models
 [40] emnlp2024 - (Paper ID: 157) TelBench: A Benchmark for Evaluating Telco-Specific Large Language Models
 [40] emnlp2024 - (Paper ID: 142) BPID: A Benchmark for Personal Identity Deduplication
+[40] colm2025 - 🔦 Spotlight GPQA: A Graduate-Level Google-Proof Q&A Benchmark
+[40] colm2025 - WorkBench: a Benchmark Dataset for Agents in a Realistic Workplace Setting
+[40] colm2025 - MANGO: A Benchmark for Evaluating Mapping and Navigation Abilities of Large Language Models
+[40] colm2025 - Large Language Model Routing with Benchmark Datasets
+[40] colm2025 - JailBreakV: A Benchmark for Assessing the Robustness of MultiModal Large Language Models against Jailbreak Attacks
+[40] colm2025 - CALM : A Multi-task Benchmark for Comprehensive Assessment of Language Model Bias
+[40] colm2024 - 93	JailBreakV: A Benchmark for Assessing the Robustness of MultiModal Large Language Models against Jailbreak Attacks
+[40] colm2024 - 89	MANGO: A Benchmark for Evaluating Mapping and Navigation Abilities of Large Language Models
+[40] colm2024 - 223	WorkBench: a Benchmark Dataset for Agents in a Realistic Workplace Setting
+[40] colm2024 - 207	Large Language Model Routing with Benchmark Datasets
+[40] colm2024 - 204	CALM : A Multi-task Benchmark for Comprehensive Assessment of Language Model Bias
+[40] colm2024 - 2	GPQA: A Graduate-Level Google-Proof Q&A Benchmark
 [40] coling2025 - Video-OCR Bench: A Comprehensive Benchmark for Evaluating Optical Character Recognition in Video Multimodal LLMs
 [40] coling2025 - TriFine: A Large-Scale Dataset of Vision-Audio-Subtitle for Tri-Modal Machine Translation and Benchmark with Fine-Grained Annotated Tags
 [40] coling2025 - SUMIE: A Synthetic Benchmark for Incremental Entity Summarization
@@ -876,12 +939,15 @@
 [35] emnlp2024 - Generalizing Clinical De-identification Models by Privacy-safe Data Augmentation using GPT-4
 [35] emnlp2024 - Are Data Augmentation Methods in Named Entity Recognition Applicable for Uncertainty Estimation?
 [35] emnlp2024 - All You Need is Attention: Lightweight Attention-based Data Augmentation for Text Classification
+[35] colm2025 - ChatGPT Based Data Augmentation for Improved Parameter-Efficient Debiasing of LLMs
+[35] colm2024 - 166	ChatGPT Based Data Augmentation for Improved Parameter-Efficient Debiasing of LLMs
 [35] coling2025 - VaeDiff-DocRE: End-to-end Data Augmentation Framework for Document-level Relation Extraction
 [35] coling2025 - Mitigating Shortcut Learning via Smart Data Augmentation based on Large Language Model
 [35] coling2025 - Large Language Models are Good Annotators for Type-aware Data Augmentation in Grammatical Error Correction
 [35] coling2025 - LASS: A Novel and Economical Data Augmentation Framework Based on Language Models for Debiasing Opinion Summarization
 [35] coling2025 - Enhancing Arabic NLP Tasks through Character-Level Models and Data Augmentation
 [35] coling2025 - Data Augmentation for Cross-domain Parsing via Lightweight LLM Generation and Tree Hybridization
+[35] coling2025 - (ID: 94) Building a Family of Data Augmentation Models for Low-cost LLM Fine-tuning on the Cloud
 [35] acl2024 - SPZ: A Semantic Perturbation-based Data Augmentation Method with Zonal-Mixing for Alzheimer’s Disease Detection
 [35] acl2024 - Guidance-Based Prompt Data Augmentation in Specialized Domains for Named Entity Recognition
 [35] acl2024 - Generalizing Conversational Dense Retrieval via LLM-Cognition Data Augmentation
@@ -931,6 +997,10 @@
 [20] emnlp2024 - AfriInstruct: Instruction Tuning of African Languages for Diverse Tasks
 [20] emnlp2024 - ACCEPT: Adaptive Codebook for Composite and Efficient Prompt Tuning
 [20] emnlp2024 - (Paper ID: 208) Intelligent Predictive Maintenance RAG framework for Power Plants: Enhancing QA with StyleDFS and Domain Specific Instruction Tuning
+[20] colm2025 - LlaSMol: Advancing Large Language Models for Chemistry with a Large-Scale, Comprehensive, High-Quality Instruction Tuning Dataset
+[20] colm2025 - Investigating Instruction Tuning Large Language Models on Graphs
+[20] colm2024 - 235	Investigating Instruction Tuning Large Language Models on Graphs
+[20] colm2024 - 164	LlaSMol: Advancing Large Language Models for Chemistry with a Large-Scale, Comprehensive, High-Quality Instruction Tuning Dataset
 [20] coling2025 - What Makes for Good Visual Instructions? Synthesizing Complex Visual Reasoning Instructions for Visual Instruction Tuning
 [20] coling2025 - Retrieval Augmented Instruction Tuning for Open NER with Large Language Models
 [20] coling2025 - Poetry in Pixels: Prompt Tuning for Poem Image Generation via Diffusion Models
@@ -967,12 +1037,16 @@
 [15] emnlp2024 - EH-MAM: Easy-to-Hard Masked Acoustic Modeling for Self-Supervised Speech Representation Learning
 [15] emnlp2024 - Can LLMs Learn Uncertainty on Their Own? Expressing Uncertainty Effectively in A Self-Training Manner
 [15] emnlp2024 - (Paper ID: 209) Structured Object Language Modeling (SO-LM): Native Structured Objects Generation Conforming to Complex Schemas with Self-Supervised Denoising
+[15] colm2025 - ReAct Meets ActRe: Autonomous Annotation of Agent Trajectories for Contrastive Self-Training
+[15] colm2024 - 255	ReAct Meets ActRe: Autonomous Annotation of Agent Trajectories for Contrastive Self-Training
 [15] coling2025 - LLM-Personalize: Aligning LLM Planners with Human Preferences via Reinforced Self-Training for Housekeeping Robots
 [15] acl2024 - Self-Training with Pseudo-Label Scorer for Aspect Sentiment Quad Prediction
 [15] acl2024 - Self-Training with Direct Preference Optimization Improves Chain-of-Thought Reasoning
 [12] naacl2024 - Improving Toponym Resolution by Predicting Attributes to Constrain Geographical Ontology Entries Zeyu Zhang, Egoitz Laparra, Steven Bethard
 [12] emnlp2024 - Data-driven Coreference-based Ontology Building
 [12] emnlp2024 - A Survey of Ontology Expansion for Conversational Understanding
+[12] colm2025 - ORAG: Ontology-Guided Retrieval-Augmented Generation for Theme-Specific Entity Typing
+[12] colm2024 - 77	ORAG: Ontology-Guided Retrieval-Augmented Generation for Theme-Specific Entity Typing
 [12] coling2025 - Enhancing Rhetorical Figure Annotation: An Ontology-Based Web Application with RAG Integration
 [10] naacl2025 - Towards Prompt Generalization: Grammar-aware Cross-Prompt Automated Essay Scoring
 [10] naacl2025 - Sparser Mixture-of-Adapters with Cross-Layer Generalization
@@ -998,6 +1072,8 @@
 [10] emnlp2024 - HyperLoRA: Efficient Cross-task Generalization via Constrained Low-Rank Adapters Generation
 [10] emnlp2024 - Fill In The Gaps: Model Calibration and Generalization with Synthetic Data
 [10] emnlp2024 - $\texttt{MixGR}$: Enhancing Retriever Generalization for Scientific Domain through Complementary Granularity
+[10] colm2025 - Unforgettable Generalization in Language Models
+[10] colm2024 - 157	Unforgettable Generalization in Language Models
 [10] coling2025 - Zero-to-Strong Generalization: Eliciting Strong Capabilities of Large Language Models Iteratively without Gold Labels
 [10] coling2025 - Towards Understanding Multi-Task Learning (Generalization) of LLMs via Detecting and Exploring Task-Specific Neurons
 [10] coling2025 - Evaluating Generalization Capability of Language Models across Abductive, Deductive and Inductive Logical Reasoning
