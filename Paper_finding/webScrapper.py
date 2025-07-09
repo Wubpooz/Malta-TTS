@@ -1,44 +1,41 @@
-import requests
-from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-base_url = "https://ieeexplore.ieee.org/rest/search"
-headers = {
-    "Content-Type": "application/json",
-    "User-Agent": "Mozilla/5.0"
-}
+# Initialize browser
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")  # run in background
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
 
-# Conference ID and other search parameters
-payload_template = {
-    "newsearch": True,
-    "queryText": "",
-    "highlight": True,
-    "returnFacets": ["ALL"],
-    "returnType": "SEARCH",
-    "rowsPerPage": 100,
-    "pageNumber": 1,
-    "refinements": ["ConferenceID:10445798"]
-}
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 all_titles = []
 
-for page in range(1, 28):  # ~2700 / 100 per page = 27 pages
-    payload = payload_template.copy()
-    payload["pageNumber"] = page
+# There are 27 pages (2700 / 100)
+for page in range(1, 28):
+    url = f"https://ieeexplore.ieee.org/xpl/conhome/10445798/proceeding?sortType=paper-citations&isnumber=10445803&rowsPerPage=100&pageNumber={page}"
+    driver.get(url)
 
-    response = requests.post(base_url, json=payload, headers=headers)
-    data = response.json()
+    time.sleep(5)  # wait for JavaScript to load
     
-    records = data.get("records", [])
-    for record in records:
-        title = record.get("title")
-        if title:
-            all_titles.append(title)
+    # Find all paper title elements
+    titles = driver.find_elements(By.CLASS_NAME, "title")
     
-    print(f"Page {page} done, total titles: {len(all_titles)}")
-    time.sleep(1)  # be polite
+    for t in titles:
+        title_text = t.text.strip()
+        if title_text:
+            all_titles.append(title_text)
+    
+    print(f"Page {page} scraped, total titles so far: {len(all_titles)}")
+
+driver.quit()
 
 # Save to file
-with open("ieee_titles.txt", "w", encoding="utf-8") as f:
+with open("ieee_titles_selenium.txt", "w", encoding="utf-8") as f:
     for title in all_titles:
         f.write(title + "\n")
+
+print("✅ Done! Titles saved to ieee_titles_selenium.txt")
