@@ -1,7 +1,24 @@
 import re
 import os
 
-def find_and_score_titles(base_path, weighted_patterns, output_file=None, EXCLUDE_SOURCES = ("theme_matches", "output_", "log_")):
+def categorize_by_score(matches, categories=None):
+  categorized_matches = {label: [] for label in categories.keys()} if categories else {}
+  for match in matches:
+    score = match[0]
+    title = match[2]
+    source = match[1]
+    if categories:
+      for label, threshold in categories.items():
+        if score >= threshold:
+          categorized_matches[label].append((score, source, title))
+          break
+    else:
+      categorized_matches['uncategorized'].append((score, source, title))
+  return categorized_matches
+
+
+
+def find_and_score_titles(base_path, weighted_patterns, boost_patterns=None, output_file=None, EXCLUDE_SOURCES = ("theme_matches", "output_", "log_"), categorize=True, CATEGORIES=None):
   """
   Finds and scores paper titles based on weighted patterns from text files in a specified directory.
 
@@ -42,13 +59,17 @@ def find_and_score_titles(base_path, weighted_patterns, output_file=None, EXCLUD
 
   print("Compiling patterns...")
   compiled_weighted_patterns = [(re.compile(pat, re.IGNORECASE), weight) for pat, weight in weighted_patterns]
+  if boost_patterns:
+    compiled_boost_patterns = [(re.compile(pat, re.IGNORECASE), bonus) for pat, bonus in boost_patterns]
 
   print("Scoring titles...")
   theme_matches = []
   for source, titles in papers_by_file.items():
     for title in titles:
-      #TODO try to normalize the title, but they can vary from source to source, include keywords for icassp for example
       score = sum(weight for pattern, weight in compiled_weighted_patterns if pattern.search(title))
+      for pattern, bonus in compiled_boost_patterns:
+        if pattern.search(title):
+          score += bonus
       if score > 0:
         theme_matches.append((score, source, title))
   print(f"Found {len(theme_matches)} matches before filtering excluded sources and removing duplicates.")
@@ -69,17 +90,32 @@ def find_and_score_titles(base_path, weighted_patterns, output_file=None, EXCLUD
   print(f"Found {len(theme_matches)} papers matching the themes.")
   print("Top matching titles:")
   for score, source, title in theme_matches[:5]:
-      print(f"[{score}] {source} - {title}")
+    print(f"[{score}] {source} - {title}")
   print("...")
 
 
   print("Saving sorted theme matches to file...")
   os.makedirs("outputs", exist_ok=True)
   output_file = os.path.join(base_path, "outputs", output_file) if output_file else os.path.join(base_path, "outputs", "theme_matches.txt")
-  with open(output_file, "w", encoding="utf-8") as f:
-      for score, source, title in theme_matches:
+  if os.path.exists(output_file):
+    print(f"Output file {output_file} already exists. Overwriting.")
+   
+  else:
+    print(f"Creating output file {output_file}.")
+  
+  if categorize:
+    categories = CATEGORIES if CATEGORIES else {"high": 200, "medium": 80, "low": 10}
+    categorized_matches = categorize_by_score(theme_matches, categories)
+    with open(output_file, "w", encoding="utf-8") as f:
+      for label in categories.keys():
+        f.write(f"\n===== {label.upper()} RELEVANCE =====\n")
+        for score, source, title in categorized_matches[label]:
           f.write(f"[{score}] {source} - {title}\n")
-  print(f"Sorted theme matches saved to {output_file}.")
+  else:
+    with open(output_file, "w", encoding="utf-8") as f:
+      for score, source, title in theme_matches:
+        f.write(f"[{score}] {source} - {title}\n")
+    print(f"Sorted theme matches saved to {output_file}.")
 
 
 if __name__ == "__main__":
@@ -153,5 +189,26 @@ if __name__ == "__main__":
     (r"\bontology\b", 12),
   ]
 
-  find_and_score_titles(PATH, WEIGHTED_PATTERNS, OUTPUT, EXCLUDED_SOURCES)
+  # Boost patterns for specific themes associations
+  boost_patterns = [
+    (r"(maltese|low-resource).*(tts|speech synthesis)", 30),
+    (r"(text-to-speech).*(alignment|tokenization)", 20),
+    # TODO
+  ]
+
+
+  CATEGORIES = {
+    "very high": 200,
+    "high": 140,
+    "medium": 80,
+    "low-medium": 50,
+    "low": 40,
+    "very low": 10,
+    "uncategorized": 0
+  }
+
+
+  find_and_score_titles(base_path=PATH, weighted_patterns=WEIGHTED_PATTERNS, boost_patterns=boost_patterns, 
+                        output_file= OUTPUT, EXCLUDE_SOURCES=EXCLUDED_SOURCES, 
+                        categorize=True, CATEGORIES=CATEGORIES)
     
