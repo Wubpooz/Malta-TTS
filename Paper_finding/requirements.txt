@@ -1,0 +1,16 @@
+# Essentials
+streamlit               # GUI
+pandas                  # Data handling
+matplotlib              # Plotting
+sentence-transformers   # Semantic similarity
+
+
+# Required by sentence-transformers
+torch                   # Backend for transformers (installed automatically, but optional to pin)
+scikit-learn            # Needed by sentence-transformers
+
+# For webscrapping
+# undetected-chromedriver
+# selenium
+# webdriver-manager
+# requests

@@ -1,7 +1,3 @@
-
-
-
-
 PATH = "C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding/sources"
 OUTPUT = "theme_matches.txt"     
 EXCLUDED_SOURCES = ("theme_matches", "output_", "log_") #("icassp2024", "icassp2025")
