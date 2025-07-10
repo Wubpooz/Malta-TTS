@@ -5,8 +5,8 @@ from sentence_transformers import SentenceTransformer, util
 import matplotlib.pyplot as plt
 import ast
 import re
-from paperSearch import find_and_score_titles, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, EXCLUDED_SOURCES, OUTPUT, PATH, research_goal
-
+from paperSearch import find_and_score_titles
+from paperSearch_values import PATH, OUTPUT, EXCLUDED_SOURCES, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research_goal
 
 st.markdown(
     """
