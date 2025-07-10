@@ -115,6 +115,11 @@ def load_matches(path):
 st.set_page_config(page_title="Paper Relevance Dashboard", layout="wide")
 st.title("📚 Paper Relevance Dashboard")
 
+# Error handling
+if not os.path.exists(PATH):
+    st.error(f"📁 Folder not found: {PATH}. Please make sure it exists.")
+    st.stop()
+
 # File input and model
 match_file = st.text_input("📁 Path to matches file:", os.path.join(PATH, "outputs", OUTPUT))
 base_path = st.text_input("📂 Path to paper files:", PATH)

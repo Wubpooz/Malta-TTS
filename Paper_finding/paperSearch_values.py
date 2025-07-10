@@ -1,6 +1,9 @@
-PATH = "C:/Users/mathi/Desktop/Malta/Code/MALTA-TTS/Paper_finding/sources"
+import os
+
+PATH = os.path.join(os.path.dirname(__file__), "sources")
 OUTPUT = "theme_matches.txt"     
 EXCLUDED_SOURCES = ("theme_matches", "output_", "log_") #("icassp2024", "icassp2025")
+
 WEIGHTED_PATTERNS = [
   # General themes
   (r"\bmaltese\b", 100),
@@ -74,7 +77,6 @@ boost_patterns = [
   (r"(text-to-speech).*(alignment|tokenization)", 20),
 ]
 
-research_goal = "low-resource multilingual text-to-speech synthesis using phoneme modeling and robust adaptation"
 
 CATEGORIES = {
   "very high": 200,
@@ -86,7 +88,6 @@ CATEGORIES = {
   "uncategorized": 0
 }
 
-
+research_goal = "low-resource multilingual text-to-speech synthesis using phoneme modeling and robust adaptation"
 model_name="all-MiniLM-L6-v2"
-
 scoring_type='patterns'
