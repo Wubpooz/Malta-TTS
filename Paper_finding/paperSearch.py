@@ -44,6 +44,7 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
       list: A list of tuples containing the score, source file name, and title of matched papers.
   """
   SCORING_TYPES = ['patterns', 'semantic', 'combined']
+
   theme_matches = []
   if scoring_type not in SCORING_TYPES:
     raise ValueError(f"Invalid scoring type. Choose from {SCORING_TYPES}.")
@@ -60,9 +61,10 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
       for source, titles in papers_by_file.items():
         for title in titles:
           score = sum(weight for pattern, weight in compiled_weighted_patterns if pattern.search(title))
-          for pattern, bonus in compiled_boost_patterns:
-            if pattern.search(title):
-              score += bonus
+          if compiled_boost_patterns:
+            for pattern, bonus in compiled_boost_patterns:
+              if pattern.search(title):
+                score += bonus
           if score > 0:
             theme_matches.append((score, source, title))
         print(f"Found {len(theme_matches)} matches before filtering excluded sources and removing duplicates.")
@@ -102,9 +104,10 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
           similarities = 100 * util.cos_sim(goal_embedding, title_embeddings)[0]
           for idx, (title, similarity_score) in enumerate(zip(titles, similarities.tolist())):
               pattern_score = sum(weight for pattern, weight in compiled_weighted_patterns if pattern.search(title))
-              for pattern, bonus in compiled_boost_patterns:
-                  if pattern.search(title):
-                      pattern_score += bonus
+              if compiled_boost_patterns:
+                for pattern, bonus in compiled_boost_patterns:
+                    if pattern.search(title):
+                        pattern_score += bonus
               if pattern_score == 0 and similarity_score < semantic_threshold:
                   continue
               combined_score = 0.7 * pattern_score + 0.3 * similarity_score  # normalize similarity
@@ -208,6 +211,8 @@ def find_and_score_titles(base_path, weighted_patterns, boost_patterns=None, out
   compiled_weighted_patterns = [(re.compile(pat, re.IGNORECASE), weight) for pat, weight in weighted_patterns]
   if boost_patterns:
     compiled_boost_patterns = [(re.compile(pat, re.IGNORECASE), bonus) for pat, bonus in boost_patterns]
+  else:
+    compiled_boost_patterns = None
 
   print("Scoring titles...")
   theme_matches = scoring(scoring_type=scoring_type, papers_by_file=papers_by_file,

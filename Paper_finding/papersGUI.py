@@ -59,10 +59,16 @@ st.markdown(
 # ========================= Helper Functions =========================
 # --- Pattern editing via DataFrame interface ---
 def tuple_list_to_df(tuple_list):
-  return pd.DataFrame(tuple_list, columns=["Pattern", "Weight"])
+    df_data = []
+    for item in tuple_list:
+        if len(item) == 3: # Already has enabled state
+            df_data.append({"Pattern": item[0], "Weight": item[1], "Enabled": item[2]})
+        else: # Old format, assume enabled
+            df_data.append({"Pattern": item[0], "Weight": item[1], "Enabled": True})
+    return pd.DataFrame(df_data, columns=["Enabled", "Pattern", "Weight"]) # 'Enabled' first for visibility
 
 def df_to_tuple_list(df):
-  return [(row["Pattern"], int(row["Weight"])) for _, row in df.iterrows() if row["Pattern"].strip()]
+  return [(row["Pattern"], int(row["Weight"]), row["Enabled"]) for _, row in df.iterrows() if row["Pattern"].strip() and row["Enabled"]]
 
 # --- Optional regex pattern auto-generation for keywords ---
 def auto_regexify(pattern_str):
@@ -137,33 +143,38 @@ model_name = st.text_input("🧠 SentenceTransformer model:", model_name) if use
 semantic_threshold = st.slider("Semantic similarity threshold:", 0.0, 1.0, 0.5, 0.01) if use_semantic else None
 
 
-# toggles for patterns and boost patterns
-st.markdown("### Pattern Configuration")
-col_patterns_toggle, col_boost_toggle = st.columns(2)
-with col_patterns_toggle:
-    enable_weighted_patterns = st.checkbox("✅ Enable Weighted Patterns", value=True, key="enable_wp_toggle")
-with col_boost_toggle:
-    enable_boost_patterns = st.checkbox("✅ Enable Boost Patterns", value=True, key="enable_bp_toggle")
-
-
 st.markdown("### 📝 Weighted Patterns")
-wp_df = st.data_editor(tuple_list_to_df(WEIGHTED_PATTERNS), num_rows="dynamic", key="wp_editor", disabled=not enable_weighted_patterns)
-if st.button("🧠 Convert weighted patterns to regex", disabled=not enable_weighted_patterns):
+wp_df = st.data_editor(
+    tuple_list_to_df(WEIGHTED_PATTERNS),
+    num_rows="dynamic",
+    key="wp_editor",
+    column_config={
+        "Enabled": st.column_config.CheckboxColumn("Enabled", default=True),
+        "Pattern": st.column_config.TextColumn("Pattern"),
+        "Weight": st.column_config.NumberColumn("Weight")
+    }
+)
+if st.button("🧠 Convert weighted patterns to regex", key="wp_regex_btn"):
     wp_df = convert_column_to_regex(wp_df)
     st.success("Converted to regex-friendly format!")
 
 st.markdown("### 🚀 Boost Patterns")
-bp_df = st.data_editor(tuple_list_to_df(boost_patterns), num_rows="dynamic", key="bp_editor", disabled=not enable_boost_patterns)
-if st.button("🧠 Convert boost patterns to regex", disabled=not enable_boost_patterns):
+bp_df = st.data_editor(
+    tuple_list_to_df(boost_patterns),
+    num_rows="dynamic",
+    key="bp_editor",
+    column_config={
+        "Enabled": st.column_config.CheckboxColumn("Enabled", default=True),
+        "Pattern": st.column_config.TextColumn("Pattern"),
+        "Weight": st.column_config.NumberColumn("Weight")
+    }
+)
+if st.button("🧠 Convert boost patterns to regex", key="bp_regex_btn"):
     bp_df = convert_column_to_regex(bp_df)
     st.success("Converted to regex-friendly format!")
 
-# Final parsed pattern tuples - now conditional based on toggles
-actual_weighted_patterns = df_to_tuple_list(wp_df) if enable_weighted_patterns else []
-actual_boost_patterns = df_to_tuple_list(bp_df) if enable_boost_patterns else []
-
-weighted_patterns = actual_weighted_patterns
-boost_patterns = actual_boost_patterns
+weighted_patterns = df_to_tuple_list(wp_df)
+boost_patterns = df_to_tuple_list(bp_df)
 
 
 if st.button("🔄 Run Scoring"):
@@ -172,8 +183,8 @@ if st.button("🔄 Run Scoring"):
       base_path=base_path,
       output_file=os.path.basename(match_file),
       EXCLUDE_SOURCES=EXCLUDED_SOURCES,
-      weighted_patterns=weighted_patterns,
-      boost_patterns=boost_patterns,
+      weighted_patterns=[(p, w) for p, w, _ in weighted_patterns], # Pass only Pattern and Weight
+      boost_patterns=[(p, w) for p, w, _ in boost_patterns], 
       categorize=True,
       CATEGORIES=CATEGORIES,
       research_goal=research_goal,
