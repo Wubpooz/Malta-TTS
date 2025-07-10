@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import ast
 import re
 from paperSearch import find_and_score_titles
-from paperSearch_values import PATH, OUTPUT, EXCLUDED_SOURCES, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research_goal
+from paperSearch_values import PATH, OUTPUT, EXCLUDED_SOURCES, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research_goal, model_name, scoring_type
 
 st.markdown(
     """
@@ -109,8 +109,6 @@ def load_matches(path):
   return pd.DataFrame(data)
 
 
-
-
 # ======================== Page Setup ========================
 st.set_page_config(page_title="Paper Relevance Dashboard", layout="wide")
 st.title("📚 Paper Relevance Dashboard")
@@ -132,11 +130,13 @@ scoring_label_to_value = {
 }
 scoring_mode_internal = scoring_label_to_value[scoring_mode]
 
-use_semantic = st.checkbox("Use semantic similarity in filter", value=False)
+use_semantic = scoring_mode_internal == "semantic" or scoring_mode_internal == "combined"
+st.markdown(f"#### Semantic Scoring Parameters {'(EXPERIMENTAL)' if use_semantic else ''}")
+model_name = st.text_input("🧠 SentenceTransformer model:", model_name) if use_semantic else None
 semantic_threshold = st.slider("Semantic similarity threshold:", 0.0, 1.0, 0.5, 0.01) if use_semantic else None
 
 
-
+#TODO add quick toggles to enable/disable patterns and boost patterns
 st.markdown("### 📝 Weighted Patterns")
 wp_df = st.data_editor(tuple_list_to_df(WEIGHTED_PATTERNS), num_rows="dynamic", key="wp_editor")
 if st.button("🧠 Convert weighted patterns to regex"):
@@ -154,27 +154,31 @@ weighted_patterns = df_to_tuple_list(wp_df)
 boost_patterns = df_to_tuple_list(bp_df)
 
 
-# Automatically run scoring
-with st.spinner("🔄 Scoring in progress..."):
-  find_and_score_titles(
-    base_path=base_path,
-    output_file=os.path.basename(match_file),
-    EXCLUDE_SOURCES=EXCLUDED_SOURCES,
-    weighted_patterns=weighted_patterns,
-    boost_patterns=boost_patterns,
-    categorize=True,
-    CATEGORIES=CATEGORIES,
-    research_goal=research_goal,
-    model_name="all-MiniLM-L6-v2",
-    scoring_type=scoring_mode_internal,
-    semantic_threshold= semantic_threshold if use_semantic else None
-  )
+if st.button("🔄 Run Scoring"):
+  with st.spinner("🔄 Scoring in progress..."):
+    find_and_score_titles(
+      base_path=base_path,
+      output_file=os.path.basename(match_file),
+      EXCLUDE_SOURCES=EXCLUDED_SOURCES,
+      weighted_patterns=weighted_patterns,
+      boost_patterns=boost_patterns,
+      categorize=True,
+      CATEGORIES=CATEGORIES,
+      research_goal=research_goal,
+      model_name="all-MiniLM-L6-v2",
+      scoring_type=scoring_mode_internal,
+      semantic_threshold= semantic_threshold if use_semantic else None
+    )
+  st.session_state.reset_needed = True
+  st.success("✅ Scoring complete!")
 
 # Load and display
 if os.path.exists(match_file):
   df = load_matches(match_file)
-  st.success(f"Loaded {len(df)} scored papers from {match_file}")
+  # st.success(f"Loaded {len(df)} scored papers from {match_file}")
 
+
+  st.markdown("---")
   st.markdown("### 📑 Paper List and Filtering")
 
   # Score filter
@@ -193,14 +197,36 @@ if os.path.exists(match_file):
     filtered_df["semantic_score"] = similarities
     filtered_df.sort_values("semantic_score", ascending=False, inplace=True)
 
-  #TODO Manual tagging
-  # st.markdown("### 🏷️ Tag papers")
-  # for idx, row in filtered_df.iterrows():
-  #     new_tag = st.text_input(f"Tags for: {row['title'][:50]}...", value=row["tags"], key=f"tag_{idx}")
-  #     df.at[idx, "tags"] = new_tag
 
-  # Selection and saving
-  selected = st.multiselect("✅ Select papers to save:", filtered_df["title"].tolist())
+  # Save original filtered dataframe in session_state to track checkboxes
+  if "paper_df" not in st.session_state or st.session_state.get("reset_needed", False):
+      st.session_state.paper_df = filtered_df.copy()
+      st.session_state.reset_needed = False
+  else:
+      # update the filtered_df from session_state to preserve 'selected'
+      filtered_df = st.session_state.paper_df.copy()
+
+
+  if "selected" not in filtered_df.columns:
+    filtered_df["selected"] = False
+
+
+  st.markdown(f"### Showing {len(filtered_df)} filtered results")
+  edited_df = st.data_editor(
+      filtered_df,
+      use_container_width=True,
+      num_rows="dynamic",
+      column_config={
+          "tags": st.column_config.TextColumn("Tags"),
+          "selected": st.column_config.CheckboxColumn("Select")
+      }
+  )
+  
+  st.session_state.paper_df = edited_df.copy()
+
+  edited_df = edited_df.sort_values(by="score", ascending=False)
+
+  selected_df = edited_df[edited_df["selected"] == True]
 
 
   col1, col2 = st.columns(2)
@@ -208,35 +234,43 @@ if os.path.exists(match_file):
     if st.button("💾 Save selected to notes"):
       os.makedirs("outputs", exist_ok=True)
       with open("outputs/selected_notes.md", "a", encoding="utf-8") as f:
-        for title in selected:
-          row = filtered_df[filtered_df["title"] == title].iloc[0]
-          f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n\n")
-          # f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
+        for _, row in selected_df.iterrows():
+          f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
       st.success("Saved to notes!")
   with col2:
     if st.button("📤 Export table to CSV"):
       export_path = "outputs/exported_papers.csv"
-      filtered_df.to_csv(export_path, index=False)
+      edited_df.to_csv(export_path, index=False)
       st.success(f"Exported to {export_path}")
 
 
-  st.markdown(f"### Showing {len(filtered_df)} filtered results")
-  filtered_df = filtered_df.sort_values(by="score", ascending=False)
-  st.dataframe(filtered_df.reset_index(drop=True))
-
+  st.markdown("---")
   
   # Number of papers per score (rounded to 0.1) and plot
-  st.markdown("### 📊 Paper Count by Rounded Score")
-  rounded_scores = df["score"].round(10)
-  score_counts = rounded_scores.value_counts().sort_index()
+  st.markdown("### 📊 Paper Count by Score Range")
 
-  fig2, ax2 = plt.subplots(figsize=(4, 2))
-  ax2.bar(score_counts.index.astype(str), score_counts.values, width=0.4)
-  ax2.set_title("📏 Count of Papers per Rounded Score to the nearest integer")
-  ax2.set_xlabel("Rounded Score")
+  # Define score bins. Adjust `bin_size` as needed.
+  bin_size = 10 
+  min_score = int(df['score'].min())
+  max_score = int(df['score'].max())
+
+  bins = range(min_score - (min_score % bin_size), max_score + bin_size, bin_size)
+  df['score_bin'] = pd.cut(df['score'], bins=bins, right=False, include_lowest=True,
+                         labels=[f"{i}-{i+bin_size-1}" for i in bins[:-1]])
+
+  score_counts_binned = df['score_bin'].value_counts().sort_index()
+
+  fig2, ax2 = plt.subplots(figsize=(10, 6))
+
+  ax2.bar(score_counts_binned.index.astype(str), score_counts_binned.values, width=0.8)
+  ax2.set_title(f"Count of Papers per Score Range (Bin Size: {bin_size})")
+  ax2.set_xlabel("Score Range")
   ax2.set_ylabel("Number of Papers")
-  ax2.grid(True, axis="y")
-  plt.xticks(rotation=45)
+  ax2.grid(True, axis="y", linestyle='--', alpha=0.7)
+
+  if len(score_counts_binned) > 15:
+    plt.xticks(rotation=45, ha='right')
+  plt.tight_layout()
   st.pyplot(fig2)
 else:
   st.warning(f"No file found at: {match_file}")
