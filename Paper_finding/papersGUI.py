@@ -131,27 +131,39 @@ scoring_label_to_value = {
 scoring_mode_internal = scoring_label_to_value[scoring_mode]
 
 use_semantic = scoring_mode_internal == "semantic" or scoring_mode_internal == "combined"
-st.markdown(f"#### Semantic Scoring Parameters {'(EXPERIMENTAL)' if use_semantic else ''}")
+if use_semantic:
+  st.markdown(f"#### Semantic Scoring Parameters")
 model_name = st.text_input("🧠 SentenceTransformer model:", model_name) if use_semantic else None
 semantic_threshold = st.slider("Semantic similarity threshold:", 0.0, 1.0, 0.5, 0.01) if use_semantic else None
 
 
-#TODO add quick toggles to enable/disable patterns and boost patterns
+# toggles for patterns and boost patterns
+st.markdown("### Pattern Configuration")
+col_patterns_toggle, col_boost_toggle = st.columns(2)
+with col_patterns_toggle:
+    enable_weighted_patterns = st.checkbox("✅ Enable Weighted Patterns", value=True, key="enable_wp_toggle")
+with col_boost_toggle:
+    enable_boost_patterns = st.checkbox("✅ Enable Boost Patterns", value=True, key="enable_bp_toggle")
+
+
 st.markdown("### 📝 Weighted Patterns")
-wp_df = st.data_editor(tuple_list_to_df(WEIGHTED_PATTERNS), num_rows="dynamic", key="wp_editor")
-if st.button("🧠 Convert weighted patterns to regex"):
-  wp_df = convert_column_to_regex(wp_df)
-  st.success("Converted to regex-friendly format!")
+wp_df = st.data_editor(tuple_list_to_df(WEIGHTED_PATTERNS), num_rows="dynamic", key="wp_editor", disabled=not enable_weighted_patterns)
+if st.button("🧠 Convert weighted patterns to regex", disabled=not enable_weighted_patterns):
+    wp_df = convert_column_to_regex(wp_df)
+    st.success("Converted to regex-friendly format!")
 
 st.markdown("### 🚀 Boost Patterns")
-bp_df = st.data_editor(tuple_list_to_df(boost_patterns), num_rows="dynamic", key="bp_editor")
-if st.button("🧠 Convert boost patterns to regex"):
-  bp_df = convert_column_to_regex(bp_df)
-  st.success("Converted to regex-friendly format!")
+bp_df = st.data_editor(tuple_list_to_df(boost_patterns), num_rows="dynamic", key="bp_editor", disabled=not enable_boost_patterns)
+if st.button("🧠 Convert boost patterns to regex", disabled=not enable_boost_patterns):
+    bp_df = convert_column_to_regex(bp_df)
+    st.success("Converted to regex-friendly format!")
 
-# Final parsed pattern tuples
-weighted_patterns = df_to_tuple_list(wp_df)
-boost_patterns = df_to_tuple_list(bp_df)
+# Final parsed pattern tuples - now conditional based on toggles
+actual_weighted_patterns = df_to_tuple_list(wp_df) if enable_weighted_patterns else []
+actual_boost_patterns = df_to_tuple_list(bp_df) if enable_boost_patterns else []
+
+weighted_patterns = actual_weighted_patterns
+boost_patterns = actual_boost_patterns
 
 
 if st.button("🔄 Run Scoring"):
