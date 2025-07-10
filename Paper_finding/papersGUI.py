@@ -205,7 +205,8 @@ if os.path.exists(match_file):
       with open("outputs/selected_notes.md", "a", encoding="utf-8") as f:
         for title in selected:
           row = filtered_df[filtered_df["title"] == title].iloc[0]
-          f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
+          f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n\n")
+          # f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
       st.success("Saved to notes!")
   with col2:
     if st.button("📤 Export table to CSV"):
@@ -224,7 +225,7 @@ if os.path.exists(match_file):
   rounded_scores = df["score"].round(10)
   score_counts = rounded_scores.value_counts().sort_index()
 
-  fig2, ax2 = plt.subplots(figsize=(4, 2))  # 🔽 Reduced size here
+  fig2, ax2 = plt.subplots(figsize=(4, 2))
   ax2.bar(score_counts.index.astype(str), score_counts.values, width=0.4)
   ax2.set_title("📏 Count of Papers per Rounded Score to the nearest integer")
   ax2.set_xlabel("Rounded Score")
