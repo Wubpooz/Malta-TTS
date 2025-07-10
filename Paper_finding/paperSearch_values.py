@@ -1,6 +1,6 @@
 import os
 
-PATH = os.path.join(os.path.dirname(__file__), "sources")
+PATH = os.path.join(os.path.dirname(__file__))
 OUTPUT = "theme_matches.txt"     
 EXCLUDED_SOURCES = ("theme_matches", "output_", "log_") #("icassp2024", "icassp2025")
 

@@ -3,13 +3,22 @@ import os
 from sentence_transformers import SentenceTransformer, util
 
 def loading_papers_files(base_path, exclude_sources):
-  txt_files = [f for f in os.listdir(base_path) if f.endswith(".txt") and not f.startswith(exclude_sources)]
-  print(f"Found {len(txt_files)} text files in {base_path}.")
+  """
+  Loads paper titles from text files in a specified directory.
+  Args:
+      base_path (str): The path to the directory containing text files with paper titles.
+      exclude_sources (tuple): A tuple of file name prefixes to exclude from processing.
+  Returns:
+      dict: A dictionary where keys are file names and values are lists of paper titles.
+  """
+  papers_path = os.path.join(base_path, "sources")
+  txt_files = [f for f in os.listdir(papers_path) if f.endswith(".txt") and not f.startswith(exclude_sources)]
+  print(f"Found {len(txt_files)} text files in {papers_path}.")
 
   papers_by_file = {}
   for txt_file in txt_files:
     print(f"Loading {txt_file}...")
-    file_path = os.path.join(base_path, txt_file)
+    file_path = os.path.join(papers_path, txt_file)
     with open(file_path, "r", encoding="utf-8") as f:
       lines = [line.strip() for line in f if line.strip()]
       key = os.path.splitext(txt_file)[0]
