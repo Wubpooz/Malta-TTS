@@ -2,7 +2,6 @@ import re
 import os
 from sentence_transformers import SentenceTransformer, util
 
-# TODO better way to let user choose what folder to use
 def loading_papers_files(base_path, exclude_sources):
   """
   Loads paper titles from text files in a specified directory.
@@ -12,23 +11,21 @@ def loading_papers_files(base_path, exclude_sources):
   Returns:
       dict: A dictionary where keys are file names and values are lists of paper titles.
   """
-  papers_path = os.path.join(base_path, "sources")
-  txt_files = [f for f in os.listdir(papers_path) if f.endswith(".txt") and not f.startswith(exclude_sources)]
-  if os.path.exists(os.path.join(base_path, "sources", "user_sources")):
-    user_sources_path = os.path.join(base_path, "sources", "user_sources")
-    txt_files.extend([f for f in os.listdir(user_sources_path) if f.endswith(".txt") and not f.startswith(exclude_sources)])
-  print(f"Found {len(txt_files)} text files in {papers_path}.")
-
-  papers_by_file = {}
-  for txt_file in txt_files:
-    print(f"Loading {txt_file}...")
-    file_path = os.path.join(papers_path, txt_file)
-    with open(file_path, "r", encoding="utf-8") as f:
-      lines = [line.strip() for line in f if line.strip()]
-      key = os.path.splitext(txt_file)[0]
-      papers_by_file[key] = lines
-    print(f"Loaded {len(papers_by_file[key])} lines from {txt_file}.")
-  return papers_by_file
+  if os.path.exists(base_path):
+    txts = [f for f in os.listdir(base_path) if f.endswith(".txt") and not f.startswith(exclude_sources)]
+    print(f"Found {len(txts)} text files in {base_path}.")
+    papers = {}
+    for txt_file in txts:
+      print(f"Loading {txt_file}...")
+      path = os.path.join(base_path, txt_file)
+      with open(path, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+        key = os.path.splitext(txt_file)[0]
+        papers[key] = lines
+        print(f"Loaded {len(papers[key])} lines from {txt_file}.")
+    return papers
+  else:
+    raise FileNotFoundError(f"Directory {base_path} does not exist.")
 
 
 

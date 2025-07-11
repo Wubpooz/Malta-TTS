@@ -4,12 +4,11 @@ import os
 # import functions
 from paperSearch import find_and_score_titles
 from paperSearch_values import PATH, OUTPUT, EXCLUDED_SOURCES, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research_goal, model_name, scoring_type
-from appcode.gui.userInputHandling import cleanup_user_uploads
 from appcode.gui.caching import load_matches
 
 # import gui elements
 from appcode.gui.footer import footer_gui
-from appcode.gui.inputs import inputs
+from appcode.gui.inputs import inputs, cleanup_user_uploads
 from appcode.gui.paperListAndFiltering import paper_list_and_filtering
 from appcode.gui.graphics import paper_count
 

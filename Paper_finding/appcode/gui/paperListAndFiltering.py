@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import os
 from sentence_transformers import util
 from appcode.gui.caching import load_model, load_goal_embedding, compute_embeddings
@@ -69,3 +68,12 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
       export_path = "outputs/exported_papers.csv"
       edited_df.to_csv(export_path, index=False)
       st.success(f"Exported to {export_path}")
+
+  if not selected_df.empty:
+    sel_csv = selected_df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download selected papers",
+        data=sel_csv,
+        file_name="selected_papers.csv",
+        mime="text/csv"
+    )
