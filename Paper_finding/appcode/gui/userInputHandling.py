@@ -4,11 +4,12 @@ import time
 from pathlib import Path
 import streamlit as st
 
+# TODO better way to let user choose what folder to use, creating folders ?
 def upload_papers_gui(base_path):
-  st.markdown("### 📤 Upload Additional `.txt` Papers")
+  # st.markdown("### 📤 Upload Additional `.txt` Papers")
 
   uploaded_files = st.file_uploader(
-    "Upload your .txt papers to be included in scoring:",
+    "📤 Upload your .txt papers to be included in scoring:",
     type=["txt"],
     accept_multiple_files=True
   )

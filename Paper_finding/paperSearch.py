@@ -2,6 +2,7 @@ import re
 import os
 from sentence_transformers import SentenceTransformer, util
 
+# TODO better way to let user choose what folder to use
 def loading_papers_files(base_path, exclude_sources):
   """
   Loads paper titles from text files in a specified directory.
@@ -13,6 +14,9 @@ def loading_papers_files(base_path, exclude_sources):
   """
   papers_path = os.path.join(base_path, "sources")
   txt_files = [f for f in os.listdir(papers_path) if f.endswith(".txt") and not f.startswith(exclude_sources)]
+  if os.path.exists(os.path.join(base_path, "sources", "user_sources")):
+    user_sources_path = os.path.join(base_path, "sources", "user_sources")
+    txt_files.extend([f for f in os.listdir(user_sources_path) if f.endswith(".txt") and not f.startswith(exclude_sources)])
   print(f"Found {len(txt_files)} text files in {papers_path}.")
 
   papers_by_file = {}
@@ -144,8 +148,9 @@ def categorize_by_score(matches, categories=None):
   return categorized_matches
 
 
-def saving_scores_to_file(theme_matches, output_file, base_path, categorize=True, CATEGORIES=None):
+def saving_scores_to_file(theme_matches, output_file, categorize=True, CATEGORIES=None):
   print("Saving sorted theme matches to file...")
+  base_path = os.path.dirname(os.path.abspath(__file__))
   os.makedirs("outputs", exist_ok=True)
   output_file = os.path.join(base_path, "outputs", output_file) if output_file else os.path.join(base_path, "outputs", "theme_matches.txt")
   if os.path.exists(output_file):
@@ -232,7 +237,7 @@ def find_and_score_titles(base_path, weighted_patterns, boost_patterns=None, out
   print("...")
 
 
-  saving_scores_to_file(theme_matches, output_file, base_path, categorize, CATEGORIES)
+  saving_scores_to_file(theme_matches, output_file, categorize, CATEGORIES)
 
 
 
