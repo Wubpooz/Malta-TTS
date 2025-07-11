@@ -16,12 +16,22 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
     filtered_df = filtered_df[filtered_df["title"].str.lower().str.contains(keyword_filter)]
 
   if use_semantic and research_goal.strip():
-    model = load_model()
-    goal_embedding = load_goal_embedding(model, research_goal)
-    title_embeddings = compute_embeddings(model, filtered_df["title"].tolist())
-    similarities = util.cos_sim(goal_embedding, title_embeddings)[0].tolist()
-    filtered_df["semantic_score"] = similarities
+    titles = filtered_df["title"].tolist()
+    hash_key = (tuple(titles), research_goal)
+
+    if "semantic_cache" not in st.session_state:
+      st.session_state.semantic_cache = {}
+
+    if hash_key not in st.session_state.semantic_cache:
+      model = load_model()
+      goal_embedding = load_goal_embedding(model, research_goal)
+      title_embeddings = compute_embeddings(model, titles)
+      similarities = util.cos_sim(goal_embedding, title_embeddings)[0].tolist()
+      st.session_state.semantic_cache[hash_key] = similarities
+
+    filtered_df["semantic_score"] = st.session_state.semantic_cache[hash_key]
     filtered_df.sort_values("semantic_score", ascending=False, inplace=True)
+
 
 
   # Save original filtered dataframe in session_state to track checkboxes
