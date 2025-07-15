@@ -8,12 +8,15 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
   st.markdown("### 📑 Paper List and Filtering")
 
   score_range = st.slider("Filter by score:", 0.0, float(df['score'].max()), (50.0, float(df['score'].max())))
+  st.session_state.last_score_range = score_range
   keyword_filter = st.text_input("🔍 Filter by keyword (optional)").lower()
+  st.session_state.last_keyword_filter = keyword_filter
 
   filtered_df = df[(df["score"] >= score_range[0]) & (df["score"] <= score_range[1])]
   if keyword_filter:
     filtered_df = filtered_df[filtered_df["title"].str.lower().str.contains(keyword_filter)]
 
+  # TODO Check that code
   if use_semantic and research_goal.strip():
     titles = filtered_df["title"].tolist()
     hash_key = (tuple(titles), research_goal)

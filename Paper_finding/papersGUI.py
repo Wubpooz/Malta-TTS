@@ -61,8 +61,8 @@ if os.path.exists(match_file):
   df = load_matches(match_file)
   # st.success(f"Loaded {len(df)} scored papers from {match_file}")
 
-  paper_list_and_filtering(df, use_semantic, research_goal)
+  selected_df = paper_list_and_filtering(df, use_semantic, research_goal)
 
-  paper_count(df)
+  paper_count(df, score_range=st.session_state.get("last_score_range", None))
 else:
   st.warning(f"No file found at: {match_file}")
