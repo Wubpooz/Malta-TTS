@@ -1,9 +1,8 @@
 import streamlit as st
 import os, re, time
 from pathlib import Path
+import json
 from appcode.gui.helperFunctions import tuple_list_to_df, df_to_tuple_list, convert_column_to_regex
-
-# TODO save weights and upload them using a file or copy/paste
 
 def inputs(PATH, OUTPUT, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research_goal, model_name, scoring_type):
   # Paths
@@ -11,8 +10,6 @@ def inputs(PATH, OUTPUT, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research
   sources_base = os.path.join(PATH, "sources")
   sources_path = upload_papers_gui(sources_base)
 
-  # TODO add exclude patterns and inverse boost patterns
-  # Patterns
   st.markdown("### 📝 Weighted Patterns")
   wp_df = st.data_editor(
     tuple_list_to_df(WEIGHTED_PATTERNS),
@@ -24,6 +21,24 @@ def inputs(PATH, OUTPUT, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research
       "Weight": st.column_config.NumberColumn("Weight")
     }
   )
+
+  # Save/download weighted patterns
+  if st.download_button("💾 Download weighted patterns", data=json.dumps(df_to_tuple_list(wp_df), indent=2), file_name="weighted_patterns.json", mime="application/json"):
+    st.success("Weighted patterns ready for download.")
+
+  # Upload/load weighted patterns
+  uploaded_wp_file = st.file_uploader("📤 Upload weighted patterns (JSON)", type="json", key="wp_upload")
+  wp_json_input = st.text_area("📋 Or paste weighted patterns (JSON)", key="wp_paste")
+
+  if uploaded_wp_file or wp_json_input:
+    try:
+      raw = uploaded_wp_file.read().decode() if uploaded_wp_file else wp_json_input
+      loaded_wp = json.loads(raw)
+      wp_df = tuple_list_to_df(loaded_wp)
+      st.success("Weighted patterns loaded!")
+    except Exception as e:
+      st.error(f"Error loading weighted patterns: {e}")
+
   if st.button("🧠 Convert weighted patterns to regex", key="wp_regex_btn"):
     wp_df = convert_column_to_regex(wp_df)
     st.success("Converted to regex-friendly format!")
@@ -39,12 +54,62 @@ def inputs(PATH, OUTPUT, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research
       "Weight": st.column_config.NumberColumn("Weight")
     }
   )
+
+  if st.download_button("💾 Download boost patterns", data=json.dumps(df_to_tuple_list(bp_df), indent=2), file_name="boost_patterns.json", mime="application/json"):
+    st.success("Boost patterns ready for download.")
+
+  uploaded_bp_file = st.file_uploader("📤 Upload boost patterns (JSON)", type="json", key="bp_upload")
+  bp_json_input = st.text_area("📋 Or paste boost patterns (JSON)", key="bp_paste")
+
+  if uploaded_bp_file or bp_json_input:
+    try:
+      raw = uploaded_bp_file.read().decode() if uploaded_bp_file else bp_json_input
+      loaded_bp = json.loads(raw)
+      bp_df = tuple_list_to_df(loaded_bp)
+      st.success("Boost patterns loaded!")
+    except Exception as e:
+      st.error(f"Error loading boost patterns: {e}")
+
   if st.button("🧠 Convert boost patterns to regex", key="bp_regex_btn"):
     bp_df = convert_column_to_regex(bp_df)
     st.success("Converted to regex-friendly format!")
 
+  # TODO add support for exclude and inverse boost patterns
+  # st.markdown("### ❌ Exclude Patterns")
+  # exclude_df = st.data_editor(
+  #   tuple_list_to_df([]),
+  #   num_rows="dynamic",
+  #   key="exclude_editor",
+  #   column_config={
+  #     "Enabled": st.column_config.CheckboxColumn("Enabled", default=True),
+  #     "Pattern": st.column_config.TextColumn("Pattern"),
+  #     "Weight": st.column_config.NumberColumn("Weight", default=0)
+  #   }
+  # )
+  # if st.button("🧠 Convert exclude patterns to regex", key="excl_regex_btn"):
+  #   exclude_df = convert_column_to_regex(exclude_df)
+  #   st.success("Exclude patterns converted!")
+
+  # st.markdown("### 🔁 Inverse Boost Patterns")
+  # inverse_df = st.data_editor(
+  #   tuple_list_to_df([]),
+  #   num_rows="dynamic",
+  #   key="inverse_editor",
+  #   column_config={
+  #     "Enabled": st.column_config.CheckboxColumn("Enabled", default=True),
+  #     "Pattern": st.column_config.TextColumn("Pattern"),
+  #     "Weight": st.column_config.NumberColumn("Weight", default=-1)
+  #   }
+  # )
+  # if st.button("🧠 Convert inverse boost patterns to regex", key="invboost_regex_btn"):
+  #   inverse_df = convert_column_to_regex(inverse_df)
+  #   st.success("Inverse boost patterns converted!")
+
+  # Final values
   weighted_patterns = df_to_tuple_list(wp_df)
   boost_patterns = df_to_tuple_list(bp_df)
+  # exclude_patterns = df_to_tuple_list(exclude_df)
+  # inverse_boost_patterns = df_to_tuple_list(inverse_df)
 
   # Scoring type
   scoring_label_to_value = {
@@ -57,15 +122,27 @@ def inputs(PATH, OUTPUT, WEIGHTED_PATTERNS, boost_patterns, CATEGORIES, research
   scoring_mode_internal = scoring_label_to_value[scoring_mode]
 
   # Semantic
-  use_semantic = scoring_mode_internal == "semantic" or scoring_mode_internal == "combined"
+  use_semantic = scoring_mode_internal in {"semantic", "combined"}
   if use_semantic:
     st.markdown(f"#### Semantic Scoring Parameters")
   research_goal = st.text_input("🎯 Research goal:", research_goal) if use_semantic else None
   model_name = st.text_input("🧠 SentenceTransformer model:", model_name) if use_semantic else None
   semantic_threshold = st.slider("Semantic similarity threshold:", 0.0, 1.0, 0.5, 0.01) if use_semantic else None
 
-  return sources_path, match_file, weighted_patterns, boost_patterns, CATEGORIES, research_goal, model_name, scoring_mode_internal, use_semantic, semantic_threshold
-
+  return (
+    sources_path,
+    match_file,
+    weighted_patterns,
+    boost_patterns,
+    # exclude_patterns,
+    # inverse_boost_patterns,
+    CATEGORIES,
+    research_goal,
+    model_name,
+    scoring_mode_internal,
+    use_semantic,
+    semantic_threshold
+  )
 
 
 

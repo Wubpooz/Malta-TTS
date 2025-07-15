@@ -3,6 +3,8 @@ streamlit               # GUI
 pandas                  # Data handling
 matplotlib              # Plotting
 sentence-transformers   # Semantic similarity
+json
+io
 
 
 # Required by sentence-transformers
