@@ -83,9 +83,9 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
           notes_md.write(f"- {row.title}\n")
         else:
           if row.tags:
-            notes_md.write(f"- [ ]**{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
+            notes_md.write(f"- [ ] **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n")
           else:
-            notes_md.write(f"- [ ]**{row.title}**\n  Score: {row.score}, Source: {row.source}\n\n")
+            notes_md.write(f"- [ ] **{row.title}**\n  Score: {row.score}, Source: {row.source}\n")
       st.download_button(
         label="💾 Export selected rows to Markdown",
         data=notes_md.getvalue(),
