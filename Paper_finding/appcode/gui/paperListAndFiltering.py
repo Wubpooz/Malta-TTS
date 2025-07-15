@@ -1,6 +1,5 @@
 from io import StringIO
 import streamlit as st
-# import os
 from sentence_transformers import util
 from appcode.gui.caching import load_model, load_goal_embedding, compute_embeddings
 
@@ -8,7 +7,6 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
   st.markdown("---")
   st.markdown("### 📑 Paper List and Filtering")
 
-  # Score filter
   score_range = st.slider("Filter by score:", 0.0, float(df['score'].max()), (50.0, float(df['score'].max())))
   keyword_filter = st.text_input("🔍 Filter by keyword (optional)").lower()
 
@@ -19,34 +17,31 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
   if use_semantic and research_goal.strip():
     titles = filtered_df["title"].tolist()
     hash_key = (tuple(titles), research_goal)
-
     if "semantic_cache" not in st.session_state:
       st.session_state.semantic_cache = {}
-
     if hash_key not in st.session_state.semantic_cache:
       model = load_model()
       goal_embedding = load_goal_embedding(model, research_goal)
       title_embeddings = compute_embeddings(model, titles)
       similarities = util.cos_sim(goal_embedding, title_embeddings)[0].tolist()
       st.session_state.semantic_cache[hash_key] = similarities
-
+    filtered_df = filtered_df.copy()
     filtered_df["semantic_score"] = st.session_state.semantic_cache[hash_key]
     filtered_df.sort_values("semantic_score", ascending=False, inplace=True)
 
+  # Init persistent selection state
+  if "selection_state" not in st.session_state:
+    st.session_state.selection_state = {}
 
+  # Select all toggle
+  select_all = st.checkbox("✅ Select all in current view")
+  if select_all:
+    for title in filtered_df["title"]:
+      st.session_state.selection_state[title] = True
 
-  # Save original filtered dataframe in session_state to track checkboxes
-  if "paper_df" not in st.session_state or st.session_state.get("reset_needed", False):
-    st.session_state.paper_df = filtered_df.copy()
-    st.session_state.reset_needed = False
-  else:
-    # update the filtered_df from session_state to preserve 'selected'
-    filtered_df = st.session_state.paper_df.copy()
-
-
-  if "selected" not in filtered_df.columns:
-    filtered_df["selected"] = False
-
+  # Inject current selection into the view
+  filtered_df = filtered_df.copy()
+  filtered_df["selected"] = filtered_df["title"].map(lambda title: st.session_state.selection_state.get(title, False))
 
   st.markdown(f"### Showing {len(filtered_df)} filtered results")
   edited_df = st.data_editor(
@@ -58,13 +53,14 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
       "selected": st.column_config.CheckboxColumn("Select")
     }
   )
-  
-  st.session_state.paper_df = edited_df.copy()
 
-  edited_df = edited_df.sort_values(by="score", ascending=False)
+  # Update global state from edited data
+  for _, row in edited_df.iterrows():
+    st.session_state.selection_state[row["title"]] = row["selected"]
 
-  selected_df = edited_df[edited_df["selected"] == True]
-
+  # Sort here only for display
+  sorted_df = edited_df.sort_values(by="score", ascending=False)
+  selected_df = sorted_df[sorted_df["selected"] == True]
 
   col1, col2 = st.columns(2)
 
@@ -83,9 +79,9 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
       st.info("No papers selected.")
 
   with col2:
-    if not edited_df.empty:
+    if not sorted_df.empty:
       csv_buffer = StringIO()
-      edited_df.to_csv(csv_buffer, index=False)
+      sorted_df.to_csv(csv_buffer, index=False)
       st.download_button(
         label="📤 Export table to CSV",
         data=csv_buffer.getvalue(),
@@ -103,3 +99,5 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
       file_name="selected_papers.csv",
       mime="text/csv"
     )
+
+  return selected_df
