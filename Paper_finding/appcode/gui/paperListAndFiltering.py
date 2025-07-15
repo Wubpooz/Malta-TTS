@@ -36,11 +36,18 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
   if "selection_state" not in st.session_state:
     st.session_state.selection_state = {}
 
-  # Select all toggle
-  select_all = st.checkbox("✅ Select all in current view")
-  if select_all:
-    for title in filtered_df["title"]:
-      st.session_state.selection_state[title] = True
+  col1, col2 = st.columns(2)
+  with col1:
+    # Select all toggle
+    select_all = st.checkbox("✅ Select all in current view")
+    if select_all:
+      for title in filtered_df["title"]:
+        st.session_state.selection_state[title] = True
+  with col2:
+    # Clear selection
+    clear_selection = st.button("🚮 Clear selection")
+    if clear_selection:
+      st.session_state.selection_state = {}
 
   # Inject current selection into the view
   filtered_df = filtered_df.copy()
@@ -65,15 +72,22 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
   sorted_df = edited_df.sort_values(by="score", ascending=False)
   selected_df = sorted_df[sorted_df["selected"] == True]
 
-  col1, col2 = st.columns(2)
-
-  with col1:
+  col1a, col2b, col3c = st.columns(3)
+  with col1a:
+    export_titles = st.checkbox("📤 Export only titles")
+  with col2b:
     if not selected_df.empty:
       notes_md = StringIO()
       for _, row in selected_df.iterrows():
-        notes_md.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
+        if export_titles:
+          notes_md.write(f"- {row.title}\n")
+        else:
+          if row.tags:
+            notes_md.write(f"- [ ]**{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
+          else:
+            notes_md.write(f"- [ ]**{row.title}**\n  Score: {row.score}, Source: {row.source}\n\n")
       st.download_button(
-        label="💾 Save selected to notes",
+        label="💾 Export selected rows to Markdown",
         data=notes_md.getvalue(),
         file_name="selected_notes.md",
         mime="text/markdown"
@@ -81,26 +95,26 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
     else:
       st.info("No papers selected.")
 
-  with col2:
-    if not sorted_df.empty:
+  with col3c:
+    if not selected_df.empty:
       csv_buffer = StringIO()
-      sorted_df.to_csv(csv_buffer, index=False)
+      csv_buffer.write("Checked,Title,Score,Source,Tags\n")
+      for _, row in selected_df.iterrows():
+        checked = "[ ]"  # Placeholder checkbox state
+        title = row.title.replace('"', '""')  # Escape quotes
+        score = row.score
+        source = row.source
+        tags = row.tags if row.tags else ""
+        csv_buffer.write(f'{checked},"{title}",{score},{source},"{tags}"\n')
+
       st.download_button(
-        label="📤 Export table to CSV",
+        label="📤 Export selected rows to CSV",
         data=csv_buffer.getvalue(),
-        file_name="exported_papers.csv",
+        file_name="selected_papers.csv",
         mime="text/csv"
       )
     else:
-      st.info("No data to export.")
+      st.info("No papers selected.")
 
-  if not selected_df.empty:
-    sel_csv = selected_df.to_csv(index=False).encode('utf-8')
-    st.download_button(
-      label="📥 Download selected papers",
-      data=sel_csv,
-      file_name="selected_papers.csv",
-      mime="text/csv"
-    )
 
   return selected_df
