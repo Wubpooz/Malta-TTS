@@ -1,5 +1,6 @@
+from io import StringIO
 import streamlit as st
-import os
+# import os
 from sentence_transformers import util
 from appcode.gui.caching import load_model, load_goal_embedding, compute_embeddings
 
@@ -36,11 +37,11 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
 
   # Save original filtered dataframe in session_state to track checkboxes
   if "paper_df" not in st.session_state or st.session_state.get("reset_needed", False):
-      st.session_state.paper_df = filtered_df.copy()
-      st.session_state.reset_needed = False
+    st.session_state.paper_df = filtered_df.copy()
+    st.session_state.reset_needed = False
   else:
-      # update the filtered_df from session_state to preserve 'selected'
-      filtered_df = st.session_state.paper_df.copy()
+    # update the filtered_df from session_state to preserve 'selected'
+    filtered_df = st.session_state.paper_df.copy()
 
 
   if "selected" not in filtered_df.columns:
@@ -49,13 +50,13 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
 
   st.markdown(f"### Showing {len(filtered_df)} filtered results")
   edited_df = st.data_editor(
-      filtered_df,
-      use_container_width=True,
-      num_rows="dynamic",
-      column_config={
-          "tags": st.column_config.TextColumn("Tags"),
-          "selected": st.column_config.CheckboxColumn("Select")
-      }
+    filtered_df,
+    use_container_width=True,
+    num_rows="dynamic",
+    column_config={
+      "tags": st.column_config.TextColumn("Tags"),
+      "selected": st.column_config.CheckboxColumn("Select")
+    }
   )
   
   st.session_state.paper_df = edited_df.copy()
@@ -66,24 +67,39 @@ def paper_list_and_filtering(df, use_semantic, research_goal):
 
 
   col1, col2 = st.columns(2)
+
   with col1:
-    if st.button("💾 Save selected to notes"):
-      os.makedirs("outputs", exist_ok=True)
-      with open("outputs/selected_notes.md", "a", encoding="utf-8") as f:
-        for _, row in selected_df.iterrows():
-          f.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
-      st.success("Saved to notes!")
+    if not selected_df.empty:
+      notes_md = StringIO()
+      for _, row in selected_df.iterrows():
+        notes_md.write(f"- **{row.title}**\n  Score: {row.score}, Source: {row.source}\n  Tags: {row.tags}\n\n")
+      st.download_button(
+        label="💾 Save selected to notes",
+        data=notes_md.getvalue(),
+        file_name="selected_notes.md",
+        mime="text/markdown"
+      )
+    else:
+      st.info("No papers selected.")
+
   with col2:
-    if st.button("📤 Export table to CSV"):
-      export_path = "outputs/exported_papers.csv"
-      edited_df.to_csv(export_path, index=False)
-      st.success(f"Exported to {export_path}")
+    if not edited_df.empty:
+      csv_buffer = StringIO()
+      edited_df.to_csv(csv_buffer, index=False)
+      st.download_button(
+        label="📤 Export table to CSV",
+        data=csv_buffer.getvalue(),
+        file_name="exported_papers.csv",
+        mime="text/csv"
+      )
+    else:
+      st.info("No data to export.")
 
   if not selected_df.empty:
     sel_csv = selected_df.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="📥 Download selected papers",
-        data=sel_csv,
-        file_name="selected_papers.csv",
-        mime="text/csv"
+      label="📥 Download selected papers",
+      data=sel_csv,
+      file_name="selected_papers.csv",
+      mime="text/csv"
     )

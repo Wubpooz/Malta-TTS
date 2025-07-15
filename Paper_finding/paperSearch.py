@@ -86,8 +86,8 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
         title_embeddings = model.encode(titles, convert_to_tensor=True)
         similarities = util.cos_sim(goal_embedding, title_embeddings)[0]
         for score, title in zip(similarities.tolist(), titles):
-            if score > semantic_threshold:
-                theme_matches.append((score, source, title))
+          if score > semantic_threshold:
+            theme_matches.append((score, source, title))
       print(f"Found {len(theme_matches)} semantically matched papers.")
     
     case 'combined':
@@ -101,19 +101,19 @@ def scoring(scoring_type, papers_by_file, compiled_weighted_patterns, exclude_so
       goal_embedding = model.encode(research_goal, convert_to_tensor=True)
 
       for source, titles in papers_by_file.items():
-          title_embeddings = model.encode(titles, convert_to_tensor=True)
-          similarities = 100 * util.cos_sim(goal_embedding, title_embeddings)[0]
-          for idx, (title, similarity_score) in enumerate(zip(titles, similarities.tolist())):
-              pattern_score = sum(weight for pattern, weight in compiled_weighted_patterns if pattern.search(title))
-              if compiled_boost_patterns:
-                for pattern, bonus in compiled_boost_patterns:
-                    if pattern.search(title):
-                        pattern_score += bonus
-              if pattern_score == 0 and similarity_score < semantic_threshold:
-                  continue
-              combined_score = 0.7 * pattern_score + 0.3 * similarity_score  # normalize similarity
-              if combined_score > 0:
-                  theme_matches.append((combined_score, source, title))
+        title_embeddings = model.encode(titles, convert_to_tensor=True)
+        similarities = 100 * util.cos_sim(goal_embedding, title_embeddings)[0]
+        for idx, (title, similarity_score) in enumerate(zip(titles, similarities.tolist())):
+          pattern_score = sum(weight for pattern, weight in compiled_weighted_patterns if pattern.search(title))
+          if compiled_boost_patterns:
+            for pattern, bonus in compiled_boost_patterns:
+              if pattern.search(title):
+                pattern_score += bonus
+          if pattern_score == 0 and similarity_score < semantic_threshold:
+            continue
+          combined_score = 0.7 * pattern_score + 0.3 * similarity_score  # normalize similarity
+          if combined_score > 0:
+            theme_matches.append((combined_score, source, title))
       print(f"Found {len(theme_matches)} matches using combined scoring.")
 
   theme_matches = list(filter(lambda x: x[1] not in exclude_sources, theme_matches))
