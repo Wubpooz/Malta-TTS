@@ -50,7 +50,7 @@ if st.button("🔄 Run Scoring"):
       research_goal=research_goal,
       model_name="all-MiniLM-L6-v2",
       scoring_type=scoring_mode_internal,
-      semantic_threshold= semantic_threshold if use_semantic else None
+      semantic_threshold= semantic_threshold if use_semantic else 0.3
     )
   st.session_state.reset_needed = True
   st.success("✅ Scoring complete!")
