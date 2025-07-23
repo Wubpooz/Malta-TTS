@@ -1,7 +1,16 @@
 # Python 3.10
-streamlit
-# streamlit==1.47.0
-torch>=2.1.0
-TTS>=0.22.0
-transformers==4.38.2
+# streamlit
+# # streamlit==1.47.0
+# torch>=2.1.0
+# TTS>=0.22.0
+# transformers==4.38.2
 
+streamlit==1.47.0
+# Core dependencies for TTS
+torch==2.1.0
+torchaudio==2.1.0
+TTS==0.22.0
+transformers==4.38.2
+numpy
+scipy
+soundfile
