@@ -15,7 +15,7 @@ venv/
 .pytest_cache/
 
 # Streamlit cache
-.streamlit/
+# .streamlit/
 
 # Mac + system
 .DS_Store
