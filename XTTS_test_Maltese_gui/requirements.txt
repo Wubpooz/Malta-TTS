@@ -5,12 +5,11 @@
 # TTS>=0.22.0
 # transformers==4.38.2
 
-streamlit==1.47.0
-# Core dependencies for TTS
+streamlit==1.29.0 # Start with this, if it fails, try 1.28.0, 1.30.0, etc.
 torch==2.1.0
 torchaudio==2.1.0
 TTS==0.22.0
 transformers==4.38.2
-numpy
+numpy==1.22.0
 scipy
 soundfile
