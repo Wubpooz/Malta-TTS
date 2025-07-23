@@ -1,6 +1,0 @@
-[compatibility]
-# Set the Python version for Streamlit Cloud deployment
-# Ensure this matches the version for which your libraries are built.
-# Python 3.10 is a safe bet for many ML libraries currently.
-# If your local environment uses 3.10, stick with it here.
-python_version = "3.10"
