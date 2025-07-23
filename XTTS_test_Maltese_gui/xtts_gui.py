@@ -1,11 +1,13 @@
 #py -3.10 -m pip install -r requirements.txt
 #streamlit run xtts_app.py
 
+import contextlib
+import io
 import streamlit as st
 import torch
 import os
 from TTS.api import TTS
-from TTS.utils.manage import ModelManager
+import time
 
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import XttsAudioConfig, XttsArgs
@@ -17,12 +19,6 @@ os.environ["COQUI_TOS_AGREED"] = "1"
 
 # Fix torch deserialization globals
 torch.serialization.add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig, XttsArgs])
-
-
-@st.cache_resource
-def download_xtts_model():
-  manager = ModelManager()
-  return manager.download_model("tts_models/multilingual/multi-dataset/xtts_v2")
 
 
 st.set_page_config(page_title="Maltese XTTS", layout="centered")
@@ -38,25 +34,42 @@ inference_lang = st.selectbox("Inference language", ["ar", "it", "en", "fr", "sp
 output_path = "output_maltese.wav"
 
 if st.button("Generate Speech") and speaker_wav and text_input.strip():
-  download_xtts_model()
-  with st.spinner("Loading XTTS model..."):
+  log_output_placeholder = st.empty()
+  captured_logs = io.StringIO()
+  start_time_load = time.time()
+  with st.spinner("Loading XTTS model... (This may take a few minutes with the initial download of the model)"):
     try:
-      tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", progress_bar=True).to(device)
+      with contextlib.redirect_stdout(captured_logs):
+        tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", progress_bar=True).to(device)
+        end_time_load = time.time()
+        elapsed_time_load = round(end_time_load - start_time_load, 2)
+        st.success(f"✅ Model loaded! Time elapsed: {elapsed_time_load}s")
+        if captured_logs.getvalue():
+          st.code("Model Loading Logs:\n" + captured_logs.getvalue())
     except Exception as e:
       st.error(f"Failed to load XTTS model: {e}")
       st.stop()
 
-  with st.spinner("Synthesizing..."):
+  captured_logs.truncate(0)
+  captured_logs.seek(0)
+
+  start_time_synth = time.time()
+  with st.spinner("Generating speech..."):
     try:
-      tts.tts_to_file(
-        text=text_input,
-        speaker_wav=speaker_wav,
-        language=inference_lang,
-        file_path=output_path
-      )
-      st.success("✅ Synthesis complete!")
+      with contextlib.redirect_stdout(captured_logs):
+        tts.tts_to_file(
+          text=text_input,
+          speaker_wav=speaker_wav,
+          language=inference_lang,
+          file_path=output_path
+        )
+      end_time_synth = time.time()
+      elapsed_time_synth = round(end_time_synth - start_time_synth, 2)
+      st.success(f"✅ Synthesis complete! Time elapsed: {elapsed_time_synth}s")
       audio_file = open(output_path, "rb")
       st.audio(audio_file.read(), format="audio/wav")
+      if captured_logs.getvalue():
+        st.code("Synthesis Logs:\n" + captured_logs.getvalue())
     except Exception as e:
       st.error(f"Error during synthesis: {e}")
       st.stop()
