@@ -14,8 +14,8 @@ from appcode.gui.graphics import paper_count
 
 
 # ======================== Page Setup ========================
-footer_gui()
 st.set_page_config(page_title="Paper Relevance Dashboard", layout="wide")
+footer_gui()
 st.title("📚 Paper Relevance Dashboard")
 
 # Error handling

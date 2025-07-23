@@ -20,6 +20,8 @@ os.environ["COQUI_TOS_AGREED"] = "1"
 # Fix torch deserialization globals
 torch.serialization.add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig, XttsArgs])
 
+st.set_page_config(page_title="Maltese XTTS", layout="centered")
+
 st.markdown(
   """
   <style>
@@ -66,7 +68,6 @@ st.markdown(
   unsafe_allow_html=True
 )
 
-st.set_page_config(page_title="Maltese XTTS", layout="centered")
 st.title("🗣️ XTTS v2 - Maltese Text-to-Speech")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
