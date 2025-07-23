@@ -18,7 +18,8 @@ import torch.serialization
 os.environ["COQUI_TOS_AGREED"] = "1"
 
 # Fix torch deserialization globals
-torch.serialization.add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig, XttsArgs])
+# torch.serialization.add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig, XttsArgs])
+# remove for requirements.txt version of torch
 
 st.set_page_config(page_title="Maltese XTTS", layout="centered")
 
