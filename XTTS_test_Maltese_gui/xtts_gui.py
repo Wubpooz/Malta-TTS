@@ -1,12 +1,12 @@
 #py -3.10 -m pip install -r requirements.txt
 #streamlit run xtts_app.py
 
-import contextlib
-import io
 import streamlit as st
+from TTS.api import TTS
 import torch
 import os
-from TTS.api import TTS
+import contextlib
+import io
 import time
 
 from TTS.tts.configs.xtts_config import XttsConfig
