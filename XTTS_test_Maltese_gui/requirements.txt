@@ -1,10 +1,8 @@
 # Python 3.10
 streamlit
-# streamlit==1.47.0
 torch>=2.1.0
 TTS>=0.22.0
 transformers==4.38.2
-
 
 # Possible fix for deployment but real issue is OOM
 # streamlit==1.29.0
