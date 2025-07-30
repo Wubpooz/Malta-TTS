@@ -12,6 +12,7 @@ from appcode.gui.inputs import inputs, cleanup_user_uploads
 from appcode.gui.paperListAndFiltering import paper_list_and_filtering
 from appcode.gui.graphics import paper_count
 
+#TODO add citation couts, use web api instead of txt files for up to date search (like ACL OCL corpus), add year filtering
 
 # ======================== Page Setup ========================
 st.set_page_config(page_title="Paper Relevance Dashboard", layout="wide")
