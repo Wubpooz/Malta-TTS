@@ -1,23 +1,28 @@
-# -*- coding: utf-8 -*-
-# new_language_xtts.py
-# This script is used to fine-tune the XTTS model for a new language and run inference on it.
-# It includes functions for training the model and performing inference, as well as a command-line interface to
-# control the process.
-# Based on https://github.com/daswer123/xtts-webui/blob/main/scripts/utils/gpt_train.py & https://github.com/anhnh2002/XTTSv2-Finetuning-for-New-Languages/blob/main/train_gpt_xtts.py
-
-
+# ============================ Requirements ============================
+# - Python 3.8 or higher
+# - PyTorch with CUDA support
+# - Required Python packages listed in requirements.txt
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+#find if on windows or linux:
+if [ -d "venv/Scripts" ]; then
+  echo "Windows detected, using venv/Scripts/activate"
+  venv/Scripts/activate
+else
+  echo "Linux detected, using venv/bin/activate"
+  source venv/bin/activate
+fi
 
+pip install --upgrade pip
 pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install git+https://github.com/coqui-ai/TTS.git@dev
 pip install -r requirements.txt
-
-
+# pip install git+https://github.com/coqui-ai/TTS.git@dev
 python -c "import nltk; nltk.download('punkt')"
 python -m spacy download en_core_web_sm # XTTS uses spacy for some languages. Even if not "mt"
 
 
+
+
+# ============================ Dataset Preparation ============================
 # CUDA_VISIBLE_DEVICES=0 python dataset_preparation.py \
 # --input_path datasets/ \
 # --output_path datasets-1/ \
@@ -25,8 +30,11 @@ python -m spacy download en_core_web_sm # XTTS uses spacy for some languages. Ev
 # --metadata_path datasets/metadata_train.csv \
 
 
+# ============================ Model Training ============================
 # CUDA_VISIBLE_DEVICES=0
 python new_language_training_cli.py \
+--is_download True \
+--is_tokenizer_extension True \
 --output_path checkpoints/ \
 --metadatas datasets-1/metadata_train.csv,datasets-1/metadata_eval.csv,mt datasets-2/metadata_train.csv,datasets-2/metadata_eval.csv,mt \
 --num_epochs 100 \

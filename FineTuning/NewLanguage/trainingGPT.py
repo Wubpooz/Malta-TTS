@@ -12,7 +12,7 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
-
+  Based on the XTTSv2 fine-tuning scripts and https://github.com/daswer123/xtts-webui/blob/main/scripts/utils/gpt_train.py & https://github.com/anhnh2002/XTTSv2-Finetuning-for-New-Languages/blob/main/train_gpt_xtts.py
   Args:
       metadatas (list): A list of metadata strings in the format "train_csv_path,eval_csv_path,language".
       num_epochs (int): Number of epochs for training. Default is 100.
@@ -180,3 +180,28 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   gc.collect()
 
   return XTTS_CHECKPOINT, TOKENIZER_FILE, CONFIG_PATH, trainer_out_path, speaker_ref
+
+
+
+if __name__ == "__main__":
+  from parsers import create_train_GPT_parser
+  parser = create_train_GPT_parser()
+  args = parser.parse_args()
+
+  train_gpt(
+    metadatas=args.metadatas,
+    num_epochs=args.num_epochs,
+    batch_size=args.batch_size,
+    grad_acumm=args.grad_acumm,
+    output_path=args.output_path,
+    lr=args.lr,
+    weight_decay=args.weight_decay,
+    save_step=args.save_step,
+    custom_model=args.custom_model,
+    version=args.version,
+    max_text_length=args.max_text_length,
+    max_audio_length=args.max_audio_length,
+    multi_gpu=args.multi_gpu
+  )
+  print("Training completed successfully!")
+  print("You can now run inference using the trained model.")

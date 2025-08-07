@@ -82,13 +82,8 @@ def prepare_dataset(input_dir, output_dir, test_size):
 
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser(description="Prepare MASRI-HEADSET CORPUS v2 for Hugging Face.")
-  parser.add_argument("--input_dir", type=str, required=True, help="Path to the root of the MASRI-HEADSET CORPUS v2 dataset.")
-  parser.add_argument("--output_dir", type=str, required=True, help="Path where the prepared dataset will be saved.")
-  parser.add_argument("--test_size", type=float, default=0.1, help="Proportion of the dataset to include in the test split (default: 0.1).")
-  parser.add_argument("--upload_to_hf", action='store_true', help="If set, will upload the dataset to Hugging Face after preparation.")
-  parser.add_argument("--dataset_name", type=str, default="Bluefir/maltese-headset-v2", help="Name of the dataset to upload to Hugging Face (default: 'Bluefir/maltese-headset-v2').")
-  
+  from parsers import create_prepare_dataset_parser
+  parser = create_prepare_dataset_parser()
   args = parser.parse_args()
 
   final_dataset_path = prepare_dataset(args.input_dir, args.output_dir, args.test_size)

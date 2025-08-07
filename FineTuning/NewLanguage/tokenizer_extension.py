@@ -6,7 +6,7 @@ from tokenizers.models import BPE
 from tokenizers.pre_tokenizers import Whitespace
 from tokenizers.trainers import BpeTrainer
 
-def merge_tokenizers_preserve_ids(old_tokenizer_path, new_tokenizer_path, output_path):
+def _merge_tokenizers_preserve_ids(old_tokenizer_path, new_tokenizer_path, output_path):
   """
   Merges two vocabularies, preserving the token IDs from the old tokenizer
   and adding new tokens from the new tokenizer.
@@ -37,7 +37,7 @@ def merge_tokenizers_preserve_ids(old_tokenizer_path, new_tokenizer_path, output
   return combined_vocab
 
 
-def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 100000):
+def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 100_000):
   """Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
   This function combines the existing tokenizer with a new tokenizer trained on the provided metadata.
   It saves the new tokenizer in a specified directory and updates the vocabulary to include new tokens.
@@ -45,7 +45,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
       output_path (str): Path to the output directory where the tokenizer files will be saved.
       metadata_path (str): Path to the metadata file containing training data.
       language (str): Language code for the new language to be added.
-      extended_vocab_size (int): Desired size of the extended vocabulary. Default is 100000.
+      extended_vocab_size (int): Desired size of the extended vocabulary. Default is 100_000.
   """
   root = os.path.join(output_path, "")
   
@@ -71,7 +71,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   os.makedirs(new_tokenizer_path, exist_ok=True)
   new_tokenizer.model.save(new_tokenizer_path)
 
-  merge_tokenizers_preserve_ids(old_tokenizer_path, new_tokenizer_path, merged_tokenizer_path)
+  _merge_tokenizers_preserve_ids(old_tokenizer_path, new_tokenizer_path, merged_tokenizer_path)
 
   # 4. Now, create the final tokenizer by combining the merged vocab with the new merges.txt
   merged_vocab_file = os.path.join(merged_tokenizer_path, 'vocab.json')
@@ -104,3 +104,23 @@ def adjust_config(output_path: str, version: str, language: str):
   config["languages"] += [language]
   with open(config_path, 'w') as f:
     json.dump(config, f, indent=4)
+
+
+
+if __name__ == "__main__":
+  from parsers import create_tokenizer_extension_parser
+  parser = create_tokenizer_extension_parser()
+  args = parser.parse_args()
+
+  extend_tokenizer(
+    output_path=args.output_path,
+    metadata_path=args.metadata_path,
+    language=args.language,
+    extended_vocab_size=args.extended_vocab_size
+  )
+
+  adjust_config(
+    output_path=args.output_path,
+    version=args.version,
+    language=args.language
+  )

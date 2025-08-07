@@ -1,9 +1,4 @@
-import os
-import torch
-import torchaudio
-
 from trainingGPT import train_gpt
-from inference import inference
 from tokenizer_extension import extend_tokenizer
 from tokenizer_extension import adjust_config
 from download import download
@@ -14,32 +9,33 @@ if __name__ == "__main__":
   parser = create_xtts_trainer_parser()
   args = parser.parse_args()
 
-  # Step 1: Download the base XTTS model files.
-  print("Step 1: Downloading XTTS base model files.")
-  download(
-    output_path=args.output_path,
-    version=args.version
-  )
-  
-  # Step 2: Extend the tokenizer for the new language.
-  print("Step 2: Extending the XTTS tokenizer with the new language.")
-  extend_tokenizer(
-    output_path=args.output_path,
-    metadata_path=args.metadata_path, #datasets/metadata_train.csv
-    language=args.language,
-    extended_vocab_size=args.extended_vocab_size #2000
-  )
-  
-  # Step 3: Adjust the config file to include the new language.
-  print("Step 3: Adjusting the config file.")
+  step = 1
+  if args.is_download:
+    print(f"Step {step}: Downloading XTTS base model files.")
+    download(
+      output_path=args.output_path,
+      version=args.version
+    )
+    step += 1
+
+  if args.is_tokenizer_extension:
+    print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
+    extend_tokenizer(
+      output_path=args.output_path,
+      metadata_path=args.metadata_path,
+      language=args.language,
+      extended_vocab_size=args.extended_vocab_size
+    )
+    step += 1  
+
+  print(f"Step {step}: Adjusting the config file.")
   adjust_config(
     output_path=args.output_path,
     version=args.version,
     language=args.language
   )
 
-  # Step 4: Start the training process with the extended tokenizer and updated config.
-  print("Step 4: Starting GPT training.")
+  print(f"Step {step}: Starting GPT training.")
   xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref = train_gpt(
     metadatas=args.metadatas,
     output_path=args.output_path,
@@ -55,7 +51,7 @@ if __name__ == "__main__":
   
   print(f"Checkpoint saved in dir: {trainer_out_path}")
 
-  # Step 5: Run inference on the trained model.
+
   # run_inference = input("Do you want to run inference? (y/n): ").strip().lower()
   # inference_text = input("Enter the text for inference (or leave empty to use default): ").strip() # Hija test tal-mudell tat-taħdit il-ġdid tiegħi, il-lingwa Maltija hija interessanti! Esperimenti u testijiet huma importanti biex niskopru l-possibbiltajiet tat-taħdit.
   # if run_inference == 'y':
@@ -70,10 +66,10 @@ if __name__ == "__main__":
   #   )
   #   print("Inference completed!")
   #   torchaudio.save(os.path.join(trainer_out_path, "output_maltese.wav"), audio, 24000)
-
+  #   print("Audio saved as output_maltese.wav")
   #   try:
   #     from IPython.display import Audio
-  #     Audio(audio, rate=24000) # Play audio (for Jupyter Notebook)
+  #     Audio(audio, rate=24000)
   #   except ImportError:
   #     print("IPython not available, audio playback not supported in this environment.")
   # else:

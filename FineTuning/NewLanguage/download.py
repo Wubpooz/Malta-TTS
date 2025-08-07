@@ -52,4 +52,12 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
 
 
 if __name__ == "__main__":
-  print("This script is intended to be imported as a module.")
+  from parsers import create_download_parser
+
+  parser = create_download_parser()
+  args = parser.parse_args()
+  download(
+    output_path=args.output_path,
+    version=args.version,
+    custom_model=args.custom_model
+  )

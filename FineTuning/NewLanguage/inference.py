@@ -82,13 +82,27 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
 
 
 if __name__ == "__main__":
-  # Example usage
-  xtts_checkpoint = "path/to/xtts_checkpoint.pth"
-  xtts_config = "path/to/xtts_config.json"
-  xtts_vocab = "path/to/xtts_vocab.json"
-  tts_text = "Hello, this is a test of the XTTS model."
-  speaker_audio_file = "path/to/speaker_audio.wav"
-  lang = "en"
+  from parsers import create_inference_parser
+  parser = create_inference_parser()
+  args = parser.parse_args()
+  audio_waveform = inference(
+    xtts_checkpoint=args.xtts_checkpoint,
+    xtts_config=args.xtts_config,
+    xtts_vocab=args.xtts_vocab,
+    tts_text=args.tts_text,
+    speaker_audio_file=args.speaker_audio_file,
+    lang=args.lang
+  )
 
-  audio_waveform = inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_file, lang)
-  print("Synthesized audio waveform:", audio_waveform.shape)
+  print("Inference completed. Audio waveform shape:", audio_waveform.shape)
+  # Save the audio waveform to a file
+  import torchaudio
+  output_file = args.output_file if args.output_file else "output.wav"
+  torchaudio.save(output_file, audio_waveform, sample_rate=24000)
+  print(f"Audio saved to {output_file}")
+
+  try:
+    from IPython.display import Audio
+    Audio(output_file, autoplay=True)
+  except ImportError:
+    print("IPython.display.Audio not available. You can play the audio file using any audio player.")
