@@ -97,6 +97,10 @@ python trainingGPT.py --output_path=checkpoints/ --metadatas=datasets-1/metadata
 &nbsp;  
 &nbsp;  
 ## (Optional) DVAE Finetuning
+You can also train the Discrete VAE (DVAE) model with the following command:  
+```bash
+python trainingDVAE.py --dvae_pretrained checkpoints/dvae.pth --mel_norm_file checkpoints/mel_norm.json --language mt --metadatas=datasets-1/metadata_train.csv,datasets-1/metadata_eval.csv,mt datasets-2/metadata_train.csv,datasets-2/metadata_eval.csv,mt --num_epochs 5 --batch_size 512 --lr 5e-6
+```
 
 
 
