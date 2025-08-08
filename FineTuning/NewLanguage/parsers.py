@@ -6,8 +6,8 @@ def create_xtts_trainer_parser():
   """Create a command-line argument parser for the XTTS Trainer.
   """
   parser = argparse.ArgumentParser(description="Arguments for XTTS Trainer")
-  parser.add_argument("is_download", action='store_true', help="Flag to indicate if the XTTS model files should be downloaded.")
-  parser.add_argument("is_tokenizer_extension", action='store_true', help="Flag to indicate if the tokenizer should be extended with a new language.")
+  parser.add_argument("--is_download", action='store_true', help="Flag to indicate if the XTTS model files should be downloaded.")
+  parser.add_argument("--is_tokenizer_extension", action='store_true', help="Flag to indicate if the tokenizer should be extended with a new language.")
   parser.add_argument("--output_path", type=str, required=True, help="Path to pretrained + checkpoint model")
   parser.add_argument("--metadatas", nargs='+', type=str, required=True, help="train_csv_path,eval_csv_path,language")
   parser.add_argument("--num_epochs", type=int, default=10, help="Number of epochs")

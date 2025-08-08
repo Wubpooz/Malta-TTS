@@ -33,8 +33,8 @@ python -m spacy download en_core_web_sm # XTTS uses spacy for some languages. Ev
 # ============================ Model Training ============================
 # CUDA_VISIBLE_DEVICES=0
 python new_language_training_cli.py \
---is_download True \
---is_tokenizer_extension True \
+--is_download \
+--is_tokenizer_extension \
 --output_path checkpoints/ \
 --metadatas datasets-1/metadata_train.csv,datasets-1/metadata_eval.csv,mt datasets-2/metadata_train.csv,datasets-2/metadata_eval.csv,mt \
 --num_epochs 100 \
