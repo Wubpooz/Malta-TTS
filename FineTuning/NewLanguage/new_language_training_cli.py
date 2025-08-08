@@ -26,14 +26,14 @@ if __name__ == "__main__":
       language=args.language,
       extended_vocab_size=args.extended_vocab_size
     )
-    step += 1  
-
-  print(f"Step {step}: Adjusting the config file.")
-  adjust_config(
-    output_path=args.output_path,
-    version=args.version,
-    language=args.language
-  )
+  else:
+    print(f"Step {step}: Adjusting the config file.")
+    adjust_config(
+      output_path=args.output_path,
+      version=args.version,
+      language=args.language
+    )
+  step += 1  
 
   print(f"Step {step}: Starting GPT training.")
   xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref = train_gpt(

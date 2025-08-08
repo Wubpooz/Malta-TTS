@@ -1,5 +1,6 @@
 import os
 import json
+import torch
 import pandas as pd
 from tokenizers import Tokenizer
 from tokenizers.models import BPE
@@ -37,7 +38,7 @@ def _merge_tokenizers_preserve_ids(old_tokenizer_path, new_tokenizer_path, outpu
   return combined_vocab
 
 
-def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 100_000):
+def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 100_000, version: str = "main"):
   """Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
   This function combines the existing tokenizer with a new tokenizer trained on the provided metadata.
   It saves the new tokenizer in a specified directory and updates the vocabulary to include new tokens.
@@ -90,6 +91,12 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
 
   print(f"Tokenizer has been successfully extended and saved to {os.path.join(root, 'vocab.json')}")
 
+  print("Updating the XTTS checkpoint...")
+  clean_xtts_checkpoint(output_path)
+
+  print("Updating the XTTS config file...")
+  adjust_config(output_path, version, language)
+
 
 
 def adjust_config(output_path: str, version: str, language: str):
@@ -110,6 +117,33 @@ def adjust_config(output_path: str, version: str, language: str):
 
 
 
+def clean_xtts_checkpoint(original_path: str):
+  """Removes incompatible layers after tokenizer extension.
+  Args:
+      original_path (str): Path to the original XTTS checkpoint directory.
+  """
+  xtts_checkpoint_path = os.path.join(original_path, "model.pth")
+  if not os.path.exists(original_path) or not os.path.exists(xtts_checkpoint_path):
+    raise FileNotFoundError(f"Original checkpoint file not found at {original_path}. Please ensure the path is correct.")
+
+  print(f"Cleaning checkpoint: {xtts_checkpoint_path}")
+
+  checkpoint = torch.load(xtts_checkpoint_path, map_location="cpu")
+
+  for key in ["gpt.text_embedding.weight", "gpt.text_head.weight", "gpt.text_head.bias"]:
+    if key in checkpoint["model"]:
+      print(f"Removing incompatible layer: {key}")
+      del checkpoint["model"][key]
+
+  if os.path.exists(xtts_checkpoint_path):
+    os.rename(xtts_checkpoint_path, xtts_checkpoint_path + ".old")
+
+  torch.save(checkpoint, xtts_checkpoint_path)
+  print(f"Cleaned checkpoint saved.")
+  return xtts_checkpoint_path
+
+
+
 if __name__ == "__main__":
   from parsers import create_tokenizer_extension_parser
   parser = create_tokenizer_extension_parser()
@@ -119,11 +153,6 @@ if __name__ == "__main__":
     output_path=args.output_path,
     metadata_path=args.metadata_path,
     language=args.language,
-    extended_vocab_size=args.extended_vocab_size
-  )
-
-  adjust_config(
-    output_path=args.output_path,
     version=args.version,
-    language=args.language
+    extended_vocab_size=args.extended_vocab_size
   )

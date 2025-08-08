@@ -71,6 +71,7 @@ def create_tokenizer_extension_parser():
   parser.add_argument("--output_path", type=str, required=True, help="Path to the output directory where the tokenizer files will be saved.")
   parser.add_argument("--metadata_path", type=str, required=True, help="Path to the metadata file containing training data.")
   parser.add_argument("--language", type=str, required=True, help="Language code for the new language to be added.")
+  parser.add_argument("--version", type=str, default="main", help="XTTS version to use (default: main).")
   parser.add_argument("--extended_vocab_size", type=int, default=100000, help="Desired size of the extended vocabulary (default: 100000).")
   return parser
 
