@@ -122,5 +122,8 @@ Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but r
 
 
 
-
+# TODOs
 ## trainingGPT calls download => make that optional but require file path then
+## maybe audio file khz inconsistencies
+## use global paths in the colab notebook at the top
+## do the TODOS in files

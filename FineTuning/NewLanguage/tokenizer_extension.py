@@ -58,8 +58,9 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   existing_tokenizer.model.save(old_tokenizer_path)
   print(f"Original tokenizer loaded with {len(existing_tokenizer.get_vocab())} tokens.")
 
-  traindf = pd.read_csv(metadata_path, sep="|")
-  texts = traindf.text.to_list()
+  traindf = pd.read_csv(metadata_path, sep="|", header=None)
+  traindf.columns = ["audio_filepath", "text", "speaker"] #TODO do by argument
+  texts = traindf['text'].to_list()
   new_tokenizer = Tokenizer(BPE())
   new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
   trainer = BpeTrainer(special_tokens=[f"[{language}]"], vocab_size=extended_vocab_size) # type: ignore
@@ -77,7 +78,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   merged_vocab_file = os.path.join(merged_tokenizer_path, 'vocab.json')
   new_merges_file = os.path.join(new_tokenizer_path, 'merges.txt')
 
-  final_tokenizer = Tokenizer(BPE.from_files(vocab=merged_vocab_file, merges=new_merges_file)) # type: ignore
+  final_tokenizer = Tokenizer(BPE(vocab=merged_vocab_file, merges=new_merges_file))
   final_tokenizer.pre_tokenizer = Whitespace() # type: ignore
   final_tokenizer.add_special_tokens([f"[{language}]"])
 
@@ -98,7 +99,9 @@ def adjust_config(output_path: str, version: str, language: str):
       version (str): Version of the XTTS model.
       language (str): Language code for the new language to be added.
   """
-  config_path = os.path.join(output_path, "models", f"{version}", "/config.json")
+  config_path = os.path.join(output_path, "config.json")
+  if not os.path.exists(config_path):
+    raise FileNotFoundError(f"Config file not found at {config_path}. Please ensure the path is correct.") #TODO add more error handling like this
   with open(config_path, "r") as f:
     config = json.load(f)
   config["languages"] += [language]
