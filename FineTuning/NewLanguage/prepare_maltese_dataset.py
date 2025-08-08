@@ -71,8 +71,8 @@ def prepare_dataset(input_dir, output_dir, test_size):
       except OSError as e:
         shutil.copy(src, dst)
 
-  train_df[['audio_file', 'text', 'speaker_name']].to_csv(os.path.join(dataset_path, "metadata_train.csv"), sep="|", index=False, header=False)
-  test_df[['audio_file', 'text', 'speaker_name']].to_csv(os.path.join(dataset_path, "metadata_test.csv"), sep="|", index=False, header=False)
+  train_df[['audio_file', 'text', 'speaker_name']].to_csv(os.path.join(dataset_path, "metadata_train.csv"), sep="|", index=False)
+  test_df[['audio_file', 'text', 'speaker_name']].to_csv(os.path.join(dataset_path, "metadata_test.csv"), sep="|", index=False)
 
   print("\nDataset preparation completed successfully!")
   print(f"Dataset saved to: {dataset_path}")
@@ -99,7 +99,7 @@ if __name__ == "__main__":
           'test': os.path.join(final_dataset_path, "metadata_test.csv"),
         },
         delimiter="|",
-        column_names=["audio_file", "normalized_text", "speaker_id"],
+        column_names=["audio_file", "text", "speaker_name"],
       )
 
       def add_features(example):
