@@ -36,7 +36,7 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
     print(" > Downloading DVAE files!")
     ModelManager._download_model_files([MEL_NORM_LINK, DVAE_CHECKPOINT_LINK], output_path, progress_bar=True)
 
-  print(f" > Downloading XTTS v{version} files!")
+  print(f" > Downloading XTTS v-{version} files...")
   if not os.path.isfile(XTTS_CHECKPOINT):  # don't download again if the checkpoint exists or when using a custom model
     print(" > Downloading XTTS checkpoint...")
     ModelManager._download_model_files([XTTS_CHECKPOINT_LINK], output_path, progress_bar=True) # private API
