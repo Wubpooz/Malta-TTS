@@ -55,9 +55,12 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
     if language == "ja":
       num_workers = 0
 
+    # coqui format: "audio_file", "text", "speaker_name", "emotion_name"
+    # ljspeech format: "audio_file", "text", "normalized_transcription""
+
     config_dataset = BaseDatasetConfig(
-      formatter="coqui", #TODO ljspeech ?
-      dataset_name="ft_dataset",
+      formatter="ljspeech",
+      dataset_name="MASRI_HEADSET",
       path=os.path.dirname(train_csv),
       meta_file_train=os.path.basename(train_csv),
       meta_file_val=os.path.basename(eval_csv),
