@@ -34,9 +34,10 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   PROJECT_NAME = "XTTS_trainer_maltese"
   DASHBOARD_LOGGER = "tensorboard"
   LOGGER_URI = None
-  num_workers = 8
+  cpu_count = os.cpu_count() or 1  # fallback to 1 if None
+  num_workers = min(8, cpu_count - 1) if cpu_count > 1 else 1
 
-  OUT_PATH = os.path.join(output_path, "run", "training") #Path.cwd()  #os.path.join(output_path, "run", "training")
+  OUT_PATH = os.path.join(output_path, "training") #Path.cwd()
   os.makedirs(OUT_PATH, exist_ok=True)
 
   # Training Parameters
@@ -55,9 +56,9 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
       num_workers = 0
 
     config_dataset = BaseDatasetConfig(
-      formatter="coqui",
+      formatter="coqui", #TODO ljspeech ?
       dataset_name="ft_dataset",
-      path=os.path.dirname(train_csv), #TODO os.path.join(output_path, "dataset")
+      path=os.path.dirname(train_csv),
       meta_file_train=os.path.basename(train_csv),
       meta_file_val=os.path.basename(eval_csv),
       language=language,
@@ -120,6 +121,7 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
     test_sentences=[],
   )
 
+  #TODO use mixed precision
   model = GPTTrainer.init_from_config(config)
 
   print("Loading datasets...")
