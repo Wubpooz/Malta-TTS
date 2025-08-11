@@ -127,3 +127,10 @@ Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but r
 ## maybe audio file khz inconsistencies
 ## use global paths in the colab notebook at the top
 ## do the TODOS in files
+## param for num_workers ?
+## training loss graph
+## Use deepspeed
+If you want to be able to load_checkpoint with use_deepspeed=True and enjoy the speedup, you need to install deepspeed first.
+`pip install deepspeed==0.10.3`
+
+## autodetect formatter based on metadata number of cols and names

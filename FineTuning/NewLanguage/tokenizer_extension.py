@@ -113,6 +113,7 @@ def adjust_config(output_path: str, version: str, language: str):
   config["languages"] += [language]
   with open(config_path, 'w') as f:
     json.dump(config, f, indent=4)
+  print(f"Updated config file saved to {config_path}. Added new language: {language}")
 
 
 
