@@ -59,8 +59,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   existing_tokenizer.model.save(old_tokenizer_path)
   print(f"Original tokenizer loaded with {len(existing_tokenizer.get_vocab())} tokens.")
 
-  traindf = pd.read_csv(metadata_path, sep="|", header=None)
-  traindf.columns = ["audio_filepath", "text", "speaker"] #TODO do by argument
+  traindf = pd.read_csv(metadata_path, sep="|")
   texts = traindf['text'].to_list()
   new_tokenizer = Tokenizer(BPE())
   new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
