@@ -134,3 +134,82 @@ If you want to be able to load_checkpoint with use_deepspeed=True and enjoy the 
 `pip install deepspeed==0.10.3`
 
 ## autodetect formatter based on metadata number of cols and names
+
+
+
+
+
+## mixed precision:
+1. Add a mixed_precision flag to your GPTTrainerConfig
+python
+Copy
+Edit
+@dataclass
+class GPTTrainerConfig(XttsConfig):
+    lr: float = 5e-06
+    training_seed: int = 1
+    optimizer_wd_only_on_weights: bool = False
+    weighted_loss_attrs: dict = field(default_factory=lambda: {})
+    weighted_loss_multipliers: dict = field(default_factory=lambda: {})
+    test_sentences: List[dict] = field(default_factory=lambda: [])
+    mixed_precision: bool = False  # <<< NEW
+2. Modify train_step to support AMP
+Replace:
+
+python
+Copy
+Edit
+loss_text, loss_mel, _ = self.forward(
+    text_inputs, text_lengths, audio_codes, wav_lengths, cond_mels, cond_idxs, cond_lens
+)
+with:
+
+python
+Copy
+Edit
+if self.config.mixed_precision and self.device.type == "cuda":
+    with torch.cuda.amp.autocast(dtype=torch.float16):
+        loss_text, loss_mel, _ = self.forward(
+            text_inputs, text_lengths, audio_codes, wav_lengths, cond_mels, cond_idxs, cond_lens
+        )
+else:
+    loss_text, loss_mel, _ = self.forward(
+        text_inputs, text_lengths, audio_codes, wav_lengths, cond_mels, cond_idxs, cond_lens
+    )
+3. Add gradient scaling in the training loop
+If your training loop is inside the Trainer class (from trainer package), you’ll need something like:
+
+python
+Copy
+Edit
+scaler = torch.cuda.amp.GradScaler(enabled=config.mixed_precision)
+
+for batch in train_loader:
+    optimizer.zero_grad()
+
+    with torch.cuda.amp.autocast(enabled=config.mixed_precision):
+        _, loss_dict = model.train_step(batch, criterion)
+        loss = loss_dict["loss"]
+
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
+That way, when mixed_precision=True in your config, the model runs FP16 forward passes and scaled gradients, but still keeps FP32 master weights.
+
+4. Activate it in your fine-tune script
+When you build the GPTTrainerConfig in your train_gpt():
+
+python
+Copy
+Edit
+config = GPTTrainerConfig(
+    ...
+    mixed_precision=True,  # enable AMP
+)
+This will:
+
+Cut VRAM usage ~40–50% (helpful for Colab T4).
+
+Possibly increase speed (depends on compute/memory balance).
+
+Automatically fall back to FP32 for numerically sensitive ops.
