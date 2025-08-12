@@ -178,7 +178,7 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   print("Saving final model...")
   trainer.save_checkpoint(
     os.path.join(OUT_PATH, "final_model.pth"),
-    config=config,
+    # config=config,
     tokenizer_file=TOKENIZER_FILE,
     dvae_checkpoint=DVAE_CHECKPOINT,
     xtts_checkpoint=XTTS_CHECKPOINT,
@@ -198,6 +198,7 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   speaker_ref = train_samples[longest_text_idx]["audio_file"] # type: ignore
   if not os.path.isabs(speaker_ref):
     speaker_ref = os.path.join(output_path, os.path.dirname(metadatas[0].split(",")[0]), speaker_ref)
+  print(f"Speaker reference: {speaker_ref}")
 
   trainer_out_path = trainer.output_path
 
