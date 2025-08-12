@@ -33,14 +33,12 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   RUN_NAME = "GPT_XTTS_FT"
   PROJECT_NAME = "XTTS_trainer_maltese"
   DASHBOARD_LOGGER = "tensorboard"
+  LOGGER_URI = None #os.path.join(OUT_PATH, "logs")
   cpu_count = os.cpu_count() or 1  # fallback to 1 if None
   num_workers = min(8, cpu_count - 1) if cpu_count > 1 else 1
 
   OUT_PATH = os.path.join(output_path, "training") #Path.cwd()
-  LOGGER_URI = os.path.join(OUT_PATH, "logs")
   os.makedirs(OUT_PATH, exist_ok=True)
-  os.makedirs(LOGGER_URI, exist_ok=True)
-  print(f" > TensorBoard logs will be saved to {LOGGER_URI}")
 
   # Training Parameters
   OPTIMIZER_WD_ONLY_ON_WEIGHTS = not multi_gpu
@@ -156,15 +154,21 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   # if multi_gpu:
   #   trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
-  # Testing new language
-  from TTS.tts.layers.xtts.tokenizer import VoiceBpeTokenizer
+  import TTS.tts.layers.xtts.tokenizer as tokenizer
+  import re
 
-  print("Loading tokenizer...")
-  tokenizer = VoiceBpeTokenizer(TOKENIZER_FILE, max_length=512)
-  print("Tokenizer loaded!")
-  tokenizer.encode(tokenizer, "Merhba", "mt")
+  _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
 
+  def custom_preprocess_text(self, txt, lang):
+      if lang == "mt":  # Maltese
+          txt = txt.lower()
+          txt = re.sub(re.compile(r"\s+"), " ", txt)
+          # transliterate ?
+          return txt.strip()
+      return _original_preprocess_text(self, txt, lang)
 
+  # Monkey-patch
+  tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
 
 
   print("Starting training...")

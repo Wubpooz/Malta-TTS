@@ -17,8 +17,9 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
   XTTS_CHECKPOINT_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/model.pth"
   XTTS_CONFIG_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/config.json"
 
-  CHECKPOINTS_OUT_PATH = os.path.join(output_path, "models", f"{version}")
-  os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
+  # TODO move files there ?
+  # CHECKPOINTS_OUT_PATH = os.path.join(output_path, "models", f"{version}")
+  # os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
   
   DVAE_CHECKPOINT = os.path.join(output_path, os.path.basename(DVAE_CHECKPOINT_LINK))
   MEL_NORM_FILE = os.path.join(output_path, os.path.basename(MEL_NORM_LINK))
