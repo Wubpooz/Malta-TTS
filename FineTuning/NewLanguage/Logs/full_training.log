@@ -1,0 +1,382 @@
+
+[1m > TRAINING (2025-08-12 09:43:44) [0m
+ ! Run is removed from /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-12-2025_09+43AM-87ed0ce
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/trainer/trainer.py", line 1833, in fit
+    self._fit()
+  File "/usr/local/lib/python3.11/dist-packages/trainer/trainer.py", line 1785, in _fit
+    self.train_epoch()
+  File "/usr/local/lib/python3.11/dist-packages/trainer/trainer.py", line 1503, in train_epoch
+    for cur_step, batch in enumerate(self.train_loader):
+  File "/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py", line 1465, in _next_data
+    return self._process_data(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py", line 1491, in _process_data
+    data.reraise()
+  File "/usr/local/lib/python3.11/dist-packages/torch/_utils.py", line 715, in reraise
+    raise exception
+ ! Run is removed from /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-12-2025_09+43AM-87ed0ce
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/trainer/trainer.py", line 1833, in fit
+    self._fit()
+  File "/usr/local/lib/python3.11/dist-packages/trainer/trainer.py", line 1785, in _fit
+    self.train_epoch()
+  File "/usr/local/lib/python3.11/dist-packages/trainer/trainer.py", line 1503, in train_epoch
+    for cur_step, batch in enumerate(self.train_loader):
+  File "/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py", line 1465, in _next_data
+    return self._process_data(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py", line 1491, in _process_data
+    data.reraise()
+  File "/usr/local/lib/python3.11/dist-packages/torch/_utils.py", line 715, in reraise
+    raise exception
+RecursionError: Caught RecursionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 160, in __getitem__
+    tseq, audiopath, wav, cond, cond_len, cond_idxs = self.load_item(sample)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 110, in load_item
+    wav = load_audio(audiopath, self.sample_rate)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/models/xtts.py", line 73, in load_audio
+    audio, lsr = torchaudio.load(audiopath)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/utils.py", line 205, in load
+    return backend.load(uri, frame_offset, num_frames, normalize, channels_first, format, buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 297, in load
+    return load_audio(uri, frame_offset, num_frames, normalize, channels_first, format)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 88, in load_audio
+    s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torio/io/_streaming_media_decoder.py", line 526, in __init__
+    self._be = ffmpeg_ext.StreamingMediaDecoder(os.path.normpath(src), format, option)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data/wavs/wavs/MSRHS_M_06_P12U173_0079.wav.wav" (No such file or directory).
+Exception raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x78c37f96c446 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x78c37f9166e4 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x42134 (0x78c2ce940134 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x78c2ce942b34 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #4: <unknown function> + 0x3a8de (0x78c2af2da8de in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #5: <unknown function> + 0x323ee (0x78c2af2d23ee in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #6: python3() [0x55577b]
+<omitting python frames>
+frame #8: python3() [0x5855cd]
+frame #9: python3() [0x56e459]
+frame #10: python3() [0x52fc40]
+frame #11: <unknown function> + 0xfc8b (0x78c2ce985c8b in /usr/local/lib/python3.11/dist-packages/torchaudio/lib/_torchaudio.so)
+frame #15: python3() [0x56e0e6]
+frame #18: python3() [0x5af418]
+frame #23: python3() [0x56e0e6]
+frame #27: python3() [0x56e0e6]
+frame #32: python3() [0x65698d]
+frame #34: python3() [0x654830]
+frame #37: python3() [0x613cd4]
+frame #39: python3() [0x63415b]
+frame #40: python3() [0x6303b4]
+frame #41: python3() [0x6448f5]
+frame #46: <unknown function> + 0x29d90 (0x78c38094bd90 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+frame #47: __libc_start_main + 0x80 (0x78c38094be40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+
+
+During handling of the above exceptioRecursionError: Caught RecursionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 160, in __getitem__
+    tseq, audiopath, wav, cond, cond_len, cond_idxs = self.load_item(sample)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 110, in load_item
+    wav = load_audio(audiopath, self.sample_rate)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/models/xtts.py", line 73, in load_audio
+    audio, lsr = torchaudio.load(audiopath)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/utils.py", line 205, in load
+    return backend.load(uri, frame_offset, num_frames, normalize, channels_first, format, buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 297, in load
+    return load_audio(uri, frame_offset, num_frames, normalize, channels_first, format)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 88, in load_audio
+    s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torio/io/_streaming_media_decoder.py", line 526, in __init__
+    self._be = ffmpeg_ext.StreamingMediaDecoder(os.path.normpath(src), format, option)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data/wavs/wavs/MSRHS_M_06_P12U173_0079.wav.wav" (No such file or directory).
+Exception raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x78c37f96c446 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x78c37f9166e4 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x42134 (0x78c2ce940134 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x78c2ce942b34 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #4: <unknown function> + 0x3a8de (0x78c2af2da8de in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #5: <unknown function> + 0x323ee (0x78c2af2d23ee in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #6: python3() [0x55577b]
+<omitting python frames>
+frame #8: python3() [0x5855cd]
+frame #9: python3() [0x56e459]
+frame #10: python3() [0x52fc40]
+frame #11: <unknown function> + 0xfc8b (0x78c2ce985c8b in /usr/local/lib/python3.11/dist-packages/torchaudio/lib/_torchaudio.so)
+frame #15: python3() [0x56e0e6]
+frame #18: python3() [0x5af418]
+frame #23: python3() [0x56e0e6]
+frame #27: python3() [0x56e0e6]
+frame #32: python3() [0x65698d]
+frame #34: python3() [0x654830]
+frame #37: python3() [0x613cd4]
+frame #39: python3() [0x63415b]
+frame #40: python3() [0x6303b4]
+frame #41: python3() [0x6448f5]
+frame #46: <unknown function> + 0x29d90 (0x78c38094bd90 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+frame #47: __libc_start_main + 0x80 (0x78c38094be40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 160, in __getitem__
+    tseq, audiopath, wav, cond, cond_len, cond_idxs = self.load_item(sample)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 110, in load_item
+    wav = load_audio(audiopath, self.sample_rate)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/models/xtts.py", line 73, in load_audio
+    audio, lsr = torchaudio.load(audiopath)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/utils.py", line 205, in load
+    return backend.load(uri, frame_offset, num_frames, normalize, channels_first, format, buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 297, in load
+    return load_audio(uri, frame_offset, num_frames, normalize, channels_first, format)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 88, in load_audio
+    s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torio/io/_streaming_media_decoder.py", line 526, in __init__
+    self._be = ffmpeg_ext.StreamingMediaDecoder(os.path.normpath(src), format, option)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data/wavs/wavs/MSRHS_F_02_P03U109_0011.wav.wav" (No such file or directory).
+Exception raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x78c37f96c446 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x78c37f9166e4 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x42134 (0x78c2ce940134 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x78c2ce942b34 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #4: <unknown function> + 0x3a8de (0x78c2af2da8de in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #5: <unknown function> + 0x323ee (0x78c2af2d23ee in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #6: python3() [0x55577b]
+<omitting python frames>
+frame #8: python3() [0x5855cd]
+frame #9: python3() [0x56e459]
+frame #10: python3() [0x52fc40]
+frame #11: <unknown function> + 0xfc8b (0x78c2ce985c8b in /usr/local/lib/python3.11/dist-packages/torchaudio/lib/_torchaudio.so)
+frame #15: python3() [0x56e0e6]
+frame #18: python3() [0x5af418]
+frame #20: python3() [0x5af418]
+frame #25: python3() [0x56e0e6]
+frame #29: python3() [0x56e0e6]
+frame #34: python3() [0x65698d]
+frame #36: python3() [0x654830]
+frame #39: python3() [0x613cd4]
+frame #41: python3() [0x63415b]
+frame #42: python3() [0x6303b4]
+frame #43: python3() [0x6448f5]
+frame #48: <unknown function> + 0x29d90 (0x78c38094bd90 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+frame #49: __libc_start_main + 0x80 (0x78c38094be40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+
+
+During handling of the above exception, another excen, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 160, in __getitem__
+    tseq, audiopath, wav, cond, cond_len, cond_idxs = self.load_item(sample)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 110, in load_item
+    wav = load_audio(audiopath, self.sample_rate)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/models/xtts.py", line 73, in load_audio
+    audio, lsr = torchaudio.load(audiopath)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/utils.py", line 205, in load
+    return backend.load(uri, frame_offset, num_frames, normalize, channels_first, format, buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 297, in load
+    return load_audio(uri, frame_offset, num_frames, normalize, channels_first, format)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 88, in load_audio
+    s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torio/io/_streaming_media_decoder.py", line 526, in __init__
+    self._be = ffmpeg_ext.StreamingMediaDecoder(os.path.normpath(src), format, option)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data/wavs/wavs/MSRHS_F_02_P03U109_0011.wav.wav" (No such file or directory).
+Exception raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x78c37f96c446 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x78c37f9166e4 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x42134 (0x78c2ce940134 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x78c2ce942b34 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #4: <unknown function> + 0x3a8de (0x78c2af2da8de in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #5: <unknown function> + 0x323ee (0x78c2af2d23ee in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #6: python3() [0x55577b]
+<omitting python frames>
+frame #8: python3() [0x5855cd]
+frame #9: python3() [0x56e459]
+frame #10: python3() [0x52fc40]
+frame #11: <unknown function> + 0xfc8b (0x78c2ce985c8b in /usr/local/lib/python3.11/dist-packages/torchaudio/lib/_torchaudio.so)
+frame #15: python3() [0x56e0e6]
+frame #18: python3() [0x5af418]
+frame #20: python3() [0x5af418]
+frame #25: python3() [0x56e0e6]
+frame #29: python3() [0x56e0e6]
+frame #34: python3() [0x65698d]
+frame #36: python3() [0x654830]
+frame #39: python3() [0x613cd4]
+frame #41: python3() [0x63415b]
+frame #42: python3() [0x6303b4]
+frame #43: python3() [0x6448f5]
+frame #48: <unknown function> + 0x29d90 (0x78c38094bd90 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+frame #49: __libc_start_main + 0x80 (0x78c38094be40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 160, in __getitem__
+    tseq, audiopath, wav, cond, cond_len, cond_idxs = self.load_item(sample)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 110, in load_item
+    wav = load_audio(audiopath, self.sample_rate)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/models/xtts.py", line 73, in load_audio
+    audio, lsr = torchaudio.load(audiopath)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/utils.py", line 205, in load
+    return backend.load(uri, frame_offset, num_frames, normalize, channels_first, format, buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 297, in load
+    return load_audio(uri, frame_offset, num_frames, normalize, channels_first, format)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 88, in load_audio
+    s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torio/io/_streaming_media_decoder.py", line 526, in __init__
+    self._be = ffmpeg_ext.StreamingMediaDecoder(os.path.normpath(src), format, option)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data/wavs/wavs/MSRHS_F_09_P15U196_0095.wav.wav" (No such file or directory).
+Exception raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x78c37f96c446 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x78c37f9166e4 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x42134 (0x78c2ce940134 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x78c2ce942b34 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #4: <unknown function> + 0x3a8de (0x78c2af2da8de in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #5: <unknown function> + 0x323ee (0x78c2af2d23ee in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #6: python3() [0x55577b]
+<omitting python frames>
+frame #8: python3() [0x5855cd]
+frame #9: python3() [0x56e459]
+frame #10: python3() [0x52fc40]
+frame #11: <unknown function> + 0xfc8b (0x78c2ce985c8b in /usr/local/lib/python3.11/dist-packages/torchaudio/lib/_torchaudio.so)
+frame #15: python3() [0x56e0e6]
+frame #18: python3() [0x5af418]
+frame #20: python3() [0x5af418]
+frame #22: python3() [0x5af418]
+frame #27: python3() [0x56e0e6]
+frame #31: python3() [0x56e0e6]
+frame #36: python3() [0x65698d]
+frame #38: python3() [0x654830]
+frame #41: python3() [0x613cd4]
+frame #43: python3() [0x63415b]
+frame #44: python3() [0x6303b4]
+frame #45: python3() [0x6448f5]
+frame #50: <unknown function> + 0x29d90 (0x78c38094bd90 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+frame #51: __libc_start_main + 0x80 (0x78c38094be40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 160, in __getitem__
+    tseq, audiopath, wav, cond, cond_len, cond_idxs = self.load_item(sample)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 110, in load_item
+    wav = load_audio(audiopath, self.sample_rate)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/models/xtts.py", line 73, in load_audio
+    audio, lsr = torchaudio.load(audiopath)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/utils.py", line 205, in load
+    return backend.load(uri, frame_offset, num_frames, normalize, channels_first, format, buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 297, in load
+    return load_audio(uri, frame_offset, num_frames, normalize, channels_first, format)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torchaudio/_backend/ffmpeg.py", line 88, in load_audio
+    s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torio/io/_streaming_media_decoder.py", line 526, in __init__
+    self._be = ffmpeg_ext.StreamingMediaDecoder(os.path.normpath(src), format, option)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data/wavs/wavs/MSRHS_F_05_P08U025_0105.wav.wav" (No such file or directory).
+Exception raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x78c37f96c446 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x78c37f9166e4 in /usr/local/lib/python3.11/dist-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x42134 (0x78c2ce940134 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x78c2ce942b34 in /usr/local/lib/python3.11/dist-packages/torio/lib/libtorio_ffmpeg4.so)
+frame #4: <unknown function> + 0x3a8de (0x78c2af2da8de in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #5: <unknown function> + 0x323ee (0x78c2af2d23ee in /usr/local/lib/python3.11/dist-packages/torio/lib/_torio_ffmpeg4.so)
+frame #6: python3() [0x55577b]
+<omitting python frames>
+frame #8: python3() [0x5855cd]
+frame #9: python3() [0x56e459]
+frame #10: python3() [0x52fc40]
+frame #11: <unknown function> + 0xfc8b (0x78c2ce985c8b in /usr/local/lib/python3.11/dist-packages/torchaudio/lib/_torchaudio.so)
+frame #15: python3() [0x56eython3() [0x5af418]
+frame #30: python3() [0x5af418]
+frame #32: python3() [0x5af418]
+frame #37: python3() [0x56e0e6]
+frame #41: python3() [0x56e0e6]
+frame #46: python3() [0x65698d]
+frame #48: python3() [0x654830]
+frame #51: python3() [0x613cd4]
+frame #53: python3() [0x63415b]
+frame #54: python3() [0x6303b4]
+frame #55: python3() [0x6448f5]
+frame #60: <unknown function> + 0x29d90 (0x78c38094bd90 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+frame #61: __libc_start_main + 0x80 (0x78c38094be40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
+
+        ^^^^^^^^^^^^^^
+RecursionError: maximum recursion depth exceeded while calling a Python object
+
+ages/TTS/tts/layers/xtts/trainer/dataset.py", line 156, in __getitem__
+    return self[1]
+           ~~~~^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 165, in __getitem__
+    return self[1]
+           ~~~~^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 156, in __getitem__
+    return self[1]
+           ~~~~^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 165, in __getitem__
+    return self[1]
+           ~~~~^^^
+  File "/usr/local/lib/python3.11/dist-packages/TTS/tts/layers/xtts/trainer/dataset.py", line 146, in __getitem__
+    index = random.randint(0, len(self.samples[lang]) - 1)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/random.py", line 362, in randint
+    return self.randrange(a, b+1)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/random.py", line 344, in randrange
+    return istart + self._randbelow(width)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/random.py", line 239, in _randbelow_with_getrandbits
+    k = n.bit_length()  # don't use (n-1) here because n can be 1
+        ^^^^^^^^^^^^^^
+RecursionError: maximum recursion depth exceeded while calling a Python object
+
+Finetuning process initiated.Finetuning process initiated.
+
