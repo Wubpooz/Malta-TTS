@@ -1,4 +1,5 @@
 import torch
+import os
 from tqdm import tqdm
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
@@ -33,7 +34,8 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   print("Initing model...")
   XTTS_MODEL = Xtts.init_from_config(config)
   print("Model Init, loadign checkpoint...")
-  XTTS_MODEL.load_checkpoint(config, checkpoint_path=xtts_checkpoint, vocab_path=xtts_vocab, use_deepspeed=use_deepspeed)
+  checkpoint_dir = os.path.dirname(xtts_checkpoint)
+  XTTS_MODEL.load_checkpoint(config, speaker_file_path="", checkpoint_dir=checkpoint_dir, checkpoint_path=xtts_checkpoint, vocab_path=xtts_vocab, use_deepspeed=use_deepspeed)
   XTTS_MODEL.to(device)
   print("Model loaded successfully!")
 
@@ -45,36 +47,52 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
     sound_norm_refs=XTTS_MODEL.config.sound_norm_refs, # type: ignore
   )
 
-  import nltk
-  from nltk.data import find
+  # import nltk
+  # from nltk.data import find
 
-  try:
-    find('tokenizers/punkt')
-  except LookupError:
-    print("NLTK 'punkt' tokenizer not found. downloading it now... (you can also download it manually using \"python -c \"import nltk; nltk.download('punkt')\"\")")
-    nltk.download('punkt')
-    print("NLTK 'punkt' tokenizer downloaded successfully.")
-    pass
+  # try:
+  #   find('tokenizers/punkt')
+  # except LookupError:
+  #   print("NLTK 'punkt' tokenizer not found. downloading it now... (you can also download it manually using \"python -c \"import nltk; nltk.download('punkt')\"\")")
+  #   nltk.download('punkt')
+  #   print("NLTK 'punkt' tokenizer downloaded successfully.")
+  #   pass
 
-  from nltk.tokenize import sent_tokenize
+  # from nltk.tokenize import sent_tokenize
+  # tts_texts = sent_tokenize(tts_text)
 
-  tts_texts = sent_tokenize(tts_text)
+  import TTS.tts.layers.xtts.tokenizer as tokenizer
+  import re
+
+  _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
+
+  def custom_preprocess_text(self, txt, lang):
+      if lang == "mt":  # Maltese
+          txt = txt.lower()
+          txt = re.sub(re.compile(r"\s+"), " ", txt)
+          # transliterate ?
+          return txt.strip()
+      return _original_preprocess_text(self, txt, lang)
+
+  # Monkey-patch
+  tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
+
 
   wav_chunks = []
   print("Infering...")
-  for text in tqdm(tts_texts):
-    wav_chunk = XTTS_MODEL.inference(
-      text=text,
-      language=lang,
-      gpt_cond_latent=gpt_cond_latent,
-      speaker_embedding=speaker_embedding,
-      temperature=float(XTTS_MODEL.config.temperature), # default 0.1
-      length_penalty=float(XTTS_MODEL.config.length_penalty), # default 1.0
-      repetition_penalty=float(XTTS_MODEL.config.repetition_penalty), # default 10.0
-      top_k=int(XTTS_MODEL.config.top_k), # default 10
-      top_p=float(XTTS_MODEL.config.top_p), # default 0.3
-    )
-    wav_chunks.append(torch.tensor(wav_chunk["wav"]))
+  # for text in tqdm(tts_texts):
+  wav_chunk = XTTS_MODEL.inference(
+    text=tts_text,
+    language=lang,
+    gpt_cond_latent=gpt_cond_latent,
+    speaker_embedding=speaker_embedding,
+    temperature=float(XTTS_MODEL.config.temperature), # default 0.1
+    length_penalty=float(XTTS_MODEL.config.length_penalty), # default 1.0
+    repetition_penalty=float(XTTS_MODEL.config.repetition_penalty), # default 10.0
+    top_k=int(XTTS_MODEL.config.top_k), # default 10
+    top_p=float(XTTS_MODEL.config.top_p), # default 0.3
+  )
+  wav_chunks.append(torch.tensor(wav_chunk["wav"]))
   print("Inference successful!")
 
   return torch.cat(wav_chunks, dim=0).unsqueeze(0).cpu()
@@ -95,14 +113,14 @@ if __name__ == "__main__":
   )
 
   print("Inference completed. Audio waveform shape:", audio_waveform.shape)
-  # Save the audio waveform to a file
+
   import torchaudio
   output_file = args.output_file if args.output_file else "output.wav"
   torchaudio.save(output_file, audio_waveform, sample_rate=24000)
   print(f"Audio saved to {output_file}")
 
-  try:
-    from IPython.display import Audio
-    Audio(output_file, autoplay=True)
-  except ImportError:
-    print("IPython.display.Audio not available. You can play the audio file using any audio player.")
+  # try:
+  #   from IPython.display import Audio
+  #   Audio(output_file, autoplay=True)
+  # except ImportError:
+  #   print("IPython.display.Audio not available. You can play the audio file using any audio player.")
