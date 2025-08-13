@@ -209,3 +209,11 @@ Cut VRAM usage ~40–50% (helpful for Colab T4).
 Possibly increase speed (depends on compute/memory balance).
 
 Automatically fall back to FP32 for numerically sensitive ops.
+
+
+
+
+## Share everything in meeting with the other student and create a handout
+## Logger?
+import logging
+logger = logging.getLogger(__name__)
