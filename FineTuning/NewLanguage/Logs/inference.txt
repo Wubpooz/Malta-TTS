@@ -1,0 +1,37 @@
+[2025-08-12 18:57:57,397] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-12 18:57:59,990] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+Loading config...
+Config Loaded.
+Initing model...
+Model Init, loadign checkpoint...
+/usr/local/lib/python3.11/dist-packages/TTS/utils/io.py:54: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=map_location, **kwargs)
+[2025-08-12 18:58:52,020] [INFO] [logging.py:107:log_dist] [Rank -1] DeepSpeed info: version=0.17.4, git-hash=unknown, git-branch=unknown
+[2025-08-12 18:58:52,021] [WARNING] [config_utils.py:70:_process_deprecated_field] Config parameter replace_method is deprecated. This parameter is no longer needed, please remove from your call to DeepSpeed-inference
+[2025-08-12 18:58:52,021] [WARNING] [config_utils.py:70:_process_deprecated_field] Config parameter mp_size is deprecated use tensor_parallel.tp_size instead
+[2025-08-12 18:58:52,339] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-08-12 18:58:52,339] [INFO] [logging.py:107:log_dist] [Rank -1] quantize_bits = 8 mlp_extra_grouping = False, quantize_groups = 1
+[2025-08-12 18:58:53,376] [INFO] [logging.py:107:log_dist] [Rank -1] DeepSpeed-Inference config: {'layer_id': 0, 'hidden_size': 1024, 'intermediate_size': 4096, 'heads': 16, 'num_hidden_layers': -1, 'dtype': torch.float32, 'pre_layer_norm': True, 'norm_type': <NormType.LayerNorm: 1>, 'local_rank': -1, 'stochastic_mode': False, 'epsilon': 1e-05, 'mp_size': 1, 'scale_attention': True, 'triangular_masking': True, 'local_attention': False, 'window_size': 1, 'rotary_dim': -1, 'rotate_half': False, 'rotate_every_two': True, 'return_tuple': True, 'mlp_after_attn': True, 'mlp_act_func_type': <ActivationFuncType.GELU: 1>, 'training_mp_size': 1, 'bigscience_bloom': False, 'max_out_tokens': 1024, 'min_out_tokens': 1, 'scale_attn_by_inverse_layer_idx': False, 'enable_qkv_quantization': False, 'use_mup': False, 'return_single_tuple': False, 'set_empty_params': False, 'transposed_mode': False, 'use_triton': False, 'triton_autotune': False, 'num_kv': -1, 'rope_theta': 10000, 'invert_mask': True}
+Using /root/.cache/torch_extensions/py311_cu121 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /root/.cache/torch_extensions/py311_cu121/transformer_inference/build.ninja...
+/usr/local/lib/python3.11/dist-packages/torch/utils/cpp_extension.py:1964: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module transformer_inference...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module transformer_inference...
+Time to load transformer_inference op: 0.05471372604370117 seconds
+Model loaded successfully!
+Infering...
+------------------------------------------------------
+Free memory : 12.691528 (GigaBytes)  
+Total memory: 14.741272 (GigaBytes)  
+Requested memory: 0.335938 (GigaBytes) 
+Setting maximum total tokens (input + output) to 1024 
+WorkSpace: 0x7ed380000000 
+------------------------------------------------------
+Inference successful!
+Inference completed. Audio waveform shape: torch.Size([1, 130304])
+Audio saved to output_maltese.wav

@@ -49,7 +49,6 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
 
   # import nltk
   # from nltk.data import find
-
   # try:
   #   find('tokenizers/punkt')
   # except LookupError:
@@ -103,6 +102,7 @@ if __name__ == "__main__":
   from parsers import create_inference_parser
   parser = create_inference_parser()
   args = parser.parse_args()
+  print("Starting inference...")
   audio_waveform = inference(
     xtts_checkpoint=args.xtts_checkpoint,
     xtts_config=args.xtts_config,
@@ -111,16 +111,9 @@ if __name__ == "__main__":
     speaker_audio_file=args.speaker_audio_file,
     lang=args.lang
   )
-
-  print("Inference completed. Audio waveform shape:", audio_waveform.shape)
+  print("Inference completed!")
 
   import torchaudio
   output_file = args.output_file if args.output_file else "output.wav"
   torchaudio.save(output_file, audio_waveform, sample_rate=24000)
   print(f"Audio saved to {output_file}")
-
-  # try:
-  #   from IPython.display import Audio
-  #   Audio(output_file, autoplay=True)
-  # except ImportError:
-  #   print("IPython.display.Audio not available. You can play the audio file using any audio player.")
