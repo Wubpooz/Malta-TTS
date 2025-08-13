@@ -47,6 +47,11 @@ def create_inference_parser():
   parser.add_argument("--speaker_audio_file", type=str, required=True, help="Path to the speaker audio file for conditioning")
   parser.add_argument("--lang", type=str, default="en", help="Language code for the text (default: 'en')")
   parser.add_argument("--output_file", type=str, default=None, help="Output audio file path (default: 'output.wav')")
+  parser.add_argument("--temperature", type=float, default=0.7, help="Temperature for sampling (default: 0.7)")
+  parser.add_argument("--length_penalty", type=float, default=1.0, help="Length penalty for sampling (default: 1.0)")
+  parser.add_argument("--repetition_penalty", type=float, default=10.0, help="Repetition penalty for sampling (default: 10.0)")
+  parser.add_argument("--top_k", type=int, default=50, help="Top-k for sampling (default: 50)")
+  parser.add_argument("--top_p", type=float, default=0.8, help="Top-p for sampling (default: 0.8)")
   return parser
 
 
