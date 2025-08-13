@@ -1,4 +1,5 @@
 import torch
+import os
 import torchaudio
 from tqdm import tqdm
 from TTS.tts.configs.xtts_config import XttsConfig
@@ -17,6 +18,14 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   Returns:
       torch.Tensor: Synthesized audio waveform.
   """
+
+  checkpoint_dir = os.path.dirname(xtts_checkpoint)
+  speakers_file = os.path.join(checkpoint_dir, "speakers_xtts.pth")
+  if not os.path.exists(speakers_file):
+    # Create an empty speakers file
+    torch.save({}, speakers_file)
+
+
 
   device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
