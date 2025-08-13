@@ -1,7 +1,5 @@
 import argparse
 
-#TODO argumentValidator
-
 def create_xtts_trainer_parser():
   """Create a command-line argument parser for the XTTS Trainer.
   """

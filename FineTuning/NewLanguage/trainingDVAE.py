@@ -39,7 +39,7 @@ def train_DVAE(dvae_pretrained, mel_norm_file, metadatas, language="mt", lr=5e-6
     config_dataset = BaseDatasetConfig(
       formatter="coqui",
       dataset_name="ft_dataset",
-      path=os.path.dirname(train_csv), #TODO os.path.join(output_path, "dataset")
+      path=os.path.dirname(train_csv),
       meta_file_train=os.path.basename(train_csv),
       meta_file_val=os.path.basename(eval_csv),
       language=language,

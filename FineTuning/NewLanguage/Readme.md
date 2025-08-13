@@ -126,19 +126,15 @@ Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but r
 ## trainingGPT calls download => make that optional but require file path then
 ## maybe audio file khz inconsistencies
 ## use global paths in the colab notebook at the top
-## do the TODOS in files
 ## param for num_workers ?
 ## training loss graph
+## add more error handling like this
+## argumentValidator for parser
 ## Use deepspeed
 If you want to be able to load_checkpoint with use_deepspeed=True and enjoy the speedup, you need to install deepspeed first.
 `pip install deepspeed==0.10.3`
-
+## use CosineAnnealingLR?
 ## autodetect formatter based on metadata number of cols and names
-
-
-
-
-
 ## mixed precision:
 1. Add a mixed_precision flag to your GPTTrainerConfig
 python

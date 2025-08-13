@@ -42,7 +42,7 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
 
   # Training Parameters
   OPTIMIZER_WD_ONLY_ON_WEIGHTS = not multi_gpu
-  START_WITH_EVAL = False #TODO
+  START_WITH_EVAL = False
   BATCH_SIZE = batch_size
   GRAD_ACUMM_STEPS = grad_acumm
 
@@ -119,12 +119,11 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
     optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
     optimizer_params={"betas": [0.9, 0.96], "eps": 1e-8, "weight_decay": weight_decay},
     lr=lr,
-    lr_scheduler="MultiStepLR", #TODO use CosineAnnealingLR?
+    lr_scheduler="MultiStepLR",
     lr_scheduler_params={"milestones": [50000 * 18, 150000 * 18, 300000 * 18], "gamma": 0.5, "last_epoch": -1},
     test_sentences=[],
   )
 
-  #TODO use mixed precision
   model = GPTTrainer.init_from_config(config)
 
   print("Loading datasets...")

@@ -107,7 +107,7 @@ def adjust_config(output_path: str, version: str, language: str):
   """
   config_path = os.path.join(output_path, "config.json")
   if not os.path.exists(config_path):
-    raise FileNotFoundError(f"Config file not found at {config_path}. Please ensure the path is correct.") #TODO add more error handling like this
+    raise FileNotFoundError(f"Config file not found at {config_path}. Please ensure the path is correct.")
   with open(config_path, "r") as f:
     config = json.load(f)
   config["languages"] += [language]
