@@ -1,16 +1,19 @@
 # Core PyTorch
-torch>=2.1
-torchaudio>=2.1
+torch==2.5.1+cu121
+torchaudio==2.5.1
+torchvision
 
 # Coqui Stack (TTS is installed from GitHub, not PyPI)
 trainer>=0.0.36
 coqpit>=0.0.16
 
 # XTTS Dependencies
+TTS
 unidecode>=1.3.2
 num2words>=0.5.12
 spacy>=3.0.0 # for text processing
 tokenizers>=0.13.0 # XTTSv2 finetuning often relies on a specific range
+transformers==4.38.2
 
 # General ML / Audio / Utility Dependencies
 numpy>=1.24.0
@@ -20,6 +23,9 @@ librosa>=0.10.0
 tqdm>=4.64.1
 pyyaml>=6.0
 nltk>=3.8.0
+datasets>=2.12.0  # For dataset handling
+huggingface_hub>=0.27.0  # For model and dataset management
+
 
 # --- Optional Dependencies ---
 # For accelerated training/inference on NVIDIA GPUs
@@ -31,26 +37,14 @@ tensorboard
 # For audio playback in Jupyter/IPython notebooks
 ipython
 
-
-
-datasets>=2.12.0  # For dataset handling
-huggingface_hub>=0.27.0  # For model and dataset management
-
-
-hf_xet # for faster downloading of datasets and models
+# For faster downloading of datasets and models
+hf_xet
 
 
 
 
+# Potential other dependencies or fixes
 
-
-
-# %pip install -e TTS
-# %pip install transformers==4.42.4 tokenizers==0.19.1 huggingface_hub==0.27.0 gradio==4.7.1 faster_whisper
-
-
-
-# # core deps
 # numpy==1.22.0;python_version<="3.10"
 # numpy>=1.24.3;python_version>"3.10"
 # cython>=0.29.30

@@ -54,10 +54,10 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   #   find('tokenizers/punkt')
   # except LookupError:
   #   print("NLTK 'punkt' tokenizer not found. downloading it now... (you can also download it manually using \"python -c \"import nltk; nltk.download('punkt')\"\")")
+  #   import nltk
   #   nltk.download('punkt')
   #   print("NLTK 'punkt' tokenizer downloaded successfully.")
   #   pass
-
   # from nltk.tokenize import sent_tokenize
   # tts_texts = sent_tokenize(tts_text)
 
@@ -67,12 +67,12 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
 
   def custom_preprocess_text(self, txt, lang):
-      if lang == "mt":  # Maltese
-          txt = txt.lower()
-          txt = re.sub(re.compile(r"\s+"), " ", txt)
-          # transliterate ?
-          return txt.strip()
-      return _original_preprocess_text(self, txt, lang)
+    if lang == "mt":
+      txt = txt.lower()
+      txt = re.sub(re.compile(r"\s+"), " ", txt)
+      # transliterate ?
+      return txt.strip()
+    return _original_preprocess_text(self, txt, lang)
 
   # Monkey-patch
   tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text

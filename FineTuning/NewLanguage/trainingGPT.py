@@ -160,12 +160,12 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
 
   def custom_preprocess_text(self, txt, lang):
-      if lang == "mt":  # Maltese
-          txt = txt.lower()
-          txt = re.sub(re.compile(r"\s+"), " ", txt)
-          # transliterate ?
-          return txt.strip()
-      return _original_preprocess_text(self, txt, lang)
+    if lang == "mt":
+      txt = txt.lower()
+      txt = re.sub(re.compile(r"\s+"), " ", txt)
+      # transliterate ?
+      return txt.strip()
+    return _original_preprocess_text(self, txt, lang)
 
   # Monkey-patch
   tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
