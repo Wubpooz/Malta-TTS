@@ -22,6 +22,10 @@ def create_xtts_trainer_parser():
   parser.add_argument("--metadata_path", type=str, required=True, help="Path to a single metadata file for tokenizer training.")
   parser.add_argument("--language", type=str, required=True, help="Language code for the new language (e.g., 'mt').")
   parser.add_argument("--extended_vocab_size", type=int, default=2000, help="Vocabulary size for the new tokenizer.")
+  parser.add_argument("--mel_norm_file", type=str, required=False, help="Path to the mel normalization file")
+  parser.add_argument("--dvae_checkpoint", type=str, required=False, help="Path to the pretrained DVAE model checkpoint (.pth file)")
+  parser.add_argument("--xtts_checkpoint", type=str, required=False, help="Path to the pretrained XTTS model checkpoint (.pth file)")
+  parser.add_argument("--tokenizer_file", type=str, required=False, help="Path to the tokenizer file (.json file)")
   # parser.add_argument("--no_deepspeed", action='store_true', help="Disable deepspeed for training")
   return parser
 
