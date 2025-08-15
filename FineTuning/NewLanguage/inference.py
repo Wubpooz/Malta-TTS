@@ -38,6 +38,12 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   
   print("Loading checkpoint...")
   model.load_checkpoint(config, checkpoint_dir=checkpoint_dir, checkpoint_path=xtts_checkpoint, vocab_path=xtts_vocab, use_deepspeed=use_deepspeed, eval=True)
+  if not hasattr(model.tokenizer, "char_limits"):
+    model.tokenizer.char_limits = {}
+  if "mt" not in model.tokenizer.char_limits:
+    model.tokenizer.char_limits["mt"] = model.tokenizer.char_limits.get("en", 400)
+    print("Added char_limits for 'mt' language.")
+
   model.to(device)
   print("Model loaded successfully!")
 
