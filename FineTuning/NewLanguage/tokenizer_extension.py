@@ -40,6 +40,11 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
   xtts_checkpoint_path = os.path.join(original_path, "model.pth")
   if not os.path.exists(xtts_checkpoint_path):
     raise FileNotFoundError(f"Checkpoint file not found at {xtts_checkpoint_path}")
+  
+  print(f"Backing up checkpoint: {xtts_checkpoint_path + ' -> model_backup.pth'}")
+  backup_checkpoint_path = os.path.join(original_path, "model_backup.pth")
+  shutil.copyfile(xtts_checkpoint_path, backup_checkpoint_path)
+
   print(f"Resizing checkpoint embeddings: {xtts_checkpoint_path}")
   
   checkpoint = torch.load(xtts_checkpoint_path, map_location="cpu")
@@ -132,12 +137,6 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
   Uses the Tokenizer API to preserve all config and special tokens.
   """
-  import pandas as pd
-  from tokenizers import Tokenizer
-  from tokenizers.models import BPE
-  from tokenizers.pre_tokenizers import Whitespace
-  from tokenizers.trainers import BpeTrainer
-
   root = os.path.join(output_path, "")
   tokenizer_json_path = os.path.join(root, "vocab.json")
   if not os.path.exists(tokenizer_json_path):
@@ -148,9 +147,9 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
 
   traindf = pd.read_csv(metadata_path, sep="|")
   texts = traindf['text'].to_list()
-  trainer = BpeTrainer(vocab_size=extended_vocab_size, show_progress=True)
+  trainer = BpeTrainer(vocab_size=extended_vocab_size, show_progress=True) # type: ignore
   new_tokenizer = Tokenizer(BPE())
-  new_tokenizer.pre_tokenizer = Whitespace()
+  new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
   new_tokenizer.train_from_iterator(texts, trainer=trainer)
 
   orig_vocab = tokenizer.get_vocab()
