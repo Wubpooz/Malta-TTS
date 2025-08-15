@@ -16,6 +16,7 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
   TOKENIZER_FILE_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/vocab.json"
   XTTS_CHECKPOINT_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/model.pth"
   XTTS_CONFIG_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/config.json"
+  XTTS_SPEAKERS_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/speakers_xtts.pth"
 
   # TODO move files there ?
   # CHECKPOINTS_OUT_PATH = os.path.join(output_path, "models", f"{version}")
@@ -25,6 +26,8 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
   MEL_NORM_FILE = os.path.join(output_path, os.path.basename(MEL_NORM_LINK))
   XTTS_CHECKPOINT = os.path.join(output_path, os.path.basename(XTTS_CHECKPOINT_LINK))
   TOKENIZER_FILE = os.path.join(output_path, os.path.basename(TOKENIZER_FILE_LINK))
+  XTTS_CONFIG_FILE = os.path.join(output_path, os.path.basename(XTTS_CONFIG_LINK))
+  XTTS_SPEAKERS_FILE = os.path.join(output_path, os.path.basename(XTTS_SPEAKERS_LINK))
 
   if custom_model:
     if os.path.isfile(custom_model) and custom_model.endswith('.pth'):
@@ -44,10 +47,17 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
   if not os.path.isfile(TOKENIZER_FILE):
     print(" > Downloading XTTS tokenizer...")
     ModelManager._download_model_files([TOKENIZER_FILE_LINK], output_path, progress_bar=True)
-  if not os.path.isfile(XTTS_CONFIG_LINK):
+  if not os.path.isfile(XTTS_CONFIG_FILE):
     print(" > Downloading XTTS config file...")
     ModelManager._download_model_files([XTTS_CONFIG_LINK], output_path, progress_bar=True)
+  if not os.path.isfile(XTTS_SPEAKERS_FILE):
+    print(" > Downloading XTTS speakers file...")
+    ModelManager._download_model_files([XTTS_SPEAKERS_LINK], output_path, progress_bar=True)
+    # or Create an empty speakers file
+    # torch.save({}, XTTS_SPEAKERS_FILE)
+
   print(" > XTTS model files downloaded successfully!")
+
 
   return MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE
 

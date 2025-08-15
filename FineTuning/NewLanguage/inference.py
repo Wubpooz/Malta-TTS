@@ -18,15 +18,7 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   Returns:
       torch.Tensor: Synthesized audio waveform.
   """
-
   checkpoint_dir = os.path.dirname(xtts_checkpoint)
-  speakers_file = os.path.join(checkpoint_dir, "speakers_xtts.pth")
-  if not os.path.exists(speakers_file):
-    # Create an empty speakers file
-    torch.save({}, speakers_file)
-
-
-
   device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
   try:
@@ -50,21 +42,8 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   print("Model loaded successfully!")
 
   if lang_code not in ["en", "fr", "de", "es", "it", "pt", "ru", "zh", "ja", "ko"]:
-    import TTS.tts.layers.xtts.tokenizer as tokenizer
-    import re
-
-    _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
-
-    def custom_preprocess_text(self, txt, lang):
-      if lang == lang_code:
-        # transliterate ?
-        txt = txt.lower()
-        txt = re.sub(re.compile(r"\s+"), " ", txt)
-        return txt.strip()
-      return _original_preprocess_text(self, txt, lang)
-
-    # Monkey-patch
-    tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
+    from utils import add_language_to_VoiceBpeTokenizer
+    add_language_to_VoiceBpeTokenizer(lang_code)
     print("Applied custom tokenizer.")
 
 

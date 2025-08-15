@@ -153,22 +153,8 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   # if multi_gpu:
   #   trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
-  import TTS.tts.layers.xtts.tokenizer as tokenizer
-  import re
-
-  _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
-
-  def custom_preprocess_text(self, txt, lang):
-    if lang == "mt":
-      txt = txt.lower()
-      txt = re.sub(re.compile(r"\s+"), " ", txt)
-      # transliterate ?
-      return txt.strip()
-    return _original_preprocess_text(self, txt, lang)
-
-  # Monkey-patch
-  tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
-
+  from utils import add_language_to_VoiceBpeTokenizer
+  add_language_to_VoiceBpeTokenizer(lang_code="mt") #TODO make it a param
 
   print("Starting training...")
   trainer.fit()

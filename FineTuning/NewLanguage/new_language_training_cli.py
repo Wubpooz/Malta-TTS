@@ -29,9 +29,9 @@ if __name__ == "__main__":
   else:
     print(f"Step {step}: Adjusting the config file.")
     adjust_config(
-      output_path=args.output_path,
-      version=args.version,
-      language=args.language
+      root=args.output_path,
+      language=args.language,
+      vocab_size=args.extended_vocab_size
     )
   step += 1  
 

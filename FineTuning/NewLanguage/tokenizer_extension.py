@@ -109,29 +109,6 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
   return xtts_checkpoint_path
 
 
-# def add_language_to_VoiceBpeTokenizer(lang_code: str):
-#   """Add a new language to the tokenizer.
-#   Args:
-#       lang (str): Language code for the new language to be added.
-#   """
-#   print(f"Adding new language: {lang_code}")
-#   import TTS.tts.layers.xtts.tokenizer as tokenizer
-#   import re
-
-#   _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
-
-#   def custom_preprocess_text(self, txt, lang):
-#     if lang == lang_code:
-#       txt = txt.lower()
-#       txt = re.sub(re.compile(r"\s+"), " ", txt)
-#       # transliterate ?
-#       return txt.strip()
-#     return _original_preprocess_text(self, txt, lang)
-
-#   # Monkey-patch
-#   tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
-
-
 def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
   """
   Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
