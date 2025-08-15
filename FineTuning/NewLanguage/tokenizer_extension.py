@@ -140,8 +140,9 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
 
   # Collect all unique tokens in the new data
   # (You may want to use a more sophisticated tokenizer for real use)
+  print("Collecting new tokens...")
   new_tokens = set()
-  for text in texts:
+  for text in texts: #TODO add tqm
     for token in text.strip().split():
       if token not in tokenizer.get_vocab():
         new_tokens.add(token)

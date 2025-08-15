@@ -35,7 +35,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   RUN_NAME = "GPT_XTTS_FT"
   PROJECT_NAME = "XTTS_trainer_maltese"
   DASHBOARD_LOGGER = "tensorboard"
-  LOGGER_URI = None #os.path.join(OUT_PATH, "logs")
+  LOGGER_URI = None
   cpu_count = os.cpu_count() or 1  # fallback to 1 if None
   num_workers = min(8, cpu_count - 1) if cpu_count > 1 else 1
 
@@ -159,7 +159,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   print("Training finished!")
 
   print("Saving final model...")
-  trainer.save_checkpoint(os.path.join(OUT_PATH, "final_model.pth"))
+  trainer.save_checkpoint()
 
   print("Saving configuration...")
   CONFIG_PATH = os.path.join(OUT_PATH, "config.json")

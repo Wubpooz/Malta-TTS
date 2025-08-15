@@ -121,20 +121,18 @@ python inference.py --xtts_checkpoint=checkpoints/xtts.pth --xtts_config=checkpo
 Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but resulted in worse performance. DVAE and GPT finetuning are sufficient for optimal results. They also found that ff you have enough short texts in your datasets (about 20 hours), you do not need to finetune DVAE.  
 
 
-
 # TODOs
-## trainingGPT calls download => make that optional but require file path then
 ## maybe audio file khz inconsistencies
-## use global paths in the colab notebook at the top
 ## param for num_workers ?
 ## training loss graph
 ## add more error handling like this
 ## argumentValidator for parser
-## Use deepspeed
-If you want to be able to load_checkpoint with use_deepspeed=True and enjoy the speedup, you need to install deepspeed first.
-`pip install deepspeed==0.10.3`
 ## use CosineAnnealingLR?
 ## autodetect formatter based on metadata number of cols and names
+## Share everything in meeting with the other student and create a handout
+## Logger?
+import logging
+logger = logging.getLogger(__name__)
 ## mixed precision:
 1. Add a mixed_precision flag to your GPTTrainerConfig
 python
@@ -213,7 +211,4 @@ Automatically fall back to FP32 for numerically sensitive ops.
 
 
 
-## Share everything in meeting with the other student and create a handout
-## Logger?
-import logging
-logger = logging.getLogger(__name__)
+
