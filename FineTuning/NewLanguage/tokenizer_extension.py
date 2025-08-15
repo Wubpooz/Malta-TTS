@@ -108,44 +108,97 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
   
   return xtts_checkpoint_path
 
-
 def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
   """
-  Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
-  Uses the Tokenizer API to preserve all config and special tokens.
+  Safely extends the XTTS tokenizer by adding new tokens from the provided metadata file.
+  Does NOT retrain the tokenizer or change token IDs, only appends new tokens.
   """
+  import pandas as pd
+  from tokenizers import Tokenizer
+  from tokenizers.pre_tokenizers import Whitespace
+
   root = os.path.join(output_path, "")
   tokenizer_json_path = os.path.join(root, "vocab.json")
   if not os.path.exists(tokenizer_json_path):
     raise FileNotFoundError(f"vocab.json not found at {tokenizer_json_path}")
 
+  # Load the existing tokenizer
+  print(f"Loading tokenizer from {tokenizer_json_path}")
   tokenizer = Tokenizer.from_file(tokenizer_json_path)
   tokenizer.pre_tokenizer = Whitespace()
 
-  traindf = pd.read_csv(metadata_path, sep="|")
-  texts = traindf['text'].to_list()
-  trainer = BpeTrainer(vocab_size=extended_vocab_size, show_progress=True) # type: ignore
-  new_tokenizer = Tokenizer(BPE())
-  new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
-  new_tokenizer.train_from_iterator(texts, trainer=trainer)
-
-  orig_vocab = tokenizer.get_vocab()
-  new_vocab = new_tokenizer.get_vocab()
-  missing_tokens = [tok for tok in new_vocab if tok not in orig_vocab]
-  if missing_tokens:
-    tokenizer.add_tokens(missing_tokens)
-    print(f"Added {len(missing_tokens)} new tokens.")
-
-  if f"[{language}]" not in orig_vocab:
+  # Add the new language special token if needed
+  if f"[{language}]" not in tokenizer.get_vocab():
     tokenizer.add_special_tokens([f"[{language}]"])
     print(f"Added special token: [{language}]")
 
+
+  # Read new texts
+  print(f"Reading new texts from {metadata_path}")
+  traindf = pd.read_csv(metadata_path, sep="|")
+  texts = traindf['text'].to_list()
+
+  # Collect all unique tokens in the new data
+  # (You may want to use a more sophisticated tokenizer for real use)
+  new_tokens = set()
+  for text in texts:
+    for token in text.strip().split():
+      if token not in tokenizer.get_vocab():
+        new_tokens.add(token)
+  print(f"Found {len(new_tokens)} new tokens.")
+
+  # Add new tokens to the tokenizer
+  if new_tokens:
+    tokenizer.add_tokens(list(new_tokens))
+    print(f"Added {len(new_tokens)} new tokens.")
+
+
+  # Save the extended tokenizer
   tokenizer.save(tokenizer_json_path)
   print(f"Extended tokenizer saved to {tokenizer_json_path}")
 
+  # Update config and checkpoint as before
   adjust_config(output_path, language, tokenizer.get_vocab_size())
   resize_xtts_checkpoint_embeddings(output_path, tokenizer.get_vocab_size())
   print("Vocabulary extension complete.")
+
+# def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
+#   """
+#   Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
+#   Uses the Tokenizer API to preserve all config and special tokens.
+#   """
+#   root = os.path.join(output_path, "")
+#   tokenizer_json_path = os.path.join(root, "vocab.json")
+#   if not os.path.exists(tokenizer_json_path):
+#     raise FileNotFoundError(f"vocab.json not found at {tokenizer_json_path}")
+
+#   tokenizer = Tokenizer.from_file(tokenizer_json_path)
+#   tokenizer.pre_tokenizer = Whitespace()
+
+#   traindf = pd.read_csv(metadata_path, sep="|")
+#   texts = traindf['text'].to_list()
+#   trainer = BpeTrainer(vocab_size=extended_vocab_size, show_progress=True) # type: ignore
+#   new_tokenizer = Tokenizer(BPE())
+#   new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
+#   new_tokenizer.train_from_iterator(texts, trainer=trainer)
+
+#   orig_vocab = tokenizer.get_vocab()
+#   new_vocab = new_tokenizer.get_vocab()
+#   missing_tokens = [tok for tok in new_vocab if tok not in orig_vocab]
+#   if missing_tokens:
+#     tokenizer.add_tokens(missing_tokens)
+#     print(f"Added {len(missing_tokens)} new tokens.")
+
+#   if f"[{language}]" not in orig_vocab:
+#     tokenizer.add_special_tokens([f"[{language}]"])
+#     print(f"Added special token: [{language}]")
+
+#   tokenizer.save(tokenizer_json_path)
+#   print(f"Extended tokenizer saved to {tokenizer_json_path}")
+
+#   adjust_config(output_path, language, tokenizer.get_vocab_size())
+#   resize_xtts_checkpoint_embeddings(output_path, tokenizer.get_vocab_size())
+#   print("Vocabulary extension complete.")
 
 
 if __name__ == "__main__":
