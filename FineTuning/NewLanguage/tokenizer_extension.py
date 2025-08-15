@@ -127,119 +127,6 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
 #   tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
 
 
-
-
-# def _merge_vocabs_preserve_ids(old_tokenizer_path, new_tokenizer_path, output_path):
-#   """
-#   Merges two vocabularies, preserving the token IDs from the old tokenizer
-#   and adding new tokens from the new tokenizer.
-#   """
-#   print(f"Merging tokenizers from {old_tokenizer_path} and {new_tokenizer_path} into {output_path}")
-#   with open(os.path.join(old_tokenizer_path, 'vocab.json'), encoding='utf-8') as f:
-#     old_tokenizer = json.load(f)
-#   with open(os.path.join(new_tokenizer_path, 'vocab.json'), encoding='utf-8') as f:
-#     new_tokenizer = json.load(f)
-
-#   old_vocab = old_tokenizer
-#   new_vocab = new_tokenizer
-#   print(f"Old tokenizer vocabulary size: {len(old_vocab)}")
-#   print(f"New tokenizer vocabulary size: {len(new_vocab)}")
-
-#   combined_vocab = old_vocab.copy()
-#   new_id = max(old_vocab.values())
-  
-#   # Iterate through the new vocabulary and add words not in the old one
-#   new_tokens = set(new_vocab.keys()) - set(old_vocab.keys())
-#   print(f"{len(new_tokens)} New tokens: {list(new_tokens)[:20]}")
-
-#   for token in new_tokens:
-#     new_id += 1
-#     combined_vocab[token] = new_id
-#   print(f"Combined vocabulary size: {len(combined_vocab)}")
-
-#   merged_tokenizer = old_tokenizer.copy()
-#   merged_tokenizer = combined_vocab
-
-#   os.makedirs(output_path, exist_ok=True)
-#   with open(os.path.join(output_path, 'vocab.json'), 'w', encoding='utf-8') as fp:
-#     json.dump(merged_tokenizer, fp, ensure_ascii=False, indent=2)
-#   print(f"Combined vocabulary saved to {os.path.join(output_path, 'vocab.json')}")
-#   return merged_tokenizer
-
-
-# def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
-#   """Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
-#   This function combines the existing tokenizer with a new tokenizer trained on the provided metadata.
-#   It saves the new tokenizer in a specified directory and updates the vocabulary to include new tokens.
-#   Args:
-#       output_path (str): Path to the output directory where the tokenizer files will be saved.
-#       metadata_path (str): Path to the metadata file containing training data.
-#       language (str): Language code for the new language to be added.
-#       extended_vocab_size (int): Desired size of the extended vocabulary. Default is 10_000.
-#   """
-#   root = os.path.join(output_path, "")
-#   old_tokenizer_path = os.path.join(root, "old_tokenizer/")
-#   new_tokenizer_path = os.path.join(root, "new_tokenizer/")
-#   merged_tokenizer_path = os.path.join(root, "merged_tokenizer/")
-
-#   if not os.path.exists(root):
-#     raise FileNotFoundError(f"Output directory not found at {root}. Please ensure the path is correct.")
-#   if not os.path.exists(metadata_path):
-#     raise FileNotFoundError(f"Metadata file not found at {metadata_path}. Please ensure the path is correct.")
-
-#   existing_tokenizer = Tokenizer.from_file(os.path.join(root, "vocab.json"))
-#   print(f"Original tokenizer loaded with {len(existing_tokenizer.get_vocab())} tokens.")
-
-#   traindf = pd.read_csv(metadata_path, sep="|")
-#   texts = traindf['text'].to_list()
-#   new_tokenizer = Tokenizer(BPE())
-#   new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
-#   trainer = BpeTrainer(special_tokens=[f"[{language}]"], vocab_size=extended_vocab_size) # type: ignore
-#   print(f"Training new tokenizer with {len(texts)} texts...")
-#   new_tokenizer.train_from_iterator(iter(texts), trainer=trainer)
-#   new_tokenizer.add_special_tokens([f"[{language}]"])
-#   print(f"New tokenizer trained with {len(new_tokenizer.get_vocab())} tokens.")
-
-#   # Saving tokenizers
-#   os.makedirs(new_tokenizer_path, exist_ok=True)
-#   os.makedirs(old_tokenizer_path, exist_ok=True)
-#   existing_tokenizer.model.save(old_tokenizer_path)
-#   new_tokenizer.model.save(new_tokenizer_path)
-
-#   print(f"Making backups at {os.path.join(root, 'backups/')}...")
-#   os.makedirs(os.path.join(root, "backups/"), exist_ok=True)
-#   shutil.copy2(os.path.join(root, "vocab.json"), os.path.join(root, "backups/vocab.json"))
-#   shutil.copy2(os.path.join(root, "config.json"), os.path.join(root, "backups/config.json"))
-
-
-#   _merge_vocabs_preserve_ids(old_tokenizer_path, new_tokenizer_path, merged_tokenizer_path)
-#   # shutil.copy2(os.path.join(new_tokenizer_path, "merges.txt"), os.path.join(merged_tokenizer_path, "merges.txt"))
-#   merged_vocab_file = os.path.join(merged_tokenizer_path, 'vocab.json')
-#   new_merges_file = os.path.join(merged_tokenizer_path, 'merges.txt')
-
-#   final_tokenizer = Tokenizer(BPE.from_file(cls=BPE, vocab=merged_vocab_file, merges=new_merges_file)) # type: ignore
-#   final_tokenizer.pre_tokenizer = Whitespace() # type: ignore
-#   special_tokens = [f"[{language}]", existing_tokenizer.get_vocab()[f"[{language}]"]]
-#   final_tokenizer.add_special_tokens(special_tokens)
-#   final_tokenizer.save(os.path.join(root, "vocab.json"))
-#   final_tokenizer = Tokenizer.from_file(os.path.join(root, "vocab.json"))
-#   print(f"Final tokenizer loaded with {len(final_tokenizer.get_vocab())} tokens.")
-
-#   print("Cleaning up...")
-#   shutil.rmtree(old_tokenizer_path)
-#   shutil.rmtree(new_tokenizer_path)
-#   shutil.rmtree(merged_tokenizer_path)
-
-#   print(f"Tokenizer has been successfully extended and saved to {os.path.join(root, 'vocab.json')}")
-
-#   print("Updating the XTTS config file...")
-#   adjust_config(output_path, language, len(final_tokenizer.get_vocab()))
-
-#   print("Resizing the XTTS checkpoint...")
-#   resize_xtts_checkpoint_embeddings(output_path, len(final_tokenizer.get_vocab()))
-
-#   print("Vocabulary extension complete.")
-
 def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
   """
   Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
@@ -283,6 +170,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   adjust_config(output_path, language, tokenizer.get_vocab_size())
   resize_xtts_checkpoint_embeddings(output_path, tokenizer.get_vocab_size())
   print("Vocabulary extension complete.")
+
 
 if __name__ == "__main__":
   from parsers import create_tokenizer_extension_parser
