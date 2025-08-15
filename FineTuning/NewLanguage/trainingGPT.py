@@ -1,5 +1,6 @@
 import os
 import gc
+import torch
 from trainer import Trainer, TrainerArgs
 from TTS.config.shared_configs import BaseDatasetConfig
 from TTS.tts.layers.xtts.trainer.gpt_trainer import GPTArgs, GPTTrainer, GPTTrainerConfig, XttsAudioConfig
@@ -8,7 +9,8 @@ from TTS.tts.datasets import load_tts_samples
 
 from download import download
 
-def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False):
+
+def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False):
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
@@ -68,9 +70,6 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
     )
     DATASETS_CONFIG_LIST.append(config_dataset)
 
-  print(" > Downloading XTTS model files...")
-  MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE = download(output_path, version=version, custom_model=custom_model)
-  print(" > XTTS model files downloaded successfully!")
 
   print("Setting up model arguments...")
   model_args = GPTArgs(
@@ -79,10 +78,10 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
     debug_loading_failures=False,
     max_wav_length=max_audio_length,
     max_text_length=max_text_length,
-    mel_norm_file=MEL_NORM_FILE,
-    dvae_checkpoint=DVAE_CHECKPOINT,
-    xtts_checkpoint=XTTS_CHECKPOINT,
-    tokenizer_file=TOKENIZER_FILE,
+    mel_norm_file=mel_norm_file,
+    dvae_checkpoint=dvae_checkpoint,
+    xtts_checkpoint=xtts_checkpoint,
+    tokenizer_file=tokenizer_file,
     gpt_num_audio_tokens=1026,
     gpt_start_audio_token=1024,
     gpt_stop_audio_token=1025,
@@ -149,25 +148,18 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
     eval_samples=eval_samples,
   )
 
-
-  # if multi_gpu:
-  #   trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
+  if multi_gpu:
+    trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
   from utils import add_language_to_VoiceBpeTokenizer
-  add_language_to_VoiceBpeTokenizer(lang_code="mt") #TODO make it a param
+  add_language_to_VoiceBpeTokenizer(lang_code=language)
 
   print("Starting training...")
   trainer.fit()
   print("Training finished!")
 
   print("Saving final model...")
-  trainer.save_checkpoint(
-    os.path.join(OUT_PATH, "final_model.pth"),
-    # config=config,
-    tokenizer_file=TOKENIZER_FILE,
-    dvae_checkpoint=DVAE_CHECKPOINT,
-    xtts_checkpoint=XTTS_CHECKPOINT,
-  )
+  trainer.save_checkpoint(os.path.join(OUT_PATH, "final_model.pth"))
 
   print("Saving configuration...")
   CONFIG_PATH = os.path.join(OUT_PATH, "config.json")
@@ -181,17 +173,17 @@ def train_gpt(metadatas, num_epochs=100, batch_size=3, grad_acumm=84, output_pat
   samples_len = [len(item["text"].split(" ")) for item in train_samples] # type: ignore
   longest_text_idx =  samples_len.index(max(samples_len))
   speaker_ref = train_samples[longest_text_idx]["audio_file"] # type: ignore
-  if not os.path.isabs(speaker_ref):
+  if not os.path.isabs(speaker_ref) and output_path is not None and os.path.exists(speaker_ref):
     speaker_ref = os.path.join(output_path, os.path.dirname(metadatas[0].split(",")[0]), speaker_ref)
   print(f"Speaker reference: {speaker_ref}")
 
   trainer_out_path = trainer.output_path
 
   # deallocate VRAM and RAM
-  del model, trainer, train_samples, eval_samples
+  del model, trainer, train_samples, eval_samples, config
   gc.collect()
 
-  return XTTS_CHECKPOINT, TOKENIZER_FILE, CONFIG_PATH, trainer_out_path, speaker_ref
+  return xtts_checkpoint, tokenizer_file, CONFIG_PATH, trainer_out_path, speaker_ref
 
 
 
@@ -202,6 +194,11 @@ if __name__ == "__main__":
 
   train_gpt(
     metadatas=args.metadatas,
+    language=args.language,
+    mel_norm_file=args.mel_norm_file,
+    dvae_checkpoint=args.dvae_checkpoint,
+    xtts_checkpoint=args.xtts_checkpoint,
+    tokenizer_file=args.tokenizer_file,
     num_epochs=args.num_epochs,
     batch_size=args.batch_size,
     grad_acumm=args.grad_acumm,

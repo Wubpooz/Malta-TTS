@@ -12,7 +12,7 @@ if __name__ == "__main__":
   step = 1
   if args.is_download:
     print(f"Step {step}: Downloading XTTS base model files.")
-    download(
+    mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file = download(
       output_path=args.output_path,
       version=args.version
     )
@@ -38,6 +38,11 @@ if __name__ == "__main__":
   print(f"Step {step}: Starting GPT training.")
   xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref = train_gpt(
     metadatas=args.metadatas,
+    language=args.language,
+    mel_norm_file=mel_norm_file if args.is_download else args.mel_norm_file,
+    dvae_checkpoint=dvae_checkpoint if args.is_download else args.dvae_checkpoint,
+    xtts_checkpoint=xtts_checkpoint if args.is_download else args.xtts_checkpoint,
+    tokenizer_file=tokenizer_file if args.is_download else args.tokenizer_file,
     output_path=args.output_path,
     num_epochs=args.num_epochs,
     batch_size=args.batch_size,
