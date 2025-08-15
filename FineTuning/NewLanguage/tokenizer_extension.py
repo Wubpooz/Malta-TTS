@@ -1,3 +1,4 @@
+import gc
 import os
 import json
 import torch
@@ -93,20 +94,19 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
       # New bias entries remain zero (good default)
       checkpoint["model"]["gpt.text_head.bias"] = new_bias
     
-
-    # backup_path = xtts_checkpoint_path + ".backup"
-    # if os.path.exists(xtts_checkpoint_path):
-    #   shutil.copy2(xtts_checkpoint_path, backup_path)
-    #   print(f"Backup created at: {backup_path}")
-    
     torch.save(checkpoint, xtts_checkpoint_path)
     print(f"Checkpoint resized and saved to: {xtts_checkpoint_path}")
     print(f"Successfully resized from {current_vocab_size} to {new_vocab_size} tokens")
   
   else:
     print("No text embedding layer found in checkpoint")
+
+  del checkpoint, old_embedding, new_embedding
+  torch.cuda.empty_cache()
+  gc.collect()
   
   return xtts_checkpoint_path
+
 
 def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
   """
@@ -162,6 +162,11 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, extend
   adjust_config(output_path, language, tokenizer.get_vocab_size())
   resize_xtts_checkpoint_embeddings(output_path, tokenizer.get_vocab_size())
   print("Vocabulary extension complete.")
+
+  del tokenizer
+  torch.cuda.empty_cache()
+  gc.collect()
+
 
 # def extend_tokenizer(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
 #   """

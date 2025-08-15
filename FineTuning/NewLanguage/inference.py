@@ -1,3 +1,4 @@
+import gc
 import torch
 import os
 import torchaudio
@@ -106,9 +107,11 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
     rate = 216000 #TODO
     audio_time = len(torch.tensor(out["wav"]).unsqueeze(0) / rate)
     print(f"Audio time for sentence {i+1}: {audio_time:.2f} seconds")
-
   print("Inference successful!")
 
+  del model, gpt_cond_latent, speaker_embedding, config
+  torch.cuda.empty_cache()
+  gc.collect()
 
   # combined_wav = torch.cat(wav_chunks, dim=1)
 

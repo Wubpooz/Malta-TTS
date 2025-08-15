@@ -91,99 +91,108 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
 
   audio_config = XttsAudioConfig(sample_rate=22050, dvae_sample_rate=22050, output_sample_rate=24000)
 
-  config = GPTTrainerConfig(
-    output_path=OUT_PATH,
-    model_args=model_args,
-    run_name=RUN_NAME,
-    project_name=PROJECT_NAME,
-    run_description="""GPT XTTS fine-tuning for Maltese""",
-    dashboard_logger=DASHBOARD_LOGGER,
-    logger_uri=LOGGER_URI, # type: ignore
-    audio=audio_config,
-    epochs=num_epochs,
-    batch_size=BATCH_SIZE,
-    batch_group_size=48,
-    eval_batch_size=BATCH_SIZE,
-    num_loader_workers=num_workers,
-    eval_split_max_size=256,
-    print_step=50,
-    plot_step=100,
-    log_model_step=100,
-    save_step=save_step,
-    save_n_checkpoints=1,
-    save_checkpoints=True,
-    # target_loss="loss",
-    print_eval=False,
-    optimizer="AdamW",
-    optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
-    optimizer_params={"betas": [0.9, 0.96], "eps": 1e-8, "weight_decay": weight_decay},
-    lr=lr,
-    lr_scheduler="MultiStepLR",
-    lr_scheduler_params={"milestones": [50000 * 18, 150000 * 18, 300000 * 18], "gamma": 0.5, "last_epoch": -1},
-    test_sentences=[],
-  )
+  try:
+    config = GPTTrainerConfig(
+      output_path=OUT_PATH,
+      model_args=model_args,
+      run_name=RUN_NAME,
+      project_name=PROJECT_NAME,
+      run_description="""GPT XTTS fine-tuning for Maltese""",
+      dashboard_logger=DASHBOARD_LOGGER,
+      logger_uri=LOGGER_URI, # type: ignore
+      audio=audio_config,
+      epochs=num_epochs,
+      batch_size=BATCH_SIZE,
+      batch_group_size=48,
+      eval_batch_size=BATCH_SIZE,
+      num_loader_workers=num_workers,
+      eval_split_max_size=256,
+      print_step=50,
+      plot_step=100,
+      log_model_step=100,
+      save_step=save_step,
+      save_n_checkpoints=1,
+      save_checkpoints=True,
+      # target_loss="loss",
+      print_eval=False,
+      optimizer="AdamW",
+      optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
+      optimizer_params={"betas": [0.9, 0.96], "eps": 1e-8, "weight_decay": weight_decay},
+      lr=lr,
+      lr_scheduler="MultiStepLR",
+      lr_scheduler_params={"milestones": [50000 * 18, 150000 * 18, 300000 * 18], "gamma": 0.5, "last_epoch": -1},
+      test_sentences=[],
+    )
 
-  model = GPTTrainer.init_from_config(config)
+    model = GPTTrainer.init_from_config(config)
 
-  print("Loading datasets...")
-  train_samples, eval_samples = load_tts_samples(
-    DATASETS_CONFIG_LIST,
-    eval_split=True,
-    eval_split_max_size=config.eval_split_max_size,
-    eval_split_size=config.eval_split_size,
-  )
-  print(f" > Loaded {len(train_samples)} training samples and {len(eval_samples)} evaluation samples.")
+    print("Loading datasets...")
+    train_samples, eval_samples = load_tts_samples(
+      DATASETS_CONFIG_LIST,
+      eval_split=True,
+      eval_split_max_size=config.eval_split_max_size,
+      eval_split_size=config.eval_split_size,
+    )
+    print(f" > Loaded {len(train_samples)} training samples and {len(eval_samples)} evaluation samples.")
 
-  trainer = Trainer(
-    TrainerArgs(
-      restore_path=None, #type: ignore  # xtts checkpoint is restored via xtts_checkpoint key so no need of restore it using Trainer restore_path parameter
-      skip_train_epoch=False,
-      start_with_eval=START_WITH_EVAL,
-      grad_accum_steps=GRAD_ACUMM_STEPS,
-    ),
-    config,
-    output_path=OUT_PATH,
-    model=model,
-    train_samples=train_samples,
-    eval_samples=eval_samples,
-  )
+    trainer = Trainer(
+      TrainerArgs(
+        restore_path=None, #type: ignore  # xtts checkpoint is restored via xtts_checkpoint key so no need of restore it using Trainer restore_path parameter
+        skip_train_epoch=False,
+        start_with_eval=START_WITH_EVAL,
+        grad_accum_steps=GRAD_ACUMM_STEPS,
+      ),
+      config,
+      output_path=OUT_PATH,
+      model=model,
+      train_samples=train_samples,
+      eval_samples=eval_samples,
+    )
 
-  if multi_gpu:
-    trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
+    if multi_gpu:
+      trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
-  from utils import add_language_to_VoiceBpeTokenizer
-  add_language_to_VoiceBpeTokenizer(lang_code=language)
+    from utils import add_language_to_VoiceBpeTokenizer
+    add_language_to_VoiceBpeTokenizer(lang_code=language)
 
-  print("Starting training...")
-  trainer.fit()
-  print("Training finished!")
+    print("Starting training...")
+    trainer.fit()
+    print("Training finished!")
 
-  print("Saving final model...")
-  trainer.save_checkpoint()
+    print("Saving final model...")
+    trainer.save_checkpoint()
 
-  print("Saving configuration...")
-  CONFIG_PATH = os.path.join(OUT_PATH, "config.json")
-  inference_config = XttsConfig()
-  inference_config.model_args = config.model_args  # Copy model args from training
-  inference_config.audio = config.audio
-  inference_config.save_json(CONFIG_PATH)
-  print(f"Configuration saved to {CONFIG_PATH} and model checkpoint saved to {os.path.join(OUT_PATH, 'final_model.pth')}.")
+    print("Saving configuration...")
+    CONFIG_PATH = os.path.join(OUT_PATH, "config.json")
+    inference_config = XttsConfig()
+    inference_config.model_args = config.model_args  # Copy model args from training
+    inference_config.audio = config.audio
+    inference_config.save_json(CONFIG_PATH)
+    print(f"Configuration saved to {CONFIG_PATH} and model checkpoint saved to {os.path.join(OUT_PATH, 'final_model.pth')}.")
 
-  # get the longest text audio file to use as speaker reference
-  samples_len = [len(item["text"].split(" ")) for item in train_samples] # type: ignore
-  longest_text_idx =  samples_len.index(max(samples_len))
-  speaker_ref = train_samples[longest_text_idx]["audio_file"] # type: ignore
-  if not os.path.isabs(speaker_ref) and output_path is not None and os.path.exists(speaker_ref):
-    speaker_ref = os.path.join(output_path, os.path.dirname(metadatas[0].split(",")[0]), speaker_ref)
-  print(f"Speaker reference: {speaker_ref}")
+    # get the longest text audio file to use as speaker reference
+    samples_len = [len(item["text"].split(" ")) for item in train_samples] # type: ignore
+    longest_text_idx =  samples_len.index(max(samples_len))
+    speaker_ref = train_samples[longest_text_idx]["audio_file"] # type: ignore
+    if not os.path.isabs(speaker_ref) and output_path is not None and os.path.exists(speaker_ref):
+      speaker_ref = os.path.join(output_path, os.path.dirname(metadatas[0].split(",")[0]), speaker_ref)
+    print(f"Speaker reference: {speaker_ref}")
 
-  trainer_out_path = trainer.output_path
+    trainer_out_path = trainer.output_path
+    # deallocate VRAM and RAM
+    del model, trainer, train_samples, eval_samples, config
+    torch.cuda.empty_cache()
+    gc.collect()
 
-  # deallocate VRAM and RAM
-  del model, trainer, train_samples, eval_samples, config
-  gc.collect()
+    return xtts_checkpoint, tokenizer_file, CONFIG_PATH, trainer_out_path, speaker_ref
 
-  return xtts_checkpoint, tokenizer_file, CONFIG_PATH, trainer_out_path, speaker_ref
+  except Exception as e:
+    # deallocate VRAM and RAM
+    del model, trainer, train_samples, eval_samples, config
+    torch.cuda.empty_cache()
+    gc.collect()
+    raise e
+
 
 
 
