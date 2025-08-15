@@ -94,10 +94,10 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
       checkpoint["model"]["gpt.text_head.bias"] = new_bias
     
 
-    backup_path = xtts_checkpoint_path + ".backup"
-    if os.path.exists(xtts_checkpoint_path):
-      shutil.copy2(xtts_checkpoint_path, backup_path)
-      print(f"Backup created at: {backup_path}")
+    # backup_path = xtts_checkpoint_path + ".backup"
+    # if os.path.exists(xtts_checkpoint_path):
+    #   shutil.copy2(xtts_checkpoint_path, backup_path)
+    #   print(f"Backup created at: {backup_path}")
     
     torch.save(checkpoint, xtts_checkpoint_path)
     print(f"Checkpoint resized and saved to: {xtts_checkpoint_path}")
