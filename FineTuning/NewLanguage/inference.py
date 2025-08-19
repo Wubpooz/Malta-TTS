@@ -48,47 +48,38 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   model.to(device)
   print("Model loaded successfully!")
 
-  if lang_code not in ["en", "fr", "de", "es", "it", "pt", "ru", "zh", "ja", "ko"]:
+  if lang_code not in ["en", "fr", "de", "es", "it", "pt", "ru", "zh", "ja", "ko"]: #default XTTS supported languages
     from utils import add_language_to_VoiceBpeTokenizer
     add_language_to_VoiceBpeTokenizer(lang_code)
     print("Applied custom tokenizer.")
 
 
   print("Computing speaker latents...")
-  gpt_cond_latent, speaker_embedding = model.get_conditioning_latents(
-    audio_path=[speaker_audio_file],
-    # gpt_cond_len=model.config.gpt_cond_len,
-    # max_ref_length=model.config.max_ref_len,
-    # sound_norm_refs=model.config.sound_norm_refs,
-  )
+  gpt_cond_latent, speaker_embedding = model.get_conditioning_latents(audio_path=[speaker_audio_file])
   print("Speaker latents computed successfully!")
 
-  # Split text into sentences for better quality
-  # print("Processing text...")
-  # try:
-  #   import nltk
-  #   from nltk.data import find
-  #   try:
-  #     find('tokenizers/punkt')
-  #   except LookupError:
-  #     print("NLTK 'punkt' tokenizer not found. Downloading...")
-  #     nltk.download('punkt')
-  #     print("NLTK 'punkt' tokenizer downloaded successfully.")
+  print("Processing text...")
+  try:
+    import nltk
+    from nltk.data import find
+    try:
+      find('tokenizers/punkt')
+    except LookupError:
+      print("NLTK 'punkt' tokenizer not found. Downloading...")
+      import nltk
+      nltk.download('punkt')
+      print("NLTK 'punkt' tokenizer downloaded successfully.")
     
-  #   from nltk.tokenize import sent_tokenize
-  #   tts_texts = sent_tokenize(tts_text)
-  #   print(f"Split into {len(tts_texts)} sentences.")
-  # except ImportError:
-  #   print("NLTK not available, processing as single text.")
-  #   tts_texts = [tts_text]
-
-  tts_texts = [tts_text]
+    from nltk.tokenize import sent_tokenize
+    tts_texts = sent_tokenize(tts_text)
+    print(f"Split into {len(tts_texts)} sentences.")
+  except:
+    print("NLTK not available or another error occurred, processing as single text.")
+    tts_texts = [tts_text]
 
   wav_chunks = []
   print("Running inference...")
   for i, text in enumerate(tqdm(tts_texts, desc="Processing sentences")):
-    # print(f"Processing sentence {i+1}: {text[:50]}...")
-
     out = model.inference(
       text=text,
       language=lang_code,
@@ -103,17 +94,11 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
       speed=1.0
     )
     wav_chunks.append(torch.tensor(out["wav"]))
-    # wav_chunks.append(torch.tensor(out["wav"]).unsqueeze(0))
-    rate = 216000 #TODO
-    audio_time = len(torch.tensor(out["wav"]).unsqueeze(0) / rate)
-    print(f"Audio time for sentence {i+1}: {audio_time:.2f} seconds")
   print("Inference successful!")
 
   del model, gpt_cond_latent, speaker_embedding, config
   torch.cuda.empty_cache()
   gc.collect()
-
-  # combined_wav = torch.cat(wav_chunks, dim=1)
 
   if len(wav_chunks) > 1:
     return torch.cat(wav_chunks, dim=0).unsqueeze(0)
