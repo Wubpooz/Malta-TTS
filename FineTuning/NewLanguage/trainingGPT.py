@@ -182,9 +182,12 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
 
     trainer_out_path = trainer.output_path
     # deallocate VRAM and RAM
-    del model, trainer, train_samples, eval_samples, config
-    torch.cuda.empty_cache()
-    gc.collect()
+    try:
+      del model, trainer, train_samples, eval_samples, config
+      torch.cuda.empty_cache()
+      gc.collect()
+    except:
+      pass
 
     return xtts_checkpoint, tokenizer_file, CONFIG_PATH, trainer_out_path, speaker_ref
 
