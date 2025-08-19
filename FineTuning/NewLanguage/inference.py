@@ -49,8 +49,8 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   print("Model loaded successfully!")
 
   if lang_code not in ["en", "fr", "de", "es", "it", "pt", "ru", "zh", "ja", "ko"]: #default XTTS supported languages
-    from utils import add_language_to_VoiceBpeTokenizer
-    add_language_to_VoiceBpeTokenizer(lang_code)
+    from utils import add_language_to_tokenizer
+    add_language_to_tokenizer(model.tokenizer, lang_code)
     print("Applied custom tokenizer.")
 
 
@@ -80,6 +80,7 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   wav_chunks = []
   print("Running inference...")
   for i, text in enumerate(tqdm(tts_texts, desc="Processing sentences")):
+    #TODO can use inference_stream
     out = model.inference(
       text=text,
       language=lang_code,

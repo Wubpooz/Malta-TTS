@@ -140,6 +140,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       mixed_precision=optimizations,
       precision="fp16" if optimizations else "fp32",
       allow_tf32=tf32, # TensorFloat-32 tensor cores may be used in matrix multiplications on Ampere or newer GPUs. Default to False.
+      # use_noise_augment
     )
 
     model = GPTTrainer.init_from_config(config)
@@ -170,8 +171,8 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     if multi_gpu:
       trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
-    from utils import add_language_to_VoiceBpeTokenizer
-    add_language_to_VoiceBpeTokenizer(lang_code=language)
+    from utils import add_language_to_tokenizer
+    add_language_to_tokenizer(model.tokenizer, lang_code=language)
 
     print("Starting training...")
     trainer.fit()

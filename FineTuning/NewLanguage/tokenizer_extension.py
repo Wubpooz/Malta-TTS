@@ -8,6 +8,9 @@ from collections import Counter
 from tokenizers import Tokenizer
 from tokenizers.pre_tokenizers import Whitespace
 
+from masri.tokenise.tokenise import MTWordTokenizer
+from utils import preprocess_maltese_text
+
 
 def adjust_config(root: str, language: str, vocab_size: int):
   """Adjust the XTTS configuration file to include the new language.
@@ -29,7 +32,6 @@ def adjust_config(root: str, language: str, vocab_size: int):
   with open(config_path, 'w', encoding="utf-8") as f:
     json.dump(config, f, ensure_ascii=False, indent=4)
   print(f"Updated config file saved to {config_path}. Added new language: {language}. Vocab size: {vocab_size}")
-
 
 
 
@@ -127,19 +129,42 @@ def extend_tokenizer(output_path, metadata_path, language, min_frequency=2):
     - language: language code, e.g. 'mt'
     - min_frequency: only add tokens seen >= this threshold
   """
+  # ===== Old Logic ======
+  # all_chars = set()
+  # for t in texts:
+  #   all_chars.update(list(t))
+
+  # to_add_chars = [c for c in all_chars if tok.token_to_id(c) is None and not c.isspace()]
+
+  # if to_add_chars:
+  #   tok.add_tokens(to_add_chars)
+  #   print(f"Added {len(to_add_chars)} new character tokens.")
+
+
+  # # gather whitespace tokens + frequencies
+  # freq = Counter()
+  # for t in texts:
+  #   for w in t.strip().split():
+  #     w = w.strip()
+  #     if not w:
+  #       continue
+  #     freq[w] += 1
+
   tokenizer_json_path = os.path.join(output_path, "vocab.json")
   if not os.path.exists(tokenizer_json_path):
     raise FileNotFoundError(f"vocab.json not found at {tokenizer_json_path}")
 
-  # load tokenizer
   tok = Tokenizer.from_file(tokenizer_json_path)
   tok.pre_tokenizer = Whitespace()
 
-  # read texts
   df = pd.read_csv(metadata_path, sep="|", usecols=["text"])
   texts = df["text"].astype(str).tolist()
-
-  # gather unique characters from the texts
+  
+  # Apply Maltese-specific preprocessing if language is Maltese
+  if language == "mt":
+    print("Applying Maltese-specific text preprocessing...")
+    texts = [preprocess_maltese_text(text) for text in texts]
+  
   all_chars = set()
   for t in texts:
     all_chars.update(list(t))
@@ -150,15 +175,23 @@ def extend_tokenizer(output_path, metadata_path, language, min_frequency=2):
     tok.add_tokens(to_add_chars)
     print(f"Added {len(to_add_chars)} new character tokens.")
 
-
-  # gather whitespace tokens + frequencies
+  # Enhanced token collection with Maltese-aware tokenization
   freq = Counter()
+  mt_tokenizer = MTWordTokenizer() if language == "mt" else None
+  
   for t in texts:
-    for w in t.strip().split():
-      w = w.strip()
-      if not w:
-        continue
-      freq[w] += 1
+    if language == "mt" and mt_tokenizer:
+      # Use Maltese tokenizer for better token boundaries
+      tokens = mt_tokenizer.tokenize(t)
+      for token in tokens:
+        if token.strip():
+          freq[token.strip()] += 1
+    else:
+      # Standard whitespace tokenization
+      for w in t.strip().split():
+        w = w.strip()
+        if w:
+          freq[w] += 1
 
   # decide which tokens to add
   to_add = []
@@ -218,43 +251,6 @@ def extend_tokenizer(output_path, metadata_path, language, min_frequency=2):
 
   return tok.get_vocab_size()
 
-# def extend_tokenizer_base(output_path: str, metadata_path: str, language: str, extended_vocab_size: int = 10_000):
-#   """
-#   Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
-#   Uses the Tokenizer API to preserve all config and special tokens.
-#   """
-#   root = os.path.join(output_path, "")
-#   tokenizer_json_path = os.path.join(root, "vocab.json")
-#   if not os.path.exists(tokenizer_json_path):
-#     raise FileNotFoundError(f"vocab.json not found at {tokenizer_json_path}")
-
-#   tokenizer = Tokenizer.from_file(tokenizer_json_path)
-#   tokenizer.pre_tokenizer = Whitespace()
-
-#   traindf = pd.read_csv(metadata_path, sep="|")
-#   texts = traindf['text'].to_list()
-#   trainer = BpeTrainer(vocab_size=extended_vocab_size, show_progress=True) # type: ignore
-#   new_tokenizer = Tokenizer(BPE())
-#   new_tokenizer.pre_tokenizer = Whitespace() # type: ignore
-#   new_tokenizer.train_from_iterator(texts, trainer=trainer)
-
-#   orig_vocab = tokenizer.get_vocab()
-#   new_vocab = new_tokenizer.get_vocab()
-#   missing_tokens = [tok for tok in new_vocab if tok not in orig_vocab]
-#   if missing_tokens:
-#     tokenizer.add_tokens(missing_tokens)
-#     print(f"Added {len(missing_tokens)} new tokens.")
-
-#   if f"[{language}]" not in orig_vocab:
-#     tokenizer.add_special_tokens([f"[{language}]"])
-#     print(f"Added special token: [{language}]")
-
-#   tokenizer.save(tokenizer_json_path)
-#   print(f"Extended tokenizer saved to {tokenizer_json_path}")
-
-#   adjust_config(output_path, language, tokenizer.get_vocab_size())
-#   resize_xtts_checkpoint_embeddings(output_path, tokenizer.get_vocab_size())
-#   print("Vocabulary extension complete.")
 
 
 
@@ -338,6 +334,8 @@ def debug_tokenizer_corruption(original_tokenizer_path, extended_tokenizer_path)
 
   del original, extended
   gc.collect()
+
+
 
 
 
