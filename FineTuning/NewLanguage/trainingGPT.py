@@ -179,21 +179,21 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     if not os.path.isabs(speaker_ref) and output_path is not None and os.path.exists(speaker_ref):
       speaker_ref = os.path.join(output_path, os.path.dirname(metadatas[0].split(",")[0]), speaker_ref)
     print(f"Speaker reference: {speaker_ref}")
-
-    trainer_out_path = trainer.output_path
+  
     # deallocate VRAM and RAM
-    try:
-      del model, trainer, train_samples, eval_samples, config
-      torch.cuda.empty_cache()
-      gc.collect()
-    except:
-      pass
+    for var in ["model", "trainer", "train_samples", "eval_samples", "config"]:
+      if var in locals():
+        del locals()[var]
+    torch.cuda.empty_cache()
+    gc.collect()
 
-    return xtts_checkpoint, tokenizer_file, CONFIG_PATH, trainer_out_path, speaker_ref
+    return xtts_checkpoint, tokenizer_file, CONFIG_PATH, trainer.output_path, speaker_ref
 
   except Exception as e:
     # deallocate VRAM and RAM
-    del model, trainer, train_samples, eval_samples, config
+    for var in ["model", "trainer", "train_samples", "eval_samples", "config"]:
+      if var in locals():
+        del locals()[var]
     torch.cuda.empty_cache()
     gc.collect()
     raise e
