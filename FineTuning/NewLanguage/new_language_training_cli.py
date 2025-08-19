@@ -1,6 +1,5 @@
 from trainingGPT import train_gpt
 from tokenizer_extension import extend_tokenizer
-from tokenizer_extension import adjust_config
 from download import download
 from parsers import create_xtts_trainer_parser
 
@@ -18,22 +17,13 @@ if __name__ == "__main__":
     )
     step += 1
 
-  if args.is_tokenizer_extension:
-    print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
-    extend_tokenizer(
-      output_path=args.output_path,
-      metadata_path=args.metadata_path,
-      language=args.language,
-      extended_vocab_size=args.extended_vocab_size
-    )
-  else:
-    print(f"Step {step}: Adjusting the config file.")
-    adjust_config(
-      root=args.output_path,
-      language=args.language,
-      vocab_size=args.extended_vocab_size
-    )
-  step += 1  
+  print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
+  vocab_size =extend_tokenizer(
+    output_path=args.output_path,
+    metadata_path=args.metadata_path,
+    language=args.language
+  )
+  step += 1
 
   print(f"Step {step}: Starting GPT training.")
   xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref = train_gpt(
@@ -43,6 +33,7 @@ if __name__ == "__main__":
     dvae_checkpoint=dvae_checkpoint if args.is_download else args.dvae_checkpoint,
     xtts_checkpoint=xtts_checkpoint if args.is_download else args.xtts_checkpoint,
     tokenizer_file=tokenizer_file if args.is_download else args.tokenizer_file,
+    vocab_size=vocab_size,
     output_path=args.output_path,
     num_epochs=args.num_epochs,
     batch_size=args.batch_size,

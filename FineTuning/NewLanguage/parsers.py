@@ -94,6 +94,7 @@ def create_train_GPT_parser():
   parser.add_argument("--dvae_checkpoint", type=str, required=True, help="Path to the pretrained DVAE model checkpoint (.pth file).")
   parser.add_argument("--xtts_checkpoint", type=str, required=True, help="Path to the pretrained XTTS model checkpoint (.pth file).")
   parser.add_argument("--tokenizer_file", type=str, required=True, help="Path to the tokenizer file (.json file).")
+  parser.add_argument("--vocab_size", type=int, default=6681, help="Vocabulary size for the tokenizer (default: 6681).")
   parser.add_argument("--num_epochs", type=int, default=10, help="Number of epochs for training (default: 10).")
   parser.add_argument("--batch_size", type=int, default=3, help="Batch size for training (default: 3).")
   parser.add_argument("--grad_acumm", type=int, default=84, help="Gradient accumulation steps (default: 84).")

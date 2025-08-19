@@ -9,7 +9,7 @@ from TTS.tts.datasets import load_tts_samples
 
 
 
-def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
+def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file, vocab_size,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
@@ -68,12 +68,11 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     )
     DATASETS_CONFIG_LIST.append(config_dataset)
 
-
   print("Setting up model arguments...")
   model_args = GPTArgs(
     max_conditioning_length=132300,  # 6 secs
     min_conditioning_length=66150,  # 3 secs   or 11025 for 0.5sec
-    debug_loading_failures=False,
+    debug_loading_failures=True,
     max_wav_length=max_audio_length,
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,
@@ -84,7 +83,8 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     gpt_start_audio_token=1024,
     gpt_stop_audio_token=1025,
     gpt_use_masking_gt_prompt_approach=True,
-    gpt_use_perceiver_resampler=True
+    gpt_use_perceiver_resampler=True,
+    gpt_number_text_tokens=vocab_size
   )
 
   audio_config = XttsAudioConfig(sample_rate=22050, dvae_sample_rate=22050, output_sample_rate=24000)
@@ -105,7 +105,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       eval_batch_size=BATCH_SIZE,
       num_loader_workers=num_workers,
       eval_split_max_size=256,
-      print_step=50,
+      print_step=200,
       plot_step=100,
       log_model_step=100,
       save_step=save_step,
@@ -213,6 +213,7 @@ if __name__ == "__main__":
     dvae_checkpoint=args.dvae_checkpoint,
     xtts_checkpoint=args.xtts_checkpoint,
     tokenizer_file=args.tokenizer_file,
+    vocab_size=args.vocab_size,
     num_epochs=args.num_epochs,
     batch_size=args.batch_size,
     grad_acumm=args.grad_acumm,
