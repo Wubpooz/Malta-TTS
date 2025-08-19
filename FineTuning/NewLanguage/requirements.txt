@@ -27,6 +27,13 @@ datasets>=2.12.0  # For dataset handling
 huggingface_hub>=0.27.0  # For model and dataset management
 
 
+# Maltese Tokenizer
+spacy
+stanza
+spacy-stanza
+# masri
+
+
 # --- Optional Dependencies ---
 # For accelerated training/inference on NVIDIA GPUs
 deepspeed
