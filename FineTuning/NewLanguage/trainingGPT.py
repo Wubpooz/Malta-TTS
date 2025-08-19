@@ -9,7 +9,7 @@ from TTS.tts.datasets import load_tts_samples
 
 
 
-def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file, vocab_size,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
+def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file, vocab_size,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, print_step=200, max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
@@ -23,8 +23,6 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       lr (float): Learning rate for the optimizer. Default is 5e-6.
       weight_decay (float): Weight decay for the optimizer. Default is 1e-2.
       save_step (int): Step interval for saving the model checkpoints. Default is 10000.
-      custom_model (str): Path to a custom model checkpoint (.pth file) to use instead of the default XTTS model.
-      version (str): XTTS version to use (default: "main"). 
       max_text_length (int): Maximum text length for the model. Default is 200.
       max_audio_length (int): Maximum audio length for the model. Default is 255995 (approximately 12 seconds at 22050 Hz).
       multi_gpu (bool): Whether to use multi-GPU training. Default is False.
@@ -90,7 +88,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   model_args = GPTArgs(
     max_conditioning_length=132300,  # 6 secs
     min_conditioning_length=66150,  # 3 secs   or 11025 for 0.5sec
-    debug_loading_failures=False,
+    debug_loading_failures=True,
     max_wav_length=max_audio_length,
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,
@@ -123,7 +121,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       eval_batch_size=BATCH_SIZE,
       num_loader_workers=num_workers,
       eval_split_max_size=256,
-      print_step=200,
+      print_step=print_step,
       plot_step=100,
       log_model_step=100,
       save_step=save_step,
@@ -239,8 +237,6 @@ if __name__ == "__main__":
     lr=args.lr,
     weight_decay=args.weight_decay,
     save_step=args.save_step,
-    custom_model=args.custom_model,
-    version=args.version,
     max_text_length=args.max_text_length,
     max_audio_length=args.max_audio_length,
     multi_gpu=args.multi_gpu,

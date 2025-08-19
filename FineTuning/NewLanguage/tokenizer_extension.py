@@ -44,8 +44,8 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
     raise FileNotFoundError(f"Checkpoint file not found at {xtts_checkpoint_path}")
   
   print(f"Backing up checkpoint: {xtts_checkpoint_path + ' -> model_backup.pth'}")
-  backup_checkpoint_path = os.path.join(original_path, "model_backup.pth")
-  shutil.copyfile(xtts_checkpoint_path, backup_checkpoint_path)
+  # backup_checkpoint_path = os.path.join(original_path, "model_backup.pth")
+  # shutil.copyfile(xtts_checkpoint_path, backup_checkpoint_path)
 
   print(f"Resizing checkpoint embeddings: {xtts_checkpoint_path}")
   
@@ -95,7 +95,13 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
       # New bias entries remain zero (good default)
       checkpoint["model"]["gpt.text_head.bias"] = new_bias
     
+
     torch.save(checkpoint, xtts_checkpoint_path)
+    # torch.save(checkpoint, xtts_checkpoint_path+".tmp")
+
+    # if not os.path.exists(xtts_checkpoint_path):
+    #   shutil.copy2(xtts_checkpoint_path+".tmp", xtts_checkpoint_path)
+
     print(f"Checkpoint resized and saved to: {xtts_checkpoint_path}")
     print(f"Successfully resized from {current_vocab_size} to {new_vocab_size} tokens")
   
@@ -113,10 +119,13 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
 
 def extend_tokenizer(output_path, metadata_path, language, min_frequency=2):
   """
-  tokenizer_path: path to existing tokenizer JSON (tokenizer.json or vocab.json)
-  metadata_path: CSV with column 'text' (pipe-separated metadata used in the repo)
-  language: language code, e.g. 'mt'
-  min_frequency: only add tokens seen >= this threshold
+  Extends the XTTS tokenizer with new vocabulary from the provided metadata file.
+  Uses the Tokenizer API to preserve all config and special tokens. Avoid tokenID shifts which create scrambled audios.
+  Arguments:
+    - tokenizer_path: path to existing tokenizer JSON (tokenizer.json or vocab.json)
+    - metadata_path: CSV with column 'text' (pipe-separated metadata used in the repo)
+    - language: language code, e.g. 'mt'
+    - min_frequency: only add tokens seen >= this threshold
   """
   tokenizer_json_path = os.path.join(output_path, "vocab.json")
   if not os.path.exists(tokenizer_json_path):

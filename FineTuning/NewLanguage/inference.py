@@ -128,5 +128,6 @@ if __name__ == "__main__":
   print("Inference completed!")
 
   output_file = args.output_file if args.output_file else "output.wav"
+  os.makedirs(os.path.dirname(output_file), exist_ok=True)
   torchaudio.save(output_file, audio_waveform, sample_rate=24000)
   print(f"Audio saved to {output_file}")

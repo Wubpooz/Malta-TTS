@@ -104,8 +104,6 @@ def create_train_GPT_parser():
   parser.add_argument("--output_path", type=str, required=True, help="Path to save the model checkpoints and outputs.")
   parser.add_argument("--lr", type=float, default=5e-6, help="Learning rate for the optimizer (default: 5e-6).")
   parser.add_argument("--save_step", type=int, default=10000, help="Step interval for saving model checkpoints (default: 10000).")
-  parser.add_argument("--custom_model", type=str, default="", help="Path to a custom model checkpoint (.pth file) to use instead of the default XTTS model.")
-  parser.add_argument("--version", type=str, default="main", help="XTTS version to use (default: 'main').")
   parser.add_argument("--multi_gpu", action='store_true', help="Whether to use multi-GPU training.")
   parser.add_argument("--optimizations", action='store_true', help="Whether to enable optimizations for training.")
   parser.add_argument("--tf32", action='store_true', help="Whether to enable TF32 for training.")  

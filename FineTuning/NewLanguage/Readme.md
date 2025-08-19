@@ -213,3 +213,140 @@ Automatically fall back to FP32 for numerically sensitive ops.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Great question — and Maltese is a perfect example of what “portable TTS” really needs: robustness with tiny models and smart data tricks. Here’s a practical, end-to-end blueprint you can follow, with options from “works on a Raspberry Pi/phone” to “bigger but still deployable”.
+
+1) Choose a portable-friendly architecture
+
+Pick models that are fast, non-autoregressive (or nearly so), and quantization-friendly.
+
+Good options
+	•	Piper (Glow-TTS/HiFi-GAN–style, C++ runtime): tiny, fast, proven on ARM; easy to train your own voices.
+	•	VITS / FastPitch + HiFi-GAN (light): great quality; prune + quantize for edge.
+	•	Distilled WaveRNN vocoder (if you need ultra-low CPU without GPU).
+	•	On-device runtimes: ONNX Runtime (mobile/ARM), Core ML (iOS), TFLite (Android), or a pure C/C++ runtime (Piper).
+
+Avoid for edge (unless you’ll distill later): large autoregressive GPT-style TTS blocks or heavyweight diffusion vocoders.
+
+2) Data for Maltese (+ cross-lingual leverage)
+
+Under-resourced means you win with smart transfer.
+	•	Primary Maltese speech: any studio/close-talk set you have (even a few hours can work for single-speaker). If you have crowd speech, clean it hard.
+	•	Augment with multilingual: mix in Italian/Arabic/English to help prosody and loanwords. Share a phoneme inventory across languages so Maltese borrows benefit.
+	•	Text: scrape/news/Parl Maltese, normalize (numbers, dates, abbreviations), and de-duplicate ruthlessly.
+
+Augmentations
+	•	Speed perturb (0.9×/1.0×/1.1×), room IRs, light noise, pitch shift ≤ ±100 cents (sparingly), SpecAugment on spectrograms for the acoustic model.
+	•	Add code-switch examples (Maltese + English/Italian) — realistic for Malta and improves robustness.
+
+3) Front-end: text normalization + G2P that actually works for Maltese
+
+Maltese orthography is close to phonemic, but you still need rules:
+	•	Build a rule-based G2P first (grapheme→phoneme mappings + stress heuristics).
+	•	Maintain a lexicon for exceptions, names, loanwords, and abbreviations.
+	•	Use a unified phoneme set (IPA or X-SAMPA). Make sure the vocoder/acoustic model uses the same symbol IDs across languages.
+	•	Fallback path: if a token is OOV and ambiguous, back off to graphemes (models learn this surprisingly well) or byte-level pieces.
+
+4) Training recipes (concrete)
+
+A. Small single-speaker Maltese voice (fastest path)
+	•	Model: FastPitch (acoustic) + HiFi-GAN (vocoder, V1 light).
+	•	Hours: 2–10 h clean, single speaker.
+	•	Steps
+	1.	Train HiFi-GAN on multilingual data first (transferable), then fine-tune on your Maltese speaker (50k–200k steps).
+	2.	Train FastPitch on phonemes; use duration/pitch predictors; batch size small (e.g., 16–32 on a single GPU).
+	3.	Early stop by MOS proxy: ASR-CER on TTS–>ASR, and an external prosody score.
+
+B. Multispeaker Maltese (+ neighbors) for robustness
+	•	Model: VITS (multispeaker) with speaker embeddings; or Piper multispeaker recipe.
+	•	Data: combine Maltese with Italian/Arabic/English; ensure at least ~30–60 min per speaker for stability.
+	•	Loss tricks: feature matching (for HiFi-GAN), duration loss with stochastic duration predictor (VITS), mild speaker-mixup.
+
+C. Distill/convert for portability
+	•	Export acoustic to ONNX (opset 17+), export vocoder to ONNX or keep a C++ HiFi-GAN.
+	•	Quantize:
+	•	Dynamic INT8 for linears/conv1d (ONNX Runtime).
+	•	For mobile GPUs/NNAPI/Core ML: try 16-bit float or 8-bit weight-only.
+	•	Aim: < 100 MB total (acoustic ≤ 30–60 MB, vocoder ≤ 40 MB).
+
+5) Making it truly portable (CPU-only, ARM)
+
+Targets
+	•	Raspberry Pi 4/5: ~1–2× real-time for 22 kHz with quantized FastPitch + light HiFi-GAN.
+	•	Android mid-range: real-time using NNAPI / GPU delegate or plain CPU with INT8.
+	•	iOS: Core ML conversion (float16) typically real-time.
+
+Implementation tips
+	•	Streaming synthesis: chunk text (clauses), synth acoustic chunks, stream vocoder frames as they’re ready.
+	•	Use smaller hop size (256) at 22.05 kHz to balance latency/naturalness.
+	•	Pre-warm models on app start (first inference JIT costs).
+	•	Cache phonemized text and punctuation normalization.
+
+6) Maltese specifics that help quality
+	•	Handle Maltese letters (ċ, ġ, għ, ħ, ż) carefully in normalization.
+	•	Prosody: Maltese stress tends toward the penultimate syllable — add a heuristic to your G2P (and learn residual stress via FastPitch).
+	•	Loanwords: keep dual lexicon entries (native vs. borrowed pronunciation); pick by context (neighbor tokens, language ID tags).
+	•	Code-switch tags: mark spans like <lang=en>, <lang=it> to signal different phonotactics without swapping models.
+
+7) Evaluation & QA (cheap but effective)
+	•	Objective: ASR-CER of TTS audio using a strong multilingual ASR (Whisper small/distilled) — lower is better.
+	•	Prosody: F0 variance vs. references; pause placement around punctuation.
+	•	Subjective: 5–10 native Maltese listeners; MOS + ABX against ground truth; include code-switch sentences and numerics/dates.
+	•	Robustness set: typos, all-caps, abbreviations, URLs, telephone numbers, currency, times.
+
+8) A minimal training & export sketch (framework-agnostic)
+
+
+##### Steps
+ 1) Train vocoder (HiFi-GAN light) on multilingual + fine-tune on Maltese
+python train_hifigan.py --config hifigan_light.yaml --data data_multilingual
+python finetune_hifigan.py --checkpoint ckpt_hifigan.pth --data data_mt_speaker
+
+ 2) Train FastPitch on phonemes
+python train_fastpitch.py --config fastpitch_mt.yaml --train-metadata metadata_mt_phoneme.csv
+
+ 3) Export to ONNX
+python export_fastpitch_onnx.py --checkpoint fastpitch_mt.pth --out fastpitch_mt.onnx
+python export_hifigan_onnx.py --checkpoint hifigan_mt.pth --out hifigan_mt.onnx
+
+ 4) Quantize (dynamic int8)
+python onnx_quantize.py --in fastpitch_mt.onnx --out fastpitch_mt_int8.onnx --mode dynamic
+python onnx_quantize.py --in hifigan_mt.onnx --out hifigan_mt_int8.onnx --mode dynamic
+
+9) Packaging for apps
+	•	Android: bundle ONNX models, run with ONNX Runtime (NNAPI/GPU EP if available). Kotlin wrapper; stream PCM to AudioTrack.
+	•	iOS: convert to Core ML (coremltools), or use ONNX Runtime Mobile; stream to AVAudioEngine.
+	•	Desktop/IoT: Piper or your own C++ runner; one static binary + two model files.
+
+10) If you already have a big multilingual TTS (e.g., XTTS)
+	•	Use it to bootstrap: generate high-quality Maltese pseudo-data (careful: avoid style collapse), then distill into a small FastPitch/VITS student on phonemes.
+	•	Keep the big model server-side for rare names or tricky code-switches; default to on-device small model; fall back to server only when the small model flags low confidence.
+
+⸻
+
+If you want, I can tailor this into a step-by-step Piper or VITS config for Maltese, including a ready-made phoneme map and a starter lexicon (with stress marks and typical loanword variants).
+
+https://www.reddit.com/r/mlscaling/comments/1gxakk3/did_a_quick_comparison_of_various_tts_models/
