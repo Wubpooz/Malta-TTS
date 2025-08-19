@@ -130,6 +130,18 @@ def extend_tokenizer(output_path, metadata_path, language, min_frequency=2):
   df = pd.read_csv(metadata_path, sep="|", usecols=["text"])
   texts = df["text"].astype(str).tolist()
 
+  # gather unique characters from the texts
+  all_chars = set()
+  for t in texts:
+    all_chars.update(list(t))
+
+  to_add_chars = [c for c in all_chars if tok.token_to_id(c) is None and not c.isspace()]
+
+  if to_add_chars:
+    tok.add_tokens(to_add_chars)
+    print(f"Added {len(to_add_chars)} new character tokens.")
+
+
   # gather whitespace tokens + frequencies
   freq = Counter()
   for t in texts:
@@ -172,18 +184,16 @@ def extend_tokenizer(output_path, metadata_path, language, min_frequency=2):
   else:
     print("No new tokens to add by heuristic.")
 
-  # add language special token if missing
   lang_tok = f"[{language}]"
   if tok.token_to_id(lang_tok) is None:
     tok.add_special_tokens([lang_tok])
     print(f"Added special token {lang_tok}")
 
-  # Save tokenizer (save tokenizer.json and a copy as vocab.json for XTTS compatibility)
-  out_dir = os.path.dirname(output_path)
-  out_name = os.path.join(out_dir, "tokenizer.json")
+  out_name = os.path.join(output_path, "tokenizer.json")
   tok.save(out_name)
   # many pipelines expect a 'vocab.json' or tokenizers accept tokenizer.json — keep a copy
-  shutil.copy2(out_name, os.path.join(out_dir, "vocab.json"))
+  shutil.copy2(os.path.join(output_path, "vocab.json"), os.path.join(output_path, "vocab_base.json"))
+  shutil.copy2(out_name, os.path.join(output_path, "vocab.json"))
   print(f"Tokenizer saved to {out_name} and copied to vocab.json")
 
   resize_xtts_checkpoint_embeddings(

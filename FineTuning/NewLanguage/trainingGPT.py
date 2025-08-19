@@ -47,12 +47,30 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   BATCH_SIZE = batch_size
   GRAD_ACUMM_STEPS = grad_acumm
 
+
   print(f" > Training XTTS model for Maltese with {len(metadatas)} datasets, {num_epochs} epochs, batch size {BATCH_SIZE}, grad_acumm {GRAD_ACUMM_STEPS}, output path: {OUT_PATH}")
+
+  if not os.path.exists(xtts_checkpoint):
+    raise FileNotFoundError(f"XTTS checkpoint not found at {xtts_checkpoint}")
+  if not os.path.exists(tokenizer_file):
+    raise FileNotFoundError(f"Tokenizer file not found at {tokenizer_file}")
+  if not os.path.exists(mel_norm_file):
+    raise FileNotFoundError(f"Mel norm file not found at {mel_norm_file}")
+  if not os.path.exists(dvae_checkpoint):
+    raise FileNotFoundError(f"DVAE checkpoint not found at {dvae_checkpoint}")
+
   print(" > Using the following datasets:")
   DATASETS_CONFIG_LIST = []
   for metadata in metadatas:
     train_csv, eval_csv, language = metadata.split(",")
     print(train_csv, eval_csv, language)
+
+    if not os.path.exists(train_csv):
+      raise FileNotFoundError(f"Train CSV file not found: {train_csv}")
+
+    if not os.path.exists(eval_csv):
+      raise FileNotFoundError(f"Eval CSV file not found: {eval_csv}")
+
     if language == "ja":
       num_workers = 0
 
@@ -72,7 +90,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   model_args = GPTArgs(
     max_conditioning_length=132300,  # 6 secs
     min_conditioning_length=66150,  # 3 secs   or 11025 for 0.5sec
-    debug_loading_failures=True,
+    debug_loading_failures=False,
     max_wav_length=max_audio_length,
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,

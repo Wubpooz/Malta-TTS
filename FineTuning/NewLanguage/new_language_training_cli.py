@@ -1,6 +1,9 @@
-from trainingGPT import train_gpt
-from tokenizer_extension import extend_tokenizer
+import os
+import json
+
 from download import download
+from tokenizer_extension import extend_tokenizer
+from trainingGPT import train_gpt
 from parsers import create_xtts_trainer_parser
 
 
@@ -18,21 +21,52 @@ if __name__ == "__main__":
     step += 1
 
   print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
-  vocab_size =extend_tokenizer(
+  vocab_size = extend_tokenizer(
     output_path=args.output_path,
     metadata_path=args.metadata_path,
     language=args.language
   )
+  print(f"Extended vocabulary size: {vocab_size}")
   step += 1
 
+
+  config_path = os.path.join(args.output_path, "config.json")
+  if os.path.exists(config_path):
+    with open(config_path, 'r', encoding="utf-8") as f:
+      config = json.load(f)
+    config_vocab_size = config.get("model_args", {}).get("gpt_number_text_tokens", "NOT_FOUND")
+    print(f"Config vocab size: {config_vocab_size}")
+    
+    if config_vocab_size != vocab_size:
+      print(f"WARNING: Vocab size mismatch! Tokenizer: {vocab_size}, Config: {config_vocab_size}")
+      config["model_args"]["gpt_number_text_tokens"] = vocab_size
+      with open(config_path, 'w', encoding="utf-8") as f:
+        json.dump(config, f, indent=2, ensure_ascii=False)
+      print(f"Fixed config vocab size to {vocab_size}")
+
   print(f"Step {step}: Starting GPT training.")
+  
+  updated_xtts_checkpoint = os.path.join(args.output_path, "model.pth")
+  updated_tokenizer_file = os.path.join(args.output_path, "vocab.json")
+  
+  if not os.path.exists(updated_xtts_checkpoint):
+    print(f"ERROR: Updated checkpoint not found at {updated_xtts_checkpoint}")
+    exit(1)
+  if not os.path.exists(updated_tokenizer_file):
+    print(f"ERROR: Updated tokenizer not found at {updated_tokenizer_file}")  
+    exit(1)
+    
+  print(f"Using updated checkpoint: {updated_xtts_checkpoint}")
+  print(f"Using updated tokenizer: {updated_tokenizer_file}")
+  print(f"Using vocab size: {vocab_size}")
+
   xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref = train_gpt(
     metadatas=args.metadatas,
     language=args.language,
     mel_norm_file=mel_norm_file if args.is_download else args.mel_norm_file,
     dvae_checkpoint=dvae_checkpoint if args.is_download else args.dvae_checkpoint,
-    xtts_checkpoint=xtts_checkpoint if args.is_download else args.xtts_checkpoint,
-    tokenizer_file=tokenizer_file if args.is_download else args.tokenizer_file,
+    xtts_checkpoint=updated_xtts_checkpoint,
+    tokenizer_file=updated_tokenizer_file,
     vocab_size=vocab_size,
     output_path=args.output_path,
     num_epochs=args.num_epochs,
@@ -48,19 +82,3 @@ if __name__ == "__main__":
   )
   
   print(f"Checkpoint saved in dir: {trainer_out_path}")
-
-
-
-
-# Phonetic transcription
-# A rule-based script to transcribe Maltese text into IPA notation. An example is shown below.
-
-# >> from masri.transcribe.g2p import text2phon
-# >> print(text2phon("Ilbieraħ mort s'Għawdex"))
-# ɪlbɪːrɐh mɔrt sɐʊdɛʃ
-# Numbers to words
-# An extension of num2words for the Maltese language. An example is shown below.
-
-# >> from masri.transcribe.num2text import num2text
-# >> print(num2text(301000))
-# tliet mitt elf u  elf
