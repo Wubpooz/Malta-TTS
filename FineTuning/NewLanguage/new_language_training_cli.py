@@ -51,36 +51,12 @@ if __name__ == "__main__":
     lr=args.lr,
     max_text_length=args.max_text_length,
     max_audio_length=args.max_audio_length,
-    save_step=args.save_step
+    save_step=args.save_step,
+    optimizations=args.optimizations,
+    tf32=args.tf32
   )
   
   print(f"Checkpoint saved in dir: {trainer_out_path}")
-
-
-  # run_inference = input("Do you want to run inference? (y/n): ").strip().lower()
-  # inference_text = input("Enter the text for inference (or leave empty to use default): ").strip() # Hija test tal-mudell tat-taħdit il-ġdid tiegħi, il-lingwa Maltija hija interessanti! Esperimenti u testijiet huma importanti biex niskopru l-possibbiltajiet tat-taħdit.
-  # if run_inference == 'y':
-  #   print("Running inference...")
-  #   audio = inference(
-  #     xtts_checkpoint=xtts_checkpoint,
-  #     xtts_config=config,
-  #     xtts_vocab=xtts_vocab,
-  #     tts_text=inference_text,
-  #     speaker_audio_file=speaker_ref,
-  #     lang=args.language
-  #   )
-  #   print("Inference completed!")
-  #   torchaudio.save(os.path.join(trainer_out_path, "output_maltese.wav"), audio, 24000)
-  #   print("Audio saved as output_maltese.wav")
-  #   try:
-  #     from IPython.display import Audio
-  #     Audio(audio, rate=24000)
-  #   except ImportError:
-  #     print("IPython not available, audio playback not supported in this environment.")
-  # else:
-  #   print("Skipping inference. You can run it later by calling the `inference()` function.")
-
-
 
 
 

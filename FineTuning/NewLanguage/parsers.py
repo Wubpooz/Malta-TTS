@@ -26,6 +26,8 @@ def create_xtts_trainer_parser():
   parser.add_argument("--dvae_checkpoint", type=str, required=False, help="Path to the pretrained DVAE model checkpoint (.pth file)")
   parser.add_argument("--xtts_checkpoint", type=str, required=False, help="Path to the pretrained XTTS model checkpoint (.pth file)")
   parser.add_argument("--tokenizer_file", type=str, required=False, help="Path to the tokenizer file (.json file)")
+  parser.add_argument("--optimizations", action='store_true', help="Enable optimizations for training")
+  parser.add_argument("--tf32", action='store_true', help="Enable TF32 for training")
   # parser.add_argument("--no_deepspeed", action='store_true', help="Disable deepspeed for training")
   return parser
 
@@ -104,7 +106,8 @@ def create_train_GPT_parser():
   parser.add_argument("--custom_model", type=str, default="", help="Path to a custom model checkpoint (.pth file) to use instead of the default XTTS model.")
   parser.add_argument("--version", type=str, default="main", help="XTTS version to use (default: 'main').")
   parser.add_argument("--multi_gpu", action='store_true', help="Whether to use multi-GPU training.")
-  
+  parser.add_argument("--optimizations", action='store_true', help="Whether to enable optimizations for training.")
+  parser.add_argument("--tf32", action='store_true', help="Whether to enable TF32 for training.")  
   return parser
 
 

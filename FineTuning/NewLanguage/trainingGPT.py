@@ -7,10 +7,9 @@ from TTS.tts.layers.xtts.trainer.gpt_trainer import GPTArgs, GPTTrainer, GPTTrai
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.datasets import load_tts_samples
 
-from download import download
 
 
-def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False):
+def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, custom_model="", version="main", max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
@@ -59,7 +58,6 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
 
     # coqui format: "audio_file", "text", "speaker_name", "emotion_name"
     # ljspeech format: "audio_file", "text", "normalized_transcription"" audio_file|text|transcription|speaker_name
-
     config_dataset = BaseDatasetConfig(
       formatter="ljspeech",
       dataset_name="MASRI_HEADSET",
@@ -122,6 +120,10 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       lr_scheduler="MultiStepLR",
       lr_scheduler_params={"milestones": [50000 * 18, 150000 * 18, 300000 * 18], "gamma": 0.5, "last_epoch": -1},
       test_sentences=[],
+      # Performance optimizations
+      mixed_precision=optimizations,
+      precision="fp16" if optimizations else "fp32",
+      allow_tf32=tf32, # TensorFloat-32 tensor cores may be used in matrix multiplications on Ampere or newer GPUs. Default to False.
     )
 
     model = GPTTrainer.init_from_config(config)
@@ -219,7 +221,9 @@ if __name__ == "__main__":
     version=args.version,
     max_text_length=args.max_text_length,
     max_audio_length=args.max_audio_length,
-    multi_gpu=args.multi_gpu
+    multi_gpu=args.multi_gpu,
+    optimizations=args.optimizations,
+    tf32=args.tf32
   )
   print("Training completed successfully!")
   print("You can now run inference using the trained model.")

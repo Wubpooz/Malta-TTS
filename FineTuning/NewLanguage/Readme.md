@@ -122,9 +122,8 @@ Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but r
 
 
 # TODOs
-## maybe audio file khz inconsistencies !!!
 ## Phonetic representation?
-
+## Retrain tokenizer and adapt embeddings to have BPE for Maltese
 ## add more error handling like this
 ## argumentValidator for parser
 ## param for num_workers ?
