@@ -6,9 +6,10 @@ torchaudio==2.5.1
 # Coqui Stack (TTS is installed from GitHub, not PyPI)
 TTS;python_version<"3.11"
 trainer>=0.0.36;python_version<"3.11"
-coqui-tts;python_version>="3.11" # up to date fork https://github.com/idiap/coqui-ai-TTS
-coqui-tts-trainer==0.3.0;python_version>="3.11"
-coqpit>=0.0.16
+coqpit>=0.0.16;python_version<"3.11"
+coqui-tts==0.27.0;python_version>="3.11" # up to date fork https://github.com/idiap/coqui-ai-TTS
+coqui-tts-trainer==0.3.1;python_version>="3.11"
+coqpit-config==0.2.1;python_version>="3.11"
 
 # XTTS Dependencies
 unidecode>=1.3.2
@@ -29,6 +30,9 @@ datasets>=2.12.0  # For dataset handling
 huggingface_hub>=0.27.0  # For model and dataset management
 
 
+dataclasses
+
+
 # Maltese Tokenizer
 spacy
 stanza
@@ -47,6 +51,8 @@ ipython
 
 # For faster downloading of datasets and models
 hf_xet
+
+
 
 
 # Potential other dependencies or fixes

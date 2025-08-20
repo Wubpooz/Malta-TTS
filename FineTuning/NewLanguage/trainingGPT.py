@@ -11,6 +11,14 @@ from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.datasets import load_tts_samples
 
 
+from dataclasses import dataclass
+
+@dataclass
+class XttsTrainingAudioConfig(XttsAudioConfig):
+  """Extended XttsAudioConfig with dvae_sample_rate for training.
+  """
+  dvae_sample_rate: int = 22050
+
 
 def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file, vocab_size,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, print_step=200, max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
   """Train the GPT XTTS model for Maltese language.
@@ -105,7 +113,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     gpt_number_text_tokens=vocab_size
   )
 
-  audio_config = XttsAudioConfig(sample_rate=22050, dvae_sample_rate=22050, output_sample_rate=24000)
+  audio_config = XttsTrainingAudioConfig(sample_rate=22050, dvae_sample_rate=22050, output_sample_rate=24000)
 
   try:
     config = GPTTrainerConfig(
@@ -115,7 +123,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       project_name=PROJECT_NAME,
       run_description="""GPT XTTS fine-tuning for Maltese""",
       dashboard_logger=DASHBOARD_LOGGER,
-      logger_uri=LOGGER_URI, # type: ignore
+      logger_uri=LOGGER_URI or "",
       audio=audio_config,
       epochs=num_epochs,
       batch_size=BATCH_SIZE,
@@ -129,7 +137,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       save_step=save_step,
       save_n_checkpoints=1,
       save_checkpoints=True,
-      # target_loss="loss",
+      target_loss="", # "loss",
       print_eval=False,
       optimizer="AdamW",
       optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
@@ -143,6 +151,13 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       precision="fp16" if optimizations else "fp32",
       allow_tf32=tf32, # TensorFloat-32 tensor cores may be used in matrix multiplications on Ampere or newer GPUs. Default to False.
       # use_noise_augment
+      model_dir="",  # Replace None with an empty string
+      phonemizer="",  # Replace None with an empty string
+      phoneme_language="",  # Replace None with an empty string
+      text_cleaner="",  # Replace None with an empty string
+      phoneme_cache_path="",  # Replace None with an empty string
+      characters="",  # Replace None with an empty string
+      loss_masking="",  # Replace None with an empty string
     )
 
     model = GPTTrainer.init_from_config(config)
@@ -156,9 +171,48 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     )
     print(f" > Loaded {len(train_samples)} training samples and {len(eval_samples)} evaluation samples.")
 
+    from utils import add_language_to_tokenizer
+    add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
+
+    print(f"model_args type: {type(model_args)}")
+    print(f"GPTTrainerConfig fields: {GPTTrainerConfig.__annotations__}")
+    print("Debugging GPTTrainerConfig:")
+    for field_name, field_value in config.__dict__.items():
+      print(f"{field_name}: {type(field_value)}")    
+    
+    print("Debugging GPTArgs:")
+    for field_name, field_value in model_args.__dict__.items():
+      print(f"{field_name}: {type(field_value)}")
+    print("Debugging AudioConfig:")
+    for field_name, field_value in audio_config.__dict__.items():
+      print(f"{field_name}: {type(field_value)}")
+
+
+    def validate_config_fields(config):
+      for field_name, field_value in config.__dict__.items():
+          if field_value is None:
+              print(f"Warning: Field '{field_name}' is None. Setting a default value.")
+              if isinstance(field_value, str):
+                  setattr(config, field_name, "")
+              elif isinstance(field_value, list):
+                  setattr(config, field_name, [])
+              elif isinstance(field_value, dict):
+                  setattr(config, field_name, {})
+              elif isinstance(field_value, bool):
+                  setattr(config, field_name, False)
+              elif isinstance(field_value, int):
+                  setattr(config, field_name, 0)
+              elif isinstance(field_value, float):
+                  setattr(config, field_name, 0.0)
+
+    validate_config_fields(config)
+    validate_config_fields(model_args)
+    validate_config_fields(audio_config)
+    
+
     trainer = Trainer(
       TrainerArgs(
-        restore_path=None, #type: ignore  # xtts checkpoint is restored via xtts_checkpoint key so no need of restore it using Trainer restore_path parameter
+        # restore_path="", # xtts checkpoint is restored via xtts_checkpoint key so no need of restore it using Trainer restore_path parameter
         skip_train_epoch=False,
         start_with_eval=START_WITH_EVAL,
         grad_accum_steps=GRAD_ACUMM_STEPS,
@@ -173,8 +227,6 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     if multi_gpu:
       trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
-    from utils import add_language_to_tokenizer
-    add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
 
     print("Starting training...")
     trainer.fit()
