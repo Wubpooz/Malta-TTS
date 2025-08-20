@@ -121,19 +121,45 @@ python inference.py --xtts_checkpoint=checkpoints/xtts.pth --xtts_config=checkpo
 Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but resulted in worse performance. DVAE and GPT finetuning are sufficient for optimal results. They also found that ff you have enough short texts in your datasets (about 20 hours), you do not need to finetune DVAE.  
 
 
+
+
+
+
+
+
+
+
+
+
+
 # TODOs
-## Phonetic representation?
-## Retrain tokenizer and adapt embeddings to have BPE for Maltese
 ## add more error handling like this
 ## argumentValidator for parser
 ## param for num_workers ?
+## freeze requirements
+## fix paths and params
+## cleanup
+## put model in huggingface and make dataset repo private
+
+
+
+
+
+
+
+
+
+
+
 ## training loss graph
-## use CosineAnnealingLR?
 ## autodetect formatter based on metadata number of cols and names
-## Share everything in meeting with the other student and create a handout
+
 ## Logger?
 import logging
 logger = logging.getLogger(__name__)
+
+
+
 ## mixed precision:
 1. Add a mixed_precision flag to your GPTTrainerConfig
 python

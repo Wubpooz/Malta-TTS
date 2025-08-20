@@ -157,7 +157,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       text_cleaner="",  # Replace None with an empty string
       phoneme_cache_path="",  # Replace None with an empty string
       characters="",  # Replace None with an empty string
-      loss_masking="",  # Replace None with an empty string
+      loss_masking=False,  # Replace None with an empty string
     )
 
     model = GPTTrainer.init_from_config(config)
@@ -171,44 +171,52 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     )
     print(f" > Loaded {len(train_samples)} training samples and {len(eval_samples)} evaluation samples.")
 
+
+    import librosa
+
+    def filter_invalid_samples(samples, sample_rate):
+      """Filter out samples with invalid or problematic audio files."""
+      valid_samples = []
+      for sample in samples:
+        try:
+          # Attempt to load the audio file
+          audio_path = sample["audio_file"]
+          audio, sr = librosa.load(audio_path, sr=sample_rate)
+          valid_samples.append(sample)
+        except Exception as e:
+          print(f"Skipping invalid sample: {audio_path}. Error: {e}")
+      return valid_samples
+    print("Filtering invalid training samples...")
+    train_samples = filter_invalid_samples(train_samples, sample_rate=22050)
+    print(f" > Valid training samples: {len(train_samples)} | {(len(train_samples) / len(train_samples)):.2f if train_samples else 0:.2f}")
+    print("Filtering invalid evaluation samples...")
+    eval_samples = filter_invalid_samples(eval_samples, sample_rate=22050)
+    print(f" > Valid evaluation samples: {len(eval_samples)} | {(len(eval_samples) / len(eval_samples)):.2f if eval_samples else 0:.2f}")
+
     from utils import add_language_to_tokenizer
     add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
 
-    print(f"model_args type: {type(model_args)}")
-    print(f"GPTTrainerConfig fields: {GPTTrainerConfig.__annotations__}")
-    print("Debugging GPTTrainerConfig:")
-    for field_name, field_value in config.__dict__.items():
-      print(f"{field_name}: {type(field_value)}")    
-    
-    print("Debugging GPTArgs:")
-    for field_name, field_value in model_args.__dict__.items():
-      print(f"{field_name}: {type(field_value)}")
-    print("Debugging AudioConfig:")
-    for field_name, field_value in audio_config.__dict__.items():
-      print(f"{field_name}: {type(field_value)}")
-
-
     def validate_config_fields(config):
       for field_name, field_value in config.__dict__.items():
-          if field_value is None:
-              print(f"Warning: Field '{field_name}' is None. Setting a default value.")
-              if isinstance(field_value, str):
-                  setattr(config, field_name, "")
-              elif isinstance(field_value, list):
-                  setattr(config, field_name, [])
-              elif isinstance(field_value, dict):
-                  setattr(config, field_name, {})
-              elif isinstance(field_value, bool):
-                  setattr(config, field_name, False)
-              elif isinstance(field_value, int):
-                  setattr(config, field_name, 0)
-              elif isinstance(field_value, float):
-                  setattr(config, field_name, 0.0)
+        if field_value is None:
+          print(f"Warning: Field '{field_name}' is None. Setting a default value.")
+          if isinstance(field_value, str):
+            setattr(config, field_name, "")
+          elif isinstance(field_value, list):
+            setattr(config, field_name, [])
+          elif isinstance(field_value, dict):
+            setattr(config, field_name, {})
+          elif isinstance(field_value, bool):
+            setattr(config, field_name, False)
+          elif isinstance(field_value, int):
+            setattr(config, field_name, 0)
+          elif isinstance(field_value, float):
+            setattr(config, field_name, 0.0)
 
     validate_config_fields(config)
     validate_config_fields(model_args)
     validate_config_fields(audio_config)
-    
+
 
     trainer = Trainer(
       TrainerArgs(

@@ -1,7 +1,8 @@
 # Core PyTorch
-torch==2.5.1 #+cu121
+torch==2.5.1
 torchaudio==2.5.1
-# torchvision
+torchvision==0.20.1
+#%pip install torch==2.8.0 torchaudio torchvision
 
 # Coqui Stack (TTS is installed from GitHub, not PyPI)
 TTS;python_version<"3.11"
