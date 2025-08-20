@@ -30,12 +30,14 @@ def preprocess_maltese_text(text):
 
 
 
-def add_language_to_tokenizer(tokenizer, lang_code="mt"):
+def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
   """
     Adds your language to the tokenizer.py file using Monkey Patching.
     # pip install spacy stanza spacy-stanza
     # python -c "import stanza; stanza.download('mt')"
   """
+  import TTS.tts.layers.xtts.tokenizer as tokenizerFile
+
   import re
   import spacy_stanza
   from masri.transcribe.num2text import num2text
@@ -44,17 +46,17 @@ def add_language_to_tokenizer(tokenizer, lang_code="mt"):
   mt_word_tokenizer = MTWordTokenizer()
 
 
-  _original_get_spacy_lang = tokenizer.get_spacy_lang
+  _original_get_spacy_lang = tokenizerFile.get_spacy_lang
   def get_spacy_lang(lang):
     if lang == lang_code:
       return spacy_stanza.load_pipeline(lang_code, processor="tokenize")
     else:
       return _original_get_spacy_lang(lang)
 
-  tokenizer.get_spacy_lang = get_spacy_lang 
+  tokenizerFile.get_spacy_lang = get_spacy_lang 
 
 
-  tokenizer._abbreviations[lang_code] = [
+  tokenizerFile._abbreviations[lang_code] = [
     (re.compile("\\b%s\\." % x[0], re.IGNORECASE), x[1])
     for x in [
       ("sra", "sinjura"),
@@ -69,7 +71,7 @@ def add_language_to_tokenizer(tokenizer, lang_code="mt"):
   ]
 
 
-  tokenizer._symbol_multilingual[lang_code] = [
+  tokenizerFile._symbol_multilingual[lang_code] = [
     (re.compile(r"%s" % re.escape(x[0]), re.IGNORECASE), x[1])
     for x in [
       ("&", " u "),
@@ -82,27 +84,27 @@ def add_language_to_tokenizer(tokenizer, lang_code="mt"):
     ]
   ]
 
-  tokenizer._ordinal_re[lang_code] = re.compile(MTRegex.DEF_NUMERAL)
+  tokenizerFile._ordinal_re[lang_code] = re.compile(MTRegex.DEF_NUMERAL)
 
 
-  if not hasattr(tokenizer, "char_limits"):
-    tokenizer.char_limits = {}
-  if lang_code not in tokenizer.char_limits:
-    tokenizer.char_limits[lang_code] = tokenizer.char_limits.get("en", 400)
+  if not hasattr(VoiceBPETokenizer, "char_limits"):
+    VoiceBPETokenizer.char_limits = {}
+  if lang_code not in VoiceBPETokenizer.char_limits:
+    VoiceBPETokenizer.char_limits[lang_code] = VoiceBPETokenizer.char_limits.get("en", 400)
     print(f"Added char_limits for '{lang_code}' language.")
 
 
 
-  original_expand_numbers_multilingual = tokenizer.expand_numbers_multilingual
+  original_expand_numbers_multilingual = tokenizerFile.expand_numbers_multilingual
   def custom_expand_numbers_multilingual(text, lang):
     if lang == lang_code:
       text = num2text(text)
     return original_expand_numbers_multilingual(text, lang)
   
-  tokenizer.expand_numbers_multilingual = custom_expand_numbers_multilingual
+  tokenizerFile.expand_numbers_multilingual = custom_expand_numbers_multilingual
 
 
-  _original_expand_currency = tokenizer._expand_currency
+  _original_expand_currency = tokenizerFile._expand_currency
   def _custom_expand_currency(m, lang="en", currency="USD"):
     if lang == lang_code:
       amount = float((re.sub(r"[^\d.]", "", m.group(0).replace(",", "."))))
@@ -116,21 +118,21 @@ def add_language_to_tokenizer(tokenizer, lang_code="mt"):
 
     else:
       return _original_expand_currency(m, lang, currency)
-    
-  tokenizer._expand_currency = _custom_expand_currency
 
-  
+  tokenizerFile._expand_currency = _custom_expand_currency
 
-  _original_preprocess_text = tokenizer.VoiceBpeTokenizer.preprocess_text
+
+
+  _original_preprocess_text = VoiceBPETokenizer.preprocess_text
   def custom_preprocess_text(self, txt, lang):
     if lang == lang_code:
       txt = mt_word_tokenizer.tokenize_fix_quotes(txt)
       if isinstance(txt, list):
         txt = " ".join(txt)
-      return tokenizer.multilingual_cleaner(txt, lang)
+      return tokenizerFile.multilingual_cleaner(txt, lang)
       # TODO transliterate ?
     return _original_preprocess_text(self, txt, lang)
 
-  tokenizer.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
+  tokenizerFile.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
 
   print(f"{lang_code} added to tokenizer.py!")

@@ -68,7 +68,6 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
 
     if not os.path.exists(train_csv):
       raise FileNotFoundError(f"Train CSV file not found: {train_csv}")
-
     if not os.path.exists(eval_csv):
       raise FileNotFoundError(f"Eval CSV file not found: {eval_csv}")
 
@@ -175,7 +174,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
 
     from utils import add_language_to_tokenizer
-    add_language_to_tokenizer(model.tokenizer, lang_code=language)
+    add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
 
     print("Starting training...")
     trainer.fit()
