@@ -1,10 +1,11 @@
 # Core PyTorch
 torch==2.5.1 #+cu121
 torchaudio==2.5.1
-torchvision
+# torchvision
 
 # Coqui Stack (TTS is installed from GitHub, not PyPI)
-TTS
+TTS;python_version<"3.11"
+coqui-tts;python_version>="3.11" # up to date fork https://github.com/idiap/coqui-ai-TTS
 trainer>=0.0.36
 coqpit>=0.0.16
 

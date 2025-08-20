@@ -1,3 +1,5 @@
+import compatibility
+
 import os
 import torch
 from torch.optim import Adam

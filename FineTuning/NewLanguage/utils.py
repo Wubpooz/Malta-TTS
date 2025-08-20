@@ -1,3 +1,5 @@
+import compatibility
+
 def preprocess_maltese_text(text):
   """Enhanced Maltese text preprocessing using MTWordTokenizer"""
   from masri.tokenise.tokenise import MTWordTokenizer, MTRegex

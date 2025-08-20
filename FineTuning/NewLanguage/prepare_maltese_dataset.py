@@ -3,7 +3,6 @@ import datasets
 import pandas as pd
 import soundfile as sf
 import shutil
-import argparse
 from tqdm import tqdm
 from datasets import load_dataset
 from sklearn.model_selection import train_test_split

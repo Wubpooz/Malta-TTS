@@ -1,3 +1,5 @@
+import compatibility
+
 import gc
 import os
 import json

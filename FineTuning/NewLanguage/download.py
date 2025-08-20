@@ -1,3 +1,5 @@
+import compatibility
+
 import os
 from TTS.utils.manage import ModelManager
 
