@@ -16,7 +16,8 @@ unidecode>=1.3.2
 num2words>=0.5.12
 spacy>=3.0.0 # for text processing
 tokenizers>=0.13.0 # XTTSv2 finetuning often relies on a specific range
-transformers==4.38.2
+transformers==4.38.2;python_version<"3.11"
+transformers==4.52.1;python_version>="3.11"
 
 # General ML / Audio / Utility Dependencies
 numpy>=1.24.0
