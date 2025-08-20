@@ -71,16 +71,16 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
   ]
 
 
-  tokenizerFile._symbol_multilingual[lang_code] = [
+  tokenizerFile._symbols_multilingual[lang_code] = [
     (re.compile(r"%s" % re.escape(x[0]), re.IGNORECASE), x[1])
     for x in [
       ("&", " u "),
       ("@", " fuq "),
-      ("%", " percent "),
+      ("%", " ful-mija "),
       ("#", " hash "),
-      ("$", " dollar "),
-      ("£", " pound "),
-      ("°", " degree "),
+      ("$", " dollaru "),
+      ("£", " lira "),
+      ("°", " grad "),
     ]
   ]
 
@@ -95,13 +95,14 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
 
 
 
-  original_expand_numbers_multilingual = tokenizerFile.expand_numbers_multilingual
-  def custom_expand_numbers_multilingual(text, lang):
+  _original_expand_decimal_point = tokenizerFile._expand_decimal_point
+  def custom_expand_decimal_point(m, lang="en"):
     if lang == lang_code:
-      text = num2text(text)
-    return original_expand_numbers_multilingual(text, lang)
-  
-  tokenizerFile.expand_numbers_multilingual = custom_expand_numbers_multilingual
+      return num2text(float(m.group(1)), lang=lang)
+    else:
+      return _original_expand_decimal_point(m, lang)
+
+  tokenizerFile._expand_decimal_point = custom_expand_decimal_point
 
 
   _original_expand_currency = tokenizerFile._expand_currency
@@ -122,6 +123,42 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
   tokenizerFile._expand_currency = _custom_expand_currency
 
 
+  _original_expand_ordinal = tokenizerFile._expand_ordinal
+  def custom_expand_ordinal(m, lang="en"):
+    if lang == lang_code:
+      return num2text(int(m.group(1)), ordinal=True, lang=lang)
+    else:
+      return _original_expand_ordinal(m, lang)
+
+  tokenizerFile._expand_ordinal = custom_expand_ordinal
+
+
+  _original_expand_number = tokenizerFile._expand_number
+  def custom_expand_number(m, lang="en"):
+    if lang == lang_code:
+      return num2text(int(m.group(0)), lang=lang)
+    else:
+      return _original_expand_number(m, lang)
+
+  tokenizerFile._expand_number = custom_expand_number
+
+
+  # original_expand_numbers_multilingual = tokenizerFile.expand_numbers_multilingual
+  # def custom_expand_numbers_multilingual(text, lang):
+  #   if lang == lang_code:
+  #     try:
+  #       text = num2text(text)
+  #     except Exception as e:
+  #       print(f"Error in num2text: {e}")
+  #       print(f"Text to expand: {text}")
+  #       exit(1)
+  #   return original_expand_numbers_multilingual(text, lang)
+  
+  # tokenizerFile.expand_numbers_multilingual = custom_expand_numbers_multilingual
+
+
+
+
 
   _original_preprocess_text = VoiceBPETokenizer.preprocess_text
   def custom_preprocess_text(self, txt, lang):
@@ -129,7 +166,7 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
       txt = mt_word_tokenizer.tokenize_fix_quotes(txt)
       if isinstance(txt, list):
         txt = " ".join(txt)
-      return tokenizerFile.multilingual_cleaner(txt, lang)
+      return tokenizerFile.multilingual_cleaners(txt, lang)
       # TODO transliterate ?
     return _original_preprocess_text(self, txt, lang)
 
