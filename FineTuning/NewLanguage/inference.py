@@ -8,6 +8,8 @@ from tqdm import tqdm
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
 
+from utils import split_into_sentences, check_and_split_by_limit
+
 
 def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_file, lang_code, temperature=0.7, length_penalty=1.0, repetition_penalty=10.0, top_k=50, top_p=0.8):
   """Run inference using the XTTS model with the provided configuration and text.
@@ -43,9 +45,9 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   model.load_checkpoint(config, checkpoint_dir=checkpoint_dir, checkpoint_path=xtts_checkpoint, vocab_path=xtts_vocab, use_deepspeed=use_deepspeed, eval=True)
   if not hasattr(model.tokenizer, "char_limits"):
     model.tokenizer.char_limits = {}
-  if "mt" not in model.tokenizer.char_limits:
-    model.tokenizer.char_limits["mt"] = model.tokenizer.char_limits.get("en", 400)
-    print("Added char_limits for 'mt' language.")
+  if lang_code not in model.tokenizer.char_limits:
+    model.tokenizer.char_limits[lang_code] = model.tokenizer.char_limits.get("en", 400)
+    print(f"Added char_limits for {lang_code} language.")
 
   model.to(device)
   print("Model loaded successfully!")
@@ -60,51 +62,63 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   gpt_cond_latent, speaker_embedding = model.get_conditioning_latents(audio_path=[speaker_audio_file])
   print("Speaker latents computed successfully!")
 
+  
   print("Processing text...")
   try:
-    import nltk
-    from nltk.data import find
-    try:
-      find('tokenizers/punkt')
-    except LookupError:
-      print("NLTK 'punkt' tokenizer not found. Downloading...")
-      import nltk
-      nltk.download('punkt')
-      print("NLTK 'punkt' tokenizer downloaded successfully.")
-    
-    from nltk.tokenize import sent_tokenize
-    tts_texts = sent_tokenize(tts_text)
-    print(f"Split into {len(tts_texts)} sentences.")
+    sentences = split_into_sentences(tts_text, lang_code)
+    print(f"Split into {len(sentences)} sentences.")
+    tts_texts = check_and_split_by_limit(sentences, char_limit=model.tokenizer.char_limits.get(lang_code, 400), lang_code=lang_code)
   except:
-    print("NLTK not available or another error occurred, processing as single text.")
     tts_texts = [tts_text]
+
+  print(f"Final text chunks: {len(tts_texts)}")
+  for i, text in enumerate(tts_texts):
+    print(f"  Chunk {i+1}: {len(text)} chars - '{text[:50]}{'...' if len(text) > 50 else ''}'")
+
 
   wav_chunks = []
   print("Running inference...")
   for i, text in enumerate(tqdm(tts_texts, desc="Processing sentences")):
+    if not text.strip():
+      continue  # Skip empty sentences
+
     #TODO can use inference_stream
-    out = model.inference(
-      text=text,
-      language=lang_code,
-      gpt_cond_latent=gpt_cond_latent,
-      speaker_embedding=speaker_embedding,
-      enable_text_splitting=True,
-      temperature=temperature,
-      length_penalty=length_penalty,
-      repetition_penalty=repetition_penalty,
-      top_k=top_k,
-      top_p=top_p,
-      speed=1.0
-    )
-    wav_chunks.append(torch.tensor(out["wav"]))
+    try:
+      out = model.inference(
+        text=text,
+        language=lang_code,
+        gpt_cond_latent=gpt_cond_latent,
+        speaker_embedding=speaker_embedding,
+        enable_text_splitting=True,
+        temperature=temperature,
+        length_penalty=length_penalty,
+        repetition_penalty=repetition_penalty,
+        top_k=top_k,
+        top_p=top_p,
+        speed=1.0
+      )
+      wav_chunks.append(torch.tensor(out["wav"]))
+    except Exception as e:
+      print(f"Warning: Failed to synthesize chunk {i+1}: '{text[:50]}...' - Error: {e}")
+      continue
+  
   print("Inference successful!")
 
   del model, gpt_cond_latent, speaker_embedding, config
   torch.cuda.empty_cache()
   gc.collect()
 
-  if len(wav_chunks) > 1:
-    return torch.cat(wav_chunks, dim=0).unsqueeze(0)
+  if len(wav_chunks) == 0:
+    raise RuntimeError("No audio chunks were successfully generated!")
+  elif len(wav_chunks) > 1:
+    # Add small silence between chunks for better flow
+    silence = torch.zeros(int(0.1 * 24000))  # 0.1 second silence at 24kHz
+    final_chunks = []
+    for i, chunk in enumerate(wav_chunks):
+      final_chunks.append(chunk)
+      if i < len(wav_chunks) - 1:  # Don't add silence after last chunk
+        final_chunks.append(silence)
+    return torch.cat(final_chunks, dim=0).unsqueeze(0)
   else:
     return torch.tensor(wav_chunks[0]).unsqueeze(0)
 

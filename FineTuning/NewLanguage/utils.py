@@ -173,3 +173,112 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
   tokenizerFile.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
 
   print(f"{lang_code} added to tokenizer.py!")
+
+
+
+
+
+def split_into_sentences(text, lang_code="en"):
+  """Split text into sentences with language-specific handling."""
+  import re
+  sentence_endings = r'[.!?]+(?:\s|$)'
+  
+  if lang_code == "mt":
+    abbreviations = [
+      r'Dr\.', r'Dott\.', r'Prof\.', r'Kap\.', r'Mons\.', 
+      r'Sant\'', r'San\.', r'A\.M\.', r'P\.M\.', r'Nru\.'
+    ]
+    
+    # Replace abbreviations temporarily
+    temp_text = text
+    abbrev_replacements = {}
+    for i, abbrev in enumerate(abbreviations):
+      placeholder = f"__ABBREV_{i}__"
+      temp_text = re.sub(abbrev, placeholder, temp_text, flags=re.IGNORECASE)
+      abbrev_replacements[placeholder] = re.search(abbrev, text, re.IGNORECASE)
+    
+
+    sentences = re.split(sentence_endings, temp_text)
+    
+    # Restore abbreviations
+    for i, sentence in enumerate(sentences):
+      for placeholder, original in abbrev_replacements.items():
+        if original:
+          sentences[i] = sentence.replace(placeholder, original.group())
+  else:
+    sentences = re.split(sentence_endings, text)
+
+  sentences = [s.strip() for s in sentences if s.strip()]
+  
+  final_sentences = []
+  for sentence in sentences:
+    if len(sentence) < 10:  # Too short, might be fragment
+      if final_sentences:
+        final_sentences[-1] += " " + sentence
+      else:
+        final_sentences.append(sentence)
+    else:
+      final_sentences.append(sentence)
+
+  return final_sentences
+
+
+def check_and_split_by_limit(sentences, char_limit, lang_code="en"):
+  """Check sentence lengths and split if necessary."""
+  import re
+  processed_sentences = []
+  
+  for sentence in sentences:
+    if len(sentence) <= char_limit:
+      processed_sentences.append(sentence)
+    else:
+      # Split long sentences at natural breaks
+      print(f"Warning: Sentence too long ({len(sentence)} chars), splitting...")
+      
+      # Try to split at commas, semicolons, or conjunctions first
+      if lang_code == "mt":
+        split_patterns = [r',\s+', r';\s+', r'\s+u\s+', r'\s+jew\s+', r'\s+imma\s+']
+      else:
+        split_patterns = [r',\s+', r';\s+', r'\s+and\s+', r'\s+or\s+', r'\s+but\s+']
+      
+      chunks = [sentence]
+      for pattern in split_patterns:
+        new_chunks = []
+        for chunk in chunks:
+          if len(chunk) > char_limit:
+            split_chunks = re.split(pattern, chunk)
+            new_chunks.extend(split_chunks)
+          else:
+            new_chunks.append(chunk)
+        chunks = new_chunks
+        
+        # Check if splitting worked
+        if all(len(chunk) <= char_limit for chunk in chunks):
+          break
+      
+      # If still too long, split by words as last resort
+      final_chunks = []
+      for chunk in chunks:
+        if len(chunk) <= char_limit:
+          final_chunks.append(chunk)
+        else:
+          words = chunk.split()
+          current_chunk = ""
+          
+          for word in words:
+            test_chunk = current_chunk + " " + word if current_chunk else word
+            if len(test_chunk) <= char_limit:
+              current_chunk = test_chunk
+            else:
+              if current_chunk:
+                final_chunks.append(current_chunk)
+              current_chunk = word
+          
+          if current_chunk:
+            final_chunks.append(current_chunk)
+      
+      processed_sentences.extend([chunk.strip() for chunk in final_chunks if chunk.strip()])
+  
+  return processed_sentences
+
+
