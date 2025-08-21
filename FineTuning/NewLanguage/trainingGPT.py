@@ -172,32 +172,10 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     print(f" > Loaded {len(train_samples)} training samples and {len(eval_samples)} evaluation samples.")
 
 
-    import librosa
-
-    def filter_invalid_samples(samples, sample_rate):
-      """Filter out samples with invalid or problematic audio files."""
-      valid_samples = []
-      for sample in samples:
-        try:
-          # Attempt to load the audio file
-          audio_path = sample["audio_file"]
-          audio, sr = librosa.load(audio_path, sr=sample_rate)
-          valid_samples.append(sample)
-        except Exception as e:
-          print(f"Skipping invalid sample: {audio_path}. Error: {e}")
-      return valid_samples
-    print("Filtering invalid training samples...")
-    train_samples_len = len(train_samples)
-    train_samples = filter_invalid_samples(train_samples, sample_rate=22050)
-    print(f" > Valid training samples: {len(train_samples)} | {len(train_samples) / train_samples_len:.2f}" if train_samples else "0.00")
-    print("Filtering invalid evaluation samples...")
-    eval_samples_len = len(eval_samples)
-    eval_samples = filter_invalid_samples(eval_samples, sample_rate=22050)
-    print(f" > Valid evaluation samples: {len(eval_samples)} | {len(eval_samples) / eval_samples_len:.2f}" if eval_samples else "0.00")
-
     from utils import add_language_to_tokenizer
     add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
 
+    #TODO
     def validate_config_fields(config):
       for field_name, field_value in config.__dict__.items():
         if field_value is None:
