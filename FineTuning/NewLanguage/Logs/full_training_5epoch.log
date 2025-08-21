@@ -1,0 +1,637 @@
+/content/Malta-TTS/FineTuning/NewLanguage
+Finetuning for mt
+2025-08-21 14:12:34.723561: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1755785554.980914   11391 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1755785555.050619   11391 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1755785555.588924   11391 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1755785555.588987   11391 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1755785555.588993   11391 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1755785555.588998   11391 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2025-08-21 14:12:35.640651: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/usr/local/lib/python3.12/dist-packages/jieba/__init__.py:44: SyntaxWarning: invalid escape sequence '\.'
+  re_han_default = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&\._%\-]+)", re.U)
+/usr/local/lib/python3.12/dist-packages/jieba/__init__.py:46: SyntaxWarning: invalid escape sequence '\s'
+  re_skip_default = re.compile("(\r\n|\s)", re.U)
+/usr/local/lib/python3.12/dist-packages/jieba/finalseg/__init__.py:78: SyntaxWarning: invalid escape sequence '\.'
+  re_skip = re.compile("([a-zA-Z0-9]+(?:\.\d+)?%?)")
+/content/Malta-TTS/FineTuning/NewLanguage/masri/tokenise/tokenise.py:30: SyntaxWarning: invalid escape sequence '\w'
+  ALPHA_WORD = "\w+";
+/content/Malta-TTS/FineTuning/NewLanguage/masri/tokenise/tokenise.py:42: SyntaxWarning: invalid escape sequence '\.'
+  URL = "(((http|ftp|gopher|javascript|telnet|file|ssh|scp)://(www\.)?)|mailto:|www\.).+\\s$";
+/content/Malta-TTS/FineTuning/NewLanguage/masri/tokenise/tokenise.py:43: SyntaxWarning: invalid escape sequence '\.'
+  URL2 = "(((http|ftp|https|gopher|javascript|telnet|file)://)|(www\.)|(mailto:))[\w\-_]+(\.[\w\-_]+)?([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?";
+/content/Malta-TTS/FineTuning/NewLanguage/masri/tokenise/tokenise.py:46: SyntaxWarning: invalid escape sequence '\d'
+  FULL_DATE = "(^I[ltnsdxr]-(Tnejn|Tlieta|Erbgħa|Ħamis|Ġimgħa|Sibt|Ħadd), \d{1,2} ta' " + "(Jannar|Frar|Marzu|April|Mejju|Ġunju|Lulju|Awwissu|Settembru|Ottubru|Novembru|Diċembru), \d{4,}$)"
+/content/Malta-TTS/FineTuning/NewLanguage/masri/tokenise/tokenise.py:46: SyntaxWarning: invalid escape sequence '\d'
+  FULL_DATE = "(^I[ltnsdxr]-(Tnejn|Tlieta|Erbgħa|Ħamis|Ġimgħa|Sibt|Ħadd), \d{1,2} ta' " + "(Jannar|Frar|Marzu|April|Mejju|Ġunju|Lulju|Awwissu|Settembru|Ottubru|Novembru|Diċembru), \d{4,}$)"
+Step 1: Downloading XTTS base model files.
+ > Downloading XTTS v-main files...
+ > XTTS model files downloaded successfully!
+Step 2: Extending the XTTS tokenizer with the new language.
+Applying Maltese-specific text preprocessing...
+No new tokens to add by heuristic.
+Tokenizer saved to /content/drive/MyDrive/XTTS_Maltese_Training/output/tokenizer.json and copied to vocab.json
+Backing up checkpoint: /content/drive/MyDrive/XTTS_Maltese_Training/output/model.pth -> model_backup.pth
+Resizing checkpoint embeddings: /content/drive/MyDrive/XTTS_Maltese_Training/output/model.pth
+/content/Malta-TTS/FineTuning/NewLanguage/tokenizer_extension.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(xtts_checkpoint_path, map_location="cpu")
+Current vocab size: 10310, New vocab size: 10310
+Vocabulary sizes match, no resizing needed.
+Updated config file saved to /content/drive/MyDrive/XTTS_Maltese_Training/output/config.json. Added new language: mt. Vocab size: 10310
+Extended vocabulary size: 10310
+Config vocab size: 10310
+Step 3: Starting GPT training.
+Using updated checkpoint: /content/drive/MyDrive/XTTS_Maltese_Training/output/model.pth
+Using updated tokenizer: /content/drive/MyDrive/XTTS_Maltese_Training/output/vocab.json
+Using vocab size: 10310
+ > Training XTTS model for Maltese with 1 datasets, 6 epochs, batch size 3, grad_acumm 48, output path: /content/drive/MyDrive/XTTS_Maltese_Training/output/training
+ > Using the following datasets:
+/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/metadata_train.csv /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/metadata_eval.csv mt
+Setting up model arguments...
+Loading datasets...
+ > Loaded 3984 training samples and 997 evaluation samples.
+/content/Malta-TTS/FineTuning/NewLanguage/masri/transcribe/g2p/maltese_g2p.py:197: SyntaxWarning: invalid escape sequence '\s'
+  cadena = re.sub('\s+',' ',cadena)
+Added char_limits for 'mt' language.
+mt added to tokenizer.py!
+Warning: Field 'wandb_entity' is None. Setting a default value.
+Warning: Field 'run_eval_steps' is None. Setting a default value.
+Warning: Field 'clvp_checkpoint' is None. Setting a default value.
+Warning: Field 'decoder_checkpoint' is None. Setting a default value.
+ > Training Environment:
+ | > Backend: Torch
+ | > Mixed precision: False
+ | > Precision: float32
+ | > Current device: 0
+ | > Num. of GPUs: 1
+ | > Num. of CPUs: 2
+ | > Num. of Torch Threads: 1
+ | > Torch seed: 1
+ | > Torch CUDNN: True
+ | > Torch CUDNN deterministic: False
+ | > Torch CUDNN benchmark: False
+ | > Torch TF32 MatMul: False
+ > Start Tensorboard: tensorboard --logdir=/content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+ > Model has 525877868 parameters
+Starting training...
+
+[4m[1m > EPOCH: 0/5[0m
+ --> /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+[1m > TRAINING (2025-08-21 14:13:58) [0m
+
+[1m   --> TIME: 2025-08-21 14:14:22 -- STEP: 0/1327 -- GLOBAL_STEP: 0[0m
+     | > current_lr: 5e-06  (5e-06)
+     | > loss_text_ce: 0.2282509058713913  (0.2282509058713913)
+     | > loss_mel_ce: 4.841388702392578  (4.841388702392578)
+     | > loss: 0.10561749339103699  (0.10561749339103699)
+     | > step_time: 1.5693  (1.5693018436431885)
+     | > loader_time: 22.0237  (22.023679733276367)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U080_0153.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb3a940>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_10_P21U008_0117.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb38a00>)
+
+[1m   --> TIME: 2025-08-21 14:18:52 -- STEP: 200/1327 -- GLOBAL_STEP: 200[0m
+     | > current_lr: 5e-06  (5.00000000000001e-06)
+     | > loss_text_ce: 0.22065503895282745  (0.2357274416834116)
+     | > loss_mel_ce: 5.132239818572998  (4.885048346519471)
+     | > loss: 0.11151864379644394  (0.10668283134698868)
+     | > step_time: 0.4289  (0.44265454053878783)
+     | > loader_time: 0.4029  (0.6621329712867731)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_04_P07U092_0160.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_04_P07U092_0160.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #33: python3() [0x6592bb]\nframe #34: python3() [0x654366]\nframe #35: python3() [0x650fd5]\nframe #40: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #41: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf1ffa0900>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav" (No such file or directory).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #33: python3() [0x6592bb]\nframe #34: python3() [0x654366]\nframe #35: python3() [0x650fd5]\nframe #40: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #41: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf1fb7fac0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U031_0107.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1ffa0340>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_04_P10U136_0039.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1ffa4640>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U127_0027.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb38140>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_01_P01U139_0043.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb3a780>)
+
+[1m   --> TIME: 2025-08-21 14:22:58 -- STEP: 400/1327 -- GLOBAL_STEP: 400[0m
+     | > current_lr: 5e-06  (5.0000000000000055e-06)
+     | > loss_text_ce: 0.21573081612586975  (0.2322510874643922)
+     | > loss_mel_ce: 4.527513027191162  (4.759108712673189)
+     | > loss: 0.09881757944822311  (0.10398666482418775)
+     | > step_time: 0.6089  (0.44708496928215025)
+     | > loader_time: 0.0086  (0.5923146653175351)
+
+
+[1m   --> TIME: 2025-08-21 14:26:46 -- STEP: 600/1327 -- GLOBAL_STEP: 600[0m
+     | > current_lr: 5e-06  (4.9999999999999335e-06)
+     | > loss_text_ce: 0.19083625078201294  (0.22770858712494377)
+     | > loss_mel_ce: 4.678470134735107  (4.666736358801528)
+     | > loss: 0.10144388675689697  (0.10196760536481934)
+     | > step_time: 0.538  (0.44955307483673107)
+     | > loader_time: 0.8342  (0.5369681692123414)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U065_0137.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U065_0137.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #33: python3() [0x6592bb]\nframe #34: python3() [0x654366]\nframe #35: python3() [0x650fd5]\nframe #40: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #41: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf2b35d480>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_10_P21U033_0072.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf1ffa1600>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U146_0045.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb1a000>)
+
+[1m   --> TIME: 2025-08-21 14:29:58 -- STEP: 800/1327 -- GLOBAL_STEP: 800[0m
+     | > current_lr: 5e-06  (4.999999999999904e-06)
+     | > loss_text_ce: 0.22031381726264954  (0.22461510473862295)
+     | > loss_mel_ce: 4.1750102043151855  (4.607499840557582)
+     | > loss: 0.09156925976276398  (0.10066906370222563)
+     | > step_time: 0.3716  (0.4526421761512757)
+     | > loader_time: 1.6508  (0.46306735843419994)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U129_0174.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb3bc00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U150_0048.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb38dc0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U172_0077.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf1fb3ba80>)
+
+[1m   --> TIME: 2025-08-21 14:33:03 -- STEP: 1000/1327 -- GLOBAL_STEP: 1000[0m
+     | > current_lr: 5e-06  (4.999999999999882e-06)
+     | > loss_text_ce: 0.20834551751613617  (0.22130882789194586)
+     | > loss_mel_ce: 4.381835460662842  (4.55819714975358)
+     | > loss: 0.0956287682056427  (0.09957304342836137)
+     | > step_time: 0.5224  (0.45049186134338387)
+     | > loader_time: 0.0085  (0.41641501617431614)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U093_0159.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1ffa2840>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U115_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb39480>)
+
+[1m   --> TIME: 2025-08-21 14:35:48 -- STEP: 1200/1327 -- GLOBAL_STEP: 1200[0m
+     | > current_lr: 5e-06  (4.999999999999865e-06)
+     | > loss_text_ce: 0.1826532930135727  (0.21783100376526515)
+     | > loss_mel_ce: 4.467120170593262  (4.528053106864304)
+     | > loss: 0.0968702882528305  (0.09887258788570762)
+     | > step_time: 0.4778  (0.45071342984835305)
+     | > loader_time: 0.5785  (0.3661934773127237)
+
+
+[1m > EVALUATION [0m
+
+
+  [1m--> EVAL PERFORMANCE[0m
+     | > avg_loader_time: 0.12066483136379358 [0m(+0.0)
+     | > avg_loss_text_ce: 0.18945592619252935 [0m(+0.0)
+     | > avg_loss_mel_ce: 4.251229478373676 [0m(+0.0)
+     | > avg_loss: 4.440685410210588 [0m(+0.0)
+
+ > BEST MODEL : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/best_model_1328.pth
+
+[4m[1m > EPOCH: 1/5[0m
+ --> /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+[1m > TRAINING (2025-08-21 14:50:41) [0m
+
+[1m   --> TIME: 2025-08-21 14:51:51 -- STEP: 72/1327 -- GLOBAL_STEP: 1400[0m
+     | > current_lr: 5e-06  (5.000000000000009e-06)
+     | > loss_text_ce: 0.1795584112405777  (0.18777923037608465)
+     | > loss_mel_ce: 4.114339351654053  (4.3239561385578575)
+     | > loss: 0.08945620059967041  (0.09399448883616263)
+     | > step_time: 0.4555  (0.5018483367231157)
+     | > loader_time: 0.0155  (0.19311915834744772)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_09_P15U117_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28915400>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U146_0045.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28914300>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U156_0054.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28905c80>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U129_0174.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28916340>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_06_P12U122_0027.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28917ac0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U184_0085.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb35300>)
+
+[1m   --> TIME: 2025-08-21 14:54:33 -- STEP: 272/1327 -- GLOBAL_STEP: 1600[0m
+     | > current_lr: 5e-06  (5.0000000000000106e-06)
+     | > loss_text_ce: 0.20828227698802948  (0.1849306135383599)
+     | > loss_mel_ce: 4.259645462036133  (4.288137236938759)
+     | > loss: 0.09308183193206787  (0.09318891581257477)
+     | > step_time: 0.364  (0.4694673173567828)
+     | > loader_time: 0.021  (0.12057771226939036)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U115_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28917080>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U172_0077.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf28916740>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_05_P08U188_0087.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28914dc0>)
+
+[1m   --> TIME: 2025-08-21 14:57:13 -- STEP: 472/1327 -- GLOBAL_STEP: 1800[0m
+     | > current_lr: 5e-06  (4.999999999999973e-06)
+     | > loss_text_ce: 0.18280519545078278  (0.1819861415710489)
+     | > loss_mel_ce: 4.182211399078369  (4.283428809400335)
+     | > loss: 0.09093784540891647  (0.09302948045907383)
+     | > step_time: 0.6085  (0.4625179979760768)
+     | > loader_time: 0.0672  (0.10819694248296449)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav" (No such file or directory).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf28916800>)
+
+[1m   --> TIME: 2025-08-21 14:59:56 -- STEP: 672/1327 -- GLOBAL_STEP: 2000[0m
+     | > current_lr: 5e-06  (4.99999999999991e-06)
+     | > loss_text_ce: 0.15312722325325012  (0.17910799384117113)
+     | > loss_mel_ce: 3.9908130168914795  (4.262632208565871)
+     | > loss: 0.08633209764957428  (0.09253625662642577)
+     | > step_time: 0.2899  (0.46259353238911854)
+     | > loader_time: 0.0108  (0.10308398341848737)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U093_0159.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb37080>)
+
+[1m   --> TIME: 2025-08-21 15:02:56 -- STEP: 872/1327 -- GLOBAL_STEP: 2200[0m
+     | > current_lr: 5e-06  (4.9999999999998945e-06)
+     | > loss_text_ce: 0.21600598096847534  (0.1761070509535183)
+     | > loss_mel_ce: 3.8603708744049072  (4.257317509399639)
+     | > loss: 0.08492451906204224  (0.09236301409952141)
+     | > step_time: 0.2617  (0.4644059164261599)
+     | > loader_time: 0.0114  (0.11923000626607753)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U155_0058.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28916680>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U150_0048.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf289379c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_08_P14U072_0146.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28935940>)
+
+[1m   --> TIME: 2025-08-21 15:05:34 -- STEP: 1072/1327 -- GLOBAL_STEP: 2400[0m
+     | > current_lr: 5e-06  (4.999999999999877e-06)
+     | > loss_text_ce: 0.16549359261989594  (0.17395016414794445)
+     | > loss_mel_ce: 3.9565653800964355  (4.244628869775513)
+     | > loss: 0.0858762264251709  (0.09205373233434427)
+     | > step_time: 0.4773  (0.46516615174599546)
+     | > loader_time: 0.0109  (0.10807158987023921)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_04_P07U092_0160.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_04_P07U092_0160.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf28914b40>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U080_0153.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb36840>)
+
+[1m   --> TIME: 2025-08-21 15:08:03 -- STEP: 1272/1327 -- GLOBAL_STEP: 2600[0m
+     | > current_lr: 5e-06  (4.999999999999865e-06)
+     | > loss_text_ce: 0.1482684165239334  (0.17102982896327384)
+     | > loss_mel_ce: 4.224544048309326  (4.23555493392284)
+     | > loss: 0.09110026061534882  (0.0918038516486966)
+     | > step_time: 0.7403  (0.46456342354510566)
+     | > loader_time: 0.0104  (0.09533032437540427)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf28917580>)
+
+[1m > EVALUATION [0m
+
+
+  [1m--> EVAL PERFORMANCE[0m
+     | > avg_loader_time:[92m 0.12004515618988962 [0m(-0.0006196751739039608)
+     | > avg_loss_text_ce:[92m 0.15217187641696509 [0m(-0.037284049775564265)
+     | > avg_loss_mel_ce:[92m 4.120758425828188 [0m(-0.13047105254548796)
+     | > avg_loss:[92m 4.272930296262105 [0m(-0.1677551139484832)
+
+ > BEST MODEL : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/best_model_2656.pth
+
+[4m[1m > EPOCH: 2/5[0m
+ --> /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+[1m > TRAINING (2025-08-21 15:12:56) [0m
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U080_0153.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30be82c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U031_0107.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30be8400>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U156_0054.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30be8d80>)
+
+[1m   --> TIME: 2025-08-21 15:14:47 -- STEP: 144/1327 -- GLOBAL_STEP: 2800[0m
+     | > current_lr: 5e-06  (5.00000000000001e-06)
+     | > loss_text_ce: 0.1580926924943924  (0.14627925477301076)
+     | > loss_mel_ce: 4.280614852905273  (4.194026519854864)
+     | > loss: 0.09247307479381561  (0.09042303957458998)
+     | > step_time: 0.283  (0.4777795705530379)
+     | > loader_time: 0.0107  (0.01992280615700616)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U172_0077.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf30be8980>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U150_0048.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30be9c00>)
+
+[1m   --> TIME: 2025-08-21 15:17:20 -- STEP: 344/1327 -- GLOBAL_STEP: 3000[0m
+     | > current_lr: 5e-06  (5.0000000000000106e-06)
+     | > loss_text_ce: 0.1316893994808197  (0.14447240132925124)
+     | > loss_mel_ce: 4.087918758392334  (4.179548041765081)
+     | > loss: 0.08790850639343262  (0.09008376179046407)
+     | > step_time: 0.5267  (0.4715085098909777)
+     | > loader_time: 0.0114  (0.02893887217654737)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U127_0027.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf31dd4680>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U115_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30bf4f40>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U093_0159.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891c580>)
+
+[1m   --> TIME: 2025-08-21 15:19:48 -- STEP: 544/1327 -- GLOBAL_STEP: 3200[0m
+     | > current_lr: 5e-06  (4.999999999999951e-06)
+     | > loss_text_ce: 0.12352417409420013  (0.14244646018864038)
+     | > loss_mel_ce: 4.427863121032715  (4.167395488742521)
+     | > loss: 0.09482057392597198  (0.08978837640846479)
+     | > step_time: 0.5967  (0.4665470842052909)
+     | > loader_time: 0.0148  (0.027898713069803568)
+
+
+[1m   --> TIME: 2025-08-21 15:22:16 -- STEP: 744/1327 -- GLOBAL_STEP: 3400[0m
+     | > current_lr: 5e-06  (4.999999999999906e-06)
+     | > loss_text_ce: 0.16045793890953064  (0.13999931170775357)
+     | > loss_mel_ce: 3.7821044921875  (4.158401449521388)
+     | > loss: 0.08213672041893005  (0.08955001835060374)
+     | > step_time: 0.3752  (0.46607380592694847)
+     | > loader_time: 0.0099  (0.024389268249593747)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_08_P14U072_0146.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891f2c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U070_0143.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891ddc0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_09_P15U117_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891cf80>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf2891fb80>)
+
+[1m   --> TIME: 2025-08-21 15:24:44 -- STEP: 944/1327 -- GLOBAL_STEP: 3600[0m
+     | > current_lr: 5e-06  (4.999999999999887e-06)
+     | > loss_text_ce: 0.14163461327552795  (0.13745012455540925)
+     | > loss_mel_ce: 4.01483154296875  (4.148753567519834)
+     | > loss: 0.08659304678440094  (0.08929591277866797)
+     | > step_time: 0.4626  (0.46493735404337866)
+     | > loader_time: 0.0147  (0.023132091609098137)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U184_0085.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891e6c0>)
+
+[1m   --> TIME: 2025-08-21 15:27:12 -- STEP: 1144/1327 -- GLOBAL_STEP: 3800[0m
+     | > current_lr: 5e-06  (4.999999999999866e-06)
+     | > loss_text_ce: 0.11132717877626419  (0.13514314496147228)
+     | > loss_mel_ce: 4.175560474395752  (4.1467762683238245)
+     | > loss: 0.0893101617693901  (0.08920665694257389)
+     | > step_time: 0.4512  (0.46495286838991656)
+     | > loader_time: 0.0128  (0.02238633144985546)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U155_0058.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30bf71c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_01_P01U139_0043.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf31dd5280>)
+
+[1m > EVALUATION [0m
+
+
+  [1m--> EVAL PERFORMANCE[0m
+     | > avg_loader_time:[91m 0.12264912489688758 [0m(+0.0026039687069979583)
+     | > avg_loss_text_ce:[92m 0.12627755220640785 [0m(-0.025894324210557235)
+     | > avg_loss_mel_ce:[92m 4.048870908130301 [0m(-0.07188751769788748)
+     | > avg_loss:[92m 4.175148473363935 [0m(-0.09778182289817039)
+
+ > BEST MODEL : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/best_model_3984.pth
+
+[4m[1m > EPOCH: 3/5[0m
+ --> /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+[1m > TRAINING (2025-08-21 15:34:35) [0m
+
+[1m   --> TIME: 2025-08-21 15:34:48 -- STEP: 16/1327 -- GLOBAL_STEP: 4000[0m
+     | > current_lr: 5e-06  (5e-06)
+     | > loss_text_ce: 0.15050914883613586  (0.12732321210205552)
+     | > loss_mel_ce: 4.259011745452881  (4.108196750283241)
+     | > loss: 0.09186502546072006  (0.0882400032132864)
+     | > step_time: 0.3597  (0.4787711799144745)
+     | > loader_time: 0.0214  (0.01490640640258789)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav" (No such file or directory).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf2b35ec80>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf23336980>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_06_P12U122_0027.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf23396480>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_08_P14U072_0146.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf23337a00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U155_0058.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf203d38c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U115_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2cf12b80>)
+
+[1m   --> TIME: 2025-08-21 15:37:16 -- STEP: 216/1327 -- GLOBAL_STEP: 4200[0m
+     | > current_lr: 5e-06  (5.00000000000001e-06)
+     | > loss_text_ce: 0.1536121368408203  (0.12411469445322398)
+     | > loss_mel_ce: 3.3009023666381836  (4.073350884296277)
+     | > loss: 0.07196905463933945  (0.08744720221255664)
+     | > step_time: 0.3588  (0.4606123058884232)
+     | > loader_time: 0.0108  (0.02415288046554284)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_04_P10U136_0039.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30bf58c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_05_P08U188_0087.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf23395a80>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U070_0143.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2b35fe00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U184_0085.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf203d2ac0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_09_P15U117_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf203d2f80>)
+
+[1m   --> TIME: 2025-08-21 15:39:40 -- STEP: 416/1327 -- GLOBAL_STEP: 4400[0m
+     | > current_lr: 5e-06  (4.999999999999998e-06)
+     | > loss_text_ce: 0.13416479527950287  (0.12163779778907505)
+     | > loss_mel_ce: 4.031900882720947  (4.081580762679762)
+     | > loss: 0.08679303526878357  (0.08756705579491189)
+     | > step_time: 0.3027  (0.45447563380002975)
+     | > loader_time: 0.0104  (0.019705417064520035)
+
+
+[1m   --> TIME: 2025-08-21 15:43:53 -- STEP: 616/1327 -- GLOBAL_STEP: 4600[0m
+     | > current_lr: 5e-06  (4.999999999999932e-06)
+     | > loss_text_ce: 0.14128802716732025  (0.12024408846174355)
+     | > loss_mel_ce: 3.775165557861328  (4.0763226081798525)
+     | > loss: 0.08159278333187103  (0.08742847527050737)
+     | > step_time: 0.2638  (0.4574745982498318)
+     | > loader_time: 0.0099  (0.1896881968170017)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U146_0045.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf23395080>)
+
+[1m   --> TIME: 2025-08-21 15:46:22 -- STEP: 816/1327 -- GLOBAL_STEP: 4800[0m
+     | > current_lr: 5e-06  (4.999999999999901e-06)
+     | > loss_text_ce: 0.10037408769130707  (0.11882253684213057)
+     | > loss_mel_ce: 4.038358211517334  (4.08241937557856)
+     | > loss: 0.08622359484434128  (0.08752587572762786)
+     | > step_time: 0.3  (0.45978597274013594)
+     | > loader_time: 0.011  (0.14712718246029832)
+
+
+[1m   --> TIME: 2025-08-21 15:48:50 -- STEP: 1016/1327 -- GLOBAL_STEP: 5000[0m
+     | > current_lr: 5e-06  (4.999999999999881e-06)
+     | > loss_text_ce: 0.11203989386558533  (0.11788989877782938)
+     | > loss_mel_ce: 4.12554931640625  (4.0770808423128635)
+     | > loss: 0.08828311413526535  (0.08739522637022064)
+     | > step_time: 0.513  (0.4611983167843556)
+     | > loader_time: 0.0319  (0.12071258087796462)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U150_0048.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf203d1d00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U031_0107.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf203c2380>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U080_0153.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf203d0980>)
+
+[1m   --> TIME: 2025-08-21 15:51:13 -- STEP: 1216/1327 -- GLOBAL_STEP: 5200[0m
+     | > current_lr: 5e-06  (4.999999999999865e-06)
+     | > loss_text_ce: 0.12557494640350342  (0.11703739685962271)
+     | > loss_mel_ce: 3.791637659072876  (4.068489118234105)
+     | > loss: 0.0816085934638977  (0.08719847162597293)
+     | > step_time: 0.3793  (0.4593189313615623)
+     | > loader_time: 0.0113  (0.10306693986058212)
+
+
+[1m > EVALUATION [0m
+
+
+  [1m--> EVAL PERFORMANCE[0m
+     | > avg_loader_time:[91m 0.12521035887978293 [0m(+0.0025612339828953584)
+     | > avg_loss_text_ce:[92m 0.11438813042460066 [0m(-0.011889421781807186)
+     | > avg_loss_mel_ce:[92m 4.000571663451918 [0m(-0.048299244678382536)
+     | > avg_loss:[92m 4.114959786155009 [0m(-0.06018868720892545)
+
+ > BEST MODEL : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/best_model_5312.pth
+
+[4m[1m > EPOCH: 4/5[0m
+ --> /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+[1m > TRAINING (2025-08-21 15:58:10) [0m
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U172_0077.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf30bead00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/audio_file.wav" (No such file or directory).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf30beb1c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_04_P10U136_0039.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fbfbb80>)
+
+[1m   --> TIME: 2025-08-21 16:00:00 -- STEP: 88/1327 -- GLOBAL_STEP: 5400[0m
+     | > current_lr: 5e-06  (5.000000000000009e-06)
+     | > loss_text_ce: 0.09169891476631165  (0.11024330370128155)
+     | > loss_mel_ce: 4.148606777191162  (4.026216233318504)
+     | > loss: 0.08833970874547958  (0.08617624259469187)
+     | > step_time: 0.3982  (0.5482177571816874)
+     | > loader_time: 0.0148  (0.4308203269134868)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U184_0085.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30bebd80>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_08_P14U072_0146.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30beb1c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U031_0107.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30c01e40>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_09_P15U117_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891d340>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U093_0159.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30ba9dc0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U129_0174.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fbf9140>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U146_0045.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30bebd80>)
+
+[1m   --> TIME: 2025-08-21 16:02:49 -- STEP: 288/1327 -- GLOBAL_STEP: 5600[0m
+     | > current_lr: 5e-06  (5.0000000000000106e-06)
+     | > loss_text_ce: 0.12048368155956268  (0.10921852008646561)
+     | > loss_mel_ce: 3.8226277828216553  (4.044179778132171)
+     | > loss: 0.08214815706014633  (0.08652913381552534)
+     | > step_time: 0.3016  (0.49709104746580074)
+     | > loader_time: 0.0117  (0.20403725488318342)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_01_P01U139_0043.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30beb7c0>)
+
+[1m   --> TIME: 2025-08-21 16:07:00 -- STEP: 488/1327 -- GLOBAL_STEP: 5800[0m
+     | > current_lr: 5e-06  (4.999999999999967e-06)
+     | > loss_text_ce: 0.12508484721183777  (0.10841750315405795)
+     | > loss_mel_ce: 4.019096851348877  (4.040573421071786)
+     | > loss: 0.0863371193408966  (0.08643731358842778)
+     | > step_time: 0.3348  (0.47884307191020126)
+     | > loader_time: 0.0087  (0.343854951565383)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf1fbfbcc0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_04_P07U092_0160.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_04_P07U092_0160.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf1fbf9500>)
+
+[1m   --> TIME: 2025-08-21 16:09:33 -- STEP: 688/1327 -- GLOBAL_STEP: 6000[0m
+     | > current_lr: 5e-06  (4.999999999999908e-06)
+     | > loss_text_ce: 0.10901439189910889  (0.10813555600078302)
+     | > loss_mel_ce: 3.9726645946502686  (4.034409993956254)
+     | > loss: 0.08503498136997223  (0.08630303492726277)
+     | > step_time: 0.3214  (0.47077757639940376)
+     | > loader_time: 0.0107  (0.2599769397530444)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U065_0137.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U065_0137.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf2891ef00>)
+
+[1m   --> TIME: 2025-08-21 16:12:15 -- STEP: 888/1327 -- GLOBAL_STEP: 6200[0m
+     | > current_lr: 5e-06  (4.999999999999893e-06)
+     | > loss_text_ce: 0.11083358526229858  (0.10744552992217177)
+     | > loss_mel_ce: 3.8348639011383057  (4.0357907320464985)
+     | > loss: 0.08220203220844269  (0.08631742475470441)
+     | > step_time: 0.3734  (0.46819502330041135)
+     | > loader_time: 0.0114  (0.22229248902819174)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U127_0027.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fbfa480>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_10_P21U008_0117.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fbf82c0>)
+
+[1m   --> TIME: 2025-08-21 16:15:35 -- STEP: 1088/1327 -- GLOBAL_STEP: 6400[0m
+     | > current_lr: 5e-06  (4.999999999999873e-06)
+     | > loss_text_ce: 0.09866815060377121  (0.10719887472634367)
+     | > loss_mel_ce: 4.1829938888549805  (4.028776202789118)
+     | > loss: 0.08920129388570786  (0.08616615004618375)
+     | > step_time: 0.3468  (0.46789580495918487)
+     | > loader_time: 0.0264  (0.23130213096737862)
+
+
+[1m   --> TIME: 2025-08-21 16:18:02 -- STEP: 1288/1327 -- GLOBAL_STEP: 6600[0m
+     | > current_lr: 5e-06  (4.999999999999865e-06)
+     | > loss_text_ce: 0.10191567987203598  (0.10640509190003143)
+     | > loss_mel_ce: 4.259958744049072  (4.027328725001821)
+     | > loss: 0.0908723920583725  (0.08611945713644628)
+     | > step_time: 0.3791  (0.46579397687260393)
+     | > loader_time: 0.0108  (0.19965116781477607)
+
+
+[1m > EVALUATION [0m
+
+
+  [1m--> EVAL PERFORMANCE[0m
+     | > avg_loader_time:[92m 0.12494031732732604 [0m(-0.0002700415524568983)
+     | > avg_loss_text_ce:[92m 0.10605104385000287 [0m(-0.008337086574597793)
+     | > avg_loss_mel_ce:[92m 3.963343135515849 [0m(-0.037228527936069344)
+     | > avg_loss:[92m 4.0693941802689535 [0m(-0.04556560588605585)
+
+ > BEST MODEL : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/best_model_6640.pth
+
+[4m[1m > EPOCH: 5/5[0m
+ --> /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+
+[1m > TRAINING (2025-08-21 16:22:55) [0m
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U093_0159.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891ee00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_12_P25U150_0048.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28937e40>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_05_P08U188_0087.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28934bc0>)
+
+[1m   --> TIME: 2025-08-21 16:25:22 -- STEP: 160/1327 -- GLOBAL_STEP: 6800[0m
+     | > current_lr: 5e-06  (5.00000000000001e-06)
+     | > loss_text_ce: 0.09240587800741196  (0.1030753885395825)
+     | > loss_mel_ce: 4.038798809051514  (4.012285016477106)
+     | > loss: 0.08606676757335663  (0.0857366776559502)
+     | > step_time: 0.3727  (0.49166859090328197)
+     | > loader_time: 1.1641  (0.16939489394426344)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U115_0018.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891c3c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_09_P20U070_0143.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf30bc6700>)
+
+[1m   --> TIME: 2025-08-21 16:27:57 -- STEP: 360/1327 -- GLOBAL_STEP: 7000[0m
+     | > current_lr: 5e-06  (5.0000000000000106e-06)
+     | > loss_text_ce: 0.0695899948477745  (0.10340773523267774)
+     | > loss_mel_ce: 4.309935569763184  (3.997522658771939)
+     | > loss: 0.09124012291431427  (0.08543605222884149)
+     | > step_time: 0.6445  (0.468353490697013)
+     | > loader_time: 0.3164  (0.11671284768316487)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_12_P22U184_0085.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28937d40>)
+
+[1m   --> TIME: 2025-08-21 16:30:43 -- STEP: 560/1327 -- GLOBAL_STEP: 7200[0m
+     | > current_lr: 5e-06  (4.999999999999946e-06)
+     | > loss_text_ce: 0.08416897803544998  (0.10187503076823694)
+     | > loss_mel_ce: 4.388249397277832  (3.9977373548916417)
+     | > loss: 0.09317538142204285  (0.0854085939404155)
+     | > step_time: 0.5775  (0.4642665926899229)
+     | > loader_time: 0.0103  (0.11584432337965289)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U172_0077.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf23395f00>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U072_0147.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf30bc5340>)
+
+[1m   --> TIME: 2025-08-21 16:33:16 -- STEP: 760/1327 -- GLOBAL_STEP: 7400[0m
+     | > current_lr: 5e-06  (4.999999999999906e-06)
+     | > loss_text_ce: 0.11850456148386002  (0.1012061903939435)
+     | > loss_mel_ce: 3.977696418762207  (3.996725568018462)
+     | > loss: 0.08533751964569092  (0.08537358091653958)
+     | > step_time: 0.5603  (0.46482613714117754)
+     | > loader_time: 0.0112  (0.09562649350417292)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_10_P21U033_0072.wav (<class 'ValueError'>, ValueError(), <traceback object at 0x7dbf289371c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U129_0174.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf1fb372c0>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U065_0137.wav (<class 'RuntimeError'>, RuntimeError('Failed to open the input "/content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U065_0137.wav" (Invalid data found when processing input).\nException raised from get_input_format_context at /__w/audio/audio/pytorch/audio/src/libtorio/ffmpeg/stream_reader/stream_reader.cpp:42 (most recent call first):\nframe #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x7dc0b956c446 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::string const&) + 0x64 (0x7dc0b95166e4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)\nframe #2: <unknown function> + 0x42134 (0x7dc0305ca134 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #3: torio::io::StreamingMediaDecoder::StreamingMediaDecoder(std::string const&, std::optional<std::string> const&, std::optional<std::map<std::string, std::string, std::less<std::string>, std::allocator<std::pair<std::string const, std::string> > > > const&) + 0x14 (0x7dc0305ccb34 in /usr/local/lib/python3.12/dist-packages/torio/lib/libtorio_ffmpeg4.so)\nframe #4: <unknown function> + 0x39fee (0x7dbfea5bbfee in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #5: <unknown function> + 0x31dfc (0x7dbfea5b3dfc in /usr/local/lib/python3.12/dist-packages/torio/lib/_torio_ffmpeg4.so)\nframe #6: python3() [0x56ac3d]\n<omitting python frames>\nframe #8: python3() [0x597256]\nframe #9: python3() [0x57c058]\nframe #10: python3() [0x53d724]\nframe #11: <unknown function> + 0xfb5b (0x7dc0b944bb5b in /usr/local/lib/python3.12/dist-packages/torchaudio/lib/_torchaudio.so)\nframe #15: python3() [0x57be3a]\nframe #19: python3() [0x57be3a]\nframe #23: python3() [0x57be3a]\nframe #26: python3() [0x5b1f17]\nframe #27: python3() [0x663266]\nframe #29: python3() [0x65eab0]\nframe #32: python3() [0x6592bb]\nframe #33: python3() [0x654366]\nframe #34: python3() [0x650fd5]\nframe #39: <unknown function> + 0x29d90 (0x7dc0ba600d90 in /lib/x86_64-linux-gnu/libc.so.6)\nframe #40: __libc_start_main + 0x80 (0x7dc0ba600e40 in /lib/x86_64-linux-gnu/libc.so.6)\n'), <traceback object at 0x7dbf28935c40>)
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_07_P13U156_0054.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28935a00>)
+
+[1m   --> TIME: 2025-08-21 16:35:51 -- STEP: 960/1327 -- GLOBAL_STEP: 7600[0m
+     | > current_lr: 5e-06  (4.999999999999886e-06)
+     | > loss_text_ce: 0.09163544327020645  (0.10039770833682266)
+     | > loss_mel_ce: 4.0085930824279785  (3.9945421479642396)
+     | > loss: 0.08542142808437347  (0.08531124962028112)
+     | > step_time: 0.4564  (0.46724013338486353)
+     | > loader_time: 0.0114  (0.08215405642986301)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_08_P18U080_0153.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf28936140>)
+
+[1m   --> TIME: 2025-08-21 16:38:21 -- STEP: 1160/1327 -- GLOBAL_STEP: 7800[0m
+     | > current_lr: 5e-06  (4.999999999999865e-06)
+     | > loss_text_ce: 0.09498226642608643  (0.09955545247628769)
+     | > loss_mel_ce: 4.047271251678467  (3.990400936480226)
+     | > loss: 0.086296945810318  (0.08520742734444547)
+     | > step_time: 0.4399  (0.466203334619259)
+     | > loader_time: 0.0106  (0.07302999352586682)
+
+WARNING:TTS.tts.layers.xtts.trainer.dataset:Error loading /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_F_13_P23U155_0058.wav (<class 'IndexError'>, IndexError('no such group'), <traceback object at 0x7dbf2891fb00>)
+
+[1m > EVALUATION [0m
+
+
+  [1m--> EVAL PERFORMANCE[0m
+     | > avg_loader_time:[91m 0.15716305068044947 [0m(+0.03222273335312344)
+     | > avg_loss_text_ce:[92m 0.09879146468910302 [0m(-0.007259579160899851)
+     | > avg_loss_mel_ce:[92m 3.930818710182652 [0m(-0.03252442533319666)
+     | > avg_loss:[92m 4.029610168572631 [0m(-0.039784011696322175)
+
+ > BEST MODEL : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/best_model_7968.pth
+Training finished!
+Saving final model...
+
+ > CHECKPOINT : /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806/checkpoint_7968.pth
+Saving configuration...
+Configuration saved to /content/drive/MyDrive/XTTS_Maltese_Training/output/training/config.json and model checkpoint saved to /content/drive/MyDrive/XTTS_Maltese_Training/output/training/final_model.pth.
+Speaker reference: /content/drive/MyDrive/XTTS_Maltese_Data_20KHz/wavs/MSRHS_M_11_P24U082_0147.wav
+Checkpoint saved in dir: /content/drive/MyDrive/XTTS_Maltese_Training/output/training/GPT_XTTS_FT-August-21-2025_02+13PM-2737806
+Finetuning process completed!
