@@ -27,7 +27,7 @@ class MTRegex:
     # non-alphanumeric char. (Accent or apostrophe allowed at end of string of alpha chars).
     WORD = r'\w+[`\']?|\S'
 
-    ALPHA_WORD = "\w+";
+    ALPHA_WORD = r'\w+'
 
     ALL_WORDS = DEF_ARTICLE + "|" + DEF_NUMERAL + "|" + L_APOST + "|" + APOST + "|" + WORD + "|" + ALPHA_WORD;
 
@@ -39,20 +39,20 @@ class MTRegex:
 
     NUMERIC_DATE = r"\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|\d{2,4}[-/]\d{1,2}[-/]\d{1,2}"
 
-    URL = "(((http|ftp|gopher|javascript|telnet|file|ssh|scp)://(www\.)?)|mailto:|www\.).+\\s$";
-    URL2 = "(((http|ftp|https|gopher|javascript|telnet|file)://)|(www\.)|(mailto:))[\w\-_]+(\.[\w\-_]+)?([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?";
+    URL = r"(((http|ftp|gopher|javascript|telnet|file|ssh|scp)://(www\.)?)|mailto:|www\.).+\\s$"
+    URL2 = r"(((http|ftp|https|gopher|javascript|telnet|file)://)|(www\.)|(mailto:))[\w\-_]+(\.[\w\-_]+)?([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?"
 
     # It-Tlieta, 25 ta' Frar, 2003
-    FULL_DATE = "(^I[ltnsdxr]-(Tnejn|Tlieta|Erbgħa|Ħamis|Ġimgħa|Sibt|Ħadd), \d{1,2} ta' " + "(Jannar|Frar|Marzu|April|Mejju|Ġunju|Lulju|Awwissu|Settembru|Ottubru|Novembru|Diċembru), \d{4,}$)"
+    FULL_DATE = r"(^I[ltnsdxr]-(Tnejn|Tlieta|Erbgħa|Ħamis|Ġimgħa|Sibt|Ħadd), \d{1,2} ta' " + r"(Jannar|Frar|Marzu|April|Mejju|Ġunju|Lulju|Awwissu|Settembru|Ottubru|Novembru|Diċembru), \d{4,}$)"
 
     # Hyphen-separated prefixes which shouldn't be separated from following words
-    PREFIX = "(sotto|inter|intra|mini|ex|eks|pre|post|sub|neo|soċjo)-";
+    PREFIX = r"(sotto|inter|intra|mini|ex|eks|pre|post|sub|neo|soċjo)-"
 
     # All tokens: definite article or token
     # TOKEN = DEF_ARTICLE + "|" + DEF_NUMERAL + "|" + APOST + "|" + L_APOST + "|" + ABBREV_PREFIX + "|" + NUMERIC_DATE + "|" + NUMBER + "|" + WORD;
     TOKEN = DEF_ARTICLE + "|" + DEF_NUMERAL + "|" + WORD + "|" + END_PUNCTUATION
 
-    ALPHA_TOKEN = DEF_ARTICLE + "|" + DEF_NUMERAL + "|" + APOST + "|" + L_APOST + "|" + ABBREV_PREFIX + "|" + ALPHA_WORD;
+    ALPHA_TOKEN = DEF_ARTICLE + "|" + DEF_NUMERAL + "|" + APOST + "|" + L_APOST + "|" + ABBREV_PREFIX + "|" + ALPHA_WORD
 
     BLANK_LINE = r"^\s*[\r\n]+\s*$"
 
