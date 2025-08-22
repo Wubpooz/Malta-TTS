@@ -24,9 +24,15 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
-  Based on the XTTSv2 fine-tuning scripts and https://github.com/daswer123/xtts-webui/blob/main/scripts/utils/gpt_train.py & https://github.com/anhnh2002/XTTSv2-Finetuning-for-New-Languages/blob/main/train_gpt_xtts.py
+  Based on the XTTSv2 fine-tuning scripts.
   Args:
       metadatas (list): A list of metadata strings in the format "train_csv_path,eval_csv_path,language".
+      language (str): Language code for the training data.
+      mel_norm_file (str): Path to the mel normalization file.
+      dvae_checkpoint (str): Path to the DVAE checkpoint file.
+      xtts_checkpoint (str): Path to the XTTS checkpoint file.
+      tokenizer_file (str): Path to the tokenizer file.
+      vocab_size (int): Vocabulary size for the tokenizer.
       num_epochs (int): Number of epochs for training. Default is 100.
       batch_size (int): Mini batch size. Default is 3.
       grad_acumm (int): Gradient accumulation steps. Default is 84.
@@ -34,9 +40,13 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       lr (float): Learning rate for the optimizer. Default is 5e-6.
       weight_decay (float): Weight decay for the optimizer. Default is 1e-2.
       save_step (int): Step interval for saving the model checkpoints. Default is 10000.
+      print_step (int): Step interval for printing training progress. Default is 200.
       max_text_length (int): Maximum text length for the model. Default is 200.
       max_audio_length (int): Maximum audio length for the model. Default is 255995 (approximately 12 seconds at 22050 Hz).
       multi_gpu (bool): Whether to use multi-GPU training. Default is False.
+      optimizations (bool): Whether to apply optimizations for faster training. Default is False.
+      tf32 (bool): Whether to use TensorFloat-32 (TF32) precision. Default is False.
+
   Returns:
       tuple: Paths to the XTTS checkpoint, tokenizer file, config file, trainer output path, and speaker reference audio file.
   """
@@ -51,7 +61,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   os.makedirs(OUT_PATH, exist_ok=True)
 
   # Training Parameters
-  OPTIMIZER_WD_ONLY_ON_WEIGHTS = not multi_gpu
+  OPTIMIZER_WD_ONLY_ON_WEIGHTS = True #TODO
   START_WITH_EVAL = False
   BATCH_SIZE = batch_size
   GRAD_ACUMM_STEPS = grad_acumm
@@ -102,15 +112,22 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     max_wav_length=max_audio_length,
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,
-    dvae_checkpoint=dvae_checkpoint,
     xtts_checkpoint=xtts_checkpoint,
+    gpt_checkpoint="", #TODO
+    dvae_checkpoint=dvae_checkpoint,
     tokenizer_file=tokenizer_file,
-    gpt_num_audio_tokens=1026,
+    gpt_num_audio_tokens=1026, #8194 default
     gpt_start_audio_token=1024,
     gpt_stop_audio_token=1025,
+    # gpt_loss_text_ce_weight = 0.01,
+    # gpt_loss_mel_ce_weight = 1.0,
     gpt_use_masking_gt_prompt_approach=True,
     gpt_use_perceiver_resampler=True,
-    gpt_number_text_tokens=vocab_size
+    gpt_number_text_tokens=vocab_size,
+  
+    # Replace None values with default values to fix initialization:
+    clvp_checkpoint="",
+    decoder_checkpoint=""
   )
 
   audio_config = XttsTrainingAudioConfig(sample_rate=22050, dvae_sample_rate=22050, output_sample_rate=24000)
@@ -138,7 +155,8 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       save_n_checkpoints=1,
       save_checkpoints=True,
       target_loss="", # "loss",
-      print_eval=False,
+      print_eval=True,
+      run_eval_steps=save_step,
       optimizer="AdamW",
       optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
       optimizer_params={"betas": [0.9, 0.96], "eps": 1e-8, "weight_decay": weight_decay},
@@ -151,13 +169,18 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       precision="fp16" if optimizations else "fp32",
       allow_tf32=tf32, # TensorFloat-32 tensor cores may be used in matrix multiplications on Ampere or newer GPUs. Default to False.
       # use_noise_augment
-      model_dir="",  # Replace None with an empty string
-      phonemizer="",  # Replace None with an empty string
-      phoneme_language="",  # Replace None with an empty string
-      text_cleaner="",  # Replace None with an empty string
-      phoneme_cache_path="",  # Replace None with an empty string
-      characters="",  # Replace None with an empty string
-      loss_masking=False,  # Replace None with an empty string
+
+      # Replace None with default values to fix failure:
+      model_dir="",
+      phonemizer="",
+      phoneme_language="",
+      text_cleaner="",
+      phoneme_cache_path="",
+      characters="",
+      loss_masking=False,
+      wandb_entity="",
+      clvp_checkpoint="",
+      decoder_checkpoint="",
     )
 
     model = GPTTrainer.init_from_config(config)
@@ -175,32 +198,9 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     from utils import add_language_to_tokenizer
     add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
 
-    #TODO
-    def validate_config_fields(config):
-      for field_name, field_value in config.__dict__.items():
-        if field_value is None:
-          print(f"Warning: Field '{field_name}' is None. Setting a default value.")
-          if isinstance(field_value, str):
-            setattr(config, field_name, "")
-          elif isinstance(field_value, list):
-            setattr(config, field_name, [])
-          elif isinstance(field_value, dict):
-            setattr(config, field_name, {})
-          elif isinstance(field_value, bool):
-            setattr(config, field_name, False)
-          elif isinstance(field_value, int):
-            setattr(config, field_name, 0)
-          elif isinstance(field_value, float):
-            setattr(config, field_name, 0.0)
-
-    validate_config_fields(config)
-    validate_config_fields(model_args)
-    validate_config_fields(audio_config)
-
 
     trainer = Trainer(
       TrainerArgs(
-        # restore_path="", # xtts checkpoint is restored via xtts_checkpoint key so no need of restore it using Trainer restore_path parameter
         skip_train_epoch=False,
         start_with_eval=START_WITH_EVAL,
         grad_accum_steps=GRAD_ACUMM_STEPS,
