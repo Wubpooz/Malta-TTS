@@ -176,7 +176,8 @@ if __name__ == "__main__":
     length_penalty=args.length_penalty,
     repetition_penalty=args.repetition_penalty,
     top_k=args.top_k,
-    top_p=args.top_p
+    top_p=args.top_p,
+    LORA_trained=args.LORA_trained
   )
   print("Inference completed!")
 

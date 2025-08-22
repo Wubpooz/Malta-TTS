@@ -59,6 +59,7 @@ def create_inference_parser():
   parser.add_argument("--repetition_penalty", type=float, default=10.0, help="Repetition penalty for sampling (default: 10.0)")
   parser.add_argument("--top_k", type=int, default=50, help="Top-k for sampling (default: 50)")
   parser.add_argument("--top_p", type=float, default=0.8, help="Top-p for sampling (default: 0.8)")
+  parser.add_argument("--LORA_trained", action='store_true', help="Whether the model was trained with LORA")
   return parser
 
 
