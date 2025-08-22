@@ -183,9 +183,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       phoneme_cache_path="",
       characters="",
       loss_masking=False,
-      wandb_entity="",
-      clvp_checkpoint="",
-      decoder_checkpoint="",
+      wandb_entity=""
     )
 
 
