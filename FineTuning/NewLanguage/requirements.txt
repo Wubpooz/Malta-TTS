@@ -30,9 +30,8 @@ pyyaml>=6.0
 nltk>=3.8.0
 datasets>=2.12.0  # For dataset handling
 huggingface_hub>=0.27.0  # For model and dataset management
-
-
 dataclasses
+peft # For Parameter-Efficient Fine-Tuning (LoRA)
 
 
 # Maltese Tokenizer
@@ -54,9 +53,7 @@ ipython
 # For faster downloading of datasets and models
 hf_xet
 
-
-
-
+  
 # Potential other dependencies or fixes
 # numpy==1.22.0;python_version<="3.10"
 # numpy>=1.24.3;python_version>"3.10"

@@ -9,7 +9,7 @@ from TTS.tts.layers.xtts.trainer.gpt_trainer import GPTArgs, GPTTrainer, GPTTrai
 from TTS.tts.models.xtts import XttsAudioConfig
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.datasets import load_tts_samples
-
+from peft import get_peft_model, LoraConfig, TaskType
 
 from dataclasses import dataclass
 
@@ -61,7 +61,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
   os.makedirs(OUT_PATH, exist_ok=True)
 
   # Training Parameters
-  OPTIMIZER_WD_ONLY_ON_WEIGHTS = True #TODO
+  OPTIMIZER_WD_ONLY_ON_WEIGHTS = True # whether to apply weight decay only on the output layer or also on bias and normalization layers
   START_WITH_EVAL = False
   BATCH_SIZE = batch_size
   GRAD_ACUMM_STEPS = grad_acumm
@@ -113,7 +113,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,
     xtts_checkpoint=xtts_checkpoint,
-    gpt_checkpoint="", #TODO
+    gpt_checkpoint="", #TODO ?
     dvae_checkpoint=dvae_checkpoint,
     tokenizer_file=tokenizer_file,
     gpt_num_audio_tokens=1026, #8194 default
@@ -158,12 +158,16 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       print_eval=True,
       run_eval_steps=save_step,
       optimizer="AdamW",
+
+      # Parameters optimization for adding a new language without catastrophic forgetting:
       optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
       optimizer_params={"betas": [0.9, 0.96], "eps": 1e-8, "weight_decay": weight_decay},
       lr=lr,
-      lr_scheduler="MultiStepLR",
+      lr_scheduler="MultiStepLR", # Or "CosineAnnealingWarmRestarts"
       lr_scheduler_params={"milestones": [50000 * 18, 150000 * 18, 300000 * 18], "gamma": 0.5, "last_epoch": -1},
-      test_sentences=[],
+      # lr_scheduler_params={"T_0": save_step // 4, "T_mult": 1, "eta_min": lr * 0.01, "last_epoch": -1}, T_0 -> Restart every quarter of save_step, eta_min -> Minimum learning rate
+      grad_clip=1.0, # Or 0.5
+
       # Performance optimizations
       mixed_precision=optimizations,
       precision="fp16" if optimizations else "fp32",
@@ -171,6 +175,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       # use_noise_augment
 
       # Replace None with default values to fix failure:
+      test_sentences=[],
       model_dir="",
       phonemizer="",
       phoneme_language="",
@@ -183,7 +188,20 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
       decoder_checkpoint="",
     )
 
+
+
     model = GPTTrainer.init_from_config(config)
+    
+    lora_config = LoraConfig(
+      r=8,              # Rank of LoRA matrices
+      lora_alpha=16,    # Scaling
+      target_modules=["q_proj", "v_proj"],  # Typical for transformer attention
+      lora_dropout=0.05,
+      bias="none",
+      task_type=TaskType.CAUSAL_LM,
+    )
+    model = get_peft_model(model, lora_config)
+
 
     print("Loading datasets...")
     train_samples, eval_samples = load_tts_samples(
@@ -199,6 +217,7 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     add_language_to_tokenizer(model.xtts.tokenizer, lang_code=language)
 
 
+    #TODO use language specific weighting
     trainer = Trainer(
       TrainerArgs(
         skip_train_epoch=False,
