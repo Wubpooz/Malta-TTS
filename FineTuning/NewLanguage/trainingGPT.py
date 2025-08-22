@@ -12,6 +12,7 @@ from TTS.tts.datasets import load_tts_samples
 from peft import get_peft_model, LoraConfig, TaskType
 
 from dataclasses import dataclass
+from enum import Enum
 
 @dataclass
 class XttsTrainingAudioConfig(XttsAudioConfig):
@@ -19,8 +20,48 @@ class XttsTrainingAudioConfig(XttsAudioConfig):
   """
   dvae_sample_rate: int = 22050
 
+class ForgettingMitigation(str, Enum):
+    NONE = "none"
+    LORA = "LORA"
+    FREEZE = "FREEZE"
 
-def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file, vocab_size,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, print_step=200, max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False):
+
+def freeze_base_model_layers(model, trainable_layers=None):
+  """Freeze most layers, only train specific ones to prevent forgetting"""
+  if trainable_layers is None:
+    # Only train the last few layers and embedding
+    trainable_layers = [
+      "text_embedding",     # Allow text embedding to adapt
+      "layers.29",          # Last transformer layer  
+      "layers.28",          # Second to last layer
+      "layers.27",          # Third to last layer
+      "final_norm",         # Final normalization
+      "lm_head"            # Language model head
+    ]
+  
+  # Count total and trainable parameters
+  total_params = sum(p.numel() for p in model.parameters())
+  
+  # Freeze all parameters first
+  for param in model.parameters():
+    param.requires_grad = False
+  
+  # Unfreeze specific layers
+  trainable_params = 0
+  for name, param in model.named_parameters():
+    for layer_name in trainable_layers:
+      if layer_name in name:
+        param.requires_grad = True
+        trainable_params += param.numel()
+        print(f"Unfrozen layer: {name} ({param.numel():,} params)")
+        break
+  
+  print(f"Total params: {total_params:,}")
+  print(f"Trainable params: {trainable_params:,} ({trainable_params/total_params*100:.1f}%)")
+  print(f"Frozen params: {total_params-trainable_params:,} ({(total_params-trainable_params)/total_params*100:.1f}%)")
+
+
+def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoint, tokenizer_file, vocab_size,  num_epochs=100, batch_size=3, grad_acumm=84, output_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints"), lr=5e-06, weight_decay=1e-2, save_step=10000, print_step=200, max_text_length=200, max_audio_length=255995, multi_gpu=False, optimizations=False, tf32=False, forgetting_mitigation: ForgettingMitigation = ForgettingMitigation.LORA):
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
@@ -189,17 +230,23 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
 
 
     model = GPTTrainer.init_from_config(config)
-    
-    lora_config = LoraConfig(
-      r=8,              # Rank of LoRA matrices
-      lora_alpha=16,    # Scaling
-      target_modules=["q_proj", "v_proj"],  # Typical for transformer attention
-      lora_dropout=0.05,
-      bias="none",
-      task_type=TaskType.CAUSAL_LM,
-    )
-    model = get_peft_model(model, lora_config)
 
+    if forgetting_mitigation == ForgettingMitigation.FREEZE:
+      freeze_base_model_layers(model.xtts.gpt)
+
+    if forgetting_mitigation == ForgettingMitigation.LORA:
+      lora_config = LoraConfig(
+        r=8,              # Rank of LoRA matrices
+        lora_alpha=16,    # Scaling
+        target_modules=["c_attn", "c_proj"],
+        lora_dropout=0.05,
+        bias="none",
+        task_type=TaskType.FEATURE_EXTRACTION,
+      )
+      model = get_peft_model(model, lora_config)
+
+    # for name, module in model.named_modules():
+    #   print(name)
 
     print("Loading datasets...")
     train_samples, eval_samples = load_tts_samples(
@@ -301,7 +348,8 @@ if __name__ == "__main__":
     max_audio_length=args.max_audio_length,
     multi_gpu=args.multi_gpu,
     optimizations=args.optimizations,
-    tf32=args.tf32
+    tf32=args.tf32,
+    forgetting_mitigation=args.forgetting_mitigation
   )
   print("Training completed successfully!")
   print("You can now run inference using the trained model.")

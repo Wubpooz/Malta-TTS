@@ -28,6 +28,7 @@ def create_xtts_trainer_parser():
   parser.add_argument("--tokenizer_file", type=str, required=False, help="Path to the tokenizer file (.json file)")
   parser.add_argument("--optimizations", action='store_true', help="Enable optimizations for training")
   parser.add_argument("--tf32", action='store_true', help="Enable TF32 for training")
+  parser.add_argument("--forgetting_mitigation", type=str, choices=["none", "LORA", "FREEZE"], default="LORA", help="Method to mitigate forgetting during training (default: LORA)")
   # parser.add_argument("--no_deepspeed", action='store_true', help="Disable deepspeed for training")
   return parser
 
@@ -106,7 +107,8 @@ def create_train_GPT_parser():
   parser.add_argument("--save_step", type=int, default=10000, help="Step interval for saving model checkpoints (default: 10000).")
   parser.add_argument("--multi_gpu", action='store_true', help="Whether to use multi-GPU training.")
   parser.add_argument("--optimizations", action='store_true', help="Whether to enable optimizations for training.")
-  parser.add_argument("--tf32", action='store_true', help="Whether to enable TF32 for training.")  
+  parser.add_argument("--tf32", action='store_true', help="Whether to enable TF32 for training.")
+  parser.add_argument("--forgetting_mitigation", type=str, choices=["none", "LORA", "FREEZE"], default="LORA", help="Method to mitigate forgetting during training (default: LORA).")
   return parser
 
 

@@ -81,7 +81,8 @@ if __name__ == "__main__":
     max_audio_length=args.max_audio_length,
     save_step=args.save_step,
     optimizations=args.optimizations,
-    tf32=args.tf32
+    tf32=args.tf32,
+    forgetting_mitigation=args.forgetting_mitigation
   )
   
   print(f"Checkpoint saved in dir: {trainer_out_path}")

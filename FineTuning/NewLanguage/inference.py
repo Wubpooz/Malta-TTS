@@ -5,13 +5,59 @@ import torch
 import os
 import torchaudio
 from tqdm import tqdm
-from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
+from TTS.tts.configs.xtts_config import XttsConfig
+from peft import get_peft_model, LoraConfig, TaskType, PeftModel
 
 from utils import split_into_sentences, check_and_split_by_limit
 
 
-def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_file, lang_code, temperature=0.7, length_penalty=1.0, repetition_penalty=10.0, top_k=50, top_p=0.8):
+def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoint_dir, xtts_vocab, use_deepspeed):
+  print("Loading checkpoint...")
+  checkpoint = torch.load(xtts_checkpoint, map_location="cpu")
+  is_lora = any("lora_A" in k or "lora_B" in k for k in checkpoint.keys())
+  if LORA_trained or is_lora:
+    print("Detected LoRA adapter weights. Loading as LoRA model.")
+    lora_config = LoraConfig(
+      r=8,
+      lora_alpha=16,
+      target_modules=["c_attn", "c_proj"],
+      lora_dropout=0.05,
+      bias="none",
+      task_type=TaskType.FEATURE_EXTRACTION,
+    )
+    model = get_peft_model(model, lora_config)
+    model.load_state_dict(checkpoint, strict=False)
+  else:
+    print("Detected standard model weights. Loading as base model.")
+    model.load_checkpoint(
+      config,
+      checkpoint_dir=checkpoint_dir,
+      checkpoint_path=xtts_checkpoint,
+      vocab_path=xtts_vocab,
+      use_deepspeed=use_deepspeed,
+      eval=True
+    )
+  
+  return model
+
+
+def text_processing(tts_text, lang_code, model):
+  try:
+    sentences = split_into_sentences(tts_text, lang_code)
+    print(f"Split into {len(sentences)} sentences.")
+    tts_texts = check_and_split_by_limit(sentences, char_limit=model.tokenizer.char_limits.get(lang_code, 400), lang_code=lang_code)
+  except:
+    tts_texts = [tts_text]
+
+  print(f"Final text chunks: {len(tts_texts)}")
+  for i, text in enumerate(tts_texts):
+    print(f"  Chunk {i+1}: {len(text)} chars - '{text[:50]}{'...' if len(text) > 50 else ''}'")
+  return tts_texts  
+
+
+
+def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_file, lang_code, temperature=0.7, length_penalty=1.0, repetition_penalty=10.0, top_k=50, top_p=0.8, LORA_trained=False):
   """Run inference using the XTTS model with the provided configuration and text.
   Args:
       xtts_checkpoint (str): Path to the XTTS model checkpoint.
@@ -42,7 +88,8 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   model = Xtts.init_from_config(config)
   
   print("Loading checkpoint...")
-  model.load_checkpoint(config, checkpoint_dir=checkpoint_dir, checkpoint_path=xtts_checkpoint, vocab_path=xtts_vocab, use_deepspeed=use_deepspeed, eval=True)
+  model = load_model(LORA_trained, xtts_checkpoint, model, config, checkpoint_dir, xtts_vocab, use_deepspeed)
+
   if not hasattr(model.tokenizer, "char_limits"):
     model.tokenizer.char_limits = {}
   if lang_code not in model.tokenizer.char_limits:
@@ -62,19 +109,8 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   gpt_cond_latent, speaker_embedding = model.get_conditioning_latents(audio_path=[speaker_audio_file])
   print("Speaker latents computed successfully!")
 
-  
   print("Processing text...")
-  try:
-    sentences = split_into_sentences(tts_text, lang_code)
-    print(f"Split into {len(sentences)} sentences.")
-    tts_texts = check_and_split_by_limit(sentences, char_limit=model.tokenizer.char_limits.get(lang_code, 400), lang_code=lang_code)
-  except:
-    tts_texts = [tts_text]
-
-  print(f"Final text chunks: {len(tts_texts)}")
-  for i, text in enumerate(tts_texts):
-    print(f"  Chunk {i+1}: {len(text)} chars - '{text[:50]}{'...' if len(text) > 50 else ''}'")
-
+  tts_texts = text_processing(tts_text, lang_code, model)
 
   wav_chunks = []
   print("Running inference...")
