@@ -2,7 +2,7 @@ import os
 import json
 
 from download import download
-from tokenizer_extension import extend_tokenizer
+from tokenizer_extension import extend_tokenizer_with_validation
 from trainingGPT import train_gpt
 from parsers import create_xtts_trainer_parser
 
@@ -21,10 +21,13 @@ if __name__ == "__main__":
     step += 1
 
   print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
-  vocab_size = extend_tokenizer(
+  vocab_size = extend_tokenizer_with_validation(
     output_path=args.output_path,
     metadata_path=args.metadata_path,
-    language=args.language
+    language=args.language,
+    vocab_size=5000,
+    min_frequency=2,
+    max_new_tokens=8000
   )
   print(f"Extended vocabulary size: {vocab_size}")
   step += 1
