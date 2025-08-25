@@ -232,21 +232,20 @@ def train_gpt(metadatas, language, mel_norm_file, dvae_checkpoint, xtts_checkpoi
     model = GPTTrainer.init_from_config(config)
 
     if forgetting_mitigation == ForgettingMitigation.FREEZE:
+      print("Freezing base model layers...")
       freeze_base_model_layers(model.xtts.gpt)
 
     if forgetting_mitigation == ForgettingMitigation.LORA:
+      print("Applying LoRA...")
       lora_config = LoraConfig(
         r=8,              # Rank of LoRA matrices
         lora_alpha=16,    # Scaling
-        target_modules=["c_attn", "c_proj"],
+        target_modules=["gpt.gpt.h.*.attn.c_attn", "gpt.gpt.h.*.attn.c_proj"],
         lora_dropout=0.05,
         bias="none",
         task_type=TaskType.FEATURE_EXTRACTION,
       )
       model = get_peft_model(model, lora_config)
-
-    # for name, module in model.named_modules():
-    #   print(name)
 
     print("Loading datasets...")
     train_samples, eval_samples = load_tts_samples(

@@ -21,7 +21,7 @@ def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoi
     lora_config = LoraConfig(
       r=8,
       lora_alpha=16,
-      target_modules=["c_attn", "c_proj"],
+      target_modules=["gpt.gpt.h.*.attn.c_attn", "gpt.gpt.h.*.attn.c_proj"],
       lora_dropout=0.05,
       bias="none",
       task_type=TaskType.FEATURE_EXTRACTION,
