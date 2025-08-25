@@ -89,13 +89,6 @@ def inference(xtts_checkpoint, xtts_config, xtts_vocab, tts_text, speaker_audio_
   
   print("Loading checkpoint...")
   model = load_model(LORA_trained, xtts_checkpoint, model, config, checkpoint_dir, xtts_vocab, use_deepspeed)
-
-  if not hasattr(model.tokenizer, "char_limits"):
-    model.tokenizer.char_limits = {}
-  if lang_code not in model.tokenizer.char_limits:
-    model.tokenizer.char_limits[lang_code] = model.tokenizer.char_limits.get("en", 400)
-    print(f"Added char_limits for {lang_code} language.")
-
   model.to(device)
   print("Model loaded successfully!")
 
