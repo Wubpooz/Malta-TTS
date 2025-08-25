@@ -134,7 +134,6 @@ Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but r
 
 # TODOs
 ## add more error handling
-## freeze requirements
 ## fix paths and params
 ## cleanup
 
@@ -145,13 +144,9 @@ Finetuning the HiFiGAN decoder was attempted by `anhnh2002` for Vietnamese but r
 
 ## training loss graph
 ## autodetect formatter based on metadata number of cols and names
-
 ## Logger?
 import logging
 logger = logging.getLogger(__name__)
-
-
-
 ## mixed precision
 
 
@@ -162,8 +157,6 @@ logger = logging.getLogger(__name__)
 
 
 
-
-Great question — and Maltese is a perfect example of what “portable TTS” really needs: robustness with tiny models and smart data tricks. Here’s a practical, end-to-end blueprint you can follow, with options from “works on a Raspberry Pi/phone” to “bigger but still deployable”.
 
 1) Choose a portable-friendly architecture
 	•	Piper (Glow-TTS/HiFi-GAN–style, C++ runtime): tiny, fast, proven on ARM; easy to train your own voices.
@@ -182,7 +175,7 @@ Maltese orthography is close to phonemic, but you still need rules:
 	•	Use a unified phoneme set (IPA or X-SAMPA). Make sure the vocoder/acoustic model uses the same symbol IDs across languages.
 	•	Fallback path: if a token is OOV and ambiguous, back off to graphemes (models learn this surprisingly well) or byte-level pieces.
 
-4) Training recipes (concrete)
+1) Training recipes (concrete)
 A. Small single-speaker Maltese voice (fastest path)
 	•	Model: FastPitch (acoustic) + HiFi-GAN (vocoder, V1 light).
 	•	Hours: 2–10 h clean, single speaker.
