@@ -76,7 +76,7 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
     for x in [
       ("&", " u "),
       ("@", " fuq "),
-      ("%", " ful-mija "),
+      ("%", " fil-mija "),
       ("#", " hash "),
       ("$", " dollaru "),
       ("£", " lira "),
