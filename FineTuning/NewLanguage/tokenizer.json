@@ -1,0 +1,1930 @@
+{
+  "version": "1.0",
+  "truncation": null,
+  "padding": null,
+  "added_tokens": [
+    {
+      "id": 0,
+      "content": "[UNK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 1,
+      "content": "[CLS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 2,
+      "content": "[SEP]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 3,
+      "content": "[PAD]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 4,
+      "content": "[MASK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 202,
+      "content": "⅔",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 203,
+      "content": "⅛",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 204,
+      "content": "𝄢",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 205,
+      "content": "G",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 206,
+      "content": "4",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 207,
+      "content": "♥",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 208,
+      "content": "ġ",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 209,
+      "content": "K",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 210,
+      "content": "I",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 211,
+      "content": "-",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 212,
+      "content": ")",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 213,
+      "content": "E",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 214,
+      "content": "W",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 215,
+      "content": "≤",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 216,
+      "content": "△",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 217,
+      "content": "⛈",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 218,
+      "content": "C",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 219,
+      "content": "$",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 220,
+      "content": "□",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 221,
+      "content": "≈",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 222,
+      "content": "¥",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 223,
+      "content": "β",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 224,
+      "content": "🌧",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 225,
+      "content": "🌩",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 226,
+      "content": "1",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 227,
+      "content": "🌟",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 228,
+      "content": "0",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 229,
+      "content": "é",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 230,
+      "content": "★",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 231,
+      "content": "→",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 232,
+      "content": "!",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 233,
+      "content": "⛅",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 234,
+      "content": "≥",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 235,
+      "content": "°",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 236,
+      "content": "⇒",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 237,
+      "content": "'",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 238,
+      "content": "√",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 239,
+      "content": "◆",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 240,
+      "content": "⇔",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 241,
+      "content": "♫",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 242,
+      "content": "⅝",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 243,
+      "content": "◇",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 244,
+      "content": "♮",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 245,
+      "content": ":",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 246,
+      "content": "←",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 247,
+      "content": "∏",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 248,
+      "content": "£",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 249,
+      "content": "α",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 250,
+      "content": "∆",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 251,
+      "content": "↕",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 252,
+      "content": "(",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 253,
+      "content": "≠",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 254,
+      "content": "♣",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 255,
+      "content": "♪",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 256,
+      "content": "∞",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 257,
+      "content": "7",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 258,
+      "content": "/",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 259,
+      "content": "∑",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 260,
+      "content": "+",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 261,
+      "content": "€",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 262,
+      "content": "♩",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 263,
+      "content": "𝄞",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 264,
+      "content": "♬",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 265,
+      "content": "⅜",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 266,
+      "content": "♯",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 267,
+      "content": "ħ",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 268,
+      "content": "γ",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 269,
+      "content": "💫",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 270,
+      "content": "■",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 271,
+      "content": "₹",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 272,
+      "content": "☆",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 273,
+      "content": "±",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 274,
+      "content": "☁",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 275,
+      "content": "❄",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 276,
+      "content": "=",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 277,
+      "content": "2",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 278,
+      "content": "B",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 279,
+      "content": "↑",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 280,
+      "content": "∫",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 281,
+      "content": "☀",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 282,
+      "content": "F",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 283,
+      "content": "⇓",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 284,
+      "content": "9",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 285,
+      "content": "ż",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 286,
+      "content": "●",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 287,
+      "content": "ç",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 288,
+      "content": "😀",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 289,
+      "content": "@",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 290,
+      "content": "¼",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 291,
+      "content": "️",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 292,
+      "content": "8",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 293,
+      "content": "5",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 294,
+      "content": "🔥",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 295,
+      "content": "○",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 296,
+      "content": "A",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 297,
+      "content": "⅓",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 298,
+      "content": "3",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 299,
+      "content": "♦",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 300,
+      "content": "▲",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 301,
+      "content": "½",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 302,
+      "content": "¾",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 303,
+      "content": "ï",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 304,
+      "content": "♭",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 305,
+      "content": "J",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 306,
+      "content": "ñ",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 307,
+      "content": "⅞",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 308,
+      "content": "⇑",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 309,
+      "content": "S",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 310,
+      "content": "↔",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 311,
+      "content": "↓",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 312,
+      "content": "✨",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    },
+    {
+      "id": 313,
+      "content": "♠",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": true,
+      "special": false
+    }
+  ],
+  "normalizer": null,
+  "pre_tokenizer": {
+    "type": "Whitespace"
+  },
+  "post_processor": null,
+  "decoder": null,
+  "model": {
+    "type": "BPE",
+    "dropout": null,
+    "unk_token": "[UNK]",
+    "continuing_subword_prefix": null,
+    "end_of_word_suffix": null,
+    "fuse_unk": false,
+    "byte_fallback": false,
+    "ignore_merges": false,
+    "vocab": {
+      "[UNK]": 0,
+      "[CLS]": 1,
+      "[SEP]": 2,
+      "[PAD]": 3,
+      "[MASK]": 4,
+      ",": 5,
+      ".": 6,
+      "?": 7,
+      "D": 8,
+      "H": 9,
+      "M": 10,
+      "N": 11,
+      "P": 12,
+      "T": 13,
+      "a": 14,
+      "b": 15,
+      "c": 16,
+      "d": 17,
+      "e": 18,
+      "f": 19,
+      "g": 20,
+      "h": 21,
+      "i": 22,
+      "j": 23,
+      "k": 24,
+      "l": 25,
+      "m": 26,
+      "n": 27,
+      "o": 28,
+      "p": 29,
+      "q": 30,
+      "r": 31,
+      "s": 32,
+      "t": 33,
+      "u": 34,
+      "v": 35,
+      "w": 36,
+      "x": 37,
+      "y": 38,
+      "z": 39,
+      "ng": 40,
+      "at": 41,
+      "ing": 42,
+      "er": 43,
+      "pr": 44,
+      "en": 45,
+      "es": 46,
+      "pro": 47,
+      "ar": 48,
+      "he": 49,
+      "la": 50,
+      "or": 51,
+      "ag": 52,
+      "ci": 53,
+      "ces": 54,
+      "is": 55,
+      "iz": 56,
+      "ken": 57,
+      "nd": 58,
+      "od": 59,
+      "oken": 60,
+      "ra": 61,
+      "uag": 62,
+      "nguag": 63,
+      "proces": 64,
+      "languag": 65,
+      "okeniz": 66,
+      "process": 67,
+      "language": 68,
+      "and": 69,
+      "dat": 70,
+      "el": 71,
+      "ex": 72,
+      "ear": 73,
+      "for": 74,
+      "ho": 75,
+      "lear": 76,
+      "nat": 77,
+      "ning": 78,
+      "qu": 79,
+      "re": 80,
+      "sci": 81,
+      "the": 82,
+      "tokeniz": 83,
+      "tex": 84,
+      "ura": 85,
+      "wor": 86,
+      "ers": 87,
+      "are": 88,
+      "processing": 89,
+      "data": 90,
+      "learning": 91,
+      "qui": 92,
+      "text": 93,
+      "ural": 94,
+      "De": 95,
+      "Hel": 96,
+      "Ma": 97,
+      "Nat": 98,
+      "Py": 99,
+      "Th": 100,
+      "The": 101,
+      "Tokeniz": 102,
+      "ay": 103,
+      "asci": 104,
+      "be": 105,
+      "br": 106,
+      "ce": 107,
+      "ch": 108,
+      "ck": 109,
+      "do": 110,
+      "ef": 111,
+      "ep": 112,
+      "eprocessing": 113,
+      "fi": 114,
+      "fo": 115,
+      "fasci": 116,
+      "go": 117,
+      "gra": 118,
+      "gre": 119,
+      "in": 120,
+      "io": 121,
+      "it": 122,
+      "ju": 123,
+      "ld": 124,
+      "lo": 125,
+      "lp": 126,
+      "ly": 127,
+      "mm": 128,
+      "mp": 129,
+      "mod": 130,
+      "ou": 131,
+      "ov": 132,
+      "ow": 133,
+      "per": 134,
+      "res": 135,
+      "tt": 136,
+      "tes": 137,
+      "tod": 138,
+      "tand": 139,
+      "tho": 140,
+      "tly": 141,
+      "us": 142,
+      "und": 143,
+      "wit": 144,
+      "you": 145,
+      "zy": 146,
+      "atio": 147,
+      "preprocessing": 148,
+      "ence": 149,
+      "ently": 150,
+      "progra": 151,
+      "proper": 152,
+      "help": 153,
+      "lazy": 154,
+      "ciently": 155,
+      "els": 156,
+      "how": 157,
+      "nating": 158,
+      "natural": 159,
+      "requi": 160,
+      "science": 161,
+      "tokenizer": 162,
+      "tokenizatio": 163,
+      "work": 164,
+      "world": 165,
+      "erstand": 166,
+      "quick": 167,
+      "Deep": 168,
+      "Hello": 169,
+      "Mach": 170,
+      "Natural": 171,
+      "Pytho": 172,
+      "This": 173,
+      "Tokenizers": 174,
+      "bett": 175,
+      "brow": 176,
+      "dog": 177,
+      "effi": 178,
+      "fox": 179,
+      "fascinating": 180,
+      "good": 181,
+      "great": 182,
+      "ine": 183,
+      "jump": 184,
+      "mming": 185,
+      "models": 186,
+      "over": 187,
+      "test": 188,
+      "today": 189,
+      "understand": 190,
+      "with": 191,
+      "programming": 192,
+      "requires": 193,
+      "tokenization": 194,
+      "Machine": 195,
+      "Python": 196,
+      "better": 197,
+      "brown": 198,
+      "efficiently": 199,
+      "jumps": 200,
+      "understanding": 201
+    },
+    "merges": [
+      [
+        "n",
+        "g"
+      ],
+      [
+        "a",
+        "t"
+      ],
+      [
+        "i",
+        "ng"
+      ],
+      [
+        "e",
+        "r"
+      ],
+      [
+        "p",
+        "r"
+      ],
+      [
+        "e",
+        "n"
+      ],
+      [
+        "e",
+        "s"
+      ],
+      [
+        "pr",
+        "o"
+      ],
+      [
+        "a",
+        "r"
+      ],
+      [
+        "h",
+        "e"
+      ],
+      [
+        "l",
+        "a"
+      ],
+      [
+        "o",
+        "r"
+      ],
+      [
+        "a",
+        "g"
+      ],
+      [
+        "c",
+        "i"
+      ],
+      [
+        "c",
+        "es"
+      ],
+      [
+        "i",
+        "s"
+      ],
+      [
+        "i",
+        "z"
+      ],
+      [
+        "k",
+        "en"
+      ],
+      [
+        "n",
+        "d"
+      ],
+      [
+        "o",
+        "d"
+      ],
+      [
+        "o",
+        "ken"
+      ],
+      [
+        "r",
+        "a"
+      ],
+      [
+        "u",
+        "ag"
+      ],
+      [
+        "ng",
+        "uag"
+      ],
+      [
+        "pro",
+        "ces"
+      ],
+      [
+        "la",
+        "nguag"
+      ],
+      [
+        "oken",
+        "iz"
+      ],
+      [
+        "proces",
+        "s"
+      ],
+      [
+        "languag",
+        "e"
+      ],
+      [
+        "a",
+        "nd"
+      ],
+      [
+        "d",
+        "at"
+      ],
+      [
+        "e",
+        "l"
+      ],
+      [
+        "e",
+        "x"
+      ],
+      [
+        "e",
+        "ar"
+      ],
+      [
+        "f",
+        "or"
+      ],
+      [
+        "h",
+        "o"
+      ],
+      [
+        "l",
+        "ear"
+      ],
+      [
+        "n",
+        "at"
+      ],
+      [
+        "n",
+        "ing"
+      ],
+      [
+        "q",
+        "u"
+      ],
+      [
+        "r",
+        "e"
+      ],
+      [
+        "s",
+        "ci"
+      ],
+      [
+        "t",
+        "he"
+      ],
+      [
+        "t",
+        "okeniz"
+      ],
+      [
+        "t",
+        "ex"
+      ],
+      [
+        "u",
+        "ra"
+      ],
+      [
+        "w",
+        "or"
+      ],
+      [
+        "er",
+        "s"
+      ],
+      [
+        "ar",
+        "e"
+      ],
+      [
+        "process",
+        "ing"
+      ],
+      [
+        "dat",
+        "a"
+      ],
+      [
+        "lear",
+        "ning"
+      ],
+      [
+        "qu",
+        "i"
+      ],
+      [
+        "tex",
+        "t"
+      ],
+      [
+        "ura",
+        "l"
+      ],
+      [
+        "D",
+        "e"
+      ],
+      [
+        "H",
+        "el"
+      ],
+      [
+        "M",
+        "a"
+      ],
+      [
+        "N",
+        "at"
+      ],
+      [
+        "P",
+        "y"
+      ],
+      [
+        "T",
+        "h"
+      ],
+      [
+        "T",
+        "he"
+      ],
+      [
+        "T",
+        "okeniz"
+      ],
+      [
+        "a",
+        "y"
+      ],
+      [
+        "a",
+        "sci"
+      ],
+      [
+        "b",
+        "e"
+      ],
+      [
+        "b",
+        "r"
+      ],
+      [
+        "c",
+        "e"
+      ],
+      [
+        "c",
+        "h"
+      ],
+      [
+        "c",
+        "k"
+      ],
+      [
+        "d",
+        "o"
+      ],
+      [
+        "e",
+        "f"
+      ],
+      [
+        "e",
+        "p"
+      ],
+      [
+        "e",
+        "processing"
+      ],
+      [
+        "f",
+        "i"
+      ],
+      [
+        "f",
+        "o"
+      ],
+      [
+        "f",
+        "asci"
+      ],
+      [
+        "g",
+        "o"
+      ],
+      [
+        "g",
+        "ra"
+      ],
+      [
+        "g",
+        "re"
+      ],
+      [
+        "i",
+        "n"
+      ],
+      [
+        "i",
+        "o"
+      ],
+      [
+        "i",
+        "t"
+      ],
+      [
+        "j",
+        "u"
+      ],
+      [
+        "l",
+        "d"
+      ],
+      [
+        "l",
+        "o"
+      ],
+      [
+        "l",
+        "p"
+      ],
+      [
+        "l",
+        "y"
+      ],
+      [
+        "m",
+        "m"
+      ],
+      [
+        "m",
+        "p"
+      ],
+      [
+        "m",
+        "od"
+      ],
+      [
+        "o",
+        "u"
+      ],
+      [
+        "o",
+        "v"
+      ],
+      [
+        "o",
+        "w"
+      ],
+      [
+        "p",
+        "er"
+      ],
+      [
+        "r",
+        "es"
+      ],
+      [
+        "t",
+        "t"
+      ],
+      [
+        "t",
+        "es"
+      ],
+      [
+        "t",
+        "od"
+      ],
+      [
+        "t",
+        "and"
+      ],
+      [
+        "t",
+        "ho"
+      ],
+      [
+        "t",
+        "ly"
+      ],
+      [
+        "u",
+        "s"
+      ],
+      [
+        "u",
+        "nd"
+      ],
+      [
+        "w",
+        "it"
+      ],
+      [
+        "y",
+        "ou"
+      ],
+      [
+        "z",
+        "y"
+      ],
+      [
+        "at",
+        "io"
+      ],
+      [
+        "pr",
+        "eprocessing"
+      ],
+      [
+        "en",
+        "ce"
+      ],
+      [
+        "en",
+        "tly"
+      ],
+      [
+        "pro",
+        "gra"
+      ],
+      [
+        "pro",
+        "per"
+      ],
+      [
+        "he",
+        "lp"
+      ],
+      [
+        "la",
+        "zy"
+      ],
+      [
+        "ci",
+        "ently"
+      ],
+      [
+        "el",
+        "s"
+      ],
+      [
+        "ho",
+        "w"
+      ],
+      [
+        "nat",
+        "ing"
+      ],
+      [
+        "nat",
+        "ural"
+      ],
+      [
+        "re",
+        "qui"
+      ],
+      [
+        "sci",
+        "ence"
+      ],
+      [
+        "tokeniz",
+        "er"
+      ],
+      [
+        "tokeniz",
+        "atio"
+      ],
+      [
+        "wor",
+        "k"
+      ],
+      [
+        "wor",
+        "ld"
+      ],
+      [
+        "ers",
+        "tand"
+      ],
+      [
+        "qui",
+        "ck"
+      ],
+      [
+        "De",
+        "ep"
+      ],
+      [
+        "Hel",
+        "lo"
+      ],
+      [
+        "Ma",
+        "ch"
+      ],
+      [
+        "Nat",
+        "ural"
+      ],
+      [
+        "Py",
+        "tho"
+      ],
+      [
+        "Th",
+        "is"
+      ],
+      [
+        "Tokeniz",
+        "ers"
+      ],
+      [
+        "be",
+        "tt"
+      ],
+      [
+        "br",
+        "ow"
+      ],
+      [
+        "do",
+        "g"
+      ],
+      [
+        "ef",
+        "fi"
+      ],
+      [
+        "fo",
+        "x"
+      ],
+      [
+        "fasci",
+        "nating"
+      ],
+      [
+        "go",
+        "od"
+      ],
+      [
+        "gre",
+        "at"
+      ],
+      [
+        "in",
+        "e"
+      ],
+      [
+        "ju",
+        "mp"
+      ],
+      [
+        "mm",
+        "ing"
+      ],
+      [
+        "mod",
+        "els"
+      ],
+      [
+        "ov",
+        "er"
+      ],
+      [
+        "tes",
+        "t"
+      ],
+      [
+        "tod",
+        "ay"
+      ],
+      [
+        "und",
+        "erstand"
+      ],
+      [
+        "wit",
+        "h"
+      ],
+      [
+        "progra",
+        "mming"
+      ],
+      [
+        "requi",
+        "res"
+      ],
+      [
+        "tokenizatio",
+        "n"
+      ],
+      [
+        "Mach",
+        "ine"
+      ],
+      [
+        "Pytho",
+        "n"
+      ],
+      [
+        "bett",
+        "er"
+      ],
+      [
+        "brow",
+        "n"
+      ],
+      [
+        "effi",
+        "ciently"
+      ],
+      [
+        "jump",
+        "s"
+      ],
+      [
+        "understand",
+        "ing"
+      ]
+    ]
+  }
+}
