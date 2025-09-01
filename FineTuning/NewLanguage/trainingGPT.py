@@ -165,7 +165,7 @@ def train_gpt(metadatas: list[str], language: str, mel_norm_file: str, dvae_chec
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,
     xtts_checkpoint=xtts_checkpoint,
-    gpt_checkpoint="", #TODO ?
+    gpt_checkpoint=None, #TODO ? "" by default
     dvae_checkpoint=dvae_checkpoint,
     tokenizer_file=tokenizer_file,
     gpt_num_audio_tokens=1026, #8194 default

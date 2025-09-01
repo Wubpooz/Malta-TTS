@@ -116,16 +116,20 @@ def save_to_huggingFace(dataset_path: str, dataset_name: str) -> None:
       delimiter="|",
       column_names=["audio_file", "text", "speaker_name"],
     )
+    
+    dataset_dict = dataset_dict.rename_column("speaker_name", "speaker_id")
+    dataset_dict = dataset_dict.rename_column("text", "normalized_text")
+
 
     def add_features(example):
       audio_path = os.path.join(dataset_path, example['audio_file'])
       example['audio'] = audio_path
 
-      speaker_name = example["speaker_id"]
+      speaker_id = example["speaker_id"]
       example['gender'] = "unknown"
-      if speaker_name.startswith("F_"):
+      if speaker_id.startswith("F_"):
         example['gender'] = "female"
-      elif speaker_name.startswith("M_"):
+      elif speaker_id.startswith("M_"):
         example['gender'] = "male"
 
       try:
@@ -136,7 +140,7 @@ def save_to_huggingFace(dataset_path: str, dataset_name: str) -> None:
       return example
 
     dataset_dict = dataset_dict.map(add_features, num_proc=1, desc="Adding extra features") # type: ignore
-    
+
     # Cast the columns to the correct features
     features = datasets.Features({
       "audio": datasets.Audio(sampling_rate=22050),

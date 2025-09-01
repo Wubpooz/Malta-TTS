@@ -89,6 +89,7 @@ def text_processing(tts_text: str, lang_code: str, model) -> list[str]:
     print(f"Split into {len(sentences)} sentences.")
     tts_texts = check_and_split_by_limit(sentences, char_limit=model.tokenizer.char_limits.get(lang_code, 400), lang_code=lang_code)
   except:
+    print("Warning: Sentence splitting failed, using original text.")
     tts_texts = [tts_text]
 
   print(f"Final text chunks: {len(tts_texts)}")
@@ -178,7 +179,10 @@ def inference(xtts_checkpoint: str, xtts_config: str, xtts_vocab: str, tts_text:
         top_p=top_p,
         speed=1.0
       )
-      wav_chunks.append(torch.tensor(out["wav"]))
+      if isinstance(out["wav"], torch.Tensor):
+        wav_chunks.append(out["wav"])
+      else:
+        wav_chunks.append(torch.tensor(out["wav"]))
     except Exception as e:
       print(f"Warning: Failed to synthesize chunk {i+1}: '{text[:50]}...' - Error: {e}")
       continue
@@ -201,7 +205,7 @@ def inference(xtts_checkpoint: str, xtts_config: str, xtts_vocab: str, tts_text:
         final_chunks.append(silence)
     return torch.cat(final_chunks, dim=0).unsqueeze(0)
   else:
-    return torch.tensor(wav_chunks[0]).unsqueeze(0)
+    return torch.tensor(wav_chunks[0]).unsqueeze(0) #TODO remove torch.tensor?
 
 
 
@@ -228,6 +232,8 @@ if __name__ == "__main__":
   print("Inference completed!")
 
   output_file = args.output_file if args.output_file else "output.wav"
-  os.makedirs(os.path.dirname(output_file), exist_ok=True)
+  output_dir = os.path.dirname(output_file)
+  if not os.path.exists(output_dir):
+    os.makedirs(output_dir, exist_ok=True)
   torchaudio.save(output_file, audio_waveform, sample_rate=24000)
   print(f"Audio saved to {output_file}")

@@ -19,6 +19,11 @@ if __name__ == "__main__":
       version=args.version
     )
     step += 1
+  else:
+    mel_norm_file = args.mel_norm_file
+    dvae_checkpoint = args.dvae_checkpoint
+    xtts_checkpoint = args.xtts_checkpoint
+    tokenizer_file = args.tokenizer_file
 
   #TODO check if already extended and if so don't do anything (if model & model_backup, if tokenizer.vocab>68.. and if config.mt exists)
   print(f"Step {step}: Extending the XTTS tokenizer with the new language.")

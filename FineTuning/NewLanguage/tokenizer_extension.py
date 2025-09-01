@@ -30,7 +30,7 @@ def adjust_config(root: str, language: str, vocab_size: int):
   with open(config_path, "r", encoding="utf-8") as f:
     config = json.load(f)
   
-  if language not in config["languages"]:
+  if language not in config["languages"]: # config.get("languages", []) for safety
     config["languages"].append(language)
   config["model_args"]["gpt_number_text_tokens"] = vocab_size
 
