@@ -1,10 +1,14 @@
 import os
+import io
+import shutil
+import librosa
 import datasets
 import pandas as pd
 import soundfile as sf
-import shutil
 from tqdm import tqdm
-from datasets import load_dataset
+from datasets import load_dataset, Audio
+from datasets import load_dataset, Audio
+from concurrent.futures import ThreadPoolExecutor
 from sklearn.model_selection import train_test_split
 
 # python FineTuning\NewLanguage\prepare_maltese_dataset.py --input_dir "C:\\Users\\mathi\\Downloads\\MASRI_HEADSET_v2" --output_dir "C:\\Users\\mathi\\Downloads\\MASRI_HEADSET_HF" --test_size 0.2 --upload_to_hf --dataset_name "Bluefir/maltese-headset-v2_test"
@@ -12,10 +16,16 @@ from sklearn.model_selection import train_test_split
 # ========================================================================================================
 # ============================== Dataset Preparation and CLI Logic =======================================
 # ========================================================================================================
-def prepare_dataset(input_dir, output_dir, test_size):
+def prepare_dataset(input_dir: str, output_dir: str, test_size: float = 0.1):
   """
   Prepares the MASRI-HEADSET CORPUS v2 dataset by splitting it into train/test
   and creating a directory structure suitable for Hugging Face.
+  Arguments:
+    input_dir (str): Path to the input directory containing the dataset files.
+    output_dir (str): Path to the output directory where the prepared dataset will be saved.
+    test_size (float): Proportion of the dataset to include in the test split. Default is 0.1 (10%).
+  Raises:
+    FileNotFoundError: If the transcription file is not found.
   """
   print("Starting dataset preparation...")
   transcriptions_file = os.path.join(input_dir, "files", "MASRI_HEADSET_v2.trans")
@@ -80,69 +90,153 @@ def prepare_dataset(input_dir, output_dir, test_size):
   return dataset_path
 
 
+
+def save_to_huggingFace(dataset_path: str, dataset_name: str):
+  print(f"\nLoading dataset from {dataset_path} using direct file loading...")
+  try:
+    # Use `load_dataset` with the CSV files directly.
+    dataset_dict = load_dataset(
+      'csv', 
+      data_files={
+        'train': os.path.join(dataset_path, "metadata_train.csv"),
+        'test': os.path.join(dataset_path, "metadata_test.csv"),
+      },
+      delimiter="|",
+      column_names=["audio_file", "text", "speaker_name"],
+    )
+
+    def add_features(example):
+      audio_path = os.path.join(dataset_path, example['audio_file'])
+      example['audio'] = audio_path
+
+      speaker_name = example["speaker_id"]
+      example['gender'] = "unknown"
+      if speaker_name.startswith("F_"):
+        example['gender'] = "female"
+      elif speaker_name.startswith("M_"):
+        example['gender'] = "male"
+
+      try:
+        info = sf.info(audio_path)
+        example['duration'] = info.frames / info.samplerate
+      except Exception:
+        example['duration'] = 0.0                
+      return example
+
+    dataset_dict = dataset_dict.map(add_features, num_proc=1, desc="Adding extra features") # type: ignore
+    
+    # Cast the columns to the correct features
+    features = datasets.Features({
+      "audio": datasets.Audio(sampling_rate=22050),
+      "speaker_id": datasets.Value("string"),
+      "gender": datasets.Value("string"),
+      "duration": datasets.Value("float32"),
+      "normalized_text": datasets.Value("string"),
+    })
+    # Clean up the original `audio_file` column to match the expected format
+    dataset_dict = dataset_dict.remove_columns("audio_file")
+    dataset_dict = dataset_dict.cast(features)
+
+    print("\nDataset loaded successfully!")
+    print(dataset_dict)
+
+    input("Do you want to upload this dataset to Hugging Face? Press Enter to continue or Ctrl+C to exit.")
+    
+    dataset_dict.push_to_hub(dataset_name)
+    print("Dataset pushed to Hugging Face Hub successfully!")
+
+  except FileNotFoundError as e:
+    print(f"Error: {e}")
+    print("Please ensure 'metadata_train.csv', 'metadata_test.csv', and the 'wavs' folder are correctly placed inside the output directory.")
+  except Exception as e:
+    print(f"An unexpected error occurred during loading or uploading: {e}")
+
+
+
+def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2", sampling_rate: int = 22050, num_workers: int = 16):
+  """
+  Load a dataset and resample its audio files.
+  Arguments:
+    output_dir (str): Directory to save the processed audio files.
+    dataset (str): Name of the dataset to load.
+    sampling_rate (int): Target sampling rate for audio files.
+    num_workers (int): Number of worker threads for processing.
+  Raises:
+    ValueError: If the dataset is not found or cannot be loaded.
+  """
+  os.makedirs(output_dir, exist_ok=True)
+  wavs_dir = os.path.join(output_dir, "wavs")
+  os.makedirs(wavs_dir, exist_ok=True)
+
+  def save_and_resample(example, output_dir, resample=True, save_audio=True):
+    audio_filename = example['audio']['path']
+    audio_bytes = example['audio']['bytes']
+    text = example['normalized_text']
+    speaker_id = example['speaker_id']
+
+    save_path = os.path.join(wavs_dir, audio_filename)
+    base_name = os.path.splitext(os.path.basename(audio_filename))[0]
+    out_path = os.path.join(output_dir, f"{base_name}.wav")
+
+    if save_audio:
+      # Read HF bytes safely
+      with io.BytesIO(audio_bytes) as f:
+        y, sr = sf.read(f)
+
+      # Resample if needed
+      if resample and sr != sampling_rate:
+        y = librosa.resample(y, orig_sr=sr, target_sr=sampling_rate)
+        sr = sampling_rate
+
+      sf.write(out_path, y, sr)
+
+    if(save_audio):
+      with open(save_path, 'wb') as f:
+        f.write(audio_bytes)
+
+    # Use LJSpeech format (extended)
+    # /!\ audio_file shouldn't have extension, else fails | also they should just be filenames, the loader will add wav/ before and .wav after
+    return {
+      'audio_file': base_name,
+      'text': text,
+      'normalized_text': text,
+      'speaker_name': speaker_id
+    }
+
+  def process_split(split_name: str, csv_filename: str, output_wavs_dir: str, ds, resample=True, save_audio=True):
+    print(f"Processing split: {split_name}")
+    results = []
+
+    with ThreadPoolExecutor(max_workers=num_workers) as executor:
+      futures = [executor.submit(save_and_resample, ex, output_wavs_dir, resample, save_audio) for ex in ds[split_name]]
+      for f in tqdm(futures):
+        results.append(f.result())
+
+    # Save metadata
+    df = pd.DataFrame(results)
+    df.to_csv(os.path.join(output_dir, csv_filename), sep="|", index=False)
+    print(f"Saved {len(df)} entries to {csv_filename}")
+
+
+  print("Loading dataset from Hugging Face...")
+  ds = load_dataset(dataset)
+  ds = ds.cast_column("audio", Audio(decode=False))
+
+  print(f"Resampling to {sampling_rate} and saving...")
+  process_split("train", "metadata_train.csv", wavs_dir, ds, resample=True, save_audio=True)
+  process_split("test", "metadata_eval.csv", wavs_dir, ds, resample=True, save_audio=True)
+
+  print("Dataset saved!")
+
+
+
+
 if __name__ == "__main__":
   from parsers import create_prepare_dataset_parser
   parser = create_prepare_dataset_parser()
   args = parser.parse_args()
 
-  final_dataset_path = prepare_dataset(args.input_dir, args.output_dir, args.test_size)
+  dataset_path = prepare_dataset(args.input_dir, args.output_dir, args.test_size)
 
   if args.upload_to_hf:
-    print(f"\nLoading dataset from {final_dataset_path} using direct file loading...")
-    try:
-      # Use `load_dataset` with the CSV files directly.
-      dataset_dict = load_dataset(
-        'csv', 
-        data_files={
-          'train': os.path.join(final_dataset_path, "metadata_train.csv"),
-          'test': os.path.join(final_dataset_path, "metadata_test.csv"),
-        },
-        delimiter="|",
-        column_names=["audio_file", "text", "speaker_name"],
-      )
-
-      def add_features(example):
-          audio_path = os.path.join(final_dataset_path, example['audio_file'])
-          example['audio'] = audio_path
-
-          speaker_name = example["speaker_id"]
-          example['gender'] = "unknown"
-          if speaker_name.startswith("F_"):
-            example['gender'] = "female"
-          elif speaker_name.startswith("M_"):
-            example['gender'] = "male"
-          
-          try:
-            info = sf.info(audio_path)
-            example['duration'] = info.frames / info.samplerate
-          except Exception:
-            example['duration'] = 0.0                
-          return example
-
-      dataset_dict = dataset_dict.map(add_features, num_proc=1, desc="Adding extra features") # type: ignore
-      
-      # Cast the columns to the correct features
-      features = datasets.Features({
-        "audio": datasets.Audio(sampling_rate=22050),
-        "speaker_id": datasets.Value("string"),
-        "gender": datasets.Value("string"),
-        "duration": datasets.Value("float32"),
-        "normalized_text": datasets.Value("string"),
-      })
-      # Clean up the original `audio_file` column to match the expected format
-      dataset_dict = dataset_dict.remove_columns("audio_file")
-      dataset_dict = dataset_dict.cast(features)
-
-      print("\nDataset loaded successfully!")
-      print(dataset_dict)
-
-      input("Do you want to upload this dataset to Hugging Face? Press Enter to continue or Ctrl+C to exit.")
-      
-      dataset_dict.push_to_hub(args.dataset_name)
-      print("Dataset pushed to Hugging Face Hub successfully!")
-
-    except FileNotFoundError as e:
-      print(f"Error: {e}")
-      print("Please ensure 'metadata_train.csv', 'metadata_test.csv', and the 'wavs' folder are correctly placed inside the output directory.")
-    except Exception as e:
-      print(f"An unexpected error occurred during loading or uploading: {e}")
+    save_to_huggingFace(dataset_path, args.dataset_name)
