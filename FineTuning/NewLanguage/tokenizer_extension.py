@@ -15,10 +15,14 @@ from utils import preprocess_maltese_text
 
 def adjust_config(root: str, language: str, vocab_size: int):
   """Adjust the XTTS configuration file to include the new language.
-  Args:
+  Arguments:
       root (str): Path to the output directory where the config file is located. 
       language (str): Language code for the new language to be added.
       vocab_size (int): Desired size of the extended vocabulary.
+  Returns:
+      str: Path to the updated config file.
+  Raises:
+      FileNotFoundError: If the config file is not found.
   """
   config_path = os.path.join(root, "config.json")
   if not os.path.exists(config_path):
@@ -30,66 +34,77 @@ def adjust_config(root: str, language: str, vocab_size: int):
     config["languages"].append(language)
   config["model_args"]["gpt_number_text_tokens"] = vocab_size
 
+  config_vocab_size = config.get("model_args", {}).get("gpt_number_text_tokens", "NOT_FOUND")
+  if config_vocab_size != vocab_size:
+    config["model_args"]["gpt_number_text_tokens"] = vocab_size
+
   with open(config_path, 'w', encoding="utf-8") as f:
     json.dump(config, f, ensure_ascii=False, indent=4)
   print(f"Updated config file saved to {config_path}. Added new language: {language}. Vocab size: {vocab_size}")
 
+  return config_path
 
 
-def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
+#TODO currently messes the old embeddings because of the added padding, it"s to be expected and requires to train the model on new vocab and old language too.
+def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int):
   """Resizes embedding layers to match new vocabulary size while preserving existing weights.
-  Args:
-      original_path (str): Path to the original XTTS checkpoint directory.
+  Arguments:
+      root (str): Path to the original XTTS checkpoint directory.
       new_vocab_size (int): New vocabulary size after tokenizer extension.
+  Returns:
+      str: Path to the resized checkpoint file.
+  Raises:
+      FileNotFoundError: If the checkpoint file is not found.
   """
-  xtts_checkpoint_path = os.path.join(original_path, "model.pth")
+  xtts_checkpoint_path = os.path.join(root, "model.pth")
   if not os.path.exists(xtts_checkpoint_path):
     raise FileNotFoundError(f"Checkpoint file not found at {xtts_checkpoint_path}")
-  
-  print(f"Backing up checkpoint: {xtts_checkpoint_path + ' -> model_backup.pth'}")
-  # backup_checkpoint_path = os.path.join(original_path, "model_backup.pth")
-  # shutil.copyfile(xtts_checkpoint_path, backup_checkpoint_path)
+
+  backup_checkpoint_path = os.path.join(root, "model_backup.pth")
+  if not os.path.exists(backup_checkpoint_path):
+    print(f"Backing up checkpoint: {xtts_checkpoint_path + ' -> model_backup.pth'}")
+    shutil.copy2(xtts_checkpoint_path, backup_checkpoint_path)
+
 
   print(f"Resizing checkpoint embeddings: {xtts_checkpoint_path}")
-  
   checkpoint = torch.load(xtts_checkpoint_path, map_location="cpu")
 
   if "gpt.text_embedding.weight" in checkpoint["model"]:
     current_vocab_size = checkpoint["model"]["gpt.text_embedding.weight"].shape[0]
     embedding_dim = checkpoint["model"]["gpt.text_embedding.weight"].shape[1]
     print(f"Current vocab size: {current_vocab_size}, New vocab size: {new_vocab_size}")
-    
+
     if current_vocab_size == new_vocab_size:
       print("Vocabulary sizes match, no resizing needed.")
       return xtts_checkpoint_path
-    
+
     old_embedding = checkpoint["model"]["gpt.text_embedding.weight"]
     new_embedding = torch.zeros(new_vocab_size, embedding_dim, dtype=old_embedding.dtype)
-    
+
     # Copy existing embeddings
     min_vocab_size = min(current_vocab_size, new_vocab_size)
     new_embedding[:min_vocab_size] = old_embedding[:min_vocab_size]
-    
+
     # Initialize new embeddings with small random values (similar to original initialization)
     if new_vocab_size > current_vocab_size:
       std = old_embedding.std().item()
       new_embedding[current_vocab_size:].normal_(mean=0.0, std=std)
       print(f"Initialized {new_vocab_size - current_vocab_size} new embeddings with std={std:.6f}")
-    
+
     checkpoint["model"]["gpt.text_embedding.weight"] = new_embedding
-    
+
     # Resize text_head.weight (output layer)
     if "gpt.text_head.weight" in checkpoint["model"]:
       old_head_weight = checkpoint["model"]["gpt.text_head.weight"]
       new_head_weight = torch.zeros(new_vocab_size, embedding_dim, dtype=old_head_weight.dtype)
       new_head_weight[:min_vocab_size] = old_head_weight[:min_vocab_size]
-      
+
       if new_vocab_size > current_vocab_size:
         std = old_head_weight.std().item()
         new_head_weight[current_vocab_size:].normal_(mean=0.0, std=std)
-      
+
       checkpoint["model"]["gpt.text_head.weight"] = new_head_weight
-    
+
     # Resize text_head.bias
     if "gpt.text_head.bias" in checkpoint["model"]:
       old_bias = checkpoint["model"]["gpt.text_head.bias"]
@@ -97,7 +112,6 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
       new_bias[:min_vocab_size] = old_bias[:min_vocab_size]
       # New bias entries remain zero (good default)
       checkpoint["model"]["gpt.text_head.bias"] = new_bias
-    
 
     torch.save(checkpoint, xtts_checkpoint_path)
 
@@ -110,26 +124,29 @@ def resize_xtts_checkpoint_embeddings(original_path: str, new_vocab_size: int):
   del checkpoint, old_embedding, new_embedding
   torch.cuda.empty_cache()
   gc.collect()
-  
+
   return xtts_checkpoint_path
 
 
 
-def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min_frequency=2, max_new_tokens=8_000):
+def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000):
   """
-  Hybrid approach: Use MTWordTokenizer for linguistic preprocessing, then BPE for subword discovery.
-  This combines Maltese linguistic awareness with BPE's ability to find optimal subword units.
-  
+  Extend the XTTS GPT tokenizer by incorporating new tokens from the specified language.
+  This uses MTWordTokenizer for linguistic preprocessing, then BPE for subword discovery.
   Arguments:
-    - output_path: path to save the extended tokenizer
-    - metadata_path: path to the metadata file
-    - language: language code, e.g. 'mt'
-    - vocab_size: size of the vocabulary for the new BPE tokenizer
-    - min_frequency: minimum frequency for new tokens
-    - max_new_tokens: maximum number of new tokens to add
+    output_path (str): Path to save the extended tokenizer.
+    metadata_path (str): Path to the metadata file.
+    language (str): Language code, e.g. 'mt'.
+    vocab_size (int): Size of the vocabulary for the new BPE tokenizer.
+    min_frequency (int): Minimum frequency for new tokens.
+    max_new_tokens (int): Maximum number of new tokens to add.
+  Returns:
+    (int) The number of new tokens added to the vocabulary.
+  Raises:
+    ValueError: If the dataset is not found or cannot be loaded.
+    FileNotFoundError: If the original tokenizer file is not found.
   """
   print("==== Extending Tokenizer ====")
-  # Load original tokenizer
   original_tokenizer_path = os.path.join(output_path, "vocab.json")
   if not os.path.exists(original_tokenizer_path):
     raise FileNotFoundError(f"vocab.json not found at {original_tokenizer_path}")
@@ -145,7 +162,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
     texts = [preprocess_maltese_text(text) for text in texts]
 
 
-  print("Step 1: Creating linguistically-aware text chunks...")
+  print("Creating text chunks...")
   mt_tokenizer = MTWordTokenizer() if language == "mt" else None
   processed_texts = []
   for text in texts:
@@ -159,7 +176,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
       processed_texts.append(text)
 
 
-  print("Step 2: Training BPE on linguistically-processed text...")
+  print("Training BPE...")
   new_tokenizer = Tokenizer(models.BPE())
   new_tokenizer.pre_tokenizer = pre_tokenizers.Whitespace() # type: ignore
   trainer = trainers.BpeTrainer(
@@ -170,7 +187,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
   new_tokenizer.train_from_iterator(processed_texts, trainer)
 
 
-  print("Step 3: Filtering BPE tokens for conflicts...")
+  print("Filtering BPE tokens for conflicts...")
   token_freq = Counter()
   for text in processed_texts:
     encoded = new_tokenizer.encode(text)
@@ -179,7 +196,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
         token_freq[token] += 1
 
 
-  print("Step 4: Performing conflict detection...")
+  print("Performing conflict detection...")
   safe_tokens = []
 
   for token, freq in token_freq.most_common():
@@ -210,7 +227,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
       continue
 
 
-  print("Step 5: Adding missing character tokens...")
+  print("Adding missing character tokens...")
   all_chars = set()
   for text in texts:
     all_chars.update(list(text))
@@ -221,7 +238,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
     print(f"Added {len(missing_chars)} missing character tokens.")
 
 
-  print("Step 6: Finalizing new BPE tokens...")
+  print("Finalizing new BPE tokens...")
   if len(safe_tokens) > max_new_tokens:
     safe_tokens = safe_tokens[:max_new_tokens]
     print(f"Limited to {max_new_tokens} new tokens (from {len(token_freq)} candidates)")
@@ -238,7 +255,7 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
     original_tokenizer.add_special_tokens([lang_tok])
     print(f"Added special token {lang_tok}")
 
-  print("Step 8: Saving extended tokenizer...")
+  print("Saving extended tokenizer...")
   shutil.copy2(original_tokenizer_path, os.path.join(output_path, "vocab_base.json"))
   tokenizer_json_path = os.path.join(output_path, "tokenizer.json")
   original_tokenizer.save(tokenizer_json_path)
@@ -246,11 +263,11 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
   print(f"Extended tokenizer saved to {os.path.join(output_path, 'vocab.json')}.")
 
 
-  print("Step 9: Updating model embeddings and config...")
+  print("Updating model embeddings and configuration...")
   new_vocab_size = original_tokenizer.get_vocab_size()
 
   resize_xtts_checkpoint_embeddings(
-    original_path=output_path,
+    root=output_path,
     new_vocab_size=new_vocab_size
   )
 
@@ -261,8 +278,8 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
   )
 
   print(f"=== TOKENIZER EXTENSION COMPLETE ===")
+  print(f"Added {len(safe_tokens) + len(missing_chars)} new tokens total.")
   print(f"Final vocabulary size: {new_vocab_size}")
-  print(f"Added {len(safe_tokens) + len(missing_chars)} new tokens total")
 
   del new_tokenizer, token_freq
   gc.collect()
@@ -271,8 +288,8 @@ def extend_tokenizer(output_path, metadata_path, language, vocab_size=5_000, min
 
 
 
-def debug_tokenizer_corruption(original_tokenizer_path, extended_tokenizer_path):
-  """Check if tokenizer extension corrupted existing token mappings"""
+def debug_tokenizer_corruption(original_tokenizer_path: str, extended_tokenizer_path: str):
+  """Check if tokenizer extension corrupted existing token mappings by checking token ID shifts."""
 
   print("=== TOKENIZER CORRUPTION DEBUG ===\n")
   print("Loading tokenizers...")
@@ -283,15 +300,13 @@ def debug_tokenizer_corruption(original_tokenizer_path, extended_tokenizer_path)
     print(f"Error loading tokenizers: {e}")
     return False
 
-  # Get vocabularies
   orig_vocab = original.get_vocab()
   ext_vocab = extended.get_vocab()
-
   print(f"Original vocab size: {len(orig_vocab)}")
   print(f"Extended vocab size: {len(ext_vocab)}")
   print()
 
-  # Test common English words
+
   test_words = ["hello", "world", "the", "and", "is", "that", "you", "for", "magic", "doctor", "hi", "truth", "a", "two", "rt"]
 
   print("=== TOKEN ID COMPARISON ===")
@@ -299,22 +314,19 @@ def debug_tokenizer_corruption(original_tokenizer_path, extended_tokenizer_path)
   for word in test_words:
     orig_id = orig_vocab.get(word, "NOT_FOUND")
     ext_id = ext_vocab.get(word, "NOT_FOUND")
-
     if orig_id != ext_id:
       print(f"🔴 CORRUPTION: '{word}' changed from ID {orig_id} to {ext_id}")
       corruption_detected = True
     else:
       print(f"✅ OK: '{word}' kept ID {orig_id}")
-
   print()
 
-  # Test tokenization of simple English text
+
   print("=== TOKENIZATION COMPARISON ===")
   test_text = "Hello world, how are you today?"
 
   orig_tokens = original.encode(test_text).ids
   ext_tokens = extended.encode(test_text).ids
-
   print(f"Original tokenization: {orig_tokens}")
   print(f"Extended tokenization:  {ext_tokens}")
 
@@ -323,10 +335,9 @@ def debug_tokenizer_corruption(original_tokenizer_path, extended_tokenizer_path)
     corruption_detected = True
   else:
     print("✅ OK: Same tokenization preserved")
-
   print()
 
-  # Check for token ID shifts
+
   print("=== TOKEN ID SHIFT ANALYSIS ===")
   common_tokens = set(orig_vocab.keys()) & set(ext_vocab.keys())
   shifted_tokens = 0
@@ -354,12 +365,26 @@ def debug_tokenizer_corruption(original_tokenizer_path, extended_tokenizer_path)
 
 
 
-def extend_tokenizer_with_validation(output_path, metadata_path, language, vocab_size=5_000, min_frequency=2, max_new_tokens=8_000):
+def extend_tokenizer_with_validation(output_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 8_000):
   """
   Extended version with built-in validation to ensure no corruption occurred.
+  Arguments:
+    output_path (str): Path to the output directory.
+    metadata_path (str): Path to the metadata file.
+    language (str): Language code for the tokenizer.
+    vocab_size (int, optional): Size of the vocabulary. Defaults to 5000.
+    min_frequency (int, optional): Minimum frequency for tokens. Defaults to 2.
+    max_new_tokens (int, optional): Maximum number of new tokens to add. Defaults to 8000.
+  Returns:
+    int: The new vocabulary size after extension.
+  Raises:
+    FileNotFoundError: If the original tokenizer file is not found.
+    ValueError: If the new vocabulary size is not greater than the original.
   """
   original_tokenizer_path = os.path.join(output_path, "vocab.json")
   validation_backup = os.path.join(output_path, "vocab_validation_backup.json")
+  if not os.path.exists(original_tokenizer_path):
+    raise FileNotFoundError("Original tokenizer file not found.")
   shutil.copy2(original_tokenizer_path, validation_backup)
 
   try:

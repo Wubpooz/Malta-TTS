@@ -16,7 +16,7 @@ from sklearn.model_selection import train_test_split
 # ========================================================================================================
 # ============================== Dataset Preparation and CLI Logic =======================================
 # ========================================================================================================
-def prepare_dataset(input_dir: str, output_dir: str, test_size: float = 0.1):
+def prepare_dataset(input_dir: str, output_dir: str, test_size: float = 0.1) -> str:
   """
   Prepares the MASRI-HEADSET CORPUS v2 dataset by splitting it into train/test
   and creating a directory structure suitable for Hugging Face.
@@ -24,6 +24,8 @@ def prepare_dataset(input_dir: str, output_dir: str, test_size: float = 0.1):
     input_dir (str): Path to the input directory containing the dataset files.
     output_dir (str): Path to the output directory where the prepared dataset will be saved.
     test_size (float): Proportion of the dataset to include in the test split. Default is 0.1 (10%).
+  Returns:
+    str: The path to the prepared dataset directory.
   Raises:
     FileNotFoundError: If the transcription file is not found.
   """
@@ -91,7 +93,17 @@ def prepare_dataset(input_dir: str, output_dir: str, test_size: float = 0.1):
 
 
 
-def save_to_huggingFace(dataset_path: str, dataset_name: str):
+def save_to_huggingFace(dataset_path: str, dataset_name: str) -> None:
+  """
+  Save the dataset to the Hugging Face Hub.
+  Arguments:
+      dataset_path (str): Path to the dataset directory.
+      dataset_name (str): Name of the dataset on the Hugging Face Hub.
+  Returns:
+      None
+  Raises:
+      Exception: If the dataset fails to load or upload.
+  """
   print(f"\nLoading dataset from {dataset_path} using direct file loading...")
   try:
     # Use `load_dataset` with the CSV files directly.
@@ -153,7 +165,7 @@ def save_to_huggingFace(dataset_path: str, dataset_name: str):
 
 
 
-def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2", sampling_rate: int = 22050, num_workers: int = 16):
+def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2", sampling_rate: int = 22050, num_workers: int = 16) -> None:
   """
   Load a dataset and resample its audio files.
   Arguments:

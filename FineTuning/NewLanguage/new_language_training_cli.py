@@ -20,6 +20,7 @@ if __name__ == "__main__":
     )
     step += 1
 
+  #TODO check if already extended and if so don't do anything (if model & model_backup, if tokenizer.vocab>68.. and if config.mt exists)
   print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
   vocab_size = extend_tokenizer_with_validation(
     output_path=args.output_path,
@@ -33,32 +34,16 @@ if __name__ == "__main__":
   step += 1
 
 
-  config_path = os.path.join(args.output_path, "config.json")
-  if os.path.exists(config_path):
-    with open(config_path, 'r', encoding="utf-8") as f:
-      config = json.load(f)
-    config_vocab_size = config.get("model_args", {}).get("gpt_number_text_tokens", "NOT_FOUND")
-    print(f"Config vocab size: {config_vocab_size}")
-    
-    if config_vocab_size != vocab_size:
-      print(f"WARNING: Vocab size mismatch! Tokenizer: {vocab_size}, Config: {config_vocab_size}")
-      config["model_args"]["gpt_number_text_tokens"] = vocab_size
-      with open(config_path, 'w', encoding="utf-8") as f:
-        json.dump(config, f, indent=2, ensure_ascii=False)
-      print(f"Fixed config vocab size to {vocab_size}")
-
-  print(f"Step {step}: Starting GPT training.")
-  
+  print(f"Step {step}: Starting GPT training.")  
   updated_xtts_checkpoint = os.path.join(args.output_path, "model.pth")
   updated_tokenizer_file = os.path.join(args.output_path, "vocab.json")
-  
   if not os.path.exists(updated_xtts_checkpoint):
     print(f"ERROR: Updated checkpoint not found at {updated_xtts_checkpoint}")
     exit(1)
   if not os.path.exists(updated_tokenizer_file):
     print(f"ERROR: Updated tokenizer not found at {updated_tokenizer_file}")  
     exit(1)
-    
+
   print(f"Using updated checkpoint: {updated_xtts_checkpoint}")
   print(f"Using updated tokenizer: {updated_tokenizer_file}")
   print(f"Using vocab size: {vocab_size}")

@@ -3,13 +3,14 @@ import compatibility
 import os
 from TTS.utils.manage import ModelManager
 
-def download(output_path: str, version: str = "main", custom_model: str = ""):
+def download(output_path: str, version: str = "main", custom_model: str = "") -> tuple:
   """Download the XTTS model files and prepare the environment for training or inference.
-
-  Args:
+  Arguments:
       output_path (str): Path to the output directory. They will be saved in a subdirectory named "models/<version>" within this path.
       version (str): Version of the XTTS model to download. Default is "main".
       custom_model (str): Path to a custom model checkpoint (.pth file) to use instead of the default XTTS model.
+  Returns:
+      tuple: Paths to the downloaded model files (MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE).
   Raises:
       ValueError: If the custom model is not a valid .pth file.
   """
@@ -19,10 +20,6 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
   XTTS_CHECKPOINT_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/model.pth"
   XTTS_CONFIG_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/config.json"
   XTTS_SPEAKERS_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/speakers_xtts.pth"
-
-  # TODO move files there ?
-  # CHECKPOINTS_OUT_PATH = os.path.join(output_path, "models", f"{version}")
-  # os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
   
   DVAE_CHECKPOINT = os.path.join(output_path, os.path.basename(DVAE_CHECKPOINT_LINK))
   MEL_NORM_FILE = os.path.join(output_path, os.path.basename(MEL_NORM_LINK))
@@ -59,8 +56,6 @@ def download(output_path: str, version: str = "main", custom_model: str = ""):
     # torch.save({}, XTTS_SPEAKERS_FILE)
 
   print(" > XTTS model files downloaded successfully!")
-
-
   return MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE
 
 

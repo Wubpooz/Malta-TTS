@@ -1,12 +1,18 @@
 import compatibility
 
-def preprocess_maltese_text(text):
-  """Enhanced Maltese text preprocessing using MTWordTokenizer"""
+def preprocess_maltese_text(text: str) -> str:
+  """
+  Enhanced Maltese text preprocessing using MTWordTokenizer.
+  Arguments:
+      text (str): The input text to preprocess.
+  Returns:
+      str: The preprocessed text.
+  """
   from masri.tokenise.tokenise import MTWordTokenizer, MTRegex
 
   tokenizer = MTWordTokenizer()
 
-  text = tokenizer.tokenize_fix_quotes(text)
+  text = tokenizer.tokenize_fix_quotes(text) # type: ignore
   
   # Join tokens back but with proper spacing for clitics
   if isinstance(text, list):
@@ -30,11 +36,18 @@ def preprocess_maltese_text(text):
 
 
 
-def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
+def add_language_to_tokenizer(VoiceBPETokenizer, lang_code: str = "mt") -> None:
   """
     Adds your language to the tokenizer.py file using Monkey Patching.
     # pip install spacy stanza spacy-stanza
     # python -c "import stanza; stanza.download('mt')"
+  Arguments:
+      VoiceBPETokenizer: The tokenizer class to modify.
+      lang_code (str): The language code to add (default is "mt").
+  Returns:
+      None
+  Raises:
+      ValueError: If the tokenizer class is not compatible.
   """
   import TTS.tts.layers.xtts.tokenizer as tokenizerFile
 
@@ -158,8 +171,6 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
 
 
 
-
-
   _original_preprocess_text = VoiceBPETokenizer.preprocess_text
   def custom_preprocess_text(self, txt, lang):
     if lang == lang_code:
@@ -177,9 +188,15 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code="mt"):
 
 
 
-
-def split_into_sentences(text, lang_code="en"):
-  """Split text into sentences with language-specific handling."""
+def split_into_sentences(text: str, lang_code: str = "en") -> list[str]:
+  """
+  Split text into sentences with language-specific handling.
+  Arguments:
+      text (str): The text to split into sentences.
+      lang_code (str): The language code for language-specific handling.
+  Returns:
+      list: A list of sentences extracted from the text.
+  """
   import re
   sentence_endings = r'[.!?]+(?:\s|$)'
   
@@ -223,8 +240,17 @@ def split_into_sentences(text, lang_code="en"):
   return final_sentences
 
 
-def check_and_split_by_limit(sentences, char_limit, lang_code="en"):
-  """Check sentence lengths and split if necessary."""
+
+def check_and_split_by_limit(sentences: list[str], char_limit: int, lang_code: str = "en") -> list[str]:
+  """
+  Check sentence lengths and split if necessary.
+  Arguments:
+      sentences (list[str]): List of sentences to check.
+      char_limit (int): Character limit for each sentence.
+      lang_code (str): Language code for language-specific handling.
+  Returns:
+      list[str]: A list of processed sentences, split by the character limit.
+  """
   import re
   processed_sentences = []
   
