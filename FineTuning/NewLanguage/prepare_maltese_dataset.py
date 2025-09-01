@@ -6,7 +6,7 @@ import datasets
 import pandas as pd
 import soundfile as sf
 from tqdm import tqdm
-from datasets import load_dataset, Audio
+from huggingface_hub import HfApi, HfFolder, Repository, create_repo, login
 from datasets import load_dataset, Audio
 from concurrent.futures import ThreadPoolExecutor
 from sklearn.model_selection import train_test_split
@@ -157,7 +157,6 @@ def save_to_huggingFace(dataset_path: str, dataset_name: str) -> None:
     print(dataset_dict)
 
     input("Do you want to upload this dataset to Hugging Face? Press Enter to continue or Ctrl+C to exit.")
-    
     dataset_dict.push_to_hub(dataset_name)
     print("Dataset pushed to Hugging Face Hub successfully!")
 
@@ -235,7 +234,8 @@ def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2"
 
 
   print("Loading dataset from Hugging Face...")
-  ds = load_dataset(dataset)
+  hf_token = os.environ.get("HF_TOKEN")
+  ds = load_dataset(dataset, use_auth_token=hf_token)
   ds = ds.cast_column("audio", Audio(decode=False))
 
   print(f"Resampling to {sampling_rate} and saving...")
@@ -255,7 +255,8 @@ def dataset_repartition(dataset: str = "Bluefir/MASRI_HEADSET_v2", local: bool =
   """
   import tempfile
   # Don't decode audio — just keep metadata
-  ds = load_dataset(dataset)
+  hf_token = os.environ.get("HF_TOKEN")
+  ds = load_dataset(dataset, use_auth_token=hf_token)
   ds = ds.cast_column("audio", Audio(decode=False))
   text_lengths = []
   audio_durations = []
