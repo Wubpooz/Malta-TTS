@@ -245,6 +245,39 @@ def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2"
   print("Dataset saved!")
 
 
+def dataset_repartition(dataset: str = "Bluefir/MASRI_HEADSET_v2", local: bool = False) -> None:
+  """
+    Repartition the dataset into train and test splits. Prints the text length and audio duration statistics.
+    Arguments:
+      dataset (str): The name of the huggingFace dataset to repartition.
+    Returns:
+      None
+  """
+  import tempfile
+  # Don't decode audio — just keep metadata
+  ds = load_dataset(dataset)
+  ds = ds.cast_column("audio", Audio(decode=False))
+  text_lengths = []
+  audio_durations = []
+
+  for split in ["train", "test"]:
+    print(f"Processing split: {split}")
+    for example in ds[split]:
+      text_lengths.append(len(example["normalized_text"])) # type: ignore
+
+      # Save audio bytes to temp file, read duration with soundfile
+      audio_bytes = example["audio"]["bytes"] # type: ignore
+      with tempfile.NamedTemporaryFile(suffix=".wav") as tmpf:
+        tmpf.write(audio_bytes)
+        tmpf.flush()
+        with sf.SoundFile(tmpf.name) as f:
+          duration = len(f) / f.samplerate
+          audio_durations.append(duration)
+
+  print(f"Text length range: {min(text_lengths)} - {max(text_lengths)} characters")
+  print(f"Audio duration range: {min(audio_durations):.2f} - {max(audio_durations):.2f} seconds")
+  print(f"Average text length: {sum(text_lengths)/len(text_lengths):.2f} characters")
+  print(f"Average audio duration: {sum(audio_durations)/len(audio_durations):.2f} seconds")
 
 
 if __name__ == "__main__":
