@@ -19,7 +19,6 @@ def create_xtts_trainer_parser():
   parser.add_argument("--custom_model", type=str, default="", help="Path to custom model checkpoint (.pth file)")
   parser.add_argument("--version", type=str, default="main", help="XTTS version to use (default: main)")
   parser.add_argument("--multi_gpu", action='store_true', help="Use multi-GPU training")
-  parser.add_argument("--metadata_path", type=str, required=True, help="Path to a single metadata file for tokenizer training.")
   parser.add_argument("--language", type=str, required=True, help="Language code for the new language (e.g., 'mt').")
   parser.add_argument("--mel_norm_file", type=str, required=False, help="Path to the mel normalization file")
   parser.add_argument("--dvae_checkpoint", type=str, required=False, help="Path to the pretrained DVAE model checkpoint (.pth file)")

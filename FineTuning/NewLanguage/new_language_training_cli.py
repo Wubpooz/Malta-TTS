@@ -1,5 +1,4 @@
 import os
-import json
 
 from download import download
 from tokenizer_extension import extend_tokenizer_with_validation
@@ -28,11 +27,12 @@ if __name__ == "__main__":
     xtts_checkpoint = args.xtts_checkpoint
     tokenizer_file = args.tokenizer_file
 
+  training_metadata_path = args.metadatas[0].split(',')[0]
   #TODO check if already extended and if so don't do anything (if model & model_backup, if tokenizer.vocab>68.. and if config.mt exists)
   print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
   vocab_size = extend_tokenizer_with_validation(
     output_path=args.output_path,
-    metadata_path=args.metadata_path,
+    metadata_path=training_metadata_path,
     language=args.language,
     vocab_size=5000,
     min_frequency=2,
