@@ -14,6 +14,8 @@ def download(output_path: str, version: str = "main", custom_model: str = "") ->
   Raises:
       ValueError: If the custom model is not a valid .pth file.
   """
+  if not os.path.exists(output_path):
+    os.makedirs(output_path, exist_ok=True)
   DVAE_CHECKPOINT_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/dvae.pth"
   MEL_NORM_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/mel_stats.pth"
   TOKENIZER_FILE_LINK = f"https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/{version}/vocab.json"
@@ -56,6 +58,7 @@ def download(output_path: str, version: str = "main", custom_model: str = "") ->
     # torch.save({}, XTTS_SPEAKERS_FILE)
 
   print(" > XTTS model files downloaded successfully!")
+  print("Downloaded files can be found in:", output_path)
   return MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE
 
 

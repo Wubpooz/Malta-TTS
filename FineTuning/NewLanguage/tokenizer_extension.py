@@ -150,6 +150,8 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_
   original_tokenizer_path = os.path.join(output_path, "vocab.json")
   if not os.path.exists(original_tokenizer_path):
     raise FileNotFoundError(f"vocab.json not found at {original_tokenizer_path}")
+  if not os.path.exists(metadata_path):
+    raise FileNotFoundError(f"Metadata file not found at {metadata_path}")
 
   original_tokenizer = Tokenizer.from_file(original_tokenizer_path)
   original_vocab = set(original_tokenizer.get_vocab().keys())

@@ -11,6 +11,9 @@ if __name__ == "__main__":
   parser = create_xtts_trainer_parser()
   args = parser.parse_args()
 
+  if not os.path.exists(args.output_path):
+    os.makedirs(args.output_path, exist_ok=True)
+
   step = 1
   if args.is_download:
     print(f"Step {step}: Downloading XTTS base model files.")

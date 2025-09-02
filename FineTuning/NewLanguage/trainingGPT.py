@@ -286,7 +286,7 @@ def train_gpt(metadatas: list[str], language: str, mel_norm_file: str, dvae_chec
     )
 
     # TODO untested
-    if multi_gpu:
+    if multi_gpu and torch.cuda.device_count() > 1:
       try:
         trainer.model = torch.nn.DataParallel(trainer.model, device_ids=list(range(torch.cuda.device_count())))
       except Exception as e:
