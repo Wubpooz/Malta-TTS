@@ -13,7 +13,7 @@ from masri.tokenise.tokenise import MTWordTokenizer
 from utils import preprocess_maltese_text
 
 
-def adjust_config(root: str, language: str, vocab_size: int):
+def adjust_config(root: str, language: str, vocab_size: int) -> str:
   """Adjust the XTTS configuration file to include the new language.
   Arguments:
       root (str): Path to the output directory where the config file is located. 
@@ -46,7 +46,7 @@ def adjust_config(root: str, language: str, vocab_size: int):
 
 
 #TODO currently messes the old embeddings because of the added padding, it"s to be expected and requires to train the model on new vocab and old language too.
-def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int):
+def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int) -> str:
   """Resizes embedding layers to match new vocabulary size while preserving existing weights.
   Arguments:
       root (str): Path to the original XTTS checkpoint directory.
@@ -129,7 +129,7 @@ def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int):
 
 
 
-def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000):
+def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000) -> int:
   """
   Extend the XTTS GPT tokenizer by incorporating new tokens from the specified language.
   This uses MTWordTokenizer for linguistic preprocessing, then BPE for subword discovery.
