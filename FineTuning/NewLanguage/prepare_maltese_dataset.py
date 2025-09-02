@@ -171,6 +171,102 @@ def save_to_huggingFace(dataset_path: str, dataset_name: str) -> None:
 # =====================================================
 # =============== Loading Dataset =====================
 # =====================================================
+def _save_and_resample_worker(example: dict, wavs_dir: str, sampling_rate: int, save_audio: bool = True):
+  """Top-level worker for ProcessPoolExecutor (picklable)."""
+  try:
+    audio_info = example['audio']
+    audio_bytes = audio_info.get('bytes') or audio_info.get('array')  # support decoded/undecoded
+    audio_filename = audio_info.get('path') or example.get('audio_file')
+    if not audio_bytes or not audio_filename:
+      print(f"Warning: missing audio data for example {example.get('id')}")
+      return None
+    base_name = os.path.splitext(os.path.basename(audio_filename))[0]
+
+    if save_audio:
+      out_path = os.path.join(wavs_dir, f"{base_name}.wav")
+      # read audio (bytes -> numpy array)
+      if isinstance(audio_bytes, (bytes, bytearray)):
+        with io.BytesIO(audio_bytes) as f:
+          y, sr = sf.read(f, dtype='float32')
+      else:
+        y = audio_bytes
+        sr = audio_info.get('sampling_rate', 22050)
+
+      if sr != sampling_rate:
+        # print(f"Warning: resampling {audio_filename} from {sr} to {sampling_rate}")
+        try:
+          import samplerate
+          ratio = float(sampling_rate) / float(sr)
+          y = samplerate.resample(y, ratio, 'sinc_best')
+          sr = sampling_rate
+        except Exception:
+          y = librosa.resample(y.astype('float32'), orig_sr=sr, target_sr=sampling_rate)
+          sr = sampling_rate
+
+        try:
+          sf.write(out_path, y, samplerate=sampling_rate)
+        except Exception as e:
+          print(f"Warning: failed to write resampled file {out_path}: {e}")
+          # fallback: if original bytes are available and user requested to save them, write raw bytes
+          if save_audio and isinstance(audio_info.get('bytes'), (bytes, bytearray)):
+            try:
+              raw_dst = os.path.join(wavs_dir, os.path.basename(audio_info.get('path', out_path)))
+              with open(raw_dst, 'wb') as rf:
+                rf.write(audio_info.get('bytes'))
+              out_path = raw_dst
+            except Exception as e2:
+              print(f"Error: failed to save raw audio bytes for {base_name}: {e2}")
+              return {'__error__': f"write_failed: {e2}", 'audio_file': None}
+          else:
+            return {'__error__': f"write_failed: {e}", 'audio_file': None}
+
+
+    # Use LJSpeech format (extended)
+    # /!\ audio_file shouldn't have extension, else fails | also they should just be filenames, the loader will add wav/ before and .wav after
+    return {
+      'audio_file': base_name,
+      'text': example.get('normalized_text') or example.get('text') or "",
+      'normalized_text': example.get('normalized_text') or example.get('text') or "",
+      'speaker_name': example.get('speaker_id') or example.get('speaker_name') or ""
+    }
+  except Exception as e:
+    return {'__error__': str(e), 'audio_file': None}
+
+
+def process_split(split_name: str, csv_filename: str, output_wavs_dir: str, ds, sampling_rate: int = 22050, save_audio=False, num_workers: int = 8):
+  """Process a dataset split using ProcessPoolExecutor and as_completed for streaming progress."""
+  print(f"Processing split: {split_name} (workers={num_workers})")
+  results = []
+  futures = []
+  total = len(ds[split_name])
+
+  # Reads first file and tell if there will likely be resampling (since we can assume that all the audio files follow the same format)
+  first_audio_info = ds[split_name][0].get('audio')
+  if first_audio_info is not None:
+    first_sampling_rate = first_audio_info.get('sampling_rate', 22050)
+    if first_sampling_rate != sampling_rate:
+      print(f"{split_name} split audio files are likely sampled at {first_sampling_rate}, they may need resampling to {sampling_rate}.")
+
+  with ProcessPoolExecutor(max_workers=num_workers) as exc:
+    for ex in ds[split_name]:
+      futures.append(exc.submit(_save_and_resample_worker, ex, output_wavs_dir, sampling_rate, save_audio))
+
+    with tqdm(total=total, desc=f"Resampling {split_name}") as pbar:
+      for fut in as_completed(futures):
+        res = fut.result()
+        pbar.update(1)
+        if not res or res.get('__error__'):
+          if res:
+            print(f"Warning: worker error: {res.get('__error__')}")
+          continue
+        results.append(res)
+
+  # Save metadata
+  df = pd.DataFrame(results)
+  df.to_csv(os.path.join(os.path.dirname(output_wavs_dir), csv_filename), sep="|", index=False)
+  print(f"Saved {len(df)} entries to {csv_filename}")
+
+
 def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2", sampling_rate: int = 22050, num_workers: int = 16) -> None:
   """
   Load a dataset and resample its audio files.
@@ -185,103 +281,6 @@ def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2"
   os.makedirs(output_dir, exist_ok=True)
   wavs_dir = os.path.join(output_dir, "wavs")
   os.makedirs(wavs_dir, exist_ok=True)
-
-
-  def _save_and_resample_worker(example: dict, wavs_dir: str, sampling_rate: int, save_audio: bool = True):
-    """Top-level worker for ProcessPoolExecutor (picklable)."""
-    try:
-      audio_info = example['audio']
-      audio_bytes = audio_info.get('bytes') or audio_info.get('array')  # support decoded/undecoded
-      audio_filename = audio_info.get('path') or example.get('audio_file')
-      if not audio_bytes or not audio_filename:
-        print(f"Warning: missing audio data for example {example.get('id')}")
-        return None
-      base_name = os.path.splitext(os.path.basename(audio_filename))[0]
-
-      if save_audio:
-        out_path = os.path.join(wavs_dir, f"{base_name}.wav")
-        # read audio (bytes -> numpy array)
-        if isinstance(audio_bytes, (bytes, bytearray)):
-          with io.BytesIO(audio_bytes) as f:
-            y, sr = sf.read(f, dtype='float32')
-        else:
-          y = audio_bytes
-          sr = audio_info.get('sampling_rate', 22050)
-
-        if sr != sampling_rate:
-          print(f"Warning: resampling {audio_filename} from {sr} to {sampling_rate}")
-          try:
-            import samplerate
-            ratio = float(sampling_rate) / float(sr)
-            y = samplerate.resample(y, ratio, 'sinc_best')
-            sr = sampling_rate
-          except Exception:
-            y = librosa.resample(y.astype('float32'), orig_sr=sr, target_sr=sampling_rate)
-            sr = sampling_rate
-
-          try:
-            sf.write(out_path, y, samplerate=sampling_rate)
-          except Exception as e:
-            print(f"Warning: failed to write resampled file {out_path}: {e}")
-            # fallback: if original bytes are available and user requested to save them, write raw bytes
-            if save_audio and isinstance(audio_info.get('bytes'), (bytes, bytearray)):
-              try:
-                raw_dst = os.path.join(wavs_dir, os.path.basename(audio_info.get('path', out_path)))
-                with open(raw_dst, 'wb') as rf:
-                  rf.write(audio_info.get('bytes'))
-                out_path = raw_dst
-              except Exception as e2:
-                print(f"Error: failed to save raw audio bytes for {base_name}: {e2}")
-                return {'__error__': f"write_failed: {e2}", 'audio_file': None}
-            else:
-              return {'__error__': f"write_failed: {e}", 'audio_file': None}
-
-
-      # Use LJSpeech format (extended)
-      # /!\ audio_file shouldn't have extension, else fails | also they should just be filenames, the loader will add wav/ before and .wav after
-      return {
-        'audio_file': base_name,
-        'text': example.get('normalized_text') or example.get('text') or "",
-        'normalized_text': example.get('normalized_text') or example.get('text') or "",
-        'speaker_name': example.get('speaker_id') or example.get('speaker_name') or ""
-      }
-    except Exception as e:
-      return {'__error__': str(e), 'audio_file': None}
-
-
-  def process_split(split_name: str, csv_filename: str, output_wavs_dir: str, ds, sampling_rate: int = 22050, save_audio=False, num_workers: int = 8):
-    """Process a dataset split using ProcessPoolExecutor and as_completed for streaming progress."""
-    print(f"Processing split: {split_name} (workers={num_workers})")
-    results = []
-    futures = []
-    total = len(ds[split_name])
-
-    with ProcessPoolExecutor(max_workers=num_workers) as exc:
-      for ex in ds[split_name]:
-        futures.append(exc.submit(_save_and_resample_worker, ex, output_wavs_dir, sampling_rate, save_audio))
-
-      with tqdm(total=total, desc=f"Resampling {split_name}") as pbar:
-        for fut in as_completed(futures):
-          res = fut.result()
-          pbar.update(1)
-          if not res or res.get('__error__'):
-            # optional: log failures
-            if res:
-              print(f"Warning: worker error: {res.get('__error__')}")
-            continue
-          results.append(res)
-    
-    # Or
-    # with ThreadPoolExecutor(max_workers=num_workers) as executor:
-    #   futures = [executor.submit(save_and_resample, ex, output_wavs_dir, resample, save_audio) for ex in ds[split_name]]
-    #   for f in tqdm(futures):
-    #     results.append(f.result())
-
-    # Save metadata
-    df = pd.DataFrame(results)
-    df.to_csv(os.path.join(os.path.dirname(output_wavs_dir), csv_filename), sep="|", index=False)
-    print(f"Saved {len(df)} entries to {csv_filename}")
-
 
   print("Loading dataset from Hugging Face...")
   hf_token = os.environ.get("HF_TOKEN")
