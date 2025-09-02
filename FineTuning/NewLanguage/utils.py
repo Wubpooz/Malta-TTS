@@ -66,7 +66,7 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code: str = "mt") -> None:
     else:
       return _original_get_spacy_lang(lang)
 
-  tokenizerFile.get_spacy_lang = get_spacy_lang 
+  tokenizerFile.get_spacy_lang = get_spacy_lang
 
 
   tokenizerFile._abbreviations[lang_code] = [

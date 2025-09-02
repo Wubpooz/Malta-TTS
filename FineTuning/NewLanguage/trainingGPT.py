@@ -160,7 +160,7 @@ def train_gpt(metadatas: list[str], language: str, mel_norm_file: str, dvae_chec
   model_args = GPTArgs(
     max_conditioning_length=132300,  # 6 secs
     min_conditioning_length=66150,  # 3 secs   or 11025 for 0.5sec
-    debug_loading_failures=True,
+    debug_loading_failures=False,
     max_wav_length=max_audio_length,
     max_text_length=max_text_length,
     mel_norm_file=mel_norm_file,

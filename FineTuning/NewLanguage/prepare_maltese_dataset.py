@@ -267,7 +267,7 @@ def process_split(split_name: str, csv_filename: str, output_wavs_dir: str, ds, 
   print(f"Saved {len(df)} entries to {csv_filename}")
 
 
-def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2", sampling_rate: int = 22050, num_workers: int = 16) -> None:
+def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2", save_audio: bool = False, sampling_rate: int = 22050, num_workers: int = 16) -> None:
   """
   Load a dataset and resample its audio files.
   Arguments:
@@ -287,9 +287,12 @@ def load_and_resample(output_dir: str, dataset: str = "Bluefir/MASRI_HEADSET_v2"
   ds = load_dataset(dataset, use_auth_token=hf_token)
   ds = ds.cast_column("audio", Audio(decode=False))
 
-  print(f"Resampling to {sampling_rate}Hz and saving...")
-  process_split("train", "metadata_train.csv", wavs_dir, ds, sampling_rate=sampling_rate, save_audio=True, num_workers=num_workers)
-  process_split("test", "metadata_eval.csv", wavs_dir, ds, sampling_rate=sampling_rate, save_audio=True, num_workers=num_workers)
+  if save_audio:
+    print(f"Resampling to {sampling_rate}Hz and saving...")
+  else:
+    print("Only saving metadatas...")
+  process_split("train", "metadata_train.csv", wavs_dir, ds, sampling_rate=sampling_rate, save_audio=save_audio, num_workers=num_workers)
+  process_split("test", "metadata_eval.csv", wavs_dir, ds, sampling_rate=sampling_rate, save_audio=save_audio, num_workers=num_workers)
   print("Dataset saved!")
 
 
