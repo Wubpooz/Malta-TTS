@@ -69,6 +69,7 @@ def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoi
     )
 
   if model:
+    print("Model loaded successfully!")
     return model
   else:
     raise Exception("Failed to load model.")
@@ -140,11 +141,8 @@ def inference(xtts_checkpoint: str, xtts_config: str, xtts_vocab: str, tts_text:
   
   print("Initializing model...")
   model = Xtts.init_from_config(config)
-  
-  print("Loading checkpoint...")
   model = load_model(LORA_trained, xtts_checkpoint, model, config, checkpoint_dir, xtts_vocab, use_deepspeed)
   model.to(device)
-  print("Model loaded successfully!")
 
   if lang_code not in ["en", "fr", "de", "es", "it", "pt", "ru", "zh", "ja", "ko"]: #default XTTS supported languages
     from utils import add_language_to_tokenizer

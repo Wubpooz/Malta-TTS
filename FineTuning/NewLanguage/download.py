@@ -59,7 +59,7 @@ def download(output_path: str, version: str = "main", custom_model: str = "") ->
 
   print(" > XTTS model files downloaded successfully!")
   print("Downloaded files can be found in:", output_path)
-  return MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE
+  return MEL_NORM_FILE, DVAE_CHECKPOINT, XTTS_CHECKPOINT, TOKENIZER_FILE, XTTS_CONFIG_FILE, XTTS_SPEAKERS_FILE
 
 
 if __name__ == "__main__":

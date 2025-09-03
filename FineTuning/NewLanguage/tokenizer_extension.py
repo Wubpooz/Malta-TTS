@@ -13,10 +13,10 @@ from masri.tokenise.tokenise import MTWordTokenizer
 from utils import preprocess_maltese_text
 
 
-def adjust_config(root: str, language: str, vocab_size: int) -> str:
+def adjust_config(config_path: str, language: str, vocab_size: int) -> str:
   """Adjust the XTTS configuration file to include the new language.
   Arguments:
-      root (str): Path to the output directory where the config file is located. 
+      config_path (str): Path to the configuration file.
       language (str): Language code for the new language to be added.
       vocab_size (int): Desired size of the extended vocabulary.
   Returns:
@@ -24,7 +24,6 @@ def adjust_config(root: str, language: str, vocab_size: int) -> str:
   Raises:
       FileNotFoundError: If the config file is not found.
   """
-  config_path = os.path.join(root, "config.json")
   if not os.path.exists(config_path):
     raise FileNotFoundError(f"Config file not found at {config_path}. Please ensure the path is correct.")
   with open(config_path, "r", encoding="utf-8") as f:
@@ -46,28 +45,29 @@ def adjust_config(root: str, language: str, vocab_size: int) -> str:
 
 
 #TODO currently messes the old embeddings because of the added padding, it"s to be expected and requires to train the model on new vocab and old language too.
-def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int) -> str:
+def resize_xtts_checkpoint_embeddings(output_path: str, xtts_checkpoint: str, new_vocab_size: int) -> str:
   """Resizes embedding layers to match new vocabulary size while preserving existing weights.
   Arguments:
-      root (str): Path to the original XTTS checkpoint directory.
+      output_path (str): Path to the output directory where the resized checkpoint will be saved.
+      xtts_checkpoint (str): Path to the original X-TTS checkpoint file.
       new_vocab_size (int): New vocabulary size after tokenizer extension.
   Returns:
       str: Path to the resized checkpoint file.
   Raises:
       FileNotFoundError: If the checkpoint file is not found.
   """
-  xtts_checkpoint_path = os.path.join(root, "model.pth")
-  if not os.path.exists(xtts_checkpoint_path):
-    raise FileNotFoundError(f"Checkpoint file not found at {xtts_checkpoint_path}")
+  if not os.path.exists(xtts_checkpoint):
+    raise FileNotFoundError(f"Checkpoint file not found at {xtts_checkpoint}")
 
-  backup_checkpoint_path = os.path.join(root, "model_backup.pth")
+  backup_checkpoint_path = os.path.join(output_path, "model_backup.pth")
   if not os.path.exists(backup_checkpoint_path):
-    print(f"Backing up checkpoint: {xtts_checkpoint_path + ' -> model_backup.pth'}")
-    shutil.copy2(xtts_checkpoint_path, backup_checkpoint_path)
+    print(f"Backing up checkpoint: {xtts_checkpoint + ' -> model_backup.pth'}")
+    shutil.copy2(xtts_checkpoint, backup_checkpoint_path)
 
+  xtts_checkpoint_resized = os.path.join(output_path, "model.pth")
 
-  print(f"Resizing checkpoint embeddings: {xtts_checkpoint_path}")
-  checkpoint = torch.load(xtts_checkpoint_path, map_location="cpu")
+  print(f"Resizing checkpoint embeddings: {xtts_checkpoint}")
+  checkpoint = torch.load(xtts_checkpoint, map_location="cpu")
 
   if "gpt.text_embedding.weight" in checkpoint["model"]:
     current_vocab_size = checkpoint["model"]["gpt.text_embedding.weight"].shape[0]
@@ -76,7 +76,7 @@ def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int) -> str:
 
     if current_vocab_size == new_vocab_size:
       print("Vocabulary sizes match, no resizing needed.")
-      return xtts_checkpoint_path
+      return xtts_checkpoint_resized
 
     old_embedding = checkpoint["model"]["gpt.text_embedding.weight"]
     new_embedding = torch.zeros(new_vocab_size, embedding_dim, dtype=old_embedding.dtype)
@@ -113,9 +113,9 @@ def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int) -> str:
       # New bias entries remain zero (good default)
       checkpoint["model"]["gpt.text_head.bias"] = new_bias
 
-    torch.save(checkpoint, xtts_checkpoint_path)
+    torch.save(checkpoint, xtts_checkpoint_resized)
 
-    print(f"Checkpoint resized and saved to: {xtts_checkpoint_path}")
+    print(f"Checkpoint resized and saved to: {xtts_checkpoint_resized}")
     print(f"Successfully resized from {current_vocab_size} to {new_vocab_size} tokens")
   
   else:
@@ -125,35 +125,36 @@ def resize_xtts_checkpoint_embeddings(root: str, new_vocab_size: int) -> str:
   torch.cuda.empty_cache()
   gc.collect()
 
-  return xtts_checkpoint_path
+  return xtts_checkpoint_resized
 
 
-
-def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000) -> int:
+def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000) -> tuple:
   """
   Extend the XTTS GPT tokenizer by incorporating new tokens from the specified language.
   This uses MTWordTokenizer for linguistic preprocessing, then BPE for subword discovery.
   Arguments:
     output_path (str): Path to save the extended tokenizer.
+    xtts_checkpoint (str): Path to the X-TTS checkpoint file.
+    tokenizer_file (str): Path to the tokenizer file.
+    config_path (str): Path to the configuration file.
     metadata_path (str): Path to the metadata file.
     language (str): Language code, e.g. 'mt'.
     vocab_size (int): Size of the vocabulary for the new BPE tokenizer.
     min_frequency (int): Minimum frequency for new tokens.
     max_new_tokens (int): Maximum number of new tokens to add.
   Returns:
-    (int) The number of new tokens added to the vocabulary.
+    tuple: A tuple containing the new vocabulary size, XTTS checkpoint, and tokenizer file paths.
   Raises:
     ValueError: If the dataset is not found or cannot be loaded.
     FileNotFoundError: If the original tokenizer file is not found.
   """
   print("==== Extending Tokenizer ====")
-  original_tokenizer_path = os.path.join(output_path, "vocab.json")
-  if not os.path.exists(original_tokenizer_path):
-    raise FileNotFoundError(f"vocab.json not found at {original_tokenizer_path}")
+  if not os.path.exists(tokenizer_file):
+    raise FileNotFoundError(f"Original tokenizer file not found at {tokenizer_file}")
   if not os.path.exists(metadata_path):
     raise FileNotFoundError(f"Metadata file not found at {metadata_path}")
 
-  original_tokenizer = Tokenizer.from_file(original_tokenizer_path)
+  original_tokenizer = Tokenizer.from_file(tokenizer_file)
   original_vocab = set(original_tokenizer.get_vocab().keys())
 
   # Load and preprocess texts
@@ -258,7 +259,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_
     print(f"Added special token {lang_tok}")
 
   print("Saving extended tokenizer...")
-  shutil.copy2(original_tokenizer_path, os.path.join(output_path, "vocab_base.json"))
+  shutil.copy2(tokenizer_file, os.path.join(output_path, "vocab_base.json"))
   tokenizer_json_path = os.path.join(output_path, "tokenizer.json")
   original_tokenizer.save(tokenizer_json_path)
   shutil.copy2(tokenizer_json_path, os.path.join(output_path, "vocab.json"))
@@ -269,15 +270,19 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_
   new_vocab_size = original_tokenizer.get_vocab_size()
 
   resize_xtts_checkpoint_embeddings(
-    root=output_path,
+    output_path=output_path,
+    xtts_checkpoint=xtts_checkpoint,
     new_vocab_size=new_vocab_size
   )
 
   adjust_config(
-    root=output_path,
+    config_path=config_path,
     language=language,
     vocab_size=new_vocab_size
   )
+
+  if config_path != os.path.join(output_path, "config.json"):
+    shutil.copy2(config_path, os.path.join(output_path, "config.json"))
 
   print(f"=== TOKENIZER EXTENSION COMPLETE ===")
   print(f"Added {len(safe_tokens) + len(missing_chars)} new tokens total.")
@@ -286,7 +291,7 @@ def extend_tokenizer(output_path: str, metadata_path: str, language: str, vocab_
   del new_tokenizer, token_freq
   gc.collect()
 
-  return new_vocab_size
+  return new_vocab_size, xtts_checkpoint, tokenizer_file
 
 
 
@@ -367,46 +372,50 @@ def debug_tokenizer_corruption(original_tokenizer_path: str, extended_tokenizer_
 
 
 
-def extend_tokenizer_with_validation(output_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 8_000):
+def extend_tokenizer_with_validation(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 8_000) -> tuple:
   """
   Extended version with built-in validation to ensure no corruption occurred.
   Arguments:
     output_path (str): Path to the output directory.
+    xtts_checkpoint (str): Path to the X-TTS checkpoint file.
+    tokenizer_file (str): Path to the tokenizer file.
+    config_path (str): Path to the configuration file.
     metadata_path (str): Path to the metadata file.
     language (str): Language code for the tokenizer.
     vocab_size (int, optional): Size of the vocabulary. Defaults to 5000.
     min_frequency (int, optional): Minimum frequency for tokens. Defaults to 2.
     max_new_tokens (int, optional): Maximum number of new tokens to add. Defaults to 8000.
   Returns:
-    int: The new vocabulary size after extension.
+    tuple: A tuple containing the new vocabulary size, XTTS checkpoint, and tokenizer file paths.
   Raises:
     FileNotFoundError: If the original tokenizer file is not found.
     ValueError: If the new vocabulary size is not greater than the original.
   """
-  original_tokenizer_path = os.path.join(output_path, "vocab.json")
   validation_backup = os.path.join(output_path, "vocab_validation_backup.json")
-  if not os.path.exists(original_tokenizer_path):
+  if not os.path.exists(tokenizer_file):
     raise FileNotFoundError("Original tokenizer file not found.")
-  shutil.copy2(original_tokenizer_path, validation_backup)
+  shutil.copy2(tokenizer_file, validation_backup)
 
   try:
-    new_vocab_size = extend_tokenizer(output_path, metadata_path, language, vocab_size, min_frequency, max_new_tokens)
+    new_vocab_size, xtts_checkpoint, tokenizer_file = extend_tokenizer(output_path=output_path, xtts_checkpoint=xtts_checkpoint, tokenizer_file=tokenizer_file,
+                                      config_path=config_path, metadata_path=metadata_path, language=language, vocab_size=vocab_size,
+                                      min_frequency=min_frequency, max_new_tokens=max_new_tokens)
 
     print("\n=== RUNNING CORRUPTION VALIDATION ===")
-    corruption_detected = debug_tokenizer_corruption(validation_backup, original_tokenizer_path)
+    corruption_detected = debug_tokenizer_corruption(validation_backup, tokenizer_file)
 
     if corruption_detected:
       print("🔴 CORRUPTION DETECTED! Rolling back changes...")
-      shutil.copy2(validation_backup, original_tokenizer_path)
+      shutil.copy2(validation_backup, tokenizer_file)
       raise RuntimeError("Tokenizer extension failed validation - changes rolled back")
     else:
       print("✅ Validation passed - tokenizer extension successful!")
       os.remove(validation_backup)
-      return new_vocab_size
+      return new_vocab_size, xtts_checkpoint, tokenizer_file
 
   except Exception as e:
     if os.path.exists(validation_backup):
-      shutil.copy2(validation_backup, original_tokenizer_path)
+      shutil.copy2(validation_backup, tokenizer_file)
       os.remove(validation_backup)
     raise e
 
@@ -419,6 +428,9 @@ if __name__ == "__main__":
 
   extend_tokenizer_with_validation(
     output_path=args.output_path,
+    xtts_checkpoint=args.xtts_checkpoint,
+    tokenizer_file=args.tokenizer_file,
+    config_path=args.config_path,
     metadata_path=args.metadata_path,
     language=args.language,
     vocab_size=5000,

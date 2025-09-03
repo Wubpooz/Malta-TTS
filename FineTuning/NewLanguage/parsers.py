@@ -5,7 +5,6 @@ def create_xtts_trainer_parser():
   """
   parser = argparse.ArgumentParser(description="Arguments for XTTS Trainer")
   parser.add_argument("--is_download", action='store_true', help="Flag to indicate if the XTTS model files should be downloaded.")
-  parser.add_argument("--is_tokenizer_extension", action='store_true', help="Flag to indicate if the tokenizer should be extended with a new language.")
   parser.add_argument("--output_path", type=str, required=True, help="Path to pretrained + checkpoint model")
   parser.add_argument("--metadatas", nargs='+', type=str, required=True, help="train_csv_path,eval_csv_path,language")
   parser.add_argument("--num_epochs", type=int, default=10, help="Number of epochs")
@@ -24,6 +23,7 @@ def create_xtts_trainer_parser():
   parser.add_argument("--dvae_checkpoint", type=str, required=False, help="Path to the pretrained DVAE model checkpoint (.pth file)")
   parser.add_argument("--xtts_checkpoint", type=str, required=False, help="Path to the pretrained XTTS model checkpoint (.pth file)")
   parser.add_argument("--tokenizer_file", type=str, required=False, help="Path to the tokenizer file (.json file)")
+  parser.add_argument("--config_path", type=str, required=False, help="Path to the XTTS model config file (config.json)")
   parser.add_argument("--optimizations", action='store_true', help="Enable optimizations for training")
   parser.add_argument("--tf32", action='store_true', help="Enable TF32 for training")
   parser.add_argument("--forgetting_mitigation", type=str, choices=["none", "LORA", "FREEZE"], default="LORA", help="Method to mitigate forgetting during training (default: LORA)")
@@ -78,6 +78,9 @@ def create_tokenizer_extension_parser():
   """
   parser = argparse.ArgumentParser(description="Extend the XTTS tokenizer with new vocabulary.")
   parser.add_argument("--output_path", type=str, required=True, help="Path to the output directory where the tokenizer files will be saved.")
+  parser.add_argument("--xtts_checkpoint", type=str, required=True, help="Path to the X-TTS checkpoint file.")
+  parser.add_argument("--tokenizer_path", type=str, required=True, help="Path to the tokenizer file (.json file).")
+  parser.add_argument("--config_path", type=str, required=True, help="Path to the configuration file.")
   parser.add_argument("--metadata_path", type=str, required=True, help="Path to the metadata file containing training data.")
   parser.add_argument("--language", type=str, required=True, help="Language code for the new language to be added.")
   return parser
