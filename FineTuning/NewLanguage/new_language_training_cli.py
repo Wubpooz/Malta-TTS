@@ -128,9 +128,7 @@ def training(args) -> None:
   print(f"Checkpoint saved in dir: {trainer_out_path}. Speaker reference saved in: {speaker_ref}")
 
 
-
-
-if __name__ == "__main__":
+def main():
   parser = create_xtts_trainer_parser()
   args = parser.parse_args()
 
@@ -139,5 +137,5 @@ if __name__ == "__main__":
   training(args)
 
 
-
-  
+if __name__ == "__main__":
+  main()  
