@@ -36,7 +36,7 @@ def validate_args(args) -> None:
 
 
 
-def training(args) -> None:
+def training(args) -> tuple:
   """
   Train a new language model.
   Arguments (in args):
@@ -63,7 +63,7 @@ def training(args) -> None:
       tf32 (bool): Whether to enable TF32 for training. Default is False.
       forgetting_mitigation (str): The method to mitigate forgetting during training. Between "none", "LORA", and "FREEZE". Default is "LORA".
   Returns:
-    None
+    tuple: A tuple containing the updated XTTS checkpoint, vocabulary size, configuration, training output path, and speaker reference.
   Raises:
     ValueError: If any of the arguments are invalid.
   """
@@ -126,6 +126,7 @@ def training(args) -> None:
   )
 
   print(f"Checkpoint saved in dir: {trainer_out_path}. Speaker reference saved in: {speaker_ref}")
+  return xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref
 
 
 def main():
@@ -134,7 +135,7 @@ def main():
 
   validate_args(args)
 
-  training(args)
+  return training(args)
 
 
 if __name__ == "__main__":
