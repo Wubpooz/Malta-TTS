@@ -30,10 +30,23 @@ def validate_args(args) -> None:
     if not args.tokenizer_file:
       print("ERROR: Tokenizer file must be specified.")
       raise ValueError("Invalid tokenizer file.")
-  if not args.metadatas or len(args.metadatas) < 3:
-    print("ERROR: Metadata files must be specified.")
-    raise ValueError("Invalid metadata files.")
-
+    if not args.metadatas or len(args.metadatas) == 0:
+      print("ERROR: Metadata files must be specified.")
+      raise ValueError("Invalid metadata files.")
+    else:
+      # Normalize metadata format
+      normalized = []
+      for m in args.metadatas:
+        if isinstance(m, str):
+          parts = m.split(",")
+          if len(parts) != 3:
+            raise ValueError(f"Metadata must be train,eval,lang but got: {m}")
+          normalized.append(tuple(parts))
+        elif isinstance(m, (tuple, list)) and len(m) == 3:
+          normalized.append(tuple(m))
+        else:
+          raise ValueError(f"Invalid metadata format: {m}")
+      args.metadatas = normalized
 
 
 def training(args) -> tuple:
@@ -85,7 +98,8 @@ def training(args) -> tuple:
     tokenizer_file = args.tokenizer_file
     config = args.config
 
-  training_metadata_path = args.metadatas[0].split(',')[0]
+  training_metadata_path = args.metadatas[0][0]
+  print(f"Using training metadata for tokenizer extension: {training_metadata_path}")
   #TODO check if already extended and if so don't do anything (if model & model_backup, if tokenizer.vocab>68.. and if config.mt exists)
   print(f"Step {step}: Extending the XTTS tokenizer with the new language.")
   vocab_size, xtts_checkpoint, tokenizer_file = extend_tokenizer_with_validation(
@@ -129,14 +143,14 @@ def training(args) -> tuple:
   return xtts_checkpoint, xtts_vocab, config, trainer_out_path, speaker_ref
 
 
-def main():
-  parser = create_xtts_trainer_parser()
-  args = parser.parse_args()
-
+def main(args):
   validate_args(args)
 
   return training(args)
 
 
 if __name__ == "__main__":
-  main()  
+  parser = create_xtts_trainer_parser()
+  args = parser.parse_args()
+
+  main(args)  

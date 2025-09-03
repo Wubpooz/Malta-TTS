@@ -70,13 +70,13 @@ def freeze_base_model_layers(model, trainable_layers = None):
 
 
 
-def train_gpt(metadatas: list[str], language: str, mel_norm_file: str, dvae_checkpoint: str, xtts_checkpoint: str, tokenizer_file: str, vocab_size: int, output_path: str, num_epochs: int = 100, batch_size: int = 3, grad_acumm: int = 84, lr: float = 5e-06, weight_decay: float = 1e-2, save_step: int = 10000, print_step: int = 200, max_text_length: int = 200, max_audio_length: int = 255995, multi_gpu: bool = False, optimizations: bool = False, tf32: bool = False, forgetting_mitigation: ForgettingMitigation = ForgettingMitigation.LORA):
+def train_gpt(metadatas: list, language: str, mel_norm_file: str, dvae_checkpoint: str, xtts_checkpoint: str, tokenizer_file: str, vocab_size: int, output_path: str, num_epochs: int = 100, batch_size: int = 3, grad_acumm: int = 84, lr: float = 5e-06, weight_decay: float = 1e-2, save_step: int = 10000, print_step: int = 200, max_text_length: int = 200, max_audio_length: int = 255995, multi_gpu: bool = False, optimizations: bool = False, tf32: bool = False, forgetting_mitigation: ForgettingMitigation = ForgettingMitigation.LORA):
   """Train the GPT XTTS model for Maltese language.
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
   Based on the XTTSv2 fine-tuning scripts.
   Arguments:
-      metadatas (list[str]): A list of metadata strings in the format "train_csv_path,eval_csv_path,language".
+      metadatas (list): A list of metadata strings in the format train_csv_path,eval_csv_path,language (or string format).
       language (str): Language code for the training data.
       mel_norm_file (str): Path to the mel normalization file.
       dvae_checkpoint (str): Path to the DVAE checkpoint file.
@@ -134,7 +134,7 @@ def train_gpt(metadatas: list[str], language: str, mel_norm_file: str, dvae_chec
   print(" > Using the following datasets:")
   DATASETS_CONFIG_LIST = []
   for metadata in metadatas:
-    train_csv, eval_csv, language = metadata.split(",")
+    train_csv, eval_csv, language = metadata.split(",") if isinstance(metadata, str) else metadata
     print(train_csv, eval_csv, language)
     if not os.path.exists(train_csv):
       raise FileNotFoundError(f"Train CSV file not found: {train_csv}")
