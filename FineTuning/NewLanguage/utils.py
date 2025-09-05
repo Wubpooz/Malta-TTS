@@ -175,14 +175,14 @@ def add_language_to_tokenizer(VoiceBPETokenizer, lang_code: str = "mt") -> None:
 
 
   _original_preprocess_text = VoiceBPETokenizer.preprocess_text
-  def custom_preprocess_text(self, txt, lang):
+  def custom_preprocess_text(self, txt, lang, *args, **kwargs):
     if lang == lang_code:
       txt = mt_word_tokenizer.tokenize_fix_quotes(txt)
       if isinstance(txt, list):
         txt = " ".join(txt)
       return tokenizerFile.multilingual_cleaners(txt, lang)
       # TODO transliterate ?
-    return _original_preprocess_text(self, txt, lang)
+    return _original_preprocess_text(self, txt, lang, *args, **kwargs)
 
   tokenizerFile.VoiceBpeTokenizer.preprocess_text = custom_preprocess_text
 
