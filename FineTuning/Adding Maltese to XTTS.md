@@ -1,8 +1,62 @@
 # Adding Maltese to XTTS
+## Table of Contents
+- [Adding Maltese to XTTS](#adding-maltese-to-xtts)
+  - [Table of Contents](#table-of-contents)
+  - [XTTS Model](#xtts-model)
+    - [Core Components](#core-components)
+    - [Features](#features)
+    - [License](#license)
+    - [Inference](#inference)
+    - [Manual Inference](#manual-inference)
+        - [inference parameters](#inference-parameters)
+        - [Inference](#inference-1)
+    - [Training](#training)
+      - [Run demo on Colab](#run-demo-on-colab)
+      - [Advanced training](#advanced-training)
+    - [Byte-Pair Encoding (BPE) Tokenization](#byte-pair-encoding-bpe-tokenization)
+  - [Finetuning](#finetuning)
+    - [Creating a new Dataset](#creating-a-new-dataset)
+  - [Dataset Requirements](#dataset-requirements)
+    - [Minimum Requirements](#minimum-requirements)
+    - [Maltese data](#maltese-data)
+    - [Data Augmentations](#data-augmentations)
+    - [Using an existing Dataset](#using-an-existing-dataset)
+      - [Multiple Voice Training](#multiple-voice-training)
+      - [HyperParameters](#hyperparameters)
+      - [Essential Files](#essential-files)
+      - [Notes](#notes)
+      - [Example of configuration](#example-of-configuration)
+      - [Strategies for Managing Minima](#strategies-for-managing-minima)
+    - [Training](#training-1)
+      - [Forgetting Mitigation Strategies](#forgetting-mitigation-strategies)
+        - [LoRA (Low-Rank Adaptation) - RECOMMENDED](#lora-low-rank-adaptation---recommended)
+        - [Layer Freezing](#layer-freezing)
+        - [Standard Fine-tuning](#standard-fine-tuning)
+      - [Monitoring Training](#monitoring-training)
+    - [Inference](#inference-2)
+    - [Inference with Speaker Embeddings](#inference-with-speaker-embeddings)
+  - [Evaluation \& Testing](#evaluation--testing)
+    - [1. Objective Metrics](#1-objective-metrics)
+    - [2. Subjective Evaluation](#2-subjective-evaluation)
+    - [3. Speaker Similarity](#3-speaker-similarity)
+  - [Common Issues \& Solutions](#common-issues--solutions)
+    - [Catastrophic Forgetting](#catastrophic-forgetting)
+    - [Poor Maltese Pronunciation](#poor-maltese-pronunciation)
+    - [Code-Switching Failures](#code-switching-failures)
+    - [OOM Errors](#oom-errors)
+  - [Best Practices](#best-practices)
+  - [Future Improvements](#future-improvements)
+  - [References](#references)
+
 ## XTTS Model
-ⓍTTS is a super cool Text-to-Speech model that lets you clone voices in different languages by using just a quick 3-second audio clip. Built on the 🐢Tortoise, ⓍTTS has important model changes that make cross-language voice cloning and multi-lingual speech generation super easy.  
-There is no need for an excessive amount of training data that spans countless hours.  
+ⓍTTS is a Text-to-Speech model that lets you clone voices in different languages by using just a quick 3-second audio clip. Built on the 🐢Tortoise, ⓍTTS has important model changes that make cross-language voice cloning and multi-lingual speech generation super easy. There is no need for an excessive amount of training data that spans countless hours.  
 This is the same model that powers [Coqui Studio](https://coqui.ai/), and [Coqui API](https://docs.coqui.ai/docs), however we apply a few tricks to make it faster and support streaming inference.  
+
+### Core Components
+1. **GPT Model**: Generates semantic tokens from text
+2. **DVAE (Discrete VAE)**: Encodes/decodes audio features
+3. **HiFiGAN Decoder**: Converts features to waveform
+4. **BPE Tokenizer**: Handles text tokenization
 
 ### Features
 - Voice cloning.
@@ -14,7 +68,7 @@ This is the same model that powers [Coqui Studio](https://coqui.ai/), and [Coqui
 - Support for 16 languages: English (en), Spanish (es), French (fr), German (de), Italian (it), Portuguese (pt), Polish (pl), Turkish (tr), Russian (ru), Dutch (nl), Czech (cs), Arabic (ar), Chinese (zh-cn), Japanese (ja), Hungarian (hu) and Korean (ko).
 
 ### License
-This model is licensed under [Coqui Public Model License](https://coqui.ai/cpml).
+This model is licensed under [Coqui Public Model License](https://coqui.ai/cpml). Note that the Coqui company does no longer exists. Support is available at [Coqui-TTS](https://github.com/idiap/coqui-ai-TTS).
 
 
 &nbsp;  
@@ -142,7 +196,6 @@ XTTS Implementation:
    - The script also includes options to customize token frequency thresholds, vocabulary size, and stop tokens.
 
 
-
 [Source](https://github.com/coqui-ai/TTS/tree/main/docs/source/models/xtts.md)
 
 
@@ -156,6 +209,35 @@ XTTS Implementation:
 1) Record Your Audio: Find a native Maltese speaker with a clear voice. Record them reading Maltese sentences in a quiet environment with a decent microphone. Aim for **at least 1 hour of audio** Export the audio as a single `.wav` file, with a sample rate of **22050 Hz** and in **mono**. Quality over quantity.
 2) Transcribe and segment the audio: Use a transcription tool that provides per-word timestamps. A great open-source option is `faster-whisper`. Output the text in the LJSpeech format (wav folder and `metadata.csv` file in the format `filename|transcription|normalized_transcription`).
 3) Split the Dataset: Split your `metadata.csv` into two files: `metadata_train.csv` (for training, ~95% of the lines) and `metadata_eval.csv` (for validation, ~5% of the lines).
+
+
+
+&nbsp;  
+&nbsp;  
+## Dataset Requirements
+### Minimum Requirements
+- **Duration**: 1+ hours of clean audio (10+ hours recommended)
+- **Quality**: Studio or high-quality recordings
+- **Sample Rate**: 22050 Hz (will be resampled if different)
+- **Format**: WAV, mono channel
+- **Transcription**: Accurate, normalized text
+
+&nbsp;  
+### Maltese data
+- [MASRI dev Dataset](https://huggingface.co/datasets/MLRS/masri_dev) - 1h of Maltese audio data
+- [MASRI HEADSET](https://huggingface.co/datasets/Bluefir/MASRI_HEADSET_Corpus_v2) - 6h of Maltese audio data, multiple speakers
+- [Maltese Common Voice](https://huggingface.co/datasets/common_voice/mt) - 1,000+ hours of Maltese audio data
+- [Huge text Corpus](https://mlrs.research.um.edu.mt/index.php?page=corpora) and [HuggingFace](https://huggingface.co/datasets/MLRS/korpus_malti)
+- [Maltese tokenizer](https://github.com/UMSpeech/MASRI/blob/main/masri/tokenise/tokenise.py)
+- [Sentimental Maltese data](https://github.com/jerbarnes/typology_of_crosslingual/tree/master/data/sentiment/mt)
+- 7,000h of unlabeled data (=> use Granary pipeline)
+
+
+&nbsp;  
+### Data Augmentations
+- Speed perturb (0.9×/1.0×/1.1×), room IRs, light noise, pitch shift ≤ ±100 cents (sparingly), SpecAugment on spectrograms for the acoustic model.
+- Add code-switch examples (Maltese + English/Italian) — realistic for Malta and improves robustness.
+- Multispeaker Maltese (+ neighbors) for robustness: combine Maltese with Italian/Arabic/English; ensure at least ~30–60 min per speaker for stability.
 
 
 &nbsp;  
@@ -289,7 +371,7 @@ XTTS Implementation:
    - Batch Size: Samples processed at once, start with 4 and reduce to 2 if out of memory but can be increased to 32 or 64.
      - If VRAM is limited, use gradient accumulation to simulate larger batch sizes (batch_size = 8, gradient_accumulation_steps = 4 => effective batch size = 32)
    - Learning Rate: How fast the model learns, start with 5e-6 (lower = more stable but slower)
-   - Optimizer: How the model updates, AdamW (default) works best
+   - Optimizer: How the model updates, AdamW (default) works best ([Should I try multiple optimizers when fine-tuning a pre-trained Transformer for NLP tasks? Should I tune their hyperparameters?](https://aclanthology.org/2024.eacl-long.157/))
    - Scheduler: How the learning rate changes, CosineAnnealingWarmRestarts works best:
      - Cosine Annealing with Warm Restarts (reduces the learning rate in cycles to explore different minima, ideal for long training runs where you want the model to avoid settling on a local minimum):
         ```
@@ -358,8 +440,11 @@ mel_stats.pth: Mel spectrogram statistics
 &nbsp;  
 ### Training
 ```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip install TTS
+# CUDA setup for optimal performance
+export CUDA_VISIBLE_DEVICES=0
+export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
+# Enable TF32 for Ampere GPUs
+export TORCH_ALLOW_TF32=1
 ```
 &nbsp;  
 ```bash
@@ -370,15 +455,65 @@ python train_gpt_xtts.py \
 --batch_size 4 \
 --grad_acumm 8 \
 --max_text_length 200 \
---max_audio_length 242000 \
+--max_audio_length 255995 \
 --weight_decay 1e-4 \
 --lr 5e-6 \
 --save_step 5000
 ```
 
-`--metadatas`: The crucial part. It's a comma-separated string: `train_metadata_path,eval_metadata_path,language_code`. For Maltese, the ISO 639-1 code is `mt`.  
+`--metadatas`: A comma-separated string: `train_metadata_path,eval_metadata_path,language_code`. For Maltese, the ISO 639-1 code is `mt`.  
 `--num_epochs`: The number of times to go through the training data. Start with 10 and you can increase it later.  
-`--batch_size` & `--grad_acumm`: These control memory usage. If you run out of VRAM, decrease the `batch_size` and increase `grad_acumm` to compensate. An effective batch size is `batch_size * grad_acumm`.  
+`--batch_size` & `--grad_acumm`: Control memory usage. If you run out of VRAM, decrease the `batch_size` and increase `grad_acumm` to compensate. An effective batch size is `batch_size * grad_acumm`.  
+
+#### Forgetting Mitigation Strategies
+##### LoRA (Low-Rank Adaptation) - RECOMMENDED
+```python
+lora_config = LoraConfig(
+    r=8,                    # Rank
+    lora_alpha=16,          # Scaling factor
+    target_modules=["c_attn", "c_proj"],  # Target layers
+    lora_dropout=0.05,
+    bias="none"
+)
+```
+- Preserves original model weights
+- Adds trainable adapter layers
+- ~10% of parameters trainable
+
+##### Layer Freezing
+```python
+# Only train final layers
+trainable_layers = [
+    "text_embedding",  # Vocabulary embeddings
+    "layers.29",       # Last 3 transformer layers
+    "layers.28",
+    "layers.27",
+    "final_norm",
+    "lm_head"
+]
+```
+- Most conservative approach
+- ~15% of parameters trainable
+- Slower adaptation
+
+##### Standard Fine-tuning
+- All parameters trainable
+- Highest risk of catastrophic forgetting
+- Use only with mixed language datasets
+
+
+&nbsp;  
+#### Monitoring Training
+```python
+# Check training metrics
+tensorboard --logdir checkpoints/training/logs
+
+# Key metrics to monitor:
+- loss/train_loss: Should decrease steadily
+- loss/eval_loss: Should decrease, watch for overfitting
+- grad_norm: Should remain stable (<10)
+- learning_rate: Check scheduler working
+```
 
 
 &nbsp;  
@@ -388,7 +523,6 @@ python train_gpt_xtts.py \
 from TTS.api import TTS
 import torch
 
-# Path to the configuration and model checkpoint of your fine-tuned model
 config_path = "xtts_maltese_finetuned/config.json"
 model_path = "xtts_maltese_finetuned/best_model.pth" # Or the latest checkpoint
 speakers_json_path = "xtts_maltese_finetuned/speakers.json" # If you have speaker information
@@ -401,11 +535,7 @@ reference_audio = "path/to/maltese/speaker.wav"
 
 tts = TTS(model_path=model_path, config_path=config_path, progress_bar=True).to(device)
 
-
 tts.tts_to_file(text=maltese_text, speaker_wav=reference_audio, language="mt", file_path="output_maltese.wav")
-
-# from datasets import load_dataset
-# dataset = load_dataset("mozilla-foundation/common_voice_17_0", "mt", split="train")
 ```
 
 
@@ -418,30 +548,24 @@ from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
 import torchaudio
 
-model_output_path = "./xtts_maltese_model/run/training/GPT_XTTS_FT-..." # Replace with your actual output folder name
+model_output_path = "./xtts_maltese_model/run/training/..."
 xtts_checkpoint = os.path.join(model_output_path, "best_model.pth")
 xtts_config = os.path.join(model_output_path, "config.json")
-# Path to the original vocabulary file (this doesn't change).
 xtts_vocab = "./xtts_maltese_model/ready/vocab.json"
 speaker_audio_file = "path/to/your/maltese_speaker_reference.wav" # A clean, 10-15 second audio clip of your Maltese speaker.
 
-# --- 2. LOAD THE FINE-TUNED MODEL ---
 print("Loading model...")
 config = XttsConfig()
 config.load_json(xtts_config)
-
 model = Xtts.init_from_config(config)
 model.load_checkpoint(config, checkpoint_path=xtts_checkpoint, vocab_path=xtts_vocab, use_deepspeed=False)
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
-
 print("Model loaded successfully!")
 
-# --- 3. SYNTHESIZE SPEECH ---
+
 tts_text = "Dan huwa test tal-mudell tat-taħdit il-ġdid tiegħi għal-lingwa Maltija."
 lang = "mt"
-
 print(f"Generating speech for: '{tts_text}'")
 
 # Generate conditioning latents from the speaker reference.
@@ -460,7 +584,6 @@ out = model.inference(
 )
 
 torchaudio.save("output_maltese.wav", torch.tensor(out["wav"]).unsqueeze(0), 24000)
-print("Audio saved to output_maltese.wav")
 ```
 
 
@@ -468,128 +591,162 @@ print("Audio saved to output_maltese.wav")
 
 &nbsp;  
 &nbsp;  
-## Evaluation
+## Evaluation & Testing
 [Flore+](https://huggingface.co/datasets/openlanguagedata/flores_plus/viewer/mlt_Latn?views%5B%5D=mlt_latn_dev)  
-Use Wave2Vec2 or Wispher (but they don't work as good as expected for Maltese) for CER evaluation and automatic mos prediction (with pretrained squid ?)  
-How does it fares in code-switching ?    
 
-
-
----
-
-
-&nbsp;  
-&nbsp;  
-## Further improvements
-- Auto-split larger audio files into smaller segments
-- Use Whisper to transcribe the audio files, thus generating the dataset only from the audio files (large-v3 is better, medium is good and small for testing)
-- Use advanced settings like `min_audio_length` and `max_audio_length` to control the audio length, evaluation split, and model precision (mixed, fp32, fp16)
-- GUI with spectrogram [ExtractTTSSpectrogram](https://github.com/coqui-ai/TTS/tree/main/notebooks/ExtractTTSpectrogram.ipynb)
-
-
-&nbsp;  
-### Front-end
-1) Create a new folder with the utilities for processing the text input in the `TTS.tts.utils.text` folder. `TTS.tts.utils.text.phonemizers` contains the main phonemizer for a language. This is the class that uses the utilities from the previous step and used to convert the text to phonemes or graphemes for the model.
-2) After you implement your phonemizer, you need to add it to the `TTS/tts/utils/text/phonemizers/__init__.py` to be able to map the language code in the model config - `config.phoneme_language` - to the phonemizer class and initiate the phonemizer automatically.
-3) You should also add tests to `tests/text_tests` if you want to make a PR.
-
-[Source](https://github.com/coqui-ai/TTS/tree/main/docs/source/implementing_a_new_language_frontend.md)  
-[Example](/FineTuning/coqui-ai-TTS-newlanguage.png)  
-
-
-&nbsp;  
-### Using Whisper to generate the dataset
-Whisper tends to scan a file for audio it can chunk but if it fails to recognize parts of it enough times it will discard the rest of the audio.  
-To get around this limitation, load the main samples into Audacity, mix down to mono and start highlighting sections of 1 sentence maximum, and then just press CTRL+D to duplicate it, go through the whole audio, cut out any breathing by turning it into dead sound (highlight the breath and press CTRL+L). Make sure theyre unmuted or they wont export, then tick truncate audio before clip beginning and select a folder.  
-It is recommended to use WAV signed 16-bit PCM, MONO, 44100 Hz as the audio format.  
-
-&nbsp;  
-### Creating a tokenizer extension
-BPE Tokenization (Advanced): For a language like Maltese, which uses the Latin alphabet, you **do not need to create a new BPE tokenizer**. The model's existing tokenizer is sufficient, as it was trained on several European languages.   
-You can extend the existing tokenizer to include Maltese-specific tokens or characters if needed, for that here are 2 examples of how to train or extend a tokenizer on your Maltese text corpus:  
-
+### 1. Objective Metrics
 ```python
-from transformers import AutoTokenizer
+# Character Error Rate (CER) using Whisper or Wisper
+from evaluation import calculate_cer
 
-tokenizer = AutoTokenizer.from_pretrained("openai/whisper-small")
-tokenizer.add_tokens("<speaker1>", special_tokens=True)
-tokenizer.add_tokens("<speaker2>", special_tokens=True)
-tokenizer.add_tokens("<speaker3>", special_tokens=True)
-tokenizer.add_tokens("<speaker4>", special_tokens=True)
-
-tokenizer.save_pretrained("my_modified_tokenizer")
+cer = calculate_cer(
+    synthesized_audio="output.wav",
+    reference_text="Original text",
+    whisper_model="large-v3"
+)
+print(f"CER: {cer:.2%}")  # Target: <5%
 ```
-OR
+
+### 2. Subjective Evaluation
+- Automatic Mean Opinion Score (MOS) with native speakers
+
+### 3. Speaker Similarity
 ```python
-from tokenizers import ByteLevelBPETokenizer
-from tokenizers.processors import BertProcessing
+# Using speaker verification model
+from resemblyzer import VoiceEncoder
 
-paths = [os.path.join(output_dir, "metadata.csv")] # Large text corpus of Maltese sentences or a list of text files
-
-tokenizer = ByteLevelBPETokenizer()
-
-tokenizer.train(files=paths, vocab_size=50000, min_frequency=2, special_tokens=["<s>", "<pad>", "</s>", "<unk>", "<mask>"])
-
-os.makedirs("maltese_tokenizer_dir", exist_ok=True)
-tokenizer.save_model("maltese_tokenizer_dir")
+encoder = VoiceEncoder()
+similarity = encoder.verify(
+    reference_audio,
+    synthesized_audio
+)
+print(f"Speaker similarity: {similarity:.2f}")  # Target: >0.8
 ```
 
 
 
----
-
-
-
 &nbsp;  
 &nbsp;  
-## Notes
-- leave out emotional and code switched
-- finetune (feedback loop) VS pretrain (unsupervised, clustering data)
-- 7,000h of unlabeled data (=> use Granary pipeline tweaked ?)
-- GPT2 knows arabic already for XTTS, training it would be good and making the Maltese char understood or phonems
-- how to make it expressive? See Rasa (the minimum amount of expressive data needed per emotion (ii) the difficulty of synthesizing certain emotions, and (iii) the better expressivity of multi-emotion systems over single-emotion systems): `tts.tts_to_file(text="This is a test.", file_path=OUTPUT_PATH, emotion="Happy", speed=1.5)`  
-- Use Adam optimizer [Should I try multiple optimizers when fine-tuning a pre-trained Transformer for NLP tasks? Should I tune their hyperparameters?](https://aclanthology.org/2024.eacl-long.157/)
+## Common Issues & Solutions
+### Catastrophic Forgetting
+Symptoms: Model loses ability to speak other languages  
+Solution:  
+- Use LoRA or layer freezing
+- Include 10–20% of original language data
+- Lower learning rate to 1e-6
 
+### Poor Maltese Pronunciation
+Symptoms: Incorrect pronunciation of ċ, ġ, għ, ħ, ż  
+Solution:  
+- Increase Maltese-specific tokens in tokenizer
+- Add phoneme-level supervision
+- Fine-tune for more epochs
 
+### Code-Switching Failures
+Symptoms: Poor quality when mixing languages  
+Solution:
+- Include code-switched examples in training
+- Use language tags: <lang=mt>, <lang=en>
+- Train on parallel corpora
 
-
-&nbsp;  
-&nbsp;  
-## Maltese data
-- [MASRI dev Dataset](https://huggingface.co/datasets/MLRS/masri_dev) - 1h of Maltese audio data
-- [Maltese Common Voice](https://huggingface.co/datasets/common_voice/mt) - 1,000+ hours of Maltese audio data
-- [Huge text Corpus](https://mlrs.research.um.edu.mt/index.php?page=corpora) and [HuggingFace](https://huggingface.co/datasets/MLRS/korpus_malti)
-- [Maltese tokenizer](https://github.com/UMSpeech/MASRI/blob/main/masri/tokenise/tokenise.py)
-- [Sentimental Maltese data](https://github.com/jerbarnes/typology_of_crosslingual/tree/master/data/sentiment/mt)
-
-
----
-
-
-&nbsp;  
-&nbsp;  
-## TODO
-- report on the model, what can be trained, how to train + evaluation, dataset etc + give my Zotero lib
-- how to convert dataset ? what's needed ?
-- export to huggingface
-
-
-
-### Google colab
+### OOM Errors
+Symptoms: CUDA out of memory  
+Solution:
 ```bash
-# !rm -rf TTS/ # delete repo to be able to reinstall if needed
-# !git clone --branch xtts_demo -q https://github.com/coqui-ai/TTS.git
-%pip install --upgrade pip
-%pip install -e TTS
-%pip install transformers==4.42.4 tokenizers==0.19.1 huggingface_hub==0.27.0 gradio==4.7.1 faster_whisper
-
-!python TTS/TTS/demos/xtts_ft_demo/xtts_demo.py --batch_size 2 --num_epochs 6
+# Reduce batch size
+--batch_size 2 --grad_acumm 126
+# Enable optimizations
+--optimizations True --tf32 True
+# Use gradient checkpointing
+--gradient_checkpointing True
 ```
 
 
+&nbsp;  
+## Best Practices
+1. Data Quality > Quantity
+   - 10 hours of clean audio > 100 hours of noisy audio
+   - Manual verification of transcriptions
+   - Consistent speaker recording conditions
+2. Incremental Training
+   - Start with 10 epochs, evaluate
+   - Continue training if improving
+   - Save checkpoints frequently
+3. Multi-Stage Training
+   ```bash
+   # Stage 1: Language adaptation (lower LR)
+   --lr 1e-6 --epochs 50
+
+   # Stage 2: Voice fine-tuning (higher LR)
+   --lr 5e-6 --epochs 50
+   ```
+4. Validation Strategy
+   - Hold out native speakers for testing
+   - Include diverse text (news, conversation, literature)
+   - Test edge cases (numbers, dates, foreign words)
 
 
----
+&nbsp;  
+&nbsp;  
+## Future Improvements
+1. Use a dataset with a single speaker with 80-90% of maltese speech and 10-20% of the previously learnt languages. The model resizing degrades the english inference already. Claudia Borg agrees, and a fix would be mixed training data (maltese and previously learnt languages). mBERT had 99 empty slots that they could fill in to train so no need to increase the embedding size.
+   - Consider implementing consistency loss between different speaker embeddings. Add prosody regularization to maintain natural speech patterns. [Pushing the Limits of Zero-shot End-to-End Speech Translation](https://arxiv.org/abs/2402.10422)
+  - Mixed language training (70% Maltese, 30% English/Italian) can improve robustness. Language embeddings should be learned jointly, not separately. [Multilingual Diffusion Models](https://arxiv.org/abs/2412.01271)
+
+2. Feature improvements:
+   - Auto-adjust performances based on VRAM:
+  ```python
+  if torch.cuda.is_available():
+    gpu_info = torch.cuda.get_device_properties(0)
+    print(f"GPU detected: {gpu_info.name}")
+    print(f"   Compute Capability: {gpu_info.major}.{gpu_info.minor}")
+    print(f"   Memory: {vram_gb:.1f} GB")
+    vram_gb = gpu_info.total_memory / 1024**3
+    if vram_gb < 16:
+      batch_size = 3
+      grad_acumm = 84
+    elif vram_gb < 24:
+      batch_size = 6
+      grad_acumm = 42
+    else:
+      batch_size = 8
+      grad_acumm = 32
+    print(f"Batch size: {batch_size}, grad_acumm: {grad_acumm}")
+  ```
+   - Fix LORA
+   - Use ipywidget for Colab inputs
+   - Training loss graph
+   - Dataset Quality Checks: Add comprehensive validation before training
+   - Autodetect dataset formatter in trainGPT based on metadata number of cols and names
+   - Early stop by MOS proxy: ASR-CER on TTS–>ASR, and an external prosody score.
+
+
+1. Phoneme-Level Training
+   - Implement Maltese G2P (Grapheme-to-Phoneme)
+   - Train on phoneme sequences
+   - Better handling of ambiguous pronunciations
+2. Emotional TTS
+   - See [Rasa Paper](https://www.isca-archive.org/interspeech_2024/srinivasavaradhan24_interspeech.html) for the minimum amount of expressive data needed per emotion, the difficulty of synthesizing certain emotions, and the better expressivity of multi-emotion systems over single-emotion system
+   - Collect emotional speech data: [Sentimental Maltese data](https://github.com/jerbarnes/typology_of_crosslingual/tree/master/data/sentiment/mt)
+   - Implement emotion embeddings
+   - Support for expressive synthesis: `tts.tts_to_file(text="This is a test.", file_path=OUTPUT_PATH, emotion="Happy", speed=1.5)`
+3. Lightweight Models
+   - Knowledge distillation to smaller models
+   - Quantization for mobile deployment
+     `python onnx_quantize.py --in xtts_mt.onnx --out xtts_mt_int8.onnx --mode dynamic`
+   - ONNX export for cross-platform support:
+      `python export_model_onnx.py --checkpoint best_model.pth --out xtts_mt.onnx`
+      You may also need to export HiFiGAN separately
+   - Packaging for apps
+   	-	Android: bundle ONNX models, run with ONNX Runtime (NNAPI/GPU EP if available). Kotlin wrapper; stream PCM to AudioTrack
+   	-	iOS: convert to Core ML (coremltools), or use ONNX Runtime Mobile; stream to AVAudioEngine
+   	-	Desktop/IoT: Piper or your own C++ runner; one static binary + two model files
+   - Pre-warm models on app start (first inference JIT costs)
+   - Cache phonemized text and punctuation normalization
+
+4. Auto-split larger audio files into smaller segments
+5. GUI (gradio or streamlit) with spectrogram [ExtractTTSSpectrogram](https://github.com/coqui-ai/TTS/tree/main/notebooks/ExtractTTSpectrogram.ipynb)
+
 
 
 &nbsp;  
@@ -609,3 +766,15 @@ tokenizer.save_model("maltese_tokenizer_dir")
 - [Should I try multiple optimizers when fine-tuning a pre-trained Transformer for NLP tasks? Should I tune their hyperparameters?](https://aclanthology.org/2024.eacl-long.157/)
 - [Example of tokenizer extension](/FineTuning/coqui-ai-TTS-newlanguage.png)  
 - [LJSpeech](https://keithito.com/LJ-Speech-Dataset/)
+- [XTTS Paper](https://arxiv.org/abs/2406.04904)
+- [Coqui TTS Documentation](https://docs.coqui.ai)
+- [MASRI Project](https://mlrs.research.um.edu.mt/)
+- [BPE Algorithm](https://arxiv.org/abs/1508.07909)
+- [LoRA Paper](https://arxiv.org/abs/2106.09685)
+
+
+&nbsp;  
+**Other models:**
+- <https://www.reddit.com/r/mlscaling/comments/1gxakk3/did_a_quick_comparison_of_various_tts_models/>
+- <https://github.com/OHF-Voice/piper1-gpl/tree/main>
+- <https://shashank7-iitd.medium.com/understanding-vector-quantized-variational-autoencoders-vq-vae-323d710a888a>

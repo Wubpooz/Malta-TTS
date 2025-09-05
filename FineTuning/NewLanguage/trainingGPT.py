@@ -75,6 +75,12 @@ def train_gpt(metadatas: list, language: str, mel_norm_file: str, dvae_checkpoin
   This function sets up the training configuration, downloads necessary files, initializes the model, and starts the training process.
   It also saves the final model checkpoint and configuration files after training.
   Based on the XTTSv2 fine-tuning scripts.
+  
+  **Forgetting mitigation strategies:**
+  - Standard: No special measures, train all model parameters. Risk of catastrophic forgetting, try to use mixed datasets.
+  - LoRA: Apply Low-Rank Adaptation (LoRA) to specific layers to reduce forgetting. Preserves original model weights, Adds trainable adapter layers, ~10% of parameters trainable.
+  - Layer freezing: Freeze most layers, only train specific ones to prevent forgetting. Most conservative, Slower adaptation, ~5% of parameters trainable.
+  
   Arguments:
       metadatas (list): A list of metadata strings in the format train_csv_path,eval_csv_path,language (or string format).
       language (str): Language code for the training data.

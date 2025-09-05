@@ -145,6 +145,21 @@ def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str
   """
   Extend the XTTS GPT tokenizer by incorporating new tokens from the specified language.
   This uses MTWordTokenizer for linguistic preprocessing, then BPE for subword discovery.
+
+  Key steps:
+  ```
+  1. Load existing XTTS tokenizer (6855 tokens)
+  2. Train BPE on Maltese text corpus
+  3. Add new subword tokens (max 8000)
+  4. Resize model embeddings
+  5. Validate no corruption occurred
+  ```
+  **Advantages of BPE**:
+  - Handles unseen words gracefully
+  - Captures morphological patterns
+  - Efficient vocabulary size
+  - Language-agnostic approach
+
   Arguments:
     output_path (str): Path to save the extended tokenizer.
     xtts_checkpoint (str): Path to the X-TTS checkpoint file.
