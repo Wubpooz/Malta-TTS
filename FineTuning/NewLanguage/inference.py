@@ -46,7 +46,11 @@ def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoi
         task_type=TaskType.FEATURE_EXTRACTION,
       )
       model = get_peft_model(model, lora_config)
-      model.load_state_dict(checkpoint, strict=False)
+      model.load_state_dict(state_dict, strict=False)
+
+      del checkpoint, state_dict
+      torch.cuda.empty_cache()
+      gc.collect()
       return model
     except Exception as e:
       print(f"Error loading LoRA model using LoRA weights: {e}")
@@ -59,15 +63,21 @@ def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoi
         use_deepspeed=use_deepspeed,
         eval=True
       )
+      del checkpoint, state_dict
+      torch.cuda.empty_cache()
+      gc.collect()
       return model
   else:
+    del checkpoint, state_dict
+    torch.cuda.empty_cache()
+    gc.collect()
     print("Detected standard model weights. Loading as base model...")
     model.load_checkpoint(
       config,
       checkpoint_dir=checkpoint_dir,
       checkpoint_path=xtts_checkpoint,
       vocab_path=xtts_vocab,
-      use_deepspeed=use_deepspeed,
+      use_deepspeed=use_deepspeed,  
       eval=True
     )
 
