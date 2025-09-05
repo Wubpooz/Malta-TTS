@@ -141,7 +141,7 @@ def resize_xtts_checkpoint_embeddings(output_path: str, xtts_checkpoint: str, ne
     raise e
 
 
-def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000) -> tuple:
+def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, min_frequency: int = 2, max_new_tokens: int = 1_000) -> tuple:
   """
   Extend the XTTS GPT tokenizer by incorporating new tokens from the specified language.
   This uses MTWordTokenizer for linguistic preprocessing, then BPE for subword discovery.
@@ -152,9 +152,8 @@ def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str
     config_path (str): Path to the configuration file.
     metadata_path (str): Path to the metadata file.
     language (str): Language code, e.g. 'mt'.
-    vocab_size (int): Size of the vocabulary for the new BPE tokenizer.
     min_frequency (int): Minimum frequency for new tokens.
-    max_new_tokens (int): Maximum number of new tokens to add.
+    max_new_tokens (int): Maximum number of new tokens to add. Also limits the new vocabulary size.
   Returns:
     tuple: A tuple containing the new vocabulary size, XTTS checkpoint, and tokenizer file paths.
   Raises:
@@ -198,7 +197,7 @@ def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str
   new_tokenizer = Tokenizer(models.BPE())
   new_tokenizer.pre_tokenizer = pre_tokenizers.Whitespace() # type: ignore
   trainer = trainers.BpeTrainer(
-    vocab_size=vocab_size,  # type: ignore
+    vocab_size=max_new_tokens,  # type: ignore
     min_frequency=min_frequency, # type: ignore
     special_tokens=[]  # Don't let BPE trainer add special tokens # type: ignore
   )
@@ -388,7 +387,7 @@ def debug_tokenizer_corruption(original_tokenizer_path: str, extended_tokenizer_
 
 
 
-def extend_tokenizer_with_validation(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 8_000) -> tuple:
+def extend_tokenizer_with_validation(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, min_frequency: int = 2, max_new_tokens: int = 8_000) -> tuple:
   """
   Extended version with built-in validation to ensure no corruption occurred.
   Arguments:
@@ -398,7 +397,6 @@ def extend_tokenizer_with_validation(output_path: str, xtts_checkpoint: str, tok
     config_path (str): Path to the configuration file.
     metadata_path (str): Path to the metadata file.
     language (str): Language code for the tokenizer.
-    vocab_size (int, optional): Size of the vocabulary. Defaults to 5000.
     min_frequency (int, optional): Minimum frequency for tokens. Defaults to 2.
     max_new_tokens (int, optional): Maximum number of new tokens to add. Defaults to 8000.
   Returns:
@@ -414,8 +412,7 @@ def extend_tokenizer_with_validation(output_path: str, xtts_checkpoint: str, tok
 
   try:
     new_vocab_size, xtts_checkpoint, tokenizer_file = extend_tokenizer(output_path=output_path, xtts_checkpoint=xtts_checkpoint, tokenizer_file=tokenizer_file,
-                                      config_path=config_path, metadata_path=metadata_path, language=language, vocab_size=vocab_size,
-                                      min_frequency=min_frequency, max_new_tokens=max_new_tokens)
+                                      config_path=config_path, metadata_path=metadata_path, language=language, min_frequency=min_frequency, max_new_tokens=max_new_tokens)
 
     print("\n=== RUNNING CORRUPTION VALIDATION ===")
     corruption_detected = debug_tokenizer_corruption(validation_backup, tokenizer_file)
@@ -449,7 +446,6 @@ if __name__ == "__main__":
     config_path=args.config_path,
     metadata_path=args.metadata_path,
     language=args.language,
-    vocab_size=5000,
-    min_frequency=2,
-    max_new_tokens=8000
+    min_frequency=args.min_frequency,
+    max_new_tokens=args.max_new_tokens
   )

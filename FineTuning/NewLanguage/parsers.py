@@ -10,6 +10,8 @@ def create_xtts_trainer_parser():
   parser.add_argument("--num_epochs", type=int, default=10, help="Number of epochs")
   parser.add_argument("--batch_size", type=int, default=3, help="Mini batch size")
   parser.add_argument("--grad_acumm", type=int, default=84, help="Grad accumulation steps")
+  parser.add_argument("--min_frequency", type=int, default=2, help="Minimum token frequency to be considered")
+  parser.add_argument("--max_new_tokens", type=int, default=8000, help="Maximum number of new tokens to add")
   parser.add_argument("--max_audio_length", type=int, default=255995, help="Max audio length")
   parser.add_argument("--max_text_length", type=int, default=200, help="Max text length")
   parser.add_argument("--weight_decay", type=float, default=1e-2, help="Weight decay")
@@ -83,6 +85,8 @@ def create_tokenizer_extension_parser():
   parser.add_argument("--config_path", type=str, required=True, help="Path to the configuration file.")
   parser.add_argument("--metadata_path", type=str, required=True, help="Path to the metadata file containing training data.")
   parser.add_argument("--language", type=str, required=True, help="Language code for the new language to be added.")
+  parser.add_argument("--min_frequency", type=int, default=2, help="Minimum token frequency to be considered.")
+  parser.add_argument("--max_new_tokens", type=int, default=8000, help="Maximum number of new tokens to add.")
   return parser
 
 

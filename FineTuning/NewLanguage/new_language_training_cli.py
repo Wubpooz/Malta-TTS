@@ -109,9 +109,8 @@ def training(args) -> tuple:
     config_path=config,
     metadata_path=training_metadata_path,
     language=args.language,
-    vocab_size=5000,
-    min_frequency=2,
-    max_new_tokens=8000,
+    min_frequency=args.min_frequency,
+    max_new_tokens=args.max_new_tokens,
   )
   print(f"Extended vocabulary size: {vocab_size}")
   step += 1
