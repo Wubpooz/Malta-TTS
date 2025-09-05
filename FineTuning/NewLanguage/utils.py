@@ -8,31 +8,34 @@ def preprocess_maltese_text(text: str) -> str:
   Returns:
       str: The preprocessed text.
   """
-  from masri.tokenise.tokenise import MTWordTokenizer, MTRegex
+  try:
+    from masri.tokenise.tokenise import MTWordTokenizer, MTRegex
 
-  tokenizer = MTWordTokenizer()
+    tokenizer = MTWordTokenizer()
 
-  text = tokenizer.tokenize_fix_quotes(text) # type: ignore
-  
-  # Join tokens back but with proper spacing for clitics
-  if isinstance(text, list):
-    processed_tokens = []
-    i = 0
-    while i < len(text):
-      token = text[i]      
-      # Check if current token is a clitic that should attach to next token
-      if MTRegex.is_prefix(token) and i + 1 < len(text):
-        # Join with next token
-        processed_tokens.append(token + text[i + 1])
-        i += 2
-      else:
-        processed_tokens.append(token)
-        i += 1
+    text = tokenizer.tokenize_fix_quotes(text) # type: ignore
+    
+    # Join tokens back but with proper spacing for clitics
+    if isinstance(text, list):
+      processed_tokens = []
+      i = 0
+      while i < len(text):
+        token = text[i]      
+        # Check if current token is a clitic that should attach to next token
+        if MTRegex.is_prefix(token) and i + 1 < len(text):
+          # Join with next token
+          processed_tokens.append(token + text[i + 1])
+          i += 2
+        else:
+          processed_tokens.append(token)
+          i += 1
 
-    return " ".join(processed_tokens)
-  else:
-    return " ".join(tokenizer.tokenize(text))
-
+      return " ".join(processed_tokens)
+    else:
+      return " ".join(tokenizer.tokenize(text))
+  except ImportError as e:
+    print("Warning: masri package not installed. Returning original text.")
+    return " ".join(text.replace("’", "'").split())
 
 
 

@@ -79,7 +79,7 @@ def create_tokenizer_extension_parser():
   parser = argparse.ArgumentParser(description="Extend the XTTS tokenizer with new vocabulary.")
   parser.add_argument("--output_path", type=str, required=True, help="Path to the output directory where the tokenizer files will be saved.")
   parser.add_argument("--xtts_checkpoint", type=str, required=True, help="Path to the X-TTS checkpoint file.")
-  parser.add_argument("--tokenizer_path", type=str, required=True, help="Path to the tokenizer file (.json file).")
+  parser.add_argument("--tokenizer_file", type=str, required=True, help="Path to the tokenizer file (.json file).")
   parser.add_argument("--config_path", type=str, required=True, help="Path to the configuration file.")
   parser.add_argument("--metadata_path", type=str, required=True, help="Path to the metadata file containing training data.")
   parser.add_argument("--language", type=str, required=True, help="Language code for the new language to be added.")

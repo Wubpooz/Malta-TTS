@@ -69,63 +69,76 @@ def resize_xtts_checkpoint_embeddings(output_path: str, xtts_checkpoint: str, ne
   print(f"Resizing checkpoint embeddings: {xtts_checkpoint}")
   checkpoint = torch.load(xtts_checkpoint, map_location="cpu")
 
-  if "gpt.text_embedding.weight" in checkpoint["model"]:
-    current_vocab_size = checkpoint["model"]["gpt.text_embedding.weight"].shape[0]
-    embedding_dim = checkpoint["model"]["gpt.text_embedding.weight"].shape[1]
-    print(f"Current vocab size: {current_vocab_size}, New vocab size: {new_vocab_size}")
+  try:
+    if "gpt.text_embedding.weight" in checkpoint["model"]:
+      current_vocab_size = checkpoint["model"]["gpt.text_embedding.weight"].shape[0]
+      embedding_dim = checkpoint["model"]["gpt.text_embedding.weight"].shape[1]
+      print(f"Current vocab size: {current_vocab_size}, New vocab size: {new_vocab_size}")
 
-    if current_vocab_size == new_vocab_size:
-      print("Vocabulary sizes match, no resizing needed.")
-      return xtts_checkpoint_resized
+      if current_vocab_size == new_vocab_size:
+        print("Vocabulary sizes match, no resizing needed.")
+        return xtts_checkpoint_resized
 
-    old_embedding = checkpoint["model"]["gpt.text_embedding.weight"]
-    new_embedding = torch.zeros(new_vocab_size, embedding_dim, dtype=old_embedding.dtype)
+      old_embedding = checkpoint["model"]["gpt.text_embedding.weight"]
+      new_embedding = torch.zeros(new_vocab_size, embedding_dim, dtype=old_embedding.dtype)
 
-    # Copy existing embeddings
-    min_vocab_size = min(current_vocab_size, new_vocab_size)
-    new_embedding[:min_vocab_size] = old_embedding[:min_vocab_size]
+      # Copy existing embeddings
+      min_vocab_size = min(current_vocab_size, new_vocab_size)
+      new_embedding[:min_vocab_size] = old_embedding[:min_vocab_size]
 
-    # Initialize new embeddings with small random values (similar to original initialization)
-    if new_vocab_size > current_vocab_size:
-      std = old_embedding.std().item()
-      new_embedding[current_vocab_size:].normal_(mean=0.0, std=std)
-      print(f"Initialized {new_vocab_size - current_vocab_size} new embeddings with std={std:.6f}")
-
-    checkpoint["model"]["gpt.text_embedding.weight"] = new_embedding
-
-    # Resize text_head.weight (output layer)
-    if "gpt.text_head.weight" in checkpoint["model"]:
-      old_head_weight = checkpoint["model"]["gpt.text_head.weight"]
-      new_head_weight = torch.zeros(new_vocab_size, embedding_dim, dtype=old_head_weight.dtype)
-      new_head_weight[:min_vocab_size] = old_head_weight[:min_vocab_size]
-
+      # Initialize new embeddings with small random values (similar to original initialization)
       if new_vocab_size > current_vocab_size:
-        std = old_head_weight.std().item()
-        new_head_weight[current_vocab_size:].normal_(mean=0.0, std=std)
+        std = old_embedding.std().item()
+        new_embedding[current_vocab_size:].normal_(mean=0.0, std=std)
+        print(f"Initialized {new_vocab_size - current_vocab_size} new embeddings with std={std:.6f}")
 
-      checkpoint["model"]["gpt.text_head.weight"] = new_head_weight
+      checkpoint["model"]["gpt.text_embedding.weight"] = new_embedding
 
-    # Resize text_head.bias
-    if "gpt.text_head.bias" in checkpoint["model"]:
-      old_bias = checkpoint["model"]["gpt.text_head.bias"]
-      new_bias = torch.zeros(new_vocab_size, dtype=old_bias.dtype)
-      new_bias[:min_vocab_size] = old_bias[:min_vocab_size]
-      # New bias entries remain zero (good default)
-      checkpoint["model"]["gpt.text_head.bias"] = new_bias
+      # Resize text_head.weight (output layer)
+      if "gpt.text_head.weight" in checkpoint["model"]:
+        old_head_weight = checkpoint["model"]["gpt.text_head.weight"]
+        new_head_weight = torch.zeros(new_vocab_size, embedding_dim, dtype=old_head_weight.dtype)
+        new_head_weight[:min_vocab_size] = old_head_weight[:min_vocab_size]
 
-    torch.save(checkpoint, xtts_checkpoint_resized)
+        if new_vocab_size > current_vocab_size:
+          std = old_head_weight.std().item()
+          new_head_weight[current_vocab_size:].normal_(mean=0.0, std=std)
 
-    print(f"Checkpoint resized and saved to: {xtts_checkpoint_resized}")
-    print(f"Successfully resized from {current_vocab_size} to {new_vocab_size} tokens")
-  
-  else:
-    print("No text embedding layer found in checkpoint")
+        checkpoint["model"]["gpt.text_head.weight"] = new_head_weight
 
-  del checkpoint, old_embedding, new_embedding
-  torch.cuda.empty_cache()
-  gc.collect()
+      # Resize text_head.bias
+      if "gpt.text_head.bias" in checkpoint["model"]:
+        old_bias = checkpoint["model"]["gpt.text_head.bias"]
+        new_bias = torch.zeros(new_vocab_size, dtype=old_bias.dtype)
+        new_bias[:min_vocab_size] = old_bias[:min_vocab_size]
+        # New bias entries remain zero (good default)
+        checkpoint["model"]["gpt.text_head.bias"] = new_bias
 
-  return xtts_checkpoint_resized
+      torch.save(checkpoint, xtts_checkpoint_resized)
+
+      print(f"Checkpoint resized and saved to: {xtts_checkpoint_resized}")
+      print(f"Successfully resized from {current_vocab_size} to {new_vocab_size} tokens")
+    
+    else:
+      print("No text embedding layer found in checkpoint")
+
+    try:
+      del checkpoint, old_embedding, new_embedding
+    except:
+      pass
+    torch.cuda.empty_cache()
+    gc.collect()
+
+    return xtts_checkpoint_resized
+  except Exception as e:
+    try:
+      del checkpoint, old_embedding, new_embedding
+    except:
+      pass
+    torch.cuda.empty_cache()
+    gc.collect()
+    print(f"Error during resizing embeddings: {e}")
+    raise e
 
 
 def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str, config_path: str, metadata_path: str, language: str, vocab_size: int = 5_000, min_frequency: int = 2, max_new_tokens: int = 1_000) -> tuple:
@@ -161,9 +174,11 @@ def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str
   df = pd.read_csv(metadata_path, sep="|", usecols=["text"])
   texts = df["text"].astype(str).tolist()
   if language == "mt":
-    print("Applying Maltese-specific text preprocessing...")
-    texts = [preprocess_maltese_text(text) for text in texts]
-
+    try:
+      print("Applying Maltese-specific text preprocessing...")
+      texts = [preprocess_maltese_text(text) for text in texts]
+    except Exception as e:
+      print(f"Warning: Maltese preprocessing failed: {e}. Proceeding with original texts.")
 
   print("Creating text chunks...")
   mt_tokenizer = MTWordTokenizer() if language == "mt" else None
@@ -295,7 +310,7 @@ def extend_tokenizer(output_path: str, xtts_checkpoint: str, tokenizer_file: str
 
 
 
-def debug_tokenizer_corruption(original_tokenizer_path: str, extended_tokenizer_path: str):
+def debug_tokenizer_corruption(original_tokenizer_path: str, extended_tokenizer_path: str) -> bool:
   """Check if tokenizer extension corrupted existing token mappings by checking token ID shifts."""
 
   print("=== TOKENIZER CORRUPTION DEBUG ===\n")
@@ -369,6 +384,7 @@ def debug_tokenizer_corruption(original_tokenizer_path: str, extended_tokenizer_
 
   del original, extended
   gc.collect()
+  return corruption_detected
 
 
 

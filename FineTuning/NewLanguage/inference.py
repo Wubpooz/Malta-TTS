@@ -32,20 +32,22 @@ def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoi
   """
   print("Loading checkpoint...")
   checkpoint = torch.load(xtts_checkpoint, map_location="cpu", weights_only=True) # Use map_location="cuda:1" to load it into GPU 1
-  is_lora = any("lora_A" in k or "lora_B" in k for k in checkpoint.keys())
+  state_dict = checkpoint.get("model", checkpoint) if isinstance(checkpoint, dict) else checkpoint
+  is_lora = any(("lora_A" in k or "lora_B" in k) for k in state_dict.keys()) if state_dict is not None and isinstance(state_dict, dict) else False
   if LORA_trained or is_lora: # TODO if issue with auto-detection, set it false
     print("Detected LoRA adapter weights. Loading as LoRA model...")
     try:
       lora_config = LoraConfig(
         r=8,
         lora_alpha=16,
-        target_modules=["gpt.gpt.h.*.attn.c_attn", "gpt.gpt.h.*.attn.c_proj"],
+        target_modules=["c_attn", "c_proj"], # or gpt.gpt.h.*.attn. ?
         lora_dropout=0.05,
         bias="none",
         task_type=TaskType.FEATURE_EXTRACTION,
       )
       model = get_peft_model(model, lora_config)
       model.load_state_dict(checkpoint, strict=False)
+      return model
     except Exception as e:
       print(f"Error loading LoRA model using LoRA weights: {e}")
       print("Attempting to load standard weights...")
@@ -57,6 +59,7 @@ def load_model(LORA_trained: bool, xtts_checkpoint: str, model, config, checkpoi
         use_deepspeed=use_deepspeed,
         eval=True
       )
+      return model
   else:
     print("Detected standard model weights. Loading as base model...")
     model.load_checkpoint(
